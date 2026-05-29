@@ -125,22 +125,69 @@
         <div class="venue">2026 &middot; preprint</div>
         <h3>AI-Associated Lexical Shifts Across 34 Languages</h3>
         <p>Cross-lingual convergence: <em>emphasize</em>-type verbs surface in 24 of 34 languages.</p>
-        <a class="small" href="https://arxiv.org/abs/2605.25358">arXiv</a> &middot;
-        <a class="small" href="https://github.com/tjuzek/ai-34-languages">GitHub</a>
+        <div class="pub2-links">
+          <a href="https://arxiv.org/abs/2605.25358">arXiv</a>
+          <a href="https://doi.org/10.48550/arXiv.2605.25358">DOI</a>
+          <a href="https://github.com/tjuzek/ai-34-languages">GitHub</a>
+          <details class="cite"><summary>Cite</summary></details>
+        </div>
+        <div class="cite-body" hidden><pre>@misc{juzek-2026-34languages,
+  title         = {AI-Associated Lexical Shifts Across 34 Languages:
+                   Cross-Lingual Convergence and Diachronic Uptake in News Writing},
+  author        = {Juzek, Thomas Stephan},
+  year          = {2026},
+  eprint        = {2605.25358},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2605.25358}
+}</pre><button class="copy-btn" type="button">Copy</button></div>
       </div>
       <div class="card">
         <div class="venue">LREC 2026</div>
         <h3>Fully Automated Identification of Lexical Alignment &amp; Preference-Stage Shifts</h3>
         <p>A reusable, curation-free diagnostic for AI lexical overuse: the foundational pipeline.</p>
-        <a class="small" href="https://lrec.elra.info/lrec2026-main-484">LREC</a> &middot;
-        <a class="small" href="https://github.com/fsu-nlp/lexical-alignment-shifts">GitHub</a>
+        <div class="pub2-links">
+          <a href="https://lrec.elra.info/lrec2026-main-484">Proceedings</a>
+          <a href="https://doi.org/10.63317/4ut7ammh7z3h">DOI</a>
+          <a href="https://github.com/fsu-nlp/lexical-alignment-shifts">GitHub</a>
+          <details class="cite"><summary>Cite</summary></details>
+        </div>
+        <div class="cite-body" hidden><pre>@inproceedings{juzek-etal-2026-fully,
+  title     = {Fully Automated Identification of Lexical Alignment and
+               Preference-Stage Shifts in Large Language Models},
+  author    = {Juzek, Thomas Stephan and Ming, Xiaoyang and Hernandez, Jose A.},
+  booktitle = {Proceedings of the Fifteenth Language Resources and
+               Evaluation Conference (LREC 2026)},
+  pages     = {6116--6131},
+  year      = {2026},
+  doi       = {10.63317/4ut7ammh7z3h},
+  url       = {https://lrec.elra.info/lrec2026-main-484}
+}</pre><button class="copy-btn" type="button">Copy</button></div>
       </div>
       <div class="card">
         <div class="venue">AIES 2025</div>
         <h3>Model Misalignment &amp; Language Change</h3>
         <p>First peer-reviewed evidence of AI-associated language traces in unscripted spoken English.</p>
-        <a class="small" href="https://ojs.aaai.org/index.php/AIES/article/view/36540">AIES</a> &middot;
-        <a class="small" href="https://arxiv.org/abs/2508.00238">arXiv</a>
+        <div class="pub2-links">
+          <a href="https://ojs.aaai.org/index.php/AIES/article/view/36540">Proceedings</a>
+          <a href="https://doi.org/10.1609/aies.v8i1.36540">DOI</a>
+          <a href="https://arxiv.org/abs/2508.00238">arXiv</a>
+          <a href="https://github.com/fsu-nlp/ai-traces-ssl">GitHub</a>
+          <details class="cite"><summary>Cite</summary></details>
+        </div>
+        <div class="cite-body" hidden><pre>@inproceedings{anderson-etal-2025-misalignment,
+  title     = {Model Misalignment and Language Change: Traces of
+               AI-Associated Language in Unscripted Spoken English},
+  author    = {Anderson, Bryce and Galpin, R. and Juzek, Thomas Stephan},
+  booktitle = {Proceedings of the AAAI/ACM Conference on AI, Ethics,
+               and Society (AIES 2025)},
+  volume    = {8},
+  number    = {1},
+  pages     = {179--191},
+  year      = {2025},
+  doi       = {10.1609/aies.v8i1.36540},
+  url       = {https://doi.org/10.1609/aies.v8i1.36540}
+}</pre><button class="copy-btn" type="button">Copy</button></div>
       </div>
       <div class="card">
         <div class="venue">Interactive tool</div>
@@ -187,6 +234,22 @@
     polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a></p>
 </div></footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('details.cite').forEach(function (d) {
+    var body = d.closest('.pub2-links').nextElementSibling;
+    d.addEventListener('toggle', function () { if (body) body.hidden = !d.open; });
+  });
+  document.querySelectorAll('.copy-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var pre = b.parentElement.querySelector('pre');
+      if (!pre) return;
+      navigator.clipboard && navigator.clipboard.writeText(pre.textContent.trim()).then(function () {
+        var prev = b.textContent; b.textContent = 'Copied!';
+        setTimeout(function () { b.textContent = prev; }, 1200);
+      });
+    });
+  });
+</script>
 </body>
 </html>
