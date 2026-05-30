@@ -42,3 +42,8 @@ python3 -m http.server 8000
 ## AI Assistance
 
 Repository polished with Claude Code.
+
+## Licence
+
+- **Code** (HTML, CSS, JS): MIT No Attribution (MIT-0). See [`LICENSE`](LICENSE). Use it freely, no attribution required.
+- **Site content / text**: CC0 1.0 Universal (public domain dedication). See [`LICENSE-DATA`](LICENSE-DATA).
