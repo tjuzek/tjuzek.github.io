@@ -93,6 +93,11 @@
     polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a></p>
 </div></footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
 </body>
 </html>
