@@ -38,3 +38,7 @@ python3 -m http.server 8000
 ## Files
 `index.html` · `research.html` · `publications.html` · `teaching.html` · `talks-press.html`
 · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` · `tom-juzek-3.jpg`
+
+## AI Assistance
+
+Repository polished with Claude Code.
