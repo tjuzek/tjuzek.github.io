@@ -189,18 +189,11 @@ ul.list .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mono
 .pub2-meta { color: var(--muted); font-size: 14.5px; margin-bottom: 6px; }
 .pub2-desc { font-size: 15.5px; margin: 0 0 10px; }
 .pub2-links { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
-.pub2-links a, .cite > summary {
+.pub2-links a, .cite-btn {
   font-size: 13px; border: 1px solid var(--line); border-radius: 6px;
   padding: 3px 10px; background: var(--bg-soft); color: var(--garnet); cursor: pointer;
 }
-.pub2-links a:hover, .cite > summary:hover { border-color: var(--garnet); text-decoration: none; }
-.cite > summary { list-style: none; display: inline-block; }
-.cite > summary::-webkit-details-marker { display: none; }
-.cite[open] > summary { background: var(--garnet); color: #fff; border-color: var(--garnet); }
-.cite-body { margin-top: 10px; }
-.cite-body pre { margin: 0 0 6px; }
-.copy-btn {
-  font-size: 12.5px; border: 1px solid var(--line); border-radius: 6px;
-  padding: 3px 12px; background: #fff; color: var(--garnet); cursor: pointer;
-}
-.copy-btn:hover { border-color: var(--garnet); }
+.pub2-links a:hover, .cite-btn:hover { border-color: var(--garnet); text-decoration: none; }
+.cite-btn { font-family: inherit; line-height: inherit; }
+.cite-btn.copied { background: var(--garnet); color: #fff; border-color: var(--garnet); }
+.cite-data { display: none; }

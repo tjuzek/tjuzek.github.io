@@ -113,9 +113,10 @@
        use? We are seeing some remarkable shifts in human language use that are difficult to explain
        without giving AI a role.</p>
     <p>I also teach courses in computational linguistics, and I enjoy mentoring undergraduate and
-       graduate <a href="teaching.html">research on AI and language</a>. I am always happy to hear
-       from students, and open to <a href="mailto:tjuzek@fsu.edu?subject=Media%20enquiry">media
-       enquiries</a>.</p>
+       graduate <a href="teaching.html">research on AI and language</a>. I see my work as being in
+       service of the community and the field, whether through <a href="talks-press.html">public
+       talks</a>, open tools, or freely shared data. I am always happy to hear from students, and
+       open to <a href="mailto:tjuzek@fsu.edu?subject=Media%20enquiry">media enquiries</a>.</p>
   </section>
 
   <section>
@@ -127,11 +128,10 @@
         <p>Cross-lingual convergence: <em>emphasize</em>-type verbs surface in 24 of 34 languages.</p>
         <div class="pub2-links">
           <a href="https://arxiv.org/abs/2605.25358">arXiv</a>
-          <a href="https://doi.org/10.48550/arXiv.2605.25358">DOI</a>
           <a href="https://github.com/tjuzek/ai-34-languages">GitHub</a>
-          <details class="cite"><summary>Cite</summary></details>
+          <button class="cite-btn" type="button" title="Copy BibTeX to clipboard">Cite</button>
         </div>
-        <div class="cite-body" hidden><pre>@misc{juzek-2026-34languages,
+        <div class="cite-data" hidden><pre>@misc{juzek-2026-34languages,
   title         = {AI-Associated Lexical Shifts Across 34 Languages:
                    Cross-Lingual Convergence and Diachronic Uptake in News Writing},
   author        = {Juzek, Thomas Stephan},
@@ -140,7 +140,7 @@
   archivePrefix = {arXiv},
   primaryClass  = {cs.CL},
   url           = {https://arxiv.org/abs/2605.25358}
-}</pre><button class="copy-btn" type="button">Copy</button></div>
+}</pre></div>
       </div>
       <div class="card">
         <div class="venue">LREC 2026</div>
@@ -148,11 +148,10 @@
         <p>A reusable, curation-free diagnostic for AI lexical overuse: the foundational pipeline.</p>
         <div class="pub2-links">
           <a href="https://lrec.elra.info/lrec2026-main-484">Proceedings</a>
-          <a href="https://doi.org/10.63317/4ut7ammh7z3h">DOI</a>
           <a href="https://github.com/fsu-nlp/lexical-alignment-shifts">GitHub</a>
-          <details class="cite"><summary>Cite</summary></details>
+          <button class="cite-btn" type="button" title="Copy BibTeX to clipboard">Cite</button>
         </div>
-        <div class="cite-body" hidden><pre>@inproceedings{juzek-etal-2026-fully,
+        <div class="cite-data" hidden><pre>@inproceedings{juzek-etal-2026-fully,
   title     = {Fully Automated Identification of Lexical Alignment and
                Preference-Stage Shifts in Large Language Models},
   author    = {Juzek, Thomas Stephan and Ming, Xiaoyang and Hernandez, Jose A.},
@@ -162,7 +161,7 @@
   year      = {2026},
   doi       = {10.63317/4ut7ammh7z3h},
   url       = {https://lrec.elra.info/lrec2026-main-484}
-}</pre><button class="copy-btn" type="button">Copy</button></div>
+}</pre></div>
       </div>
       <div class="card">
         <div class="venue">AIES 2025</div>
@@ -170,12 +169,11 @@
         <p>First peer-reviewed evidence of AI-associated language traces in unscripted spoken English.</p>
         <div class="pub2-links">
           <a href="https://ojs.aaai.org/index.php/AIES/article/view/36540">Proceedings</a>
-          <a href="https://doi.org/10.1609/aies.v8i1.36540">DOI</a>
           <a href="https://arxiv.org/abs/2508.00238">arXiv</a>
           <a href="https://github.com/fsu-nlp/ai-traces-ssl">GitHub</a>
-          <details class="cite"><summary>Cite</summary></details>
+          <button class="cite-btn" type="button" title="Copy BibTeX to clipboard">Cite</button>
         </div>
-        <div class="cite-body" hidden><pre>@inproceedings{anderson-etal-2025-misalignment,
+        <div class="cite-data" hidden><pre>@inproceedings{anderson-etal-2025-misalignment,
   title     = {Model Misalignment and Language Change: Traces of
                AI-Associated Language in Unscripted Spoken English},
   author    = {Anderson, Bryce and Galpin, R. and Juzek, Thomas Stephan},
@@ -187,7 +185,7 @@
   year      = {2025},
   doi       = {10.1609/aies.v8i1.36540},
   url       = {https://doi.org/10.1609/aies.v8i1.36540}
-}</pre><button class="copy-btn" type="button">Copy</button></div>
+}</pre></div>
       </div>
       <div class="card">
         <div class="venue">Interactive tool</div>
@@ -236,20 +234,36 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-  document.querySelectorAll('details.cite').forEach(function (d) {
-    var body = d.closest('.pub2-links').nextElementSibling;
-    d.addEventListener('toggle', function () { if (body) body.hidden = !d.open; });
-  });
-  document.querySelectorAll('.copy-btn').forEach(function (b) {
+  document.querySelectorAll('.cite-btn').forEach(function (b) {
+    var label = b.textContent;
     b.addEventListener('click', function () {
-      var pre = b.parentElement.querySelector('pre');
+      var data = b.closest('.pub2-links').nextElementSibling;
+      var pre = data && data.querySelector('pre');
       if (!pre) return;
-      navigator.clipboard && navigator.clipboard.writeText(pre.textContent.trim()).then(function () {
-        var prev = b.textContent; b.textContent = 'Copied!';
-        setTimeout(function () { b.textContent = prev; }, 1200);
-      });
+      var text = pre.textContent.trim();
+      var flash = function () {
+        b.textContent = 'Copied!'; b.classList.add('copied');
+        clearTimeout(b._t);
+        b._t = setTimeout(function () { b.textContent = label; b.classList.remove('copied'); }, 1400);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(flash, function () { legacyCopy(text, flash); });
+      } else {
+        legacyCopy(text, flash);
+      }
     });
   });
+  document.querySelectorAll('.pub2-links a[href^="http"]').forEach(function (a) {
+    a.target = '_blank'; a.rel = 'noopener';
+  });
+  function legacyCopy(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try { document.execCommand('copy'); if (done) done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
 </script>
 </body>
 </html>
