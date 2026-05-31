@@ -39,13 +39,13 @@ python3 -m http.server 8000
 `index.html` · `research.html` · `publications.html` · `teaching.html` · `talks-press.html`
 · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` · `tom-juzek-3.jpg`
 
-## AI Assistance
-
-Repository polished with Claude Code.
-
 ## Licence
 
 - **Code** (HTML, CSS, JS): MIT No Attribution (MIT-0). See [`LICENSE`](LICENSE). Use it freely, no attribution required.
 - **Site content / text**: CC0 1.0 Universal (public domain dedication). See [`LICENSE-DATA`](LICENSE-DATA).
 
 If you reuse anything here, a credit or a link back to [tjuzek.com](https://tjuzek.com) is appreciated, though not required.
+
+## AI Assistance
+
+Repository polished with Claude Code.
