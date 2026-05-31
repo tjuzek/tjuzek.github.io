@@ -170,7 +170,7 @@ ul.list { list-style: none; padding: 0; margin: 0; }
 ul.list li { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
 ul.list li:last-child { border-bottom: 0; }
 ul.list .note { color: var(--muted); font-size: 14px; }
-ul.list .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--muted); font-size: 13.5px; }
+ul.list .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--muted); font-size: 13.5px; margin-left: 0.6em; }
 
 /* ---- Chips (media wall / tag list) ---- */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
