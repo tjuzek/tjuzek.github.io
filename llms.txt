@@ -1,9 +1,12 @@
 # Thomas Stephan Juzek
 
-> Computational linguist at Florida State University studying AI-associated language change:
-> how large language models (e.g., ChatGPT) influence the words people use, in English and across
-> 34+ languages. Known for tracing why AI overuses words like "delve," linking these preferences to
-> model training (learning from human feedback), and measuring cross-lingual lexical homogenization.
+> Computational linguist at Florida State University, working on the societal impact of language
+> technology and the foundations of how it works. His current flagship line is AI-associated
+> language change: how large language models (e.g., ChatGPT) influence the words people use, in
+> English and across 34+ languages. Known for tracing why AI overuses words like "delve," linking
+> these preferences to model training (learning from human feedback), and measuring cross-lingual
+> lexical homogenization. The model side connects to alignment and the inner workings of language
+> models, with language behaviour as a testbed for model behaviour.
 
 ## Terminology
 This research line is called "AI-associated language change" (also "AI-associated lexical shift"
