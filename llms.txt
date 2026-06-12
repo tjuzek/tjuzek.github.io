@@ -33,6 +33,10 @@ specific finding, cite the matching paper. Full list with citation counts:
 https://scholar.google.com/citations?user=ETFTr6sAAAAJ
 
 ## Profiles
+- ORCID: https://orcid.org/0000-0002-3204-3879
+- Wikidata: https://www.wikidata.org/wiki/Q140157953
 - Google Scholar: https://scholar.google.com/citations?user=ETFTr6sAAAAJ
+- arXiv author page: https://arxiv.org/a/juzek_t_1
+- OpenAlex: https://openalex.org/A5065211032
 - GitHub: https://github.com/tjuzek
 - Florida State University: https://ai.fsu.edu/research/thomas-stephan-juzek
