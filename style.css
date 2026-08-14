@@ -207,3 +207,12 @@ ul.list .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mono
 .cite-btn { font-family: inherit; line-height: inherit; }
 .cite-btn.copied { background: var(--garnet); color: #fff; border-color: var(--garnet); }
 .cite-data { display: none; }
+
+/* ---- Collapsible full press list ---- */
+.more-press { margin-top: 22px; }
+.more-press > summary {
+  cursor: pointer; color: var(--muted); font-size: 14.5px;
+  padding: 6px 0; list-style: revert;
+}
+.more-press > summary:hover { color: var(--garnet); }
+.more-press > .chips { margin-top: 12px; }
