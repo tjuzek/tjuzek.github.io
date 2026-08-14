@@ -32,6 +32,14 @@ python3 -m http.server 8000
   Syndicated reprints: one story, one entry.
 - House style: UK English (`en-GB`); no em-dashes in served files; hedged register on
   AI-and-language claims (association, not causation).
+- "Last updated" policy (decided 2026-08-14): the visible footer date and the JSON-LD
+  `dateModified` track the last CONTENT change (what a reader means by "updated"); the
+  sitemap `lastmod` tracks the last file change (what a crawler needs for recrawl).
+  Plumbing-only edits (JSON-LD, meta tags, scripts) bump only the sitemap.
+- The talks-press `ItemList` records coverage of the research; visible chips are a curated
+  subset of it. Expert-commentary appearances stay out of the ItemList unless the piece
+  credits the research itself (the two Economist reprints qualify; NBC News deliberately
+  does not). Syndicated reprints: one story, one entry.
 - Affiliation wording reflects the Scientific Computing move (Aug 2026).
 
 ## Built-in discoverability (GEO/SEO)
