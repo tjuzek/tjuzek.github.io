@@ -1,4 +1,4 @@
-# tjuzek.com — we WANT to be crawled, including by AI/LLM crawlers.
+# tjuzek.com - we WANT to be crawled, including by AI/LLM crawlers.
 User-agent: *
 Allow: /
 
@@ -18,10 +18,16 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
 User-agent: anthropic-ai
 Allow: /
 
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
 Allow: /
 
 User-agent: Google-Extended
