@@ -49,7 +49,7 @@
     "mainEntity": { "@id": "https://tjuzek.com/#person" },
     "primaryImageOfPage": { "@id": "https://tjuzek.com/now/#now-photo" },
     "inLanguage": "en-GB",
-    "dateModified": "2026-06-19"
+    "dateModified": "2026-08-13"
   },
   {
     "@type": "ImageObject",
@@ -84,6 +84,12 @@
                     border: 3px solid #fff; box-shadow: 0 1px 8px rgba(0,0,0,.16);
                     background: var(--bg-soft); }
   .now-figure figcaption { font-size: 13.5px; color: var(--muted); margin-top: 8px; text-align: center; }
+  .now-note { margin: 0 0 20px; }
+  .now-note:last-child { margin-bottom: 0; }
+  .now-note p.now-note-date { text-transform: uppercase; letter-spacing: .12em; font-size: 12.5px;
+                              font-weight: 700; color: var(--muted); margin: 0 0 3px; }
+  .now-note p { margin: 0 0 10px; }
+  .now-note p:last-child { margin-bottom: 0; }
   @media (max-width: 620px) {
     .now-head { flex-direction: column; gap: 20px; }
     .now-figure { width: 100%; max-width: 200px; align-self: flex-start; }
@@ -113,7 +119,7 @@
         <p class="role">Computational linguist &middot; Florida State University</p>
         <p>A running note on what I am working on, reading, and excited by right now.
            I hope to update this page from time to time.</p>
-        <p class="now-updated">Last updated: June 2026</p>
+        <p class="now-updated">Last updated: August 2026</p>
       </div>
       <figure class="now-figure">
         <img src="/tommie-juzek.jpg"
@@ -140,17 +146,34 @@
 
     <h3>Recently out</h3>
     <p>The <a href="https://arxiv.org/abs/2605.25358">34-languages paper</a>, revised after
-       reviews and now at preprint stage while it finds a venue.</p>
+       reviews and now at preprint stage whilst it finds a venue.</p>
 
     <h3>Reading</h3>
     <p>Reviewing for several venues right now, so reading a lot of papers.</p>
 
     <h3>Thinking about</h3>
-    <p>Still impressed by work from Marwa Abdulhai and the team around Natasha Jaques,
-       <a href="https://arxiv.org/abs/2603.18161">How LLMs Distort Our Written Language</a>
-       (<a href="https://sites.google.com/view/llmwritingdistortion/home">project page</a>): they
-       show that LLM editing pushes writing toward a homogenised common style even when asked only
-       to fix grammar. It really raises the stakes of AI usage.</p>
+
+    <!-- Newest first. Keep three visible; move older ones into a collapsed
+         <details class="more-notes"><summary>Earlier notes</summary> ... </details>
+         and promote that to /now/notes/ once it holds more than about six. -->
+
+    <article class="now-note" id="thinking-2026-08">
+      <p class="now-note-date"><time datetime="2026-08">August 2026</time></p>
+      <p>I recently read
+         <a href="https://arxiv.org/abs/2605.12991">Not Just RLHF: Why Alignment Alone Won't Fix
+         Multi-Agent Sycophancy</a> by Adarsh Kumarappan and Ananya Mujoo: it's impressive technical
+         work, and it contributes to a nuanced (I know, I know) picture of how pretraining,
+         post-training, and context interact in producing sycophancy.</p>
+    </article>
+
+    <article class="now-note" id="thinking-2026-06">
+      <p class="now-note-date"><time datetime="2026-06">June 2026</time></p>
+      <p>Still impressed by work from Marwa Abdulhai and the team around Natasha Jaques,
+         <a href="https://arxiv.org/abs/2603.18161">How LLMs Distort Our Written Language</a>
+         (<a href="https://sites.google.com/view/llmwritingdistortion/home">project page</a>): they
+         show that LLM editing pushes writing towards a homogenised common style even when asked only
+         to fix grammar. It really raises the stakes of AI usage.</p>
+    </article>
   </section>
 
   <section>
@@ -174,7 +197,7 @@
   <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
     <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
     polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
-    Last updated: 2026-06-19</p>
+    Last updated: 2026-08-13</p>
 </div></footer>
 
 <script>
