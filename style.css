@@ -217,3 +217,10 @@ ul.list .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mono
 }
 .more-press > summary:hover { color: var(--garnet); }
 .more-press > .chips { margin-top: 12px; }
+
+/* ---- Collapsible Q&A ("In brief" on research) ---- */
+.qa { margin: 0 0 8px; }
+.qa > summary { cursor: pointer; padding: 4px 0; list-style: revert; }
+.qa > summary h3 { display: inline; margin: 0; font-size: 18px; }
+.qa > summary:hover { color: var(--garnet); }
+.qa > p { margin: 8px 0 10px; }
