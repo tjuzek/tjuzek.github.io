@@ -195,6 +195,7 @@ ul.list .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mono
 /* ---- Rich publication entries ---- */
 .pub2 { padding: 18px 0; border-bottom: 1px solid var(--line); }
 .pub2:last-of-type { border-bottom: 0; }
+.pub2[id] { scroll-margin-top: 74px; }
 .pub2-title { font-size: 17px; margin: 0 0 3px; line-height: 1.35; }
 .pub2-meta { color: var(--muted); font-size: 14.5px; margin-bottom: 6px; }
 .pub2-desc { font-size: 15.5px; margin: 0 0 10px; }

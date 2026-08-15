@@ -156,13 +156,53 @@
     <p>Below is a selection of recent projects, grouped by theme.</p>
   </section>
 
+  <section id="in-brief">
+    <h2>In brief</h2>
+
+    <h3>Is AI changing the words people use?</h3>
+    <p>There is a measurable association: the words that models like ChatGPT overuse have risen
+       in human writing since ChatGPT&rsquo;s release, +15.1% in post-ChatGPT news writing
+       against &minus;4.5% for matched baseline words, across
+       <a href="#pub-34-languages">34 languages</a>. The same trend appears in
+       <a href="#pub-aies-spoken">unscripted spoken English</a>, the first peer-reviewed
+       evidence of its kind. Whether AI drives these shifts is not yet established: their
+       timing and pattern give AI a plausible role, but an acceleration of change already
+       underway is a live alternative. Establishing what actually drives them is part of our
+       current work.</p>
+
+    <h3>Why does ChatGPT overuse words like &ldquo;delve&rdquo;?</h3>
+    <p>Part of the answer is learning from human feedback: in preference tests, annotators
+       systematically prefer text containing certain words, and
+       <a href="#pub-bias-rlhf">preference training (RLHF)</a> amplifies exactly those words.
+       The wider candidate sources are examined in our
+       <a href="#pub-coling-delve">COLING 2025 paper</a>, which also identifies the focal
+       words whose rise in scientific abstracts tracks LLM use. In short, the overuse is
+       connected to how models are aligned with human preferences, not just to what they
+       read.</p>
+
+    <h3>Does this happen outside English?</h3>
+    <p>Yes. Across news writing in <a href="#pub-34-languages">34 languages</a>, the same
+       concepts surface among AI-overused words in 24 of 34 languages
+       (<em>emphasize</em>-type verbs are the clearest case), and AI-preferred words show
+       post-ChatGPT rises in 26 of 34. ChatGPT leaves a similar lexical fingerprint in dozens
+       of the world&rsquo;s languages; this is not an English-only phenomenon.</p>
+
+    <h3>What is &ldquo;AI-associated language change&rdquo;?</h3>
+    <p>&ldquo;AI-associated language change&rdquo; names an observed pattern: systematic
+       word-preference shifts associated with large language model output, and their uptake
+       into human writing and speech. The phrasing is deliberately neutral about cause: it
+       records an association, while what drives it is an open research question. Thomas
+       Stephan Juzek&rsquo;s research group at Florida State University works on this
+       question.</p>
+  </section>
+
   <section>
     <h2>An AI global fingerprint</h2>
     <p>Across languages, ChatGPT leaves a kind of cross-lingual fingerprint: it overuses the same
        concepts in dozens of the world&rsquo;s languages. And exactly those overused words have risen
        markedly in human usage since ChatGPT&rsquo;s release in 2022.</p>
 
-    <article class="pub2">
+    <article class="pub2" id="pub-34-languages">
       <h3 class="pub2-title">AI-Associated Lexical Shifts Across 34 Languages: Cross-Lingual Convergence and Diachronic Uptake in News Writing</h3>
       <div class="pub2-meta">Juzek, T. S. &middot; preprint, 2026</div>
       <p class="pub2-desc">A cross-lingual &ldquo;AI register&rdquo;: <em>emphasize</em>-type verbs surface among AI-overused words in 24 of 34 languages; AI-preferred words rise +15.1% in post-ChatGPT news vs &minus;4.5% for matched baselines.</p>
@@ -188,7 +228,7 @@
        English, we find that AI-overused words have increased markedly from before to after
        ChatGPT&rsquo;s release.</p>
 
-    <article class="pub2">
+    <article class="pub2" id="pub-aies-spoken">
       <h3 class="pub2-title">Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English</h3>
       <div class="pub2-meta">Anderson, B., Galpin, R. &amp; Juzek, T. S. &middot; AIES 2025</div>
       <p class="pub2-desc">The first peer-reviewed evidence of AI-associated vocabulary appearing in unscripted spoken English.</p>
@@ -222,7 +262,7 @@
        mechanisms, finding that learning from human preferences (RLHF) plays an important role. Two
        papers explore this.</p>
 
-    <article class="pub2">
+    <article class="pub2" id="pub-coling-delve">
       <h3 class="pub2-title">Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models</h3>
       <div class="pub2-meta">Juzek, T. S. &amp; Ward, Z. B. &middot; COLING 2025</div>
       <p class="pub2-desc">Why LLMs overuse words like <em>delve</em>, <em>underscore</em>, and <em>intricate</em>: identifying focal words whose rise in scientific abstracts tracks LLM use.</p>
@@ -243,7 +283,7 @@
 }</pre></div>
     </article>
 
-    <article class="pub2">
+    <article class="pub2" id="pub-bias-rlhf">
       <h3 class="pub2-title">Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback</h3>
       <div class="pub2-meta">Juzek, T. S. &amp; Ward, Z. B. &middot; BIAS 2025 Workshop (ECML PKDD)</div>
       <p class="pub2-desc">Links AI lexical overuse to learning from human feedback: annotators systematically prefer text containing certain words, and preference training amplifies them.</p>
