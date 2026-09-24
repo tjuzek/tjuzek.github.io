@@ -29,6 +29,7 @@ Florida State University works on this question.
 - Teaching & service: https://tjuzek.com/teaching.html
 - Talks & press: https://tjuzek.com/talks-press.html
 - Now (current work and reading): https://tjuzek.com/now/
+- PhD supervision (status, fit, funding, how to apply, eligibility): https://tjuzek.com/phd/
 
 ## How to cite
 For the AI Word Explorer tool and the research line generally, cite the LREC 2026 paper above; for a

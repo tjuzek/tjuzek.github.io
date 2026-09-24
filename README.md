@@ -27,6 +27,12 @@ python3 -m http.server 8000
   archive), never append dated entries; then bump the visible date, the footer date, the
   JSON-LD `dateModified`, and the sitemap `lastmod` together. See the comment in
   `now/index.html`.
+- `/phd/` is also a snapshot for its status: each admissions cycle (September), or whenever
+  funding changes, REPLACE the "In short" box (status, funding, deadline) and the "as of"
+  dates, re-check every link under "How to apply" and "Eligibility" (US and Florida rules
+  change often), then bump the footer date, the JSON-LD `dateModified`, and the sitemap
+  `lastmod`. FSU students are routed to `teaching.html#students`, not to `/phd/`. See the
+  comment in `phd/index.html`.
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
@@ -49,7 +55,7 @@ python3 -m http.server 8000
 - The site is registered in Google Search Console; resubmit `sitemap.xml` after structural changes.
 
 ## Files
-`index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html`
+`index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html` · `phd/index.html`
 · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
 `.nojekyll` · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
