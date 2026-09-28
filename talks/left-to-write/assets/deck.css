@@ -1,0 +1,373 @@
+/* deck.css: theme for "What Is Left to Write?" (MLL seminar, 1 October 2026).
+   v0.1, 28 September 2026. Dark only. Palettes: flyer (default), richter, ink (key P).
+   Grey treatments for the crisis slides: canvas (default), horizon (key G).
+   Chart colours are constant across palettes and were checked with the dataviz
+   validator on all three grounds: gold #c98500 and blue #3987e5 pass together;
+   red #e66767 passes with blue but NOT with gold, so red never shares a chart with gold;
+   violet is decoration only (it collapses into blue under protanopia). */
+
+/* ---------- fonts (self-hosted, OFL; licences in fonts/) ---------- */
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-standard-italic.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-ext-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-ext-standard-italic.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: block;
+  src: url(fonts/inter-latin-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Inter'; font-style: italic; font-weight: 100 900; font-display: block;
+  src: url(fonts/inter-latin-standard-italic.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: block;
+  src: url(fonts/inter-latin-ext-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* ---------- animatable tokens (registered so colour changes can transition) ---------- */
+@property --accent  { syntax: '<color>'; inherits: true; initial-value: #d8b765; }
+@property --ground  { syntax: '<color>'; inherits: true; initial-value: #050507; }
+@property --wave-a  { syntax: '<color>'; inherits: true; initial-value: #a88f55; }
+@property --wave-b  { syntax: '<color>'; inherits: true; initial-value: #6c5fae; }
+@property --wave-c  { syntax: '<color>'; inherits: true; initial-value: #4a6fc0; }
+@property --text-2  { syntax: '<color>'; inherits: true; initial-value: #c9c5bb; }
+@property --text-3  { syntax: '<color>'; inherits: true; initial-value: #8d8a82; }
+
+/* ---------- palettes (base values; the animated tokens above point at these) ---------- */
+html, html[data-palette="flyer"] {
+  --bg: #050507;          /* the flyer's black, a hair lifted */
+  --ink: #f4f1ea;         /* warm white */
+  --ink-2: #c9c5bb;
+  --ink-3: #8d8a82;
+  --hair: #26262b;        /* gridlines */
+  --axis: #3c3c42;
+  --gold: #d8b765;        /* text accent: the em dash */
+  --w-gold: #a88f55;      /* the flyer's lines, sampled and lifted */
+  --w-violet: #6c5fae;
+  --w-blue: #4a6fc0;
+  --richter: #50524d;     /* sampled from the painting on the flyer */
+  --richter-ink-2: #e4e1d9;
+  --richter-ink-3: #cfccc4;
+}
+html[data-palette="richter"] {
+  --bg: #0b0b0b;
+  --ink: #ecebe7;
+  --ink-2: #c4c3be;
+  --ink-3: #8f8e89;
+  --hair: #262625;
+  --axis: #3b3b39;
+  --gold: #d2b36a;
+  --w-gold: #6d6e68;
+  --w-violet: #595a55;
+  --w-blue: #7e7f79;
+}
+html[data-palette="ink"] {
+  --bg: #050a18;
+  --ink: #f1f4f9;
+  --ink-2: #c3cad8;
+  --ink-3: #8a93a6;
+  --hair: #1b2236;
+  --axis: #2d3650;
+  --gold: #dcbc6c;
+  --w-gold: #b39a5c;
+  --w-violet: #4e5fb0;
+  --w-blue: #3f7fd6;
+}
+
+/* chart series: constant across palettes (colour follows the entity) */
+:root {
+  --s-gold: #c98500;      /* flagship models; "up" */
+  --s-blue: #3987e5;      /* small tier; "down" */
+  --s-red:  #e66767;      /* flagged: never in a chart with gold */
+  --s-neutral: #8d8a82;   /* human reference marks */
+  --floor: #50524d;       /* the zero-floor band: Richter grey */
+}
+
+body {
+  --accent: var(--gold);
+  --ground: var(--bg);
+  --wave-a: var(--w-gold);
+  --wave-b: var(--w-violet);
+  --wave-c: var(--w-blue);
+  --text-2: var(--ink-2);
+  --text-3: var(--ink-3);
+  transition: --accent 2s ease, --ground 2.4s ease 0.6s, --wave-a 2s ease, --wave-b 2s ease,
+              --wave-c 2s ease, --text-2 2s ease, --text-3 2s ease;
+}
+
+/* ---------- the grey: the crisis slides carry data-state="grey" (reveal puts it on body) ---------- */
+body.grey {
+  --accent: #9a9b95;
+  --wave-a: var(--richter);
+  --wave-b: var(--richter);
+  --wave-c: var(--richter);
+}
+/* canvas: the screen itself is painted grey, after the lines have stilled */
+html[data-grey="canvas"] body.grey {
+  --ground: var(--richter);
+  --text-2: var(--richter-ink-2);
+  --text-3: var(--richter-ink-3);
+}
+/* the pivot: the gold em dash is the first colour to come back */
+body.grey:has(.reveal .slides section.present .colour-returns.visible) {
+  --accent: var(--gold);
+  --ground: var(--bg);
+  --wave-a: var(--w-gold);
+  --wave-b: var(--w-violet);
+  --wave-c: var(--w-blue);
+  --text-2: var(--ink-2);
+  --text-3: var(--ink-3);
+}
+
+/* ---------- page ---------- */
+html, body { margin: 0; height: 100%; }
+body, .reveal-viewport {
+  background: var(--ground);
+  color: var(--ink);
+}
+.reveal {
+  font-family: 'Newsreader', Georgia, serif;
+  font-optical-sizing: auto;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+.reveal .slides { text-align: left; }
+.reveal .slides > section { height: 1080px; box-sizing: border-box; }
+.reveal .progress { height: 4px; color: var(--accent); background: transparent; }
+.reveal .pause-overlay { background: #000; }
+.reveal ::selection { background: var(--accent); color: #000; }
+.reveal a { color: inherit; text-decoration-color: var(--text-3); text-underline-offset: 0.18em; }
+
+/* inner frame carries the padding (print CSS zeroes section padding) */
+.frame {
+  position: absolute; inset: 0;
+  padding: 104px 132px 96px;
+  box-sizing: border-box;
+  display: flex; flex-direction: column;
+}
+.frame.center { justify-content: center; }
+.frame.split { flex-direction: row; gap: 96px; align-items: center; }
+
+/* ---------- type ---------- */
+.kicker {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 30px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 28px;
+}
+.h1 { font-size: 132px; line-height: 1.02; font-weight: 440; letter-spacing: -0.012em; margin: 0; }
+.h2 { font-size: 84px;  line-height: 1.08; font-weight: 430; letter-spacing: -0.008em; margin: 0 0 36px; }
+.h3 { font-size: 58px;  line-height: 1.12; font-weight: 450; margin: 0 0 18px; }
+.lede { font-size: 56px; line-height: 1.28; font-weight: 380; color: var(--ink); margin: 0 0 28px; max-width: 1500px; }
+.body { font-size: 46px; line-height: 1.34; font-weight: 400; color: var(--text-2); margin: 0 0 22px; }
+.small { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; line-height: 1.4; color: var(--text-3); }
+.quote { font-style: italic; font-size: 56px; line-height: 1.28; font-weight: 380; margin: 0 0 22px; }
+.cite {
+  font-family: 'Inter', system-ui, sans-serif; font-style: normal;
+  font-size: 30px; line-height: 1.4; color: var(--text-3); margin: 0 0 12px;
+}
+.sans { font-family: 'Inter', system-ui, sans-serif; }
+.num { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
+.muted { color: var(--text-3); }
+.dash { color: var(--accent); font-family: 'Inter', system-ui, sans-serif; font-weight: 300; }   /* the em dash as object of study: Inter's is a full 1.00 em; Newsreader's only 0.68 */
+
+/* tags that must be resolved before the talk */
+.tag {
+  display: inline-block; vertical-align: 0.32em;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 20px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; margin-left: 12px;
+  border: 1.5px solid currentColor; border-radius: 6px;
+  color: var(--text-3);
+}
+.tag.pending { color: #e0a25a; }
+.tag.wip { color: #8fb3e8; }
+html.is-print .tag.pending, html.is-print .tag.wip { border-width: 1px; }
+
+/* ---------- layouts ---------- */
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 72px; margin-top: 24px; }
+.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; margin-top: 12px; }
+.col h3 { font-family: 'Inter', system-ui, sans-serif; font-size: 34px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 22px; }
+.col .quote { font-size: 44px; }
+.col .body { font-size: 40px; }
+.rule { height: 2px; background: var(--axis); margin: 26px 0; border: 0; }
+
+/* title slide */
+.title-grid { display: grid; grid-template-columns: 560px 1fr; gap: 120px; align-items: center; height: 100%; }
+.painting { width: 100%; height: auto; display: block; box-shadow: 0 30px 80px rgba(0,0,0,0.55); }
+.painting-wrap figcaption { margin-top: 18px; }
+.title-main { font-size: 138px; line-height: 0.98; font-weight: 450; letter-spacing: -0.015em; margin: 0 0 40px; }
+.title-sub { font-size: 54px; line-height: 1.22; font-weight: 380; color: var(--text-2); margin: 0 0 64px; max-width: 1000px; }
+.byline { font-family: 'Inter', system-ui, sans-serif; font-size: 34px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+.byline-2 { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; color: var(--text-3); margin: 0; }
+
+/* the big mark */
+.bigdash {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 400px; line-height: 0.8; font-weight: 200; color: var(--accent);
+  margin: 0 0 12px -12px;
+}
+
+/* two prizes */
+.prize-table { display: grid; grid-template-columns: 300px 1fr 1fr; column-gap: 56px; row-gap: 26px; align-items: start; }
+.prize-table .rowhead { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); padding-top: 10px; }
+.prize-table .colhead { font-family: 'Inter', system-ui, sans-serif; font-size: 34px; font-weight: 600; color: var(--ink); }
+.prize-table .cell { font-size: 40px; line-height: 1.3; color: var(--text-2); }
+
+/* placeholders */
+.placeholder .h2 { color: var(--text-2); }
+.placeholder .note {
+  font-family: 'Inter', system-ui, sans-serif; font-size: 28px; color: var(--text-3);
+  border-top: 2px solid var(--axis); padding-top: 18px; margin-top: 18px; max-width: 1400px;
+}
+
+/* numbers table (the table-view twin of the figures) */
+table.numbers { border-collapse: collapse; font-family: 'Inter', system-ui, sans-serif; font-size: 25px; width: 100%; }
+table.numbers th, table.numbers td { text-align: left; padding: 7px 14px 7px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+table.numbers th { color: var(--text-3); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 20px; }
+table.numbers td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- figures ---------- */
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: 'Inter', system-ui, sans-serif; fill: var(--text-2); }
+.chart .tick text { font-size: 28px; fill: var(--text-3); font-variant-numeric: tabular-nums; }
+.chart .grid line { stroke: var(--hair); stroke-width: 2; }
+.chart .axis line, .chart .axis path { stroke: var(--axis); stroke-width: 2; }
+.chart .ref line { stroke: var(--ink-2); stroke-width: 3; }
+.chart .ref text { font-size: 30px; fill: var(--ink-2); }
+.chart .floor rect { fill: var(--floor); opacity: 0.55; }
+.chart .floor text { font-size: 26px; fill: var(--text-3); }
+.chart .label { font-size: 32px; fill: var(--ink); font-weight: 600; }
+.chart .label-2 { font-size: 28px; fill: var(--text-2); }
+.chart .xlab { font-size: 28px; fill: var(--text-2); }
+.chart .xlab-2 { font-size: 22px; fill: var(--text-3); }
+.chart .gold { fill: var(--s-gold); stroke: var(--s-gold); }
+.chart .blue { fill: var(--s-blue); stroke: var(--s-blue); }
+.chart .red  { fill: var(--s-red);  stroke: var(--s-red); }
+.chart .neutral { fill: var(--s-neutral); stroke: var(--s-neutral); }
+.chart .dot { stroke: var(--ground); stroke-width: 4; }       /* 2px surface ring, scaled for projection */
+.chart .line { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.chart .bar { stroke: none; }
+.chart .legend text { font-size: 28px; fill: var(--text-2); }
+.chart .pendingmark { font-size: 20px; fill: #e0a25a; font-weight: 600; letter-spacing: 0.06em; }
+.chart .wipmark { font-size: 20px; fill: #8fb3e8; font-weight: 600; letter-spacing: 0.06em; }
+
+/* step-driven state: hidden step markers are reveal fragments; the figure reads them with :has().
+   This makes back-navigation, hash jumps and print all land in the right state. */
+.step-marker { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.chart [class*="st-"] { opacity: 0; transition: opacity 0.7s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3,
+section:has(.step-marker[data-step="4"].visible) .chart .st-4,
+section:has(.step-marker[data-step="5"].visible) .chart .st-5 { opacity: 1; }
+.chart .st-0 { opacity: 1; }
+/* bars grow from the baseline when their step arrives */
+.chart .grow { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0.001); }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .grow,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .grow,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .grow,
+section:has(.step-marker[data-step="4"].visible) .chart .st-4 .grow { transform: scaleY(1); }
+/* the 39 flagged entries swell in */
+.chart .pop { transform-box: fill-box; transform-origin: 50% 50%; transform: scale(0.2); transition: transform 0.9s cubic-bezier(.3,1.6,.4,1); }
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .pop { transform: scale(1); }
+/* lines draw in */
+.chart .draw { stroke-dasharray: var(--len, 4000); stroke-dashoffset: var(--len, 4000); transition: stroke-dashoffset 1.6s ease; }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .draw,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .draw,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .draw { stroke-dashoffset: 0; }
+
+/* ---------- text fragments: a quiet rise ---------- */
+.reveal .fragment.rise { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal .fragment.rise.visible { opacity: 1; transform: none; }
+
+/* ---------- the waves (behind the slides; our own lines, echoing the flyer's) ---------- */
+.waves { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.waves .drift { position: absolute; top: 0; left: 0; width: 200%; height: 100%; animation: drift 160s linear infinite; will-change: transform; }
+.waves .drift.slow { animation-duration: 220s; }
+.waves .drift.rev  { animation-direction: reverse; }
+@keyframes drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+.waves svg { width: 100%; height: 100%; display: block; }
+.waves path { fill: none; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.waves .ba path { stroke: var(--wave-a); }
+.waves .bb path { stroke: var(--wave-b); }
+.waves .bc path { stroke: var(--wave-c); }
+.waves .amp { transform-box: view-box; transform-origin: 50% 93%; transition: transform 1.6s cubic-bezier(.6,0,.2,1), opacity 1.6s ease; }
+.waves { transition: opacity 1.2s ease; opacity: 0.9; }
+body.quiet .waves { opacity: 0.22; }
+body.grey .waves .amp { transform: scaleY(0.03); opacity: 0.55; }
+html[data-grey="canvas"] body.grey .waves { opacity: 0; transition: opacity 1.4s ease 0.9s; }
+body.grey:has(.reveal .slides section.present .colour-returns.visible) .waves { opacity: 0.9; transition-delay: 0.9s; }
+body.grey:has(.reveal .slides section.present .colour-returns.visible) .waves .amp { transform: none; opacity: 1; transition-delay: 1.1s; }
+
+/* ---------- dev overlays ---------- */
+.toast {
+  position: fixed; right: 28px; bottom: 28px; z-index: 50;
+  font: 600 16px/1.3 'Inter', system-ui, sans-serif; color: #111; background: #e8e3d6;
+  padding: 8px 14px; border-radius: 8px; opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+}
+.toast.on { opacity: 0.95; }
+.keytest {
+  position: fixed; inset: 6vh 8vw; z-index: 60; display: none;
+  background: rgba(8,8,12,0.94); border: 2px solid #5b5b66; border-radius: 16px;
+  padding: 28px 36px; box-sizing: border-box; color: #eee;
+  font: 400 18px/1.45 'Inter', system-ui, sans-serif; overflow: hidden;
+}
+.keytest.on { display: block; }
+.keytest h2 { font: 600 26px/1.2 'Inter', system-ui, sans-serif; margin: 0 0 6px; }
+.keytest p { margin: 0 0 14px; color: #aaa; }
+.keytest table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.keytest td, .keytest th { text-align: left; padding: 6px 12px 6px 0; border-bottom: 1px solid #2a2a33; }
+.keytest th { color: #999; font-weight: 600; }
+.keytest td.act { color: #e9c56b; }
+
+/* ---------- motion off (prefers-reduced-motion unless ?motion=on, or ?motion=off) ---------- */
+html.motion-off *, html.motion-off *::before, html.motion-off *::after { transition-duration: 0s !important; animation: none !important; }
+html.motion-off body { transition: none !important; }
+
+/* ---------- print (reveal ?print-pdf) ---------- */
+html.is-print .waves { display: none; }
+html.is-print, html.is-print * { transition: none !important; animation: none !important; }
+html.is-print .reveal .slides section .frame { position: absolute; }
+
+/* loop diagram and schematic strokes */
+.chart .loop-arc { fill: none; stroke: var(--text-3); stroke-width: 3; }
+.chart .arrowhead { fill: var(--text-3); }
+.chart .loop-node { fill: var(--ink-2); }
+.chart .loop-node.hot { fill: var(--s-gold); }
+.chart .loop-label { font-size: 34px; fill: var(--ink); font-weight: 500; }
+.chart .loop-dash { font-family: 'Inter', system-ui, sans-serif; font-size: 260px; font-weight: 200; fill: var(--accent); }
+.chart .inkstroke { stroke: var(--ink-2); fill: none; }
+.chart .mass { opacity: 0.5; }
+.chart .whisker line { stroke: var(--s-gold); stroke-width: 5; stroke-linecap: round; }
+.nobr { white-space: nowrap; }
+.why-list p { font-size: 40px; line-height: 1.3; color: var(--text-2); margin: 0 0 26px; }
+.why-list .num { color: var(--ink); }
+
+/* print view: reveal moves each section into a .pdf-page, so the height rule above no longer
+   matches; without an explicit height the absolute .frame collapses and content is clipped */
+html.reveal-print .reveal .slides .pdf-page section { height: 1080px !important; }
