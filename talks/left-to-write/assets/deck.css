@@ -371,6 +371,9 @@ html.is-print .reveal .slides section .frame { position: absolute; }
 .why-list p { font-size: 40px; line-height: 1.3; color: var(--text-2); margin: 0 0 26px; }
 .why-list .num { color: var(--ink); }
 
+/* provenance: a faint guide under each row of dots */
+.chart .rowguide { stroke: var(--hair); stroke-width: 2; }
+
 /* stance (Figure 6 of Abdulhai et al., redrawn): gold and blue poles around a grey middle.
    Each row opens sideways from the centre of its neutral share; its numbers follow. */
 .chart .for { fill: var(--s-gold); }

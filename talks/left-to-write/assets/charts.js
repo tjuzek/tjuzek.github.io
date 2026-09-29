@@ -408,7 +408,68 @@
     });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     8. Provenance: one open model, stage by stage (EVIDENCE §16, work in progress; §3.2).
+        OLMo-2's published training data, counted 29 Sep 2026 (the ledger in wk-talk/olmo-ledger/),
+        against the model's own rate. Colour is who wrote the text: people (grey), other models
+        (blue), OLMo itself (gold). Log scale; every dot labelled. Per million spaCy tokens.
+     ------------------------------------------------------------------------------------------ */
+  var PROV = [
+    { step: 1, stage: 'Pretraining', label: 'web text, 95% of the mix', v: 491.4, kind: 'neutral', ev: '§16.2' },
+    { step: 2, stage: 'Instruction tuning', label: 'answers written by people', v: 184.6, kind: 'neutral', ev: '§16.4' },
+    { step: 2, stage: '', label: 'answers from ChatGPT (WildChat)', v: 1032.0, kind: 'blue', ev: '§16.4' },
+    { step: 3, stage: 'Preference tuning', label: 'preferred answers', v: 411.4, kind: 'blue', ev: '§16.5' },
+    { step: 3, stage: '', label: 'rejected answers', v: 628.4, kind: 'blue', ev: '§16.5' },
+    { step: 4, stage: 'OLMo-2 7B writing science', label: 'before post-training', v: 7.5, kind: 'gold', ev: '§3.2' },
+    { step: 4, stage: '', label: 'after post-training', v: 33.3, kind: 'gold', ev: '§3.2' }
+  ];
+  function provenanceChart(host) {
+    var W = 1656, H = 640, m = { l: 560, r: 170, t: 78, b: 70 };
+    var pw = W - m.l - m.r, lo = 0, hi = Math.log10(2000);
+    var x = function (v) { return m.l + (Math.log10(v) - lo) / (hi - lo) * pw; };
+    var svg = svgFor(host, W, H, 'Em dashes per million tokens in OLMo-2 training data by stage, and in the model\'s own science writing');
+    // legend: who wrote the text
+    var lg = g(svg, 'legend st-0'), lx = m.l;
+    [['neutral', 'written by people'], ['blue', 'written by other models'], ['gold', 'written by OLMo itself']].forEach(function (k) {
+      el('circle', { cx: lx + 11, cy: 22, r: 11, 'class': 'dot ' + k[0] }, lg);
+      txt(lg, lx + 32, 32, k[1], '');
+      lx += 32 + k[1].length * 12.6 + 56;
+    });
+    // rows, with a little extra space between stages
+    var y = m.t + 30, ys = [];
+    PROV.forEach(function (r, i) { if (i && r.stage) y += 22; ys.push(y); y += 64; });
+    var plotBottom = y - 30;
+    // grid and ticks
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [1, 10, 100, 1000].forEach(function (v) {
+      el('line', { x1: x(v), x2: x(v), y1: m.t + 8, y2: plotBottom }, grid);
+      txt(ticks, x(v), plotBottom + 40, fmt(v), '', { 'text-anchor': 'middle' });
+    });
+    txt(g(svg, 'st-0'), 0, plotBottom + 40, 'em dashes per million tokens', 'xlab-2', {});
+    PROV.forEach(function (r, i) {
+      var grp = g(svg, 'st-' + r.step), yy = ys[i];
+      if (r.stage) txt(grp, 0, yy - 14, r.stage.toUpperCase(), 'xlab-2', { 'letter-spacing': '0.08em' });
+      txt(grp, 0, yy + 20, r.label, 'label-2', {});
+      el('line', { x1: m.l, x2: m.l + pw, y1: yy + 10, y2: yy + 10, 'class': 'rowguide' }, grp);
+      var c = mark(el('circle', { cx: x(r.v), cy: yy + 10, r: 12, 'class': 'dot ' + r.kind }, grp), r.ev);
+      var t = el('title', null, c); t.textContent = (r.stage ? r.stage + ': ' : '') + r.label + ', ' + fmt(r.v, 1) + ' per million tokens';
+      var left = r.label === 'before post-training';     // keep the arrow's start clear
+      txt(grp, x(r.v) + (left ? -24 : 24), yy + 20, fmt(r.v, r.v < 100 ? 1 : 0), 'label', left ? { 'text-anchor': 'end' } : {});
+    });
+    // step 4: about four times, base to instruct (EVIDENCE §3.2: "by about 4.4×")
+    var s4 = g(svg, 'st-4'), a = ys[5] + 10, b = ys[6] + 10, xa = x(7.5), xb = x(33.3);
+    var defs = el('defs', null, svg);
+    var mk = el('marker', { id: 'arrow-prov', viewBox: '0 0 12 12', refX: 9, refY: 6, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
+    el('path', { d: 'M1 1 L11 6 L1 11 z', 'class': 'gold' }, mk);
+    var ang = Math.atan2(b - a, xb - xa);
+    var arrow = el('line', { x1: xa + 18 * Math.cos(ang), y1: a + 18 * Math.sin(ang), x2: xb - 22 * Math.cos(ang), y2: b - 22 * Math.sin(ang),
+                             'class': 'gold', 'stroke-width': 3, 'marker-end': 'url(#arrow-prov)' }, s4);
+    mark(arrow, '§3.2');
+    txt(s4, (xa + xb) / 2 + 16, (a + b) / 2 - 6, 'about 4 ×', 'label-2', {});
+  }
+
   var BUILDERS = {
+    'provenance': provenanceChart,
     'rise-news': function (h) { riseChart(h, 'news'); },
     'rise-science': function (h) { riseChart(h, 'science'); },
     'reference': referenceChart,
