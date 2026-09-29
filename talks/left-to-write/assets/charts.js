@@ -362,6 +362,52 @@
     txt(s3, X(0.98), Y(0.2) + 42, 'and agreement falls: Goodhart', 'label-2', { 'text-anchor': 'end' });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     7. Beyond the mark: stance (EVIDENCE §13.5). Abdulhai, White et al., arXiv 2603.18161 (2026),
+        Figure 6, redrawn: essays on "Does money lead to happiness?", shares for / neutral / against,
+        as published. Their pies coded for and against in green and red; here gold and blue around
+        a Richter-grey middle, and each bar is centred on its neutral share, so the grey widens
+        from the centre. Rows are the paper's three groups (Human, LLM-Influenced, LLM).
+     ------------------------------------------------------------------------------------------ */
+  var STANCE = [
+    { step: 1, label: 'Wrote alone', sub: 'no AI', group: 'Human', v: [32.6, 39.5, 27.9] },
+    { step: 2, label: 'Used AI lightly', sub: 'advice, look-ups', group: 'LLM-Influenced', v: [31.0, 44.8, 24.1] },
+    { step: 3, label: 'Let AI write', sub: 'much of the essay', group: 'LLM', v: [22.2, 66.7, 11.1] }
+  ];
+  function stanceChart(host) {
+    var W = 1656, H = 420, xa = 430, xb = 1640, bh = 84, gap = 4, rowY = [118, 236, 354];
+    var maxL = 0, maxR = 0;
+    STANCE.forEach(function (r) { maxL = Math.max(maxL, r.v[0] + r.v[1] / 2); maxR = Math.max(maxR, r.v[2] + r.v[1] / 2); });
+    var s = (xb - xa) / (maxL + maxR), cx = xa + maxL * s;
+    var svg = svgFor(host, W, H, 'Stance of essays on whether money leads to happiness. Wrote alone: 32.6% for, 39.5% neutral, 27.9% against. Used AI lightly: 31.0, 44.8, 24.1. Let AI write much of the essay: 22.2, 66.7, 11.1.');
+    // legend: swatches in the marks' colours, words in text tokens
+    var lg = g(svg, 'legend st-0'), lx = xa;
+    [['for', 'for'], ['nostance', 'neutral: takes no side'], ['against', 'against']].forEach(function (k) {
+      el('rect', { x: lx, y: 8, width: 26, height: 26, rx: 5, 'class': k[0] }, lg);
+      txt(lg, lx + 38, 31, k[1], '');
+      lx += 38 + k[1].length * 12.6 + 64;         // Inter at 28px: about 12.6 units per character
+    });
+    STANCE.forEach(function (r, i) {
+      var y = rowY[i], half = r.v[1] / 2;
+      var grp = g(svg, 'st-' + r.step);
+      txt(grp, 0, y - 4, r.label, 'label', {});
+      txt(grp, 0, y + 32, r.sub, 'label-2', {});
+      var bars = g(grp, 'grow-x');
+      bars.style.transformOrigin = cx.toFixed(1) + 'px 0px';
+      var labs = g(grp, 'late');
+      [
+        { cls: 'for', name: 'for', v: r.v[0], a: cx - (half + r.v[0]) * s, b: cx - half * s - gap / 2 },
+        { cls: 'nostance', name: 'neutral', v: r.v[1], a: cx - half * s + gap / 2, b: cx + half * s - gap / 2 },
+        { cls: 'against', name: 'against', v: r.v[2], a: cx + half * s + gap / 2, b: cx + (half + r.v[2]) * s }
+      ].forEach(function (sg) {
+        var rect = mark(el('rect', { x: sg.a.toFixed(1), y: y - bh / 2, width: (sg.b - sg.a).toFixed(1), height: bh, rx: 6, 'class': 'bar ' + sg.cls }, bars), '§13.5');
+        var tt = el('title', null, rect);
+        tt.textContent = r.label + ' (' + r.group + '): ' + sg.name + ' ' + fmt(sg.v, 1) + '%';
+        txt(labs, ((sg.a + sg.b) / 2).toFixed(1), y + 11, fmt(sg.v, 1) + '%', 'seglabel', { 'text-anchor': 'middle' });
+      });
+    });
+  }
+
   var BUILDERS = {
     'rise-news': function (h) { riseChart(h, 'news'); },
     'rise-science': function (h) { riseChart(h, 'science'); },
@@ -369,7 +415,8 @@
     'slope': slopeChart,
     'dots': dotsChart,
     'loop': loopChart,
-    'ceiling': ceilingChart
+    'ceiling': ceilingChart,
+    'stance': stanceChart
   };
   function buildAll() {
     Array.prototype.forEach.call(document.querySelectorAll('.chart[data-chart]'), function (host) {

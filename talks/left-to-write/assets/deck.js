@@ -1,8 +1,9 @@
-/* deck.js: runtime for "What Is Left to Write?" (v0.1, 28 September 2026).
+/* deck.js: runtime for "What Is Left to Write?" (v0.1, 28 September 2026; numbers and G added 29 September).
    URL switches:  ?present (trap F5, Ctrl+R and Tab)   ?motion=on|off   ?palette=flyer|richter|ink
                   ?grey=canvas|horizon   ?print-pdf (reveal's print view)
    Dev keys:      K key test (for the clicker)   P palette   Y grey treatment
-   Reveal keys:   PageDown/PageUp, arrows, Space: step   B or . : black   O: overview   G: jump to slide */
+   Our keys:      G: jump to a slide by its number (A1, A2 for the appendix), Enter to go, Esc to cancel
+   Reveal keys:   PageDown/PageUp, arrows, Space: step   B or . : black   O: overview */
 (function () {
   'use strict';
   var params = new URLSearchParams(location.search);
@@ -42,7 +43,7 @@
     ArrowDown: 'next step', ArrowUp: 'previous step', ' ': 'next step', '.': 'black screen on/off',
     b: 'black screen on/off', B: 'black screen on/off', v: 'black screen on/off', F5: PRESENT ? 'blocked (would reload)' : 'reload (blocked with ?present)',
     Escape: 'nothing (overview is O)', Tab: PRESENT ? 'blocked' : 'moves focus (blocked with ?present)',
-    o: 'overview', O: 'overview', g: 'jump to slide', G: 'jump to slide', Home: 'first slide', End: 'last slide',
+    o: 'overview', O: 'overview', g: 'jump to slide (number, Enter)', G: 'jump to slide (number, Enter)', Home: 'first slide', End: 'last slide',
     p: 'palette (dev)', P: 'palette (dev)', y: 'grey treatment (dev)', Y: 'grey treatment (dev)',
     k: 'close this', K: 'close this', F11: 'browser full screen'
   };
@@ -126,6 +127,89 @@
     document.body.insertBefore(host, document.body.firstChild);
   }
 
+  /* ---- slide numbers: small, for reference. Counted slides are 1 to N in order, the uncounted
+          appendix A1, A2. The title's number shows only in the overview (O). ---- */
+  var SLIDES = [], COUNTED = 0, APPENDIX = 0;
+  function numberSlides() {
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal .slides > section'), function (s) {
+      var label = s.getAttribute('data-visibility') === 'uncounted' ? 'A' + (++APPENDIX) : String(++COUNTED);
+      SLIDES.push({ label: label, section: s });
+      var no = document.createElement('span');
+      no.className = 'slide-no' + (s.id === 'title' ? ' overview-only' : '');
+      no.setAttribute('aria-hidden', 'true');
+      no.textContent = label;
+      s.appendChild(no);
+    });
+  }
+  function slideTitle(s) {
+    var h = s.querySelector('.kicker, .title-main, .h1, .h2, .h3');
+    var t = (h ? h.textContent : s.id).replace(/\s+/g, ' ').trim();
+    return t.length > 44 ? t.slice(0, 42) + '…' : t;
+  }
+  function findSlide(v) {
+    if (/^\d+$/.test(v)) v = String(parseInt(v, 10));
+    else if (/^A\d+$/.test(v)) v = 'A' + parseInt(v.slice(1), 10);
+    else return null;
+    for (var i = 0; i < SLIDES.length; i++) if (SLIDES[i].label === v) return SLIDES[i];
+    return null;
+  }
+
+  /* ---- G: a small box for a slide number. Nothing moves until Enter (no preview flashes on the
+          projector); a bad entry keeps the box open; Esc, G or a click elsewhere closes it. ---- */
+  var jumpEl = null, jumpInput = null, jumpHint = null;
+  function range() { return '1 to ' + COUNTED + (APPENDIX ? ', A1 to A' + APPENDIX : ''); }
+  function buildJump() {
+    jumpEl = document.createElement('div');
+    jumpEl.className = 'jump';
+    jumpEl.innerHTML = '<span class="jump-label">Go to</span>' +
+      '<input type="text" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="4" aria-label="Slide number">' +
+      '<span class="jump-hint" aria-live="polite"></span>';
+    document.body.appendChild(jumpEl);
+    jumpInput = jumpEl.querySelector('input');
+    jumpHint = jumpEl.querySelector('.jump-hint');
+    jumpInput.addEventListener('input', function () {
+      var v = jumpInput.value.toUpperCase().replace(/[^0-9A]/g, '');
+      if (v !== jumpInput.value) jumpInput.value = v;
+      var hit = findSlide(v);
+      jumpEl.classList.remove('bad');
+      jumpHint.textContent = hit ? slideTitle(hit.section) : (v ? '' : range() + ', then Enter');
+    });
+    jumpInput.addEventListener('keydown', function (e) {
+      e.stopPropagation();
+      if (e.key === 'Enter') { e.preventDefault(); confirmJump(); }
+      else if (e.key === 'Escape' || e.key === 'g' || e.key === 'G') { e.preventDefault(); closeJump(); }
+    });
+    jumpInput.addEventListener('blur', closeJump);
+  }
+  function openJump() {
+    if (!jumpEl) buildJump();
+    jumpInput.value = '';
+    jumpHint.textContent = range() + ', then Enter';
+    jumpEl.classList.remove('bad');
+    jumpEl.classList.add('on');
+    jumpInput.focus();
+  }
+  function closeJump() {
+    if (!jumpEl || !jumpEl.classList.contains('on')) return;
+    jumpEl.classList.remove('on', 'bad');
+    jumpInput.blur();
+  }
+  function confirmJump() {
+    var v = jumpInput.value, hit = findSlide(v);
+    if (!hit) {
+      jumpEl.classList.remove('bad');
+      void jumpEl.offsetWidth;                      // restart the shake
+      jumpEl.classList.add('bad');
+      jumpHint.textContent = (v ? 'No slide ' + v + ': ' : 'A number: ') + range();
+      jumpInput.select();
+      return;
+    }
+    closeJump();
+    var idx = window.Reveal.getIndices(hit.section);
+    if (window.Reveal.isOverview()) window.Reveal.toggleOverview(false);
+    window.Reveal.slide(idx.h, idx.v, -1);          // land on the slide's first state
+  }
+
   function cyclePalette() {
     var cur = html.getAttribute('data-palette');
     var next = PALETTES[(PALETTES.indexOf(cur) + 1) % PALETTES.length];
@@ -143,10 +227,11 @@
 
   function start() {
     if (!PRINT) buildWaves();
+    numberSlides();
     if (window.DeckCharts) window.DeckCharts.buildAll();
     window.Reveal.initialize({
       width: 1920, height: 1080, margin: 0, center: false, minScale: 0.2, maxScale: 2,
-      controls: false, progress: true, slideNumber: false,
+      controls: false, progress: true, slideNumber: false, jumpToSlide: false,   // numbers and G are ours
       hash: true, history: false, fragmentInURL: true,
       transition: 'fade', transitionSpeed: 'default', backgroundTransition: 'fade',
       keyboard: { 27: null },
@@ -157,6 +242,7 @@
       window.Reveal.addKeyBinding({ keyCode: 75, key: 'K', description: 'Key test (dev)' }, toggleKeyTest);
       window.Reveal.addKeyBinding({ keyCode: 80, key: 'P', description: 'Cycle palette (dev)' }, cyclePalette);
       window.Reveal.addKeyBinding({ keyCode: 89, key: 'Y', description: 'Cycle grey treatment (dev)' }, cycleGrey);
+      window.Reveal.addKeyBinding({ keyCode: 71, key: 'G', description: 'Jump to a slide by number' }, openJump);
       if (PRESENT) toast('Presenting: F5, Ctrl+R and Tab are off');
     });
   }
