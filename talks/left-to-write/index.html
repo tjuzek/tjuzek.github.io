@@ -215,6 +215,18 @@
   </div>
 </section>
 
+<section id="provenance-1b" data-state="quiet" data-timing="75">
+  <div class="frame">
+    <p class="kicker">The same stages, in one model&rsquo;s own writing: OLMo-2 1B</p>
+    <div class="chart" data-chart="provenance-1b"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-ev="§16.8" style="font-size:40px; margin:6px 0 8px">Straight after pretraining, it writes the mark far less than it read it; post-training brings it up. <span class="tag wip">work in progress</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, each continuing the same 600 news articles (first halves, greedy decoding, first 200 words). Each gold dot rests on 4 to 18 dashes, so only the rise after pretraining is solid. Training data counted by us, 29 September 2026.</p>
+  </div>
+</section>
+
 <section id="house-styles" class="placeholder" data-timing="45">
   <div class="frame">
     <p class="kicker">Placeholder &middot; the trace</p>
@@ -353,6 +365,8 @@
         <tr><td class="n">491</td><td>OLMo-2&rsquo;s pretraining web text (work in progress)</td><td>§16.2</td></tr>
         <tr><td class="n">185; 1,032</td><td>its instruction data: answers by people; from ChatGPT (work in progress)</td><td>§16.4</td></tr>
         <tr><td class="n">411; 628</td><td>its preference data: preferred; rejected answers (work in progress)</td><td>§16.5</td></tr>
+        <tr><td class="n">30; 214; 144; 77</td><td>OLMo-2 1B continuing news: base, SFT, DPO, final model (work in progress)</td><td>§16.8</td></tr>
+        <tr><td class="n">373; 412</td><td>the 1B&rsquo;s instruction answers; its preferred answers (work in progress)</td><td>§16.7</td></tr>
         <tr><td class="n">7,806; 39</td><td>prize entries; innocent flags at 0.5% false positives</td><td>§5.1; §7</td></tr>
         <tr><td class="n">80%; 49%</td><td>share of flags that are right: 2% prior, 95%, 0.5%; 1% and 1%</td><td>§7</td></tr>
         <tr><td class="n">97%; 80%</td><td>could not tell the AI track; want AI music labelled (vendor)</td><td>pending row</td></tr>
@@ -372,7 +386,7 @@
     <p class="cite">Prize: Commonwealth Foundation statements of 19 May, 22 June and 30 June 2026. Base rates: worked arithmetic with illustrative parameters (a 2% or 1% prior, 95% caught, 0.5% or 1% false positives).</p>
     <p class="cite">Format bias: Zhang, Xiong, Chen, Zhou, Huang and Zhang, &ldquo;From Lists to Emojis&rdquo;, ACL 2025, pp. 26940 to 26961. Literary quality: Bizzoni et al., NoDaLiDa 2023; Feldkamp et al., JCLS 2024.</p>
     <p class="cite">Percolation: &ldquo;Isoperimetric dimension &gt; 1 implies p<sub>c</sub> &lt; 1&rdquo;, 28 May 2026; Duminil-Copin, &ldquo;Care for a little more AI?&rdquo;, 30 August 2026. Astronomy: J. Sokol, <i>Science</i>, 4 June 2026. Music: Deezer newsroom, 21 July 2026; Deezer and Ipsos, November 2025.</p>
-    <p class="cite">Stage by stage: Ai2&rsquo;s published OLMo-2 training data (olmo-mix-1124, dolmino-mix-1124, the Tulu 3 SFT mix for OLMo-2, the OLMo-2 7B preference mix), counted by us on 29 September 2026 (work in progress); the whole-corpus check with infini-gram.</p>
+    <p class="cite">Stage by stage: Ai2&rsquo;s published OLMo-2 training data (olmo-mix-1124, dolmino-mix-1124, the Tulu 3 SFT mix for OLMo-2, the OLMo-2 7B preference mix), counted by us on 29 September 2026 (work in progress); the whole-corpus check with infini-gram; the OLMo-2 1B checkpoints (base, SFT, DPO, instruct, April 2025 release) and their own post-training mixes.</p>
     <p class="cite">Stance: Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161v2, 26 August 2026 (preprint). Goncourt: Niklas Bender, &bdquo;Feigheit vor dem Thema?&ldquo;, <i>Frankfurter Allgemeine Zeitung</i>, 28 September 2026; the detector figures and the denial still to be sourced.</p>
   </div>
 </section>

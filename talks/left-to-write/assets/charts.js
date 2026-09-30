@@ -468,8 +468,70 @@
     txt(s4, (xa + xb) / 2 + 16, (a + b) / 2 - 6, 'about 4 ×', 'label-2', {});
   }
 
+  /* ------------------------------------------------------------------------------------------
+     9. The same stages in one model's own writing: OLMo-2 1B, four checkpoints, each continuing
+        the uniform tier's 600 news first halves (greedy, first 200 words), next to the data of its
+        stage (EVIDENCE §16.2, §16.7, §16.8; work in progress). Uniform-tier prompts: never on a
+        slide with deep-N numbers. Linear scale; whiskers are exact 95% intervals (4 to 18 dashes).
+     ------------------------------------------------------------------------------------------ */
+  var ONEB = [
+    { stage: 'pretraining', ckpt: 'base', data: 491.4, dataLabel: 'web text', dataEv: '§16.2', v: 29.8, lo: 8, hi: 76 },
+    { stage: 'instruction tuning', ckpt: 'SFT', data: 373.4, dataLabel: 'its answers', dataEv: '§16.7', v: 213.6, lo: 107, hi: 382 },
+    { stage: 'preference tuning', ckpt: 'DPO', data: 412.1, dataLabel: 'preferred answers', dataEv: '§16.7', v: 143.7, lo: 85, hi: 227 },
+    { stage: 'maths reinforcement', ckpt: 'final', data: null, dataLabel: 'no text to count', v: 77.1, lo: 33, hi: 152 }
+  ];
+  function provenance1bChart(host) {
+    var W = 1656, H = 650, m = { l: 150, r: 40, t: 80, b: 110 };
+    var pw = W - m.l - m.r, ph = H - m.t - m.b, ymax = 600;
+    var y = function (v) { return m.t + ph - v / ymax * ph; };
+    var col = function (i) { return m.l + (i + 0.5) * pw / ONEB.length; };
+    var svg = svgFor(host, W, H, 'OLMo-2 1B: em dashes per million tokens in the training data of each stage and in the model\'s own news continuations after that stage');
+    var lg = g(svg, 'legend st-0'), lx = m.l;
+    [['neutral', 'what it was trained on at this stage'], ['gold', 'what it writes after it (continuing news)']].forEach(function (k) {
+      el('circle', { cx: lx + 11, cy: 22, r: 11, 'class': 'dot ' + k[0] }, lg);
+      txt(lg, lx + 32, 32, k[1], '');
+      lx += 32 + k[1].length * 12.6 + 64;
+    });
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    for (var v = 0; v <= ymax; v += 100) {
+      el('line', { x1: m.l, x2: m.l + pw, y1: y(v), y2: y(v) }, grid);
+      txt(ticks, m.l - 22, y(v) + 10, fmt(v), '', { 'text-anchor': 'end' });
+    }
+    var xl = g(svg, 'st-0');
+    ONEB.forEach(function (r, i) {
+      txt(xl, col(i), m.t + ph + 48, r.stage, 'xlab', { 'text-anchor': 'middle' });
+      txt(xl, col(i), m.t + ph + 84, r.ckpt === 'final' ? 'the final model' : 'then the ' + r.ckpt + ' model', 'xlab-2', { 'text-anchor': 'middle' });
+    });
+    txt(xl, 0, m.t - 24, 'em dashes per million tokens', 'xlab-2', {});
+    // step 1: the data of each stage
+    var s1 = g(svg, 'st-1');
+    ONEB.forEach(function (r, i) {
+      var cx = col(i) - 62;
+      if (r.data === null) {
+        txt(s1, cx, y(0) - 30, r.dataLabel, 'xlab-2', { 'text-anchor': 'middle' });
+        return;
+      }
+      var c = mark(el('circle', { cx: cx, cy: y(r.data), r: 13, 'class': 'dot neutral' }, s1), r.dataEv);
+      var t = el('title', null, c); t.textContent = r.stage + ', ' + r.dataLabel + ': ' + fmt(r.data, 1) + ' per million tokens';
+      txt(s1, cx - 26, y(r.data) + 10, fmt(r.data, 0), 'label', { 'text-anchor': 'end' });
+      txt(s1, cx + 14, y(r.data) - 28, r.dataLabel, 'label-2', { 'text-anchor': 'end' });
+    });
+    // step 2: the base model; step 3: the post-trained models (gold, with 95% intervals)
+    ONEB.forEach(function (r, i) {
+      var grp = g(svg, 'st-' + (i === 0 ? 2 : 3)), cx = col(i) + 62;
+      var wk = g(grp, 'whisker');
+      mark(el('line', { x1: cx, x2: cx, y1: y(r.lo), y2: y(r.hi) }, wk), '§16.8');
+      el('line', { x1: cx - 16, x2: cx + 16, y1: y(r.hi), y2: y(r.hi) }, wk);
+      el('line', { x1: cx - 16, x2: cx + 16, y1: y(r.lo), y2: y(r.lo) }, wk);
+      var c = mark(el('circle', { cx: cx, cy: y(r.v), r: 13, 'class': 'dot gold' }, grp), '§16.8');
+      var t = el('title', null, c); t.textContent = 'after ' + r.stage + ': ' + fmt(r.v, 1) + ' per million tokens (95% range ' + r.lo + ' to ' + r.hi + ')';
+      txt(grp, cx + 28, y(r.v) + 10, fmt(r.v, 0), 'label', {});
+    });
+  }
+
   var BUILDERS = {
     'provenance': provenanceChart,
+    'provenance-1b': provenance1bChart,
     'rise-news': function (h) { riseChart(h, 'news'); },
     'rise-science': function (h) { riseChart(h, 'science'); },
     'reference': referenceChart,
