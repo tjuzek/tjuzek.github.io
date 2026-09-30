@@ -216,15 +216,22 @@ html.is-print .tag.pending, html.is-print .tag.wip { border-width: 1px; }
 .col .quote { font-size: 44px; }
 .col .body { font-size: 40px; }
 .rule { height: 2px; background: var(--axis); margin: 26px 0; border: 0; }
-/* the floods (slide 4): a label and a line per row, then the point */
-.floods { margin: 8px 0 44px; }
-.floods .row { display: grid; grid-template-columns: 320px 1fr; align-items: baseline;
+/* the ledger (slides 4 and 5): a label and a line per row, then the point */
+.ledger { margin: 8px 0 44px; }
+.ledger .row { display: grid; grid-template-columns: 320px 1fr; align-items: baseline;
   padding: 16px 0; border-top: 2px solid var(--axis); }
-.floods .row:last-child { border-bottom: 2px solid var(--axis); }
-.floods .where { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 600;
+.ledger .row:last-child { border-bottom: 2px solid var(--axis); }
+.ledger .where { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-.floods .what { font-size: 46px; line-height: 1.25; color: var(--text-2); }
+.ledger .what { font-size: 46px; line-height: 1.25; color: var(--text-2); }
 .lede.point { font-size: 64px; line-height: 1.2; margin-bottom: 20px; }
+.quote.aside { font-size: 40px; line-height: 1.3; margin: 10px 0 10px; max-width: 1600px; }
+.body.gloss { color: var(--ink); margin: 14px 0 0; }
+/* slide 5 carries the most: tighter spacing there only */
+#two-halves .h2 { margin-bottom: 26px; }
+#two-halves .ledger { margin-bottom: 30px; }
+#two-halves .ledger .row { padding: 12px 0; }
+#two-halves .lede.point { font-size: 58px; margin-bottom: 12px; }
 
 /* title slide */
 .title-grid { display: grid; grid-template-columns: 560px 1fr; gap: 120px; align-items: center; height: 100%; }
