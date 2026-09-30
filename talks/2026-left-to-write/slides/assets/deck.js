@@ -225,7 +225,7 @@
     toast('Grey treatment: ' + next);
   }
 
-  /* ---- arriving from the talk page: the grey of the mirror lifts once the slides are ready ---- */
+  /* ---- opening on the title slide: the grey of the mirror lifts once the slides are ready ---- */
   function liftGrey() {
     if (!html.classList.contains('from-grey') || html.classList.contains('lifting')) return;
     setTimeout(function () {

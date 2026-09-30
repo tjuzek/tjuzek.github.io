@@ -344,8 +344,9 @@ footer p { margin: 0 0 10px; }
 <script>
 /* The way into the slides: the page turns the grey of the mirror (#4a5159, the painting's own grey
    as the NGS image shows it), then the slides
-   open and start from that grey (slides/index.html reads the flag). A click that opens a new tab, or reduced motion,
-   goes straight there. Back from the slides, the page returns in colour. */
+   open and start from that grey (they do on every load that opens on the title slide). A click that opens a new tab
+   goes straight there. The fade is opacity only, so it runs under reduced motion too (Tommie, 30 Sep: "always run").
+   Back from the slides, the page returns in colour. */
 (function () {
   var link = document.querySelector('.card.primary');
   if (!link) return;
@@ -353,12 +354,9 @@ footer p { margin: 0 0 10px; }
   veil.className = 'to-grey';
   veil.setAttribute('aria-hidden', 'true');
   document.body.appendChild(veil);
-  var calm = false;
-  try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
   link.addEventListener('click', function (e) {
-    if (calm || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
-    try { sessionStorage.setItem('wltw.from-grey', String(Date.now())); } catch (err) {}
     var gone = false, go = function () { if (!gone) { gone = true; location.href = link.href; } };
     veil.addEventListener('transitionend', go);
     setTimeout(go, 1100);

@@ -8,10 +8,11 @@
 <!-- draft: kept out of search engines for now -->
 <meta name="robots" content="noindex">
 <script>
-/* Arriving from the talk page's "Open the slides": start in the grey of the mirror (deck.css); deck.js lifts it. */
-(function () { try { var t = +sessionStorage.getItem('wltw.from-grey'); sessionStorage.removeItem('wltw.from-grey');
-  if (t && Date.now() - t < 8000 && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-grey');
-} catch (e) { /* no storage: no grey */ } })();
+/* Every load that opens on the title slide starts in the grey of the mirror (deck.css) and deck.js lifts it
+   (Tommie, 30 Sep: "always run"); not in the print view, and not on a reload in the middle of the deck. */
+(function () { try { var h = location.hash.replace(/^#\/?/, '').split('/')[0];
+  if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-grey');
+} catch (e) { /* leave it */ } })();
 </script>
 <link rel="stylesheet" href="assets/reveal/reveal.css">
 <link rel="stylesheet" href="assets/deck.css">
