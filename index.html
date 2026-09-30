@@ -55,21 +55,33 @@ html.talk-closed .talk-banner { display: none; }
   position: relative; overflow: hidden; margin: 22px 0 8px; border-radius: 14px;
   background: #050507; color: #f4f1ea; font-family: 'Newsreader', Georgia, serif;
 }
-.talk-banner .tb-waves { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .7; }
+.talk-banner .tb-waves { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .85; }
 .talk-banner .tb-waves path { fill: none; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
-.talk-banner a.tb-link { position: relative; display: block; padding: 18px 56px 18px 22px; color: inherit; text-decoration: none; }
+.talk-banner a.tb-link {
+  position: relative; display: flex; flex-direction: column; justify-content: center;
+  min-height: 400px; box-sizing: border-box; padding: 48px 72px 48px 48px; color: inherit; text-decoration: none;
+}
 .talk-banner p { margin: 0; }
-.talk-banner .tb-when { font: 600 11.5px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a9a59c; margin-bottom: 6px; }
-.talk-banner .tb-title { font-size: 30px; line-height: 1.08; font-weight: 450; letter-spacing: -.01em; }
-.talk-banner .tb-sub { font-size: 18px; line-height: 1.3; color: #c9c5bb; margin-top: 5px; }
+.talk-banner .tb-when { font: 600 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a9a59c; margin-bottom: 20px; }
+.talk-banner .tb-title { font-size: 64px; line-height: 1.02; font-weight: 450; letter-spacing: -.015em; }
+.talk-banner .tb-sub { font-size: 27px; line-height: 1.28; color: #c9c5bb; margin-top: 16px; text-wrap: balance; }
+.talk-banner .tb-title { text-wrap: balance; }
+.talk-banner .tb-when span { white-space: nowrap; }
+/* on load (JavaScript only), the banner opens out; --tb-h is its measured height, set by the script below */
+@keyframes tb-open {
+  from { max-height: 0; opacity: 0; margin-top: 0; margin-bottom: 0; }
+  50%  { opacity: 1; }
+  to   { max-height: var(--tb-h, 640px); opacity: 1; margin-top: 22px; margin-bottom: 8px; }
+}
+html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1) .3s backwards; }
 .talk-banner .tb-dash { color: #d8b765; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 300; }
-.talk-banner .tb-go { font: 500 14.5px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #d8b765; margin-top: 12px; }
+.talk-banner .tb-go { font: 500 17px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #d8b765; margin-top: 36px; }
 .talk-banner a.tb-link:hover .tb-go { text-decoration: underline; text-underline-offset: .18em; }
 .talk-banner a.tb-link:focus-visible { outline: 2px solid #d8b765; outline-offset: -4px; border-radius: 14px; }
 .talk-banner .tb-close {
-  position: absolute; top: 8px; right: 8px; width: 42px; height: 42px; padding: 0;
+  position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; padding: 0;
   border: 0; border-radius: 8px; background: transparent; color: #c9c5bb;
-  font: 300 28px/42px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; cursor: pointer;
+  font: 300 30px/44px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; cursor: pointer;
 }
 .talk-banner .tb-close:hover { color: #fff; background: rgba(255,255,255,.08); }
 .talk-banner .tb-close:focus-visible { outline: 2px solid #d8b765; outline-offset: 0; }
@@ -78,12 +90,15 @@ html.talk-closed .talk-banner { display: none; }
   transition: opacity .45s ease, height .6s ease .1s, margin .6s ease .1s;
 }
 @media (max-width: 620px) {
-  .talk-banner a.tb-link { padding: 16px 50px 16px 18px; }
-  .talk-banner .tb-title { font-size: 26px; }
-  .talk-banner .tb-sub { font-size: 16px; }
+  .talk-banner a.tb-link { min-height: 440px; padding: 40px 28px 36px 24px; }
+  .talk-banner .tb-when { font-size: 12px; margin-bottom: 18px; padding-right: 36px; }
+  .talk-banner .tb-title { font-size: 44px; }
+  .talk-banner .tb-sub { font-size: 21px; margin-top: 14px; }
+  .talk-banner .tb-go { font-size: 16px; margin-top: 30px; }
 }
 @media (prefers-reduced-motion: reduce) {
   header.site, main.wrap > *, footer.site, .talk-banner.leaving { transition: none; }
+  html.talk-grey .talk-banner { animation: none; }
 }
 </style>
 <!-- ==== END TEMPORARY ==== -->
@@ -188,7 +203,7 @@ html.talk-closed .talk-banner { display: none; }
   <!-- TEMPORARY: talk banner (see the note in <head>) -->
   <aside class="talk-banner" aria-label="Talk on 1 October 2026">
     <a class="tb-link" href="/talks/2026-left-to-write/">
-      <p class="tb-when">Talk &middot; Thursday 1 October &middot; 5:30 pm &middot; Diffenbaugh 009</p>
+      <p class="tb-when"><span>Talk</span> &middot; <span>Thursday 1 October</span> &middot; <span>5:30 pm</span> &middot; <span>Diffenbaugh 009</span></p>
       <p class="tb-title">What Is Left to Write?</p>
       <p class="tb-sub">Richter&rsquo;s Grey, the Machine&rsquo;s Em Dash <span class="tb-dash">&mdash;</span> and What Makes Us Us</p>
       <p class="tb-go">Talk page, slides and reading &rarr;</p>
@@ -217,6 +232,7 @@ html.talk-closed .talk-banner { display: none; }
       }
     });
     b.insertBefore(svg, b.firstChild);
+    b.style.setProperty('--tb-h', b.scrollHeight + 'px');
     var btn = b.querySelector('.tb-close');
     btn.hidden = false;
     btn.addEventListener('click', function () {
