@@ -458,12 +458,14 @@
   }
 
   /* ------------------------------------------------------------------------------------------
-     9. The same stages in one model's own writing: OLMo-2 1B, four checkpoints, each continuing
-        10,000 CC-News first halves from the uniform tier's frame, sampling from its own probabilities
-        (T 1, no top-k or top-p), first 40 words, next to the data of its stage and to the same
-        articles' own writers (EVIDENCE §16.2, §16.7, §16.10, §16.12; work in progress). Uniform-tier
-        prompts: never on a slide with deep-N numbers. Linear scale; whiskers are 95% bootstrap
-        intervals over items. v0.2 showed greedy output on 600 prompts (§16.8), a decoding artefact.
+     9. The same stages in one model's own writing, at two sizes: OLMo-2 1B (slide 15) and 7B (slide 16),
+        four checkpoints each, continuing CC-News first halves from the uniform tier's frame (the 1B all
+        10,000, the 7B the first 5,000, in 4-bit), sampling from their own probabilities (T 1, no top-k or
+        top-p), first 40 words, next to the data of each stage and to the same articles' own writers
+        (EVIDENCE §16.2, §16.4-16.5, §16.7, §16.10, §16.12, §16.14; work in progress). Uniform-tier prompts:
+        never on a slide with deep-N numbers. One linear scale for both sizes, so the two slides compare at
+        a glance; whiskers are 95% bootstrap intervals over items. v0.2 showed greedy output on 600 prompts
+        (§16.8), a decoding artefact.
      ------------------------------------------------------------------------------------------ */
   var ONEB = [
     { stage: 'pretraining', ckpt: 'base', data: 491.4, dataLabel: 'web text', dataEv: '§16.2', v: 679.0, lo: 589, hi: 770 },
@@ -471,13 +473,26 @@
     { stage: 'preference tuning', ckpt: 'DPO', data: 412.1, dataLabel: 'preferred answers', dataEv: '§16.7', v: 1408.5, lo: 1282, hi: 1535 },
     { stage: 'maths reinforcement', ckpt: 'final', data: null, dataLabel: 'no text to count', v: 1159.7, lo: 1043, hi: 1273 }
   ];
-  var HUMAN_NEWS = 965.8;                          // the same 10,000 articles' own words 41 to 80 (§16.10)
-  function provenance1bChart(host) {
+  var SEVENB = [                                   // 4-bit NF4, the first 5,000 of the same prompts (§16.14)
+    { stage: 'pretraining', ckpt: 'base', data: 491.4, dataLabel: 'web text', dataEv: '§16.2', v: 654.6, lo: 531, hi: 785 },
+    { stage: 'instruction tuning', ckpt: 'SFT', data: 308.9, dataLabel: 'its answers', dataEv: '§16.4', v: 592.0, lo: 470, hi: 718 },
+    { stage: 'preference tuning', ckpt: 'DPO', data: 411.4, dataLabel: 'preferred answers', dataEv: '§16.5', v: 885.2, lo: 748, hi: 1030 },
+    { stage: 'maths reinforcement', ckpt: 'final', data: null, dataLabel: 'no text to count', v: 710.2, lo: 587, hi: 841 }
+  ];
+  var STAGE_SERIES = {
+    '1b': { rows: ONEB, human: 965.8, humanEv: '§16.10', ev: '§16.12', steps: [1, 2, 3],   // the 10,000 articles' own words 41 to 80
+            aria: 'OLMo-2 1B: em dashes per million tokens in the training data of each stage and in the model\'s own news continuations after that stage' },
+    '7b': { rows: SEVENB, human: 944.9, humanEv: '§16.14', ev: '§16.14', steps: [1, 1, 2],  // the first 5,000 articles' own words 41 to 80
+            aria: 'OLMo-2 7B: em dashes per million tokens in the training data of each stage and in the model\'s own news continuations after that stage' }
+  };
+  // steps: [the data of each stage, the base model and the writers' line, the post-trained models]
+  function stageChart(host, key) {
+    var S = STAGE_SERIES[key], ROWS = S.rows;
     var W = 1656, H = 650, m = { l: 150, r: 40, t: 80, b: 110 };
     var pw = W - m.l - m.r, ph = H - m.t - m.b, ymax = 1600;
     var y = function (v) { return m.t + ph - v / ymax * ph; };
-    var col = function (i) { return m.l + (i + 0.5) * pw / ONEB.length; };
-    var svg = svgFor(host, W, H, 'OLMo-2 1B: em dashes per million tokens in the training data of each stage and in the model\'s own news continuations after that stage');
+    var col = function (i) { return m.l + (i + 0.5) * pw / ROWS.length; };
+    var svg = svgFor(host, W, H, S.aria);
     var lg = g(svg, 'legend st-0'), lx = m.l;
     [['neutral', 'what it was trained on at this stage'], ['gold', 'what it writes after it (continuing news)']].forEach(function (k) {
       el('circle', { cx: lx + 11, cy: 22, r: 11, 'class': 'dot ' + k[0] }, lg);
@@ -490,14 +505,14 @@
       txt(ticks, m.l - 22, y(v) + 10, fmt(v), '', { 'text-anchor': 'end' });
     }
     var xl = g(svg, 'st-0');
-    ONEB.forEach(function (r, i) {
+    ROWS.forEach(function (r, i) {
       txt(xl, col(i), m.t + ph + 48, r.stage, 'xlab', { 'text-anchor': 'middle' });
       txt(xl, col(i), m.t + ph + 84, r.ckpt === 'final' ? 'the final model' : 'then the ' + r.ckpt + ' model', 'xlab-2', { 'text-anchor': 'middle' });
     });
     txt(xl, 0, m.t - 24, 'em dashes per million tokens', 'xlab-2', {});
-    // step 1: the data of each stage
-    var s1 = g(svg, 'st-1');
-    ONEB.forEach(function (r, i) {
+    // the data of each stage
+    var s1 = g(svg, 'st-' + S.steps[0]);
+    ROWS.forEach(function (r, i) {
       var cx = col(i) - 62;
       if (r.data === null) {
         txt(s1, cx, y(0) - 30, r.dataLabel, 'xlab-2', { 'text-anchor': 'middle' });
@@ -508,17 +523,17 @@
       txt(s1, cx - 26, y(r.data) + 10, fmt(r.data, 0), 'label', { 'text-anchor': 'end' });
       txt(s1, cx, y(r.data) - 30, r.dataLabel, 'label-2', { 'text-anchor': 'middle' });
     });
-    // step 2: the base model, and the same articles' own writers as a line; step 3: the post-trained models
-    var hr = g(svg, 'ref st-2');
-    mark(el('line', { x1: m.l, x2: m.l + pw, y1: y(HUMAN_NEWS), y2: y(HUMAN_NEWS), 'stroke-dasharray': '14 10' }, hr), '§16.10');
-    txt(hr, m.l + 8, y(HUMAN_NEWS) - 16, 'people writing the same articles: ' + fmt(HUMAN_NEWS, 0), '', {});
-    ONEB.forEach(function (r, i) {
-      var grp = g(svg, 'st-' + (i === 0 ? 2 : 3)), cx = col(i) + 62;
+    // the base model, and the same articles' own writers as a line; then the post-trained models
+    var hr = g(svg, 'ref st-' + S.steps[1]);
+    mark(el('line', { x1: m.l, x2: m.l + pw, y1: y(S.human), y2: y(S.human), 'stroke-dasharray': '14 10' }, hr), S.humanEv);
+    txt(hr, m.l + 8, y(S.human) - 16, 'people writing the same articles: ' + fmt(S.human, 0), '', {});
+    ROWS.forEach(function (r, i) {
+      var grp = g(svg, 'st-' + (i === 0 ? S.steps[1] : S.steps[2])), cx = col(i) + 62;
       var wk = g(grp, 'whisker');
-      mark(el('line', { x1: cx, x2: cx, y1: y(r.lo), y2: y(r.hi) }, wk), '§16.12');
+      mark(el('line', { x1: cx, x2: cx, y1: y(r.lo), y2: y(r.hi) }, wk), S.ev);
       el('line', { x1: cx - 16, x2: cx + 16, y1: y(r.hi), y2: y(r.hi) }, wk);
       el('line', { x1: cx - 16, x2: cx + 16, y1: y(r.lo), y2: y(r.lo) }, wk);
-      var c = mark(el('circle', { cx: cx, cy: y(r.v), r: 13, 'class': 'dot gold' }, grp), '§16.12');
+      var c = mark(el('circle', { cx: cx, cy: y(r.v), r: 13, 'class': 'dot gold' }, grp), S.ev);
       var t = el('title', null, c); t.textContent = 'after ' + r.stage + ': ' + fmt(r.v, 1) + ' per million tokens (95% range ' + fmt(r.lo) + ' to ' + fmt(r.hi) + ')';
       txt(grp, cx + 28, y(r.v) + 10, fmt(r.v, 0), 'label', {});
     });
@@ -564,7 +579,8 @@
 
   var BUILDERS = {
     'provenance': provenanceChart,
-    'provenance-1b': provenance1bChart,
+    'provenance-1b': function (h) { stageChart(h, '1b'); },
+    'provenance-7b': function (h) { stageChart(h, '7b'); },
     'closed-up': closedUpChart,
     'rise-news': function (h) { riseChart(h, 'news'); },
     'rise-science': function (h) { riseChart(h, 'science'); },
