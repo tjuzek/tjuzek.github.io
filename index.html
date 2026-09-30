@@ -32,17 +32,9 @@
 <link rel="stylesheet" href="style.css">
 <!-- ==== TEMPORARY: the 1 October 2026 talk banner and the grey page (added 2026-09-30).
      To remove: this <script> and <style>, the <aside class="talk-banner"> at the top of <main>,
-     and the script after it. The page is grey until the banner is closed; ?grey brings it back. ==== -->
-<script>
-(function () {
-  var k = 'talk-2026-left-to-write-closed', d = document.documentElement;
-  try {
-    if (/[?&]grey\b/.test(location.search)) localStorage.removeItem(k);
-    if (localStorage.getItem(k)) { d.classList.add('talk-closed'); return; }
-  } catch (e) {}
-  d.classList.add('talk-grey');
-})();
-</script>
+     and the script after it. The page is grey until the banner is closed. Nothing is remembered (Tommie,
+     30 Sep): every load, and every return with the back button, brings the banner and the grey back. ==== -->
+<script>document.documentElement.classList.add('talk-grey');</script>
 <style>
 @font-face {
   font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap;
@@ -50,7 +42,6 @@
 }
 header.site, main.wrap > *, footer.site { transition: filter 1.6s ease; }
 html.talk-grey header.site, html.talk-grey main.wrap > :not(.talk-banner), html.talk-grey footer.site { filter: grayscale(1); }
-html.talk-closed .talk-banner { display: none; }
 .talk-banner {
   position: relative; overflow: hidden; margin: 22px 0 8px; border-radius: 14px;
   background: #050507; color: #f4f1ea; font-family: 'Newsreader', Georgia, serif;
@@ -87,7 +78,8 @@ html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1)
 .talk-banner .tb-close:focus-visible { outline: 2px solid #d8b765; outline-offset: 0; }
 .talk-banner.leaving {
   height: 0 !important; margin-top: 0; margin-bottom: 0; opacity: 0;
-  transition: opacity .45s ease, height .6s ease .1s, margin .6s ease .1s;
+  visibility: hidden;
+  transition: opacity .45s ease, height .6s ease .1s, margin .6s ease .1s, visibility 0s linear .7s;
 }
 @media (max-width: 620px) {
   .talk-banner a.tb-link { min-height: 440px; padding: 40px 28px 36px 24px; }
@@ -235,13 +227,21 @@ html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1)
     b.style.setProperty('--tb-h', b.scrollHeight + 'px');
     var btn = b.querySelector('.tb-close');
     btn.hidden = false;
+    var closed = false;
     btn.addEventListener('click', function () {
+      closed = true;
       document.documentElement.classList.remove('talk-grey');
-      try { localStorage.setItem('talk-2026-left-to-write-closed', '1'); } catch (e) {}
       b.style.height = b.offsetHeight + 'px';
       void b.offsetHeight;
       b.classList.add('leaving');
-      setTimeout(function () { b.remove(); }, 800);
+    });
+    /* back button: a page restored from the browser's cache comes back as it was left; reopen it */
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted || !closed) return;
+      closed = false;
+      b.classList.remove('leaving');
+      b.style.height = '';
+      document.documentElement.classList.add('talk-grey');
     });
   })();
   </script>
