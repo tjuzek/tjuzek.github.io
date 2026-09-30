@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What Is Left to Write? Richter's Grey, the Machine's Em Dash, and What Makes Us Us</title>
-<meta name="description" content="Slides for a talk by Thomas Stephan (Tommie) Juzek, MLL Colloquium, Florida State University, 1 October 2026. Draft v0.2.">
+<meta name="description" content="Slides for a talk by Thomas Stephan (Tommie) Juzek, MLL Colloquium, Florida State University, 1 October 2026. Draft v0.3.">
 <!-- draft: kept out of search engines for now -->
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="assets/reveal/reveal.css">
@@ -209,9 +209,8 @@
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
-    <span class="fragment step-marker" data-step="4"></span>
     <p class="body fragment rise" data-ev="§16.4–16.5" style="font-size:40px; margin:10px 0 8px">In the post-training data, the dashes come with ChatGPT&rsquo;s answers, and preferred answers carry fewer than rejected ones. <span class="tag wip">work in progress</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 (Ai2) publishes every stage&rsquo;s training data; counted by us, 29 September 2026: pretraining from 93 sampled shards (a whole-corpus count agrees within 1%), post-training in full. The model rows are science continuations, a register with few dashes. About a tenth of the chat data&rsquo;s dashes are the Chinese double dash.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 (Ai2) publishes every stage&rsquo;s training data; counted by us, 29 September 2026: pretraining from 93 sampled shards (a whole-corpus count agrees within 1%), post-training in full. About a tenth of the chat data&rsquo;s dashes are the Chinese double dash.</p>
   </div>
 </section>
 
@@ -222,8 +221,19 @@
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
-    <p class="body fragment rise" data-ev="§16.8" style="font-size:40px; margin:6px 0 8px">Straight after pretraining, it writes the mark far less than it read it; post-training brings it up. <span class="tag wip">work in progress</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, each continuing the same 600 news articles (first halves, greedy decoding, first 200 words). Each gold dot rests on 4 to 18 dashes, so only the rise after pretraining is solid. Training data counted by us, 29 September 2026.</p>
+    <p class="body fragment rise" data-ev="§16.12" style="font-size:40px; margin:6px 0 8px">Writing freely, it starts below people; the preference step takes it past them. <span class="tag wip">work in progress</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, each continuing the same 10,000 news articles (first halves), sampling from its own probabilities, first 40 words; whiskers are 95% intervals. Always taking its likeliest next word instead, it writes a tenth as many. Counted by us, 29 and 30 September 2026.</p>
+  </div>
+</section>
+
+<section id="closed-up" data-state="quiet" data-timing="45">
+  <div class="frame">
+    <p class="kicker">The same writing, closer up: the dash&rsquo;s form</p>
+    <div class="chart" data-chart="closed-up"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <p class="body fragment rise" data-ev="§16.13" style="font-size:40px; margin:6px 0 8px">People writing news space the dash; after training, the model mostly closes it up. <span class="tag wip">work in progress</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Share of em dashes closed up rather than spaced, first 40 words: the same 10,000 news articles, and OLMo-2 1B&rsquo;s continuations of them, sampled from its own probabilities. Counted by us, 30 September 2026.</p>
   </div>
 </section>
 
@@ -336,7 +346,7 @@
 <section id="credits" data-state="quiet" data-timing="10">
   <div class="frame">
     <p class="kicker">How these slides were made</p>
-    <p class="body" style="max-width:1560px">Tommie Juzek set the argument, the running order and the substance; the numbers come from his group&rsquo;s research data and the cited sources, and any not yet logged in his evidence file are tagged <i>pending</i>. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text. <span class="tag pending">draft v0.2, before Tommie&rsquo;s edit</span></p>
+    <p class="body" style="max-width:1560px">Tommie Juzek set the argument, the running order and the substance; the numbers come from his group&rsquo;s research data and the cited sources, and any not yet logged in his evidence file are tagged <i>pending</i>. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text. <span class="tag pending">draft v0.3, before Tommie&rsquo;s edit</span></p>
     <hr class="rule">
     <p class="cite">Image: Gerhard Richter, <i>Spiegel, Grau</i> [<i>Mirror Painting (Grey)</i>], 1991, pigment on glass. &copy; Gerhard Richter. ARTIST ROOMS National Galleries of Scotland and Tate. Photo: Antonia Reeve.
       <a href="https://www.nationalgalleries.org/art-and-artists/89110">nationalgalleries.org/art-and-artists/89110</a></p>
@@ -361,11 +371,12 @@
         <tr><td class="n">2,077 to 2,288</td><td>GPT-4.1, science; matched human science 0</td><td>§1.3</td></tr>
         <tr><td class="n">42 to 85</td><td>GPT-5.4, science: 1 and 2 dashes in about 23,600 tokens</td><td>§1.4 (counts pending)</td></tr>
         <tr><td class="n">4 up, 2 down</td><td>base to instruction-tuned, six open families</td><td>§3.3 to §3.4</td></tr>
-        <tr><td class="n">7.5 to 33.3</td><td>OLMo-2 7B writing science, base to instruction-tuned</td><td>§3.2</td></tr>
         <tr><td class="n">491</td><td>OLMo-2&rsquo;s pretraining web text (work in progress)</td><td>§16.2</td></tr>
         <tr><td class="n">185; 1,032</td><td>its instruction data: answers by people; from ChatGPT (work in progress)</td><td>§16.4</td></tr>
         <tr><td class="n">411; 628</td><td>its preference data: preferred; rejected answers (work in progress)</td><td>§16.5</td></tr>
-        <tr><td class="n">30; 214; 144; 77</td><td>OLMo-2 1B continuing news: base, SFT, DPO, final model (work in progress)</td><td>§16.8</td></tr>
+        <tr><td class="n">679; 513; 1,409; 1,160</td><td>OLMo-2 1B continuing news, sampled: base, SFT, DPO, final (work in progress)</td><td>§16.12</td></tr>
+        <tr><td class="n">966</td><td>the same 10,000 news articles&rsquo; own writers (work in progress)</td><td>§16.10</td></tr>
+        <tr><td class="n">13%; 35 to 80%</td><td>em dashes closed up: those writers; OLMo-2 1B, base to final (work in progress)</td><td>§16.13</td></tr>
         <tr><td class="n">373; 412</td><td>the 1B&rsquo;s instruction answers; its preferred answers (work in progress)</td><td>§16.7</td></tr>
         <tr><td class="n">7,806; 39</td><td>prize entries; innocent flags at 0.5% false positives</td><td>§5.1; §7</td></tr>
         <tr><td class="n">80%; 49%</td><td>share of flags that are right: 2% prior, 95%, 0.5%; 1% and 1%</td><td>§7</td></tr>
@@ -386,7 +397,7 @@
     <p class="cite">Prize: Commonwealth Foundation statements of 19 May, 22 June and 30 June 2026. Base rates: worked arithmetic with illustrative parameters (a 2% or 1% prior, 95% caught, 0.5% or 1% false positives).</p>
     <p class="cite">Format bias: Zhang, Xiong, Chen, Zhou, Huang and Zhang, &ldquo;From Lists to Emojis&rdquo;, ACL 2025, pp. 26940 to 26961. Literary quality: Bizzoni et al., NoDaLiDa 2023; Feldkamp et al., JCLS 2024.</p>
     <p class="cite">Percolation: &ldquo;Isoperimetric dimension &gt; 1 implies p<sub>c</sub> &lt; 1&rdquo;, 28 May 2026; Duminil-Copin, &ldquo;Care for a little more AI?&rdquo;, 30 August 2026. Astronomy: J. Sokol, <i>Science</i>, 4 June 2026. Music: Deezer newsroom, 21 July 2026; Deezer and Ipsos, November 2025.</p>
-    <p class="cite">Stage by stage: Ai2&rsquo;s published OLMo-2 training data (olmo-mix-1124, dolmino-mix-1124, the Tulu 3 SFT mix for OLMo-2, the OLMo-2 7B preference mix), counted by us on 29 September 2026 (work in progress); the whole-corpus check with infini-gram; the OLMo-2 1B checkpoints (base, SFT, DPO, instruct, April 2025 release) and their own post-training mixes.</p>
+    <p class="cite">Stage by stage: Ai2&rsquo;s published OLMo-2 training data (olmo-mix-1124, dolmino-mix-1124, the Tulu 3 SFT mix for OLMo-2, the OLMo-2 7B preference mix), counted by us on 29 September 2026 (work in progress); the whole-corpus check with infini-gram; the OLMo-2 1B checkpoints (base, SFT, DPO, instruct, April 2025 release) and their own post-training mixes, continuing 10,000 CC-News articles, sampled and greedy (30 September 2026).</p>
     <p class="cite">Stance: Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161v2, 26 August 2026 (preprint). Goncourt: Niklas Bender, &bdquo;Feigheit vor dem Thema?&ldquo;, <i>Frankfurter Allgemeine Zeitung</i>, 28 September 2026; the detector figures and the denial still to be sourced.</p>
   </div>
 </section>

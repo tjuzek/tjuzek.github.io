@@ -409,28 +409,28 @@
   }
 
   /* ------------------------------------------------------------------------------------------
-     8. Provenance: one open model, stage by stage (EVIDENCE §16, work in progress; §3.2).
-        OLMo-2's published training data, counted 29 Sep 2026 (the ledger in wk-talk/olmo-ledger/),
-        against the model's own rate. Colour is who wrote the text: people (grey), other models
-        (blue), OLMo itself (gold). Log scale; every dot labelled. Per million spaCy tokens.
+     8. Provenance: one open model's training data, stage by stage (EVIDENCE §16, work in progress).
+        OLMo-2's published training data, counted 29 Sep 2026 (the ledger in wk-talk/olmo-ledger/).
+        Colour is who wrote the text: people (grey), other models (blue). Log scale; every dot
+        labelled. Per million spaCy tokens. The model's own writing is the next slide's (sampled);
+        v0.2's step 4, the 7B's greedy science rates (§3.2), left on 30 Sep: greedy decoding
+        under-reads a model's dashes several times over (§16.12), which invited a false contrast.
      ------------------------------------------------------------------------------------------ */
   var PROV = [
     { step: 1, stage: 'Pretraining', label: 'web text, 95% of the mix', v: 491.4, kind: 'neutral', ev: '§16.2' },
     { step: 2, stage: 'Instruction tuning', label: 'answers written by people', v: 184.6, kind: 'neutral', ev: '§16.4' },
     { step: 2, stage: '', label: 'answers from ChatGPT (WildChat)', v: 1032.0, kind: 'blue', ev: '§16.4' },
     { step: 3, stage: 'Preference tuning', label: 'preferred answers', v: 411.4, kind: 'blue', ev: '§16.5' },
-    { step: 3, stage: '', label: 'rejected answers', v: 628.4, kind: 'blue', ev: '§16.5' },
-    { step: 4, stage: 'OLMo-2 7B writing science', label: 'before post-training', v: 7.5, kind: 'gold', ev: '§3.2' },
-    { step: 4, stage: '', label: 'after post-training', v: 33.3, kind: 'gold', ev: '§3.2' }
+    { step: 3, stage: '', label: 'rejected answers', v: 628.4, kind: 'blue', ev: '§16.5' }
   ];
   function provenanceChart(host) {
-    var W = 1656, H = 640, m = { l: 560, r: 170, t: 78, b: 70 };
+    var W = 1656, H = 510, m = { l: 560, r: 170, t: 78, b: 70 };
     var pw = W - m.l - m.r, lo = 0, hi = Math.log10(2000);
     var x = function (v) { return m.l + (Math.log10(v) - lo) / (hi - lo) * pw; };
-    var svg = svgFor(host, W, H, 'Em dashes per million tokens in OLMo-2 training data by stage, and in the model\'s own science writing');
+    var svg = svgFor(host, W, H, 'Em dashes per million tokens in OLMo-2\'s training data, stage by stage');
     // legend: who wrote the text
     var lg = g(svg, 'legend st-0'), lx = m.l;
-    [['neutral', 'written by people'], ['blue', 'written by other models'], ['gold', 'written by OLMo itself']].forEach(function (k) {
+    [['neutral', 'written by people'], ['blue', 'written by other models']].forEach(function (k) {
       el('circle', { cx: lx + 11, cy: 22, r: 11, 'class': 'dot ' + k[0] }, lg);
       txt(lg, lx + 32, 32, k[1], '');
       lx += 32 + k[1].length * 12.6 + 56;
@@ -453,36 +453,28 @@
       el('line', { x1: m.l, x2: m.l + pw, y1: yy + 10, y2: yy + 10, 'class': 'rowguide' }, grp);
       var c = mark(el('circle', { cx: x(r.v), cy: yy + 10, r: 12, 'class': 'dot ' + r.kind }, grp), r.ev);
       var t = el('title', null, c); t.textContent = (r.stage ? r.stage + ': ' : '') + r.label + ', ' + fmt(r.v, 1) + ' per million tokens';
-      var left = r.label === 'before post-training';     // keep the arrow's start clear
-      txt(grp, x(r.v) + (left ? -24 : 24), yy + 20, fmt(r.v, r.v < 100 ? 1 : 0), 'label', left ? { 'text-anchor': 'end' } : {});
+      txt(grp, x(r.v) + 24, yy + 20, fmt(r.v, r.v < 100 ? 1 : 0), 'label', {});
     });
-    // step 4: about four times, base to instruct (EVIDENCE §3.2: "by about 4.4×")
-    var s4 = g(svg, 'st-4'), a = ys[5] + 10, b = ys[6] + 10, xa = x(7.5), xb = x(33.3);
-    var defs = el('defs', null, svg);
-    var mk = el('marker', { id: 'arrow-prov', viewBox: '0 0 12 12', refX: 9, refY: 6, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
-    el('path', { d: 'M1 1 L11 6 L1 11 z', 'class': 'gold' }, mk);
-    var ang = Math.atan2(b - a, xb - xa);
-    var arrow = el('line', { x1: xa + 18 * Math.cos(ang), y1: a + 18 * Math.sin(ang), x2: xb - 22 * Math.cos(ang), y2: b - 22 * Math.sin(ang),
-                             'class': 'gold', 'stroke-width': 3, 'marker-end': 'url(#arrow-prov)' }, s4);
-    mark(arrow, '§3.2');
-    txt(s4, (xa + xb) / 2 + 16, (a + b) / 2 - 6, 'about 4 ×', 'label-2', {});
   }
 
   /* ------------------------------------------------------------------------------------------
      9. The same stages in one model's own writing: OLMo-2 1B, four checkpoints, each continuing
-        the uniform tier's 600 news first halves (greedy, first 200 words), next to the data of its
-        stage (EVIDENCE §16.2, §16.7, §16.8; work in progress). Uniform-tier prompts: never on a
-        slide with deep-N numbers. Linear scale; whiskers are exact 95% intervals (4 to 18 dashes).
+        10,000 CC-News first halves from the uniform tier's frame, sampling from its own probabilities
+        (T 1, no top-k or top-p), first 40 words, next to the data of its stage and to the same
+        articles' own writers (EVIDENCE §16.2, §16.7, §16.10, §16.12; work in progress). Uniform-tier
+        prompts: never on a slide with deep-N numbers. Linear scale; whiskers are 95% bootstrap
+        intervals over items. v0.2 showed greedy output on 600 prompts (§16.8), a decoding artefact.
      ------------------------------------------------------------------------------------------ */
   var ONEB = [
-    { stage: 'pretraining', ckpt: 'base', data: 491.4, dataLabel: 'web text', dataEv: '§16.2', v: 29.8, lo: 8, hi: 76 },
-    { stage: 'instruction tuning', ckpt: 'SFT', data: 373.4, dataLabel: 'its answers', dataEv: '§16.7', v: 213.6, lo: 107, hi: 382 },
-    { stage: 'preference tuning', ckpt: 'DPO', data: 412.1, dataLabel: 'preferred answers', dataEv: '§16.7', v: 143.7, lo: 85, hi: 227 },
-    { stage: 'maths reinforcement', ckpt: 'final', data: null, dataLabel: 'no text to count', v: 77.1, lo: 33, hi: 152 }
+    { stage: 'pretraining', ckpt: 'base', data: 491.4, dataLabel: 'web text', dataEv: '§16.2', v: 679.0, lo: 589, hi: 770 },
+    { stage: 'instruction tuning', ckpt: 'SFT', data: 373.4, dataLabel: 'its answers', dataEv: '§16.7', v: 513.0, lo: 432, hi: 599 },
+    { stage: 'preference tuning', ckpt: 'DPO', data: 412.1, dataLabel: 'preferred answers', dataEv: '§16.7', v: 1408.5, lo: 1282, hi: 1535 },
+    { stage: 'maths reinforcement', ckpt: 'final', data: null, dataLabel: 'no text to count', v: 1159.7, lo: 1043, hi: 1273 }
   ];
+  var HUMAN_NEWS = 965.8;                          // the same 10,000 articles' own words 41 to 80 (§16.10)
   function provenance1bChart(host) {
     var W = 1656, H = 650, m = { l: 150, r: 40, t: 80, b: 110 };
-    var pw = W - m.l - m.r, ph = H - m.t - m.b, ymax = 600;
+    var pw = W - m.l - m.r, ph = H - m.t - m.b, ymax = 1600;
     var y = function (v) { return m.t + ph - v / ymax * ph; };
     var col = function (i) { return m.l + (i + 0.5) * pw / ONEB.length; };
     var svg = svgFor(host, W, H, 'OLMo-2 1B: em dashes per million tokens in the training data of each stage and in the model\'s own news continuations after that stage');
@@ -493,7 +485,7 @@
       lx += 32 + k[1].length * 12.6 + 64;
     });
     var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
-    for (var v = 0; v <= ymax; v += 100) {
+    for (var v = 0; v <= ymax; v += 400) {
       el('line', { x1: m.l, x2: m.l + pw, y1: y(v), y2: y(v) }, grid);
       txt(ticks, m.l - 22, y(v) + 10, fmt(v), '', { 'text-anchor': 'end' });
     }
@@ -514,24 +506,66 @@
       var c = mark(el('circle', { cx: cx, cy: y(r.data), r: 13, 'class': 'dot neutral' }, s1), r.dataEv);
       var t = el('title', null, c); t.textContent = r.stage + ', ' + r.dataLabel + ': ' + fmt(r.data, 1) + ' per million tokens';
       txt(s1, cx - 26, y(r.data) + 10, fmt(r.data, 0), 'label', { 'text-anchor': 'end' });
-      txt(s1, cx + 14, y(r.data) - 28, r.dataLabel, 'label-2', { 'text-anchor': 'end' });
+      txt(s1, cx, y(r.data) - 30, r.dataLabel, 'label-2', { 'text-anchor': 'middle' });
     });
-    // step 2: the base model; step 3: the post-trained models (gold, with 95% intervals)
+    // step 2: the base model, and the same articles' own writers as a line; step 3: the post-trained models
+    var hr = g(svg, 'ref st-2');
+    mark(el('line', { x1: m.l, x2: m.l + pw, y1: y(HUMAN_NEWS), y2: y(HUMAN_NEWS), 'stroke-dasharray': '14 10' }, hr), '§16.10');
+    txt(hr, m.l + 8, y(HUMAN_NEWS) - 16, 'people writing the same articles: ' + fmt(HUMAN_NEWS, 0), '', {});
     ONEB.forEach(function (r, i) {
       var grp = g(svg, 'st-' + (i === 0 ? 2 : 3)), cx = col(i) + 62;
       var wk = g(grp, 'whisker');
-      mark(el('line', { x1: cx, x2: cx, y1: y(r.lo), y2: y(r.hi) }, wk), '§16.8');
+      mark(el('line', { x1: cx, x2: cx, y1: y(r.lo), y2: y(r.hi) }, wk), '§16.12');
       el('line', { x1: cx - 16, x2: cx + 16, y1: y(r.hi), y2: y(r.hi) }, wk);
       el('line', { x1: cx - 16, x2: cx + 16, y1: y(r.lo), y2: y(r.lo) }, wk);
-      var c = mark(el('circle', { cx: cx, cy: y(r.v), r: 13, 'class': 'dot gold' }, grp), '§16.8');
-      var t = el('title', null, c); t.textContent = 'after ' + r.stage + ': ' + fmt(r.v, 1) + ' per million tokens (95% range ' + r.lo + ' to ' + r.hi + ')';
+      var c = mark(el('circle', { cx: cx, cy: y(r.v), r: 13, 'class': 'dot gold' }, grp), '§16.12');
+      var t = el('title', null, c); t.textContent = 'after ' + r.stage + ': ' + fmt(r.v, 1) + ' per million tokens (95% range ' + fmt(r.lo) + ' to ' + fmt(r.hi) + ')';
       txt(grp, cx + 28, y(r.v) + 10, fmt(r.v, 0), 'label', {});
+    });
+  }
+
+  /* ------------------------------------------------------------------------------------------
+     10. The dash's form, stage by stage: the share of em dashes closed up ("word\u2014word") rather
+         than spaced ("word \u2014 word") in the first 40 words, for the same 10,000 news articles'
+         writers and OLMo-2 1B's sampled continuations of them (EVIDENCE §16.13; work in progress).
+     ------------------------------------------------------------------------------------------ */
+  var CLOSED = [
+    { step: 1, label: 'People who wrote these articles', v: 12.56, kind: 'neutral' },   // 53 of 422
+    { step: 2, label: 'OLMo-2 1B: the base model', v: 35.21, kind: 'gold' },           // 100 of 284
+    { step: 2, label: 'the SFT model', v: 60.62, kind: 'gold' },                       // 117 of 193
+    { step: 2, label: 'the DPO model', v: 78.33, kind: 'gold' },                       // 488 of 623
+    { step: 2, label: 'the final model', v: 80.48, kind: 'gold' }                      // 400 of 497
+  ];
+  function closedUpChart(host) {
+    var W = 1656, H = 610, xa = 560, xb = 1540, bh = 50, top = 150, step = 82;
+    var X = function (v) { return xa + v / 100 * (xb - xa); };
+    var svg = svgFor(host, W, H, 'Share of em dashes closed up rather than spaced: people 13%; OLMo-2 1B base 35%, SFT 61%, DPO 78%, final 80%.');
+    // the two forms, at the two ends of the scale
+    var sp = g(svg, 'st-0');
+    txt(sp, xa, 40, 'word \u2014 word', 'label', { 'text-anchor': 'start' });
+    txt(sp, xa, 74, 'spaced', 'label-2', { 'text-anchor': 'start' });
+    txt(sp, xb, 40, 'word\u2014word', 'label', { 'text-anchor': 'end' });
+    txt(sp, xb, 74, 'closed up', 'label-2', { 'text-anchor': 'end' });
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [0, 25, 50, 75, 100].forEach(function (v) {
+      el('line', { x1: X(v), x2: X(v), y1: top - 40, y2: top + step * CLOSED.length - 20 }, grid);
+      txt(ticks, X(v), top + step * CLOSED.length + 18, v + '%', '', { 'text-anchor': 'middle' });
+    });
+    CLOSED.forEach(function (r, i) {
+      var y = top + i * step, grp = g(svg, 'st-' + r.step);
+      txt(grp, 0, y + 10, r.label, i === 0 ? 'label' : 'label-2', {});
+      var bars = g(grp, 'grow-x');
+      bars.style.transformOrigin = xa + 'px 0px';
+      var b = mark(el('rect', { x: xa, y: y - bh / 2, width: (X(r.v) - xa).toFixed(1), height: bh, rx: 6, 'class': 'bar ' + r.kind }, bars), '§16.13');
+      var t = el('title', null, b); t.textContent = r.label + ': ' + fmt(r.v, 1) + '% of em dashes closed up';
+      txt(g(grp, 'late'), X(r.v) + 18, y + 11, fmt(r.v, 0) + '%', 'label', {});
     });
   }
 
   var BUILDERS = {
     'provenance': provenanceChart,
     'provenance-1b': provenance1bChart,
+    'closed-up': closedUpChart,
     'rise-news': function (h) { riseChart(h, 'news'); },
     'rise-science': function (h) { riseChart(h, 'science'); },
     'reference': referenceChart,
