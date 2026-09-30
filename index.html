@@ -30,6 +30,63 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="me" href="https://scholar.google.com/citations?user=ETFTr6sAAAAJ">
 <link rel="stylesheet" href="style.css">
+<!-- ==== TEMPORARY: the 1 October 2026 talk banner and the grey page (added 2026-09-30).
+     To remove: this <script> and <style>, the <aside class="talk-banner"> at the top of <main>,
+     and the script after it. The page is grey until the banner is closed; ?grey brings it back. ==== -->
+<script>
+(function () {
+  var k = 'talk-2026-left-to-write-closed', d = document.documentElement;
+  try {
+    if (/[?&]grey\b/.test(location.search)) localStorage.removeItem(k);
+    if (localStorage.getItem(k)) { d.classList.add('talk-closed'); return; }
+  } catch (e) {}
+  d.classList.add('talk-grey');
+})();
+</script>
+<style>
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap;
+  src: url(/talks/2026-left-to-write/slides/assets/fonts/newsreader-latin-standard-normal.woff2) format('woff2-variations');
+}
+header.site, main.wrap > *, footer.site { transition: filter 1.6s ease; }
+html.talk-grey header.site, html.talk-grey main.wrap > :not(.talk-banner), html.talk-grey footer.site { filter: grayscale(1); }
+html.talk-closed .talk-banner { display: none; }
+.talk-banner {
+  position: relative; overflow: hidden; margin: 22px 0 8px; border-radius: 14px;
+  background: #050507; color: #f4f1ea; font-family: 'Newsreader', Georgia, serif;
+}
+.talk-banner .tb-waves { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .7; }
+.talk-banner .tb-waves path { fill: none; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.talk-banner a.tb-link { position: relative; display: block; padding: 18px 56px 18px 22px; color: inherit; text-decoration: none; }
+.talk-banner p { margin: 0; }
+.talk-banner .tb-when { font: 600 11.5px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a9a59c; margin-bottom: 6px; }
+.talk-banner .tb-title { font-size: 30px; line-height: 1.08; font-weight: 450; letter-spacing: -.01em; }
+.talk-banner .tb-sub { font-size: 18px; line-height: 1.3; color: #c9c5bb; margin-top: 5px; }
+.talk-banner .tb-dash { color: #d8b765; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 300; }
+.talk-banner .tb-go { font: 500 14.5px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #d8b765; margin-top: 12px; }
+.talk-banner a.tb-link:hover .tb-go { text-decoration: underline; text-underline-offset: .18em; }
+.talk-banner a.tb-link:focus-visible { outline: 2px solid #d8b765; outline-offset: -4px; border-radius: 14px; }
+.talk-banner .tb-close {
+  position: absolute; top: 8px; right: 8px; width: 42px; height: 42px; padding: 0;
+  border: 0; border-radius: 8px; background: transparent; color: #c9c5bb;
+  font: 300 28px/42px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; cursor: pointer;
+}
+.talk-banner .tb-close:hover { color: #fff; background: rgba(255,255,255,.08); }
+.talk-banner .tb-close:focus-visible { outline: 2px solid #d8b765; outline-offset: 0; }
+.talk-banner.leaving {
+  height: 0 !important; margin-top: 0; margin-bottom: 0; opacity: 0;
+  transition: opacity .45s ease, height .6s ease .1s, margin .6s ease .1s;
+}
+@media (max-width: 620px) {
+  .talk-banner a.tb-link { padding: 16px 50px 16px 18px; }
+  .talk-banner .tb-title { font-size: 26px; }
+  .talk-banner .tb-sub { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  header.site, main.wrap > *, footer.site, .talk-banner.leaving { transition: none; }
+}
+</style>
+<!-- ==== END TEMPORARY ==== -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,7 +105,7 @@
     "name": "Thomas Stephan Juzek | Computational Linguist (AI & Language)",
     "isPartOf": { "@id": "https://tjuzek.com/#website" },
     "about": { "@id": "https://tjuzek.com/#person" },
-    "dateModified": "2026-09-24"
+    "dateModified": "2026-09-30"
   },
   {
   "@type": "Person",
@@ -127,6 +184,51 @@
 </div></header>
 
 <main class="wrap">
+
+  <!-- TEMPORARY: talk banner (see the note in <head>) -->
+  <aside class="talk-banner" aria-label="Talk on 1 October 2026">
+    <a class="tb-link" href="/talks/2026-left-to-write/">
+      <p class="tb-when">Talk &middot; Thursday 1 October &middot; 5:30 pm &middot; Diffenbaugh 009</p>
+      <p class="tb-title">What Is Left to Write?</p>
+      <p class="tb-sub">Richter&rsquo;s Grey, the Machine&rsquo;s Em Dash <span class="tb-dash">&mdash;</span> and What Makes Us Us</p>
+      <p class="tb-go">Talk page, slides and reading &rarr;</p>
+    </a>
+    <button class="tb-close" type="button" aria-label="Close the banner" title="Close, and the colour comes back" hidden>&times;</button>
+  </aside>
+  <script>
+  (function () {
+    var b = document.querySelector('.talk-banner');
+    if (!b) return;
+    /* a few of the talk's wave lines behind the banner (after the slides' buildWaves) */
+    var NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'tb-waves'); svg.setAttribute('viewBox', '0 0 1920 300');
+    svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('aria-hidden', 'true');
+    [['#a88f55', 190, 70, 1, 0.4], ['#6c5fae', 120, 80, 1, 2.2], ['#4a6fc0', 230, 45, 2, 4.1]].forEach(function (w) {
+      for (var i = 0; i < 7; i++) {
+        var d = '', phi = w[4] + i * 0.1;
+        for (var x = 0; x <= 1920; x += 16) {
+          var t = 2 * Math.PI * x / 1920;
+          d += (x ? 'L' : 'M') + x + ' ' + (w[1] + (i - 3.5) * 3 + w[2] * Math.sin(w[3] * t + phi)).toFixed(1);
+        }
+        var p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', d); p.setAttribute('stroke', w[0]);
+        p.setAttribute('stroke-opacity', (0.15 + 0.4 * Math.sin(Math.PI * (i + 0.5) / 7)).toFixed(2));
+        svg.appendChild(p);
+      }
+    });
+    b.insertBefore(svg, b.firstChild);
+    var btn = b.querySelector('.tb-close');
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      document.documentElement.classList.remove('talk-grey');
+      try { localStorage.setItem('talk-2026-left-to-write-closed', '1'); } catch (e) {}
+      b.style.height = b.offsetHeight + 'px';
+      void b.offsetHeight;
+      b.classList.add('leaving');
+      setTimeout(function () { b.remove(); }, 800);
+    });
+  })();
+  </script>
 
   <section class="hero">
     <div class="hero-flex">
@@ -294,7 +396,7 @@
     <span id="image-use">Photo: &copy; McKenzie Harris, used with permission
     (<a href="mailto:tjuzek@fsu.edu?subject=Image%20use">reuse enquiries</a>)</span> &middot;
     polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
-    Last updated: 2026-09-24</p>
+    Last updated: 2026-09-30</p>
 </div></footer>
 
 <script>

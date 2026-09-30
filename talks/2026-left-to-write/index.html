@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What Is Left to Write? | Thomas Stephan Juzek</title>
+<meta name="description" content="Talk page for What Is Left to Write? by Thomas Stephan (Tommie) Juzek, MLL Colloquium, Florida State University, 1 October 2026: the slides, the survey, and further reading.">
+<link rel="canonical" href="https://tjuzek.com/talks/2026-left-to-write/">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tjuzek.com/talks/2026-left-to-write/">
+<meta property="og:title" content="What Is Left to Write? Richter's Grey, the Machine's Em Dash, and What Makes Us Us">
+<meta property="og:description" content="A talk by Tommie Juzek, MLL Colloquium, Florida State University, 1 October 2026: the slides, the survey, and further reading.">
+<meta name="theme-color" content="#050507">
+<link rel="icon" href="/favicon.ico?v=3" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<style>
+/* Talk page for "What Is Left to Write?" (MLL Colloquium, 1 October 2026).
+   Styled after the slides (slides/assets/deck.css): the flyer palette, Newsreader and Inter,
+   the gold em dash, the wave lines. Dark only, like the deck. Phone first. */
+
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap;
+  src: url(slides/assets/fonts/newsreader-latin-standard-normal.woff2) format('woff2-variations');
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: swap;
+  src: url(slides/assets/fonts/newsreader-latin-standard-italic.woff2) format('woff2-variations');
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url(slides/assets/fonts/inter-latin-standard-normal.woff2) format('woff2-variations');
+}
+
+:root {
+  --bg: #050507;
+  --ink: #f4f1ea;
+  --ink-2: #c9c5bb;
+  --ink-3: #8d8a82;
+  --hair: #26262b;
+  --axis: #3c3c42;
+  --gold: #d8b765;
+  --w-gold: #a88f55;
+  --w-violet: #6c5fae;
+  --w-blue: #4a6fc0;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  color-scheme: dark;
+}
+
+html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--serif); font-optical-sizing: auto;
+  font-size: 19px; line-height: 1.55;
+  overflow-x: hidden;
+}
+::selection { background: var(--gold); color: #000; }
+a { color: inherit; text-decoration-color: var(--ink-3); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: var(--gold); }
+a:focus-visible, .card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- the waves: a band behind the masthead (ported from the deck's buildWaves) ---------- */
+.waves {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 0;
+  height: clamp(440px, 78vh, 760px);
+  overflow: hidden; pointer-events: none; opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+}
+.waves .drift { position: absolute; top: 0; left: 0; width: 200%; height: 100%; animation: drift 160s linear infinite; will-change: transform; }
+.waves .drift.slow { animation-duration: 220s; }
+.waves .drift.rev  { animation-direction: reverse; }
+@keyframes drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+.waves svg { width: 100%; height: 100%; display: block; }
+.waves path { fill: none; stroke-width: 1.3; vector-effect: non-scaling-stroke; }
+.waves .ba path { stroke: var(--w-gold); }
+.waves .bb path { stroke: var(--w-violet); }
+.waves .bc path { stroke: var(--w-blue); }
+@media (prefers-reduced-motion: reduce) { .waves .drift { animation: none; } }
+
+/* ---------- page ---------- */
+.page {
+  position: relative; z-index: 1;
+  max-width: 46rem; margin: 0 auto;
+  padding: 44px max(20px, env(safe-area-inset-right)) 40px max(20px, env(safe-area-inset-left));
+}
+
+.kicker {
+  font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin: 0 0 14px;
+}
+
+/* masthead: painting beside the title, as on the title slide. On phones the painting sits
+   beside the title only and the details run full width beneath; wider, it spans both. */
+.masthead {
+  display: grid; grid-template-columns: 76px 1fr; column-gap: 18px; align-items: start; margin: 0 0 36px;
+  grid-template-areas: "painting head" "info info";
+}
+.painting { grid-area: painting; margin: 0; padding-top: 4px; }
+.head { grid-area: head; }
+.info { grid-area: info; margin-top: 4px; }
+.nowrap { white-space: nowrap; }
+.painting img { display: block; width: 100%; height: auto; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.55); }
+h1 {
+  font-size: 42px; line-height: 1.02; font-weight: 450; letter-spacing: -0.015em;
+  margin: 0 0 14px;
+}
+.sub { font-size: 21px; line-height: 1.3; font-weight: 380; color: var(--ink-2); margin: 0 0 22px; }
+.dash { color: var(--gold); font-family: var(--sans); font-weight: 300; }  /* Inter's em dash is a full 1.00 em; Newsreader's only 0.68 */
+.byline { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 4px; }
+.when { font-family: var(--sans); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 10px; }
+.panel { font-family: var(--sans); font-size: 14.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
+
+/* the two actions */
+.actions { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 0 0 44px; }
+.card {
+  display: block; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--axis); border-radius: 10px;
+  padding: 16px 18px 15px;
+  background: rgba(10, 10, 14, 0.78);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+a.card:hover { border-color: var(--gold); background: rgba(20, 18, 12, 0.85); }
+.card .label { display: block; font-family: var(--sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 4px; }
+.card .title { display: block; font-size: 24px; line-height: 1.2; font-weight: 450; }
+.card .title .arrow { font-family: var(--sans); font-weight: 300; color: var(--gold); }
+.card .note { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 6px; }
+.card.primary { border-color: #6f6040; }
+.card.waiting .title { color: var(--ink-2); }
+.card.waiting { border-style: dashed; }
+
+/* sections */
+section.block { margin: 0 0 40px; }
+h2 {
+  font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin: 0 0 14px; padding-top: 18px; border-top: 1px solid var(--hair);
+}
+.prose p { margin: 0 0 14px; color: var(--ink-2); }
+.prose p:last-child { margin-bottom: 0; }
+
+/* further reading */
+.group { font-size: 21px; line-height: 1.25; font-weight: 450; font-style: italic; color: var(--ink); margin: 26px 0 10px; }
+.group:first-of-type { margin-top: 4px; }
+.reading { list-style: none; margin: 0; padding: 0; }
+.reading li { margin: 0 0 16px; padding-left: 14px; border-left: 2px solid var(--hair); }
+.reading .t { font-size: 19px; line-height: 1.35; font-weight: 450; }
+.reading .meta { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 3px; }
+.reading .kind { font-family: var(--sans); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--axis); border-radius: 3px; padding: 1px 5px 0; margin-left: 6px; white-space: nowrap; vertical-align: 1px; }
+.reading .why { display: block; font-size: 16.5px; line-height: 1.45; color: var(--ink-2); margin-top: 4px; }
+.reading .also { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 4px; }
+.aside { font-family: var(--sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 22px 0 0; }
+
+/* footer */
+footer { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); border-top: 1px solid var(--hair); padding-top: 18px; }
+footer p { margin: 0 0 10px; }
+
+/* ---------- wider screens ---------- */
+@media (min-width: 560px) {
+  .masthead { grid-template-columns: 128px 1fr; column-gap: 28px; grid-template-areas: "painting head" "painting info"; }
+  .info { margin-top: 0; }
+  h1 { font-size: 56px; }
+  .sub { font-size: 24px; }
+  .actions { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  body { font-size: 20px; }
+  .page { padding-top: 72px; padding-bottom: 56px; }
+  .masthead { grid-template-columns: 190px 1fr; column-gap: 40px; margin-bottom: 48px; }
+  h1 { font-size: 68px; }
+  .sub { font-size: 27px; }
+  .kicker { font-size: 13px; }
+  .byline { font-size: 17px; }
+  .when, .panel { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<main class="page">
+
+  <header class="masthead">
+    <figure class="painting">
+      <a href="https://www.nationalgalleries.org/art-and-artists/89110"><img src="slides/assets/img/richter-grey-ngs.jpg" width="1570" height="2635"
+           alt="Gerhard Richter, Spiegel, Grau (Mirror Painting, Grey), 1991: a tall grey pane of glass in a dark frame."></a>
+    </figure>
+    <div class="head">
+      <p class="kicker">Research in Conversation &middot; MLL Colloquium</p>
+      <h1>What Is Left to Write?</h1>
+      <p class="sub">Richter&rsquo;s Grey, the Machine&rsquo;s Em Dash <span class="dash">&mdash;</span> and What Makes Us Us</p>
+    </div>
+    <div class="info">
+      <p class="byline">Tommie Juzek</p>
+      <p class="when">Thursday 1 October 2026 &middot; <span class="nowrap">5:30&ndash;7:15 pm</span>, talk and refreshments<br>Diffenbaugh 009, Florida State University</p>
+      <p class="panel">With a moderated panel: Joachim Adams and Susan Bryson</p>
+    </div>
+  </header>
+
+  <section class="actions" aria-label="Slides and survey">
+    <a class="card primary" href="slides/">
+      <span class="label">Slides</span>
+      <span class="title">Open the slides <span class="arrow">&rarr;</span></span>
+      <span class="note">Built for a laptop or a large screen. Arrow keys or space to move on.</span>
+    </a>
+    <div class="card waiting" id="survey">
+      <span class="label">Survey</span>
+      <span class="title">Susan Bryson&rsquo;s survey</span>
+      <span class="note">Link to follow.</span>
+    </div>
+  </section>
+
+  <section class="block prose">
+    <h2>About the talk</h2>
+    <p>When Gerhard Richter painted his canvases grey, it was out of a crisis: he did not know what was left to paint. Many in the academy know the feeling now. In creative writing, in programming, in mathematical proof, machines pass the tests of whether a made thing works. What few of those tests were built to see is form.</p>
+    <p>This talk follows one piece of form, the em dash, from Dickinson to the Commonwealth Short Story Prize: how models came to overuse it, then partly stopped, and what training does and does not explain. What remains is the question: what makes us us when the machine writes well?</p>
+  </section>
+
+  <section class="block">
+    <h2>Further reading</h2>
+
+    <h3 class="group">Machines that pass the tests</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://www.science.org/content/article/amid-flood-ai-advances-astrophysicists-are-questioning-soul-their-field">Amid a flood of AI advances, astrophysicists are questioning the soul of their field</a>
+        <span class="meta">Joshua Sokol, <i>Science</i>, 4 June 2026 <span class="kind">journalism</span></span>
+        <span class="why">Astronomers on what their field is for once machines can do the work.</span>
+      </li>
+      <li>
+        <a class="t" href="https://proofsandprompts.com/2026/08/30/care-for-a-little-more-ai/">Care for a little more AI?</a>
+        <span class="meta">Hugo Duminil-Copin, 30 August 2026 <span class="kind">blog post</span></span>
+        <span class="why">A Fields medallist on a machine-found proof in his own field, which he calls &ldquo;short and particularly elegant&rdquo;.</span>
+      </li>
+      <li>
+        <a class="t" href="https://arxiv.org/abs/1705.08807">When Will AI Exceed Human Performance? Evidence from AI Experts</a>
+        <span class="meta">Grace et al., <i>Journal of Artificial Intelligence Research</i> 62, 2018 <span class="kind">peer-reviewed</span></span>
+        <span class="why">In a 2016 survey, AI researchers&rsquo; median guess for a machine writing a high-school essay was 2026; for a bestselling book, 2049.</span>
+      </li>
+    </ul>
+
+    <h3 class="group">How machines write</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://www.scientificamerican.com/article/chatgpt-and-gemini-ai-have-uniquely-different-writing-styles/">ChatGPT and Gemini AIs Have Uniquely Different Writing Styles</a>
+        <span class="meta">Karolina Rudnicka, <i>Scientific American</i>, 9 July 2025 <span class="kind">journalism</span></span>
+        <span class="why">Each chatbot writes in a style of its own, much as each of us does.</span>
+        <span class="also">The paper behind it: Rudnicka and Juzek, <a href="https://arxiv.org/abs/2608.06589">&ldquo;Beyond &lsquo;AI Language&rsquo;: The case for the idiolectal nature of LLM output&rdquo;</a>, arXiv 2608.06589 <span class="kind">preprint</span></span>
+      </li>
+      <li>
+        <a class="t" href="https://doi.org/10.1609/aies.v8i1.36540">Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English</a>
+        <span class="meta">Anderson, Galpin and Juzek, AIES 2025 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Words associated with AI turning up in the way people speak, off the cuff. An association, not proof of a cause.</span>
+      </li>
+      <li>
+        <a class="t" href="https://arxiv.org/abs/2603.18161">How LLMs Distort Our Written Language</a>
+        <span class="meta">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, arXiv 2603.18161, 2026 <span class="kind">preprint</span></span>
+        <span class="why">In one of its experiments, essays largely written by the model took fewer sides than essays written without it.</span>
+      </li>
+    </ul>
+
+    <h3 class="group">Can literary quality be measured?</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://aclanthology.org/2023.nodalida-1.5/">Good Reads and Easy Novels: Readability and Literary Quality in a Corpus of US-published Fiction</a>
+        <span class="meta">Bizzoni, Moreira, Dwenger, Lassen, Thomsen and Nielbo, NoDaLiDa 2023 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Readability goes with popularity, and against prestigious literary awards: crowds and experts judge differently.</span>
+      </li>
+      <li>
+        <a class="t" href="https://jcls.io/article/id/3908/">Measuring Literary Quality: Proxies and Perspectives</a>
+        <span class="meta">Feldkamp, Bizzoni, Thomsen and Nielbo, <i>Journal of Computational Literary Studies</i>, 2024 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Fourteen measures across 9,000 novels, and the case for speaking of qualities in the plural.</span>
+      </li>
+    </ul>
+
+    <h3 class="group">Grey</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://www.nationalgalleries.org/art-and-artists/89110"><i>Spiegel, Grau</i> (Mirror Painting, Grey), 1991</a>
+        <span class="meta">Gerhard Richter, National Galleries of Scotland <span class="kind">artwork</span></span>
+        <span class="why">The painting on the title slide: grey pigment on glass, a mirror painting from the 1990s rather than one of the grey canvases of the 1970s.</span>
+      </li>
+    </ul>
+
+    <p class="aside">Every number in the talk, with its source, is on the last two slides of the deck.</p>
+  </section>
+
+  <section class="block prose">
+    <h2>About the speaker</h2>
+    <p>Tommie Juzek is Assistant Professor of Computational Linguistics at Florida State University. He works on why language models write the way they do, and what that is doing to human writing. More at <a href="/">tjuzek.com</a>.</p>
+  </section>
+
+  <footer>
+    <p>Painting: Gerhard Richter, <i>Spiegel, Grau</i>, 1991. &copy; Gerhard Richter. <a href="https://www.nationalgalleries.org/art-and-artists/89110">National Galleries of Scotland</a>. Photo: Antonia Reeve.</p>
+    <p>Tommie Juzek chose what goes on this page. Claude (Anthropic&rsquo;s Opus) built it from his notes and direction, in the style of the slides. Type: Newsreader and Inter (SIL Open Font License).</p>
+    <p>Last updated 30 September 2026.</p>
+  </footer>
+
+</main>
+
+<script>
+/* The waves: three bundles of lines echoing the flyer, as on the slides (ported from slides/assets/deck.js).
+   Periodic over 1920 units, drawn twice as wide, drifted by a composited transform. */
+(function () {
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var host = document.createElement('div');
+  host.className = 'waves';
+  host.setAttribute('aria-hidden', 'true');
+  var bundles = [
+    { cls: 'ba', cy: 650, amp: 185, k1: 1, k2: 3, b: 30, n: 16, dphi: 0.095, ph0: 0.4, drift: '', op0: 0.16, op1: 0.62 },
+    { cls: 'bb', cy: 420, amp: 225, k1: 1, k2: 2, b: 44, n: 14, dphi: 0.085, ph0: 2.2, drift: 'slow rev', op0: 0.14, op1: 0.5 },
+    { cls: 'bc', cy: 790, amp: 130, k1: 2, k2: 3, b: 22, n: 12, dphi: 0.12, ph0: 4.1, drift: 'slow', op0: 0.12, op1: 0.46 }
+  ];
+  bundles.forEach(function (B) {
+    var drift = document.createElement('div');
+    drift.className = ('drift ' + B.drift).trim();
+    var svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 3840 1080');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('class', B.cls);
+    for (var i = 0; i < B.n; i++) {
+      var phi = B.ph0 + i * B.dphi, A = B.amp * (1 - i * 0.02), off = (i - B.n / 2) * 3.2, d = '';
+      for (var x = 0; x <= 3840; x += 16) {
+        var t = 2 * Math.PI * x / 1920;
+        var yv = B.cy + off + A * Math.sin(B.k1 * t + phi) + B.b * Math.sin(B.k2 * t + phi * 1.7);
+        d += (x ? 'L' : 'M') + x + ' ' + yv.toFixed(1);
+      }
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('stroke-opacity', (B.op0 + (B.op1 - B.op0) * Math.sin(Math.PI * (i + 0.5) / B.n)).toFixed(2));
+      svg.appendChild(p);
+    }
+    drift.appendChild(svg);
+    host.appendChild(drift);
+  });
+  document.body.insertBefore(host, document.body.firstChild);
+})();
+</script>
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
