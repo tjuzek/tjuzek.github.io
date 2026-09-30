@@ -225,6 +225,16 @@
     toast('Grey treatment: ' + next);
   }
 
+  /* ---- arriving from the talk page: the grey of the mirror lifts once the slides are ready ---- */
+  function liftGrey() {
+    if (!html.classList.contains('from-grey') || html.classList.contains('lifting')) return;
+    setTimeout(function () {
+      html.classList.add('lifting');
+      setTimeout(function () { html.classList.remove('from-grey'); html.classList.remove('lifting'); }, 2000);
+    }, 500);
+  }
+  if (html.classList.contains('from-grey')) setTimeout(liftGrey, 5000);
+
   function start() {
     if (!PRINT) buildWaves();
     numberSlides();
@@ -244,6 +254,7 @@
       window.Reveal.addKeyBinding({ keyCode: 89, key: 'Y', description: 'Cycle grey treatment (dev)' }, cycleGrey);
       window.Reveal.addKeyBinding({ keyCode: 71, key: 'G', description: 'Jump to a slide by number' }, openJump);
       if (PRESENT) toast('Presenting: F5, Ctrl+R and Tab are off');
+      liftGrey();
     });
   }
 

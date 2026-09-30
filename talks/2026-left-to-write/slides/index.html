@@ -7,6 +7,12 @@
 <meta name="description" content="Slides for a talk by Thomas Stephan (Tommie) Juzek, MLL Colloquium, Florida State University, 1 October 2026. Draft v0.4.">
 <!-- draft: kept out of search engines for now -->
 <meta name="robots" content="noindex">
+<script>
+/* Arriving from the talk page's "Open the slides": start in the grey of the mirror (deck.css); deck.js lifts it. */
+(function () { try { var t = +sessionStorage.getItem('wltw.from-grey'); sessionStorage.removeItem('wltw.from-grey');
+  if (t && Date.now() - t < 8000 && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-grey');
+} catch (e) { /* no storage: no grey */ } })();
+</script>
 <link rel="stylesheet" href="assets/reveal/reveal.css">
 <link rel="stylesheet" href="assets/deck.css">
 </head>

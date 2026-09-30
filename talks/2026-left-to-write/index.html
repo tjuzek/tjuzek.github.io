@@ -154,6 +154,10 @@ h2 {
 .reading .also { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 4px; }
 .aside { font-family: var(--sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 22px 0 0; }
 
+/* the way into the slides: the page turns the grey of the mirror, then the slides open and start from it */
+.to-grey { position: fixed; inset: 0; z-index: 20; background: #4a5159; opacity: 0; pointer-events: none; transition: opacity 0.9s ease-in-out; }
+.to-grey.on { opacity: 1; pointer-events: auto; }
+
 /* footer */
 footer { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); border-top: 1px solid var(--hair); padding-top: 18px; }
 footer p { margin: 0 0 10px; }
@@ -335,6 +339,32 @@ footer p { margin: 0 0 10px; }
     host.appendChild(drift);
   });
   document.body.insertBefore(host, document.body.firstChild);
+})();
+</script>
+<script>
+/* The way into the slides: the page turns the grey of the mirror (#4a5159, the painting's own grey
+   as the NGS image shows it), then the slides
+   open and start from that grey (slides/index.html reads the flag). A click that opens a new tab, or reduced motion,
+   goes straight there. Back from the slides, the page returns in colour. */
+(function () {
+  var link = document.querySelector('.card.primary');
+  if (!link) return;
+  var veil = document.createElement('div');
+  veil.className = 'to-grey';
+  veil.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(veil);
+  var calm = false;
+  try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  link.addEventListener('click', function (e) {
+    if (calm || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    try { sessionStorage.setItem('wltw.from-grey', String(Date.now())); } catch (err) {}
+    var gone = false, go = function () { if (!gone) { gone = true; location.href = link.href; } };
+    veil.addEventListener('transitionend', go);
+    setTimeout(go, 1100);
+    veil.classList.add('on');
+  });
+  window.addEventListener('pageshow', function () { veil.classList.remove('on'); });
 })();
 </script>
 <script data-goatcounter="https://tjuzek.goatcounter.com/count"

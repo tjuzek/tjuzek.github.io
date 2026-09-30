@@ -423,3 +423,9 @@ html.is-print .jump { display: none; }
 /* print view: reveal moves each section into a .pdf-page, so the height rule above no longer
    matches; without an explicit height the absolute .frame collapses and content is clipped */
 html.reveal-print .reveal .slides .pdf-page section { height: 1080px !important; }
+
+/* arriving from the talk page's "Open the slides" (talk/landing, 30 Sep): the slides start in the grey of the mirror
+   (#4a5159, the painting's own grey in the NGS image; --richter is the flyer's) and deck.js lifts it once reveal is ready. index.html's head sets the class, so
+   the grey is the first thing painted. */
+html.from-grey::after { content: ''; position: fixed; inset: 0; z-index: 2147483000; background: #4a5159; pointer-events: none; opacity: 1; transition: opacity 1.8s ease-in-out; }
+html.from-grey.lifting::after { opacity: 0; }
