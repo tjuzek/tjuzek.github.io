@@ -1,12 +1,14 @@
-/* flurry.js: the panel slide's moving light (Tommie, 30 Sep: "waves in an animation in the colours of the
-   presentation in a calm, stylish motion during the panel, e.g. inspired by lubuntu's screensaver 'flurry'").
-   Our own code, after the idea of the old Flurry screensaver: three streams in the deck's wave colours drift on
-   slow paths and shed sparks that glow where they overlap (additive light) and fade into trails.
+/* flurry.js: the panel slide's moving light. Tommie, 30 Sep: first "waves in an animation in the colours of the
+   presentation in a calm, stylish motion during the panel, e.g. inspired by lubuntu's screensaver 'flurry'", then
+   "I like the sparks. but the general design is waves". So: the deck's own three wave bundles (the geometry of
+   deck.js's buildWaves), drawn in light, rolling, breathing and drifting slowly; and glints that run along single
+   lines, trailing light and shedding a few sparks that drift off and fade. Our own code.
    Runs only while the panel slide is showing; a still frame under reduced motion; nothing in print. */
 (function () {
   'use strict';
-  var W = 1920, H = 1080;
-  var canvas = null, ctx = null, raf = 0, last = 0, t = 0, streams = [], sparks = [], bg = [5, 5, 7];
+  var W = 1920, H = 1080, STEP = 12;
+  var canvas = null, ctx = null, raf = 0, last = 0, t = 0, bg = [5, 5, 7];
+  var bundles = [], glints = [], sparks = [], untilGlint = 0;
   var html = document.documentElement;
 
   function rgb(v, fallback) {
@@ -25,58 +27,91 @@
     ctx = canvas.getContext('2d');
     var cs = getComputedStyle(html);
     bg = rgb(cs.getPropertyValue('--bg'), bg);
-    var cols = [rgb(cs.getPropertyValue('--w-gold'), [168, 143, 85]),
-                rgb(cs.getPropertyValue('--w-violet'), [108, 95, 174]),
-                rgb(cs.getPropertyValue('--w-blue'), [74, 111, 192])];
-    // each stream: its colour (lifted a little for light), and a slow path of two sines per axis
-    streams = cols.map(function (c, i) {
-      return { c: lift(c, 0.25), ph: i * 2.09, ax: 0.15 + i * 0.023, bx: 0.061 + i * 0.013,
-               ay: 0.112 + i * 0.019, by: 0.077 - i * 0.009, x: W / 2, y: H / 2 };
-    });
-    sparks = [];
-    ctx.fillStyle = 'rgb(' + bg.join(',') + ')';
-    ctx.fillRect(0, 0, W, H);
+    var gold = rgb(cs.getPropertyValue('--w-gold'), [168, 143, 85]);
+    var violet = rgb(cs.getPropertyValue('--w-violet'), [108, 95, 174]);
+    var blue = rgb(cs.getPropertyValue('--w-blue'), [74, 111, 192]);
+    // the background's bundles (deck.js), each with its own slow roll (w), breath (br) and drift (v, px per second)
+    bundles = [
+      { c: lift(gold, 0.2), cy: 650, amp: 185, k1: 1, k2: 3, b: 30, n: 16, dphi: 0.095, ph0: 0.4, op0: 0.16, op1: 0.62, w: 0.11, v: -18, br: 0.13 },
+      { c: lift(violet, 0.25), cy: 420, amp: 225, k1: 1, k2: 2, b: 44, n: 14, dphi: 0.085, ph0: 2.2, op0: 0.14, op1: 0.5, w: -0.08, v: 12, br: 0.09 },
+      { c: lift(blue, 0.25), cy: 790, amp: 130, k1: 2, k2: 3, b: 22, n: 12, dphi: 0.12, ph0: 4.1, op0: 0.12, op1: 0.46, w: 0.14, v: -9, br: 0.17 }
+    ];
+    glints = []; sparks = [];
     return true;
   }
 
-  function head(s, tt) {
-    return [W / 2 + 560 * Math.sin(s.ax * tt + s.ph) + 220 * Math.sin(s.bx * tt * 1.7 + s.ph * 1.3),
-            H / 2 + 270 * Math.sin(s.ay * tt + s.ph * 0.7) + 120 * Math.cos(s.by * tt * 1.9 + s.ph)];
+  // the y of line i of bundle B at x, at time t (the background's formula, set in motion)
+  function lineY(B, i, x) {
+    var breath = 0.86 + 0.18 * Math.sin(B.br * t + B.ph0);
+    var phi = B.ph0 + i * B.dphi + B.w * t, A = B.amp * (1 - i * 0.02) * breath, off = (i - B.n / 2) * 3.2;
+    var tau = 2 * Math.PI * (x - B.v * t) / 1920;
+    return B.cy + off + A * Math.sin(B.k1 * tau + phi) + B.b * Math.sin(B.k2 * tau + phi * 1.7);
   }
 
-  var PACE = 0.5;                                              // Tommie, 30 Sep: half the speed
   function frame(dt) {
-    var m = dt * PACE;                                          // motion runs at half speed; light fades in real time
-    t += m * 0.016;                                             // seconds, roughly
-    // fade what was drawn towards the ground: the trails
+    t += dt / 60;                                               // seconds
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(' + bg.join(',') + ',0.022)';     // slower fade: the light lasts longer
+    ctx.fillStyle = 'rgb(' + bg.join(',') + ')';
     ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = 'lighter';
-    streams.forEach(function (s) {
-      var p = head(s, t), vx = p[0] - s.x, vy = p[1] - s.y;
-      for (var k = 0; k < 5; k++) {
-        // per unit of motion: the head's own velocity, and a wider spray, so the sparks go out further
-        var a = Math.random() * Math.PI * 2, r = Math.random() * 4.2;
-        sparks.push({ x: p[0], y: p[1], vx: vx / PACE * 0.9 + Math.cos(a) * r, vy: vy / PACE * 0.9 + Math.sin(a) * r,
-                      life: 1, decay: 0.0018 + Math.random() * 0.0022, c: s.c, w: 1.8 + Math.random() * 2.6 });
+    ctx.lineWidth = 1.7;
+    bundles.forEach(function (B) {
+      for (var i = 0; i < B.n; i++) {
+        var op = (B.op0 + (B.op1 - B.op0) * Math.sin(Math.PI * (i + 0.5) / B.n)) * 0.72;
+        ctx.strokeStyle = 'rgba(' + B.c.join(',') + ',' + op.toFixed(3) + ')';
+        ctx.beginPath();
+        for (var x = -STEP; x <= W + STEP; x += STEP) {
+          var y = lineY(B, i, x);
+          if (x < 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
       }
-      s.x = p[0]; s.y = p[1];
     });
-    for (var i = sparks.length - 1; i >= 0; i--) {
-      var q = sparks[i], px = q.x, py = q.y;
-      // a gentle swirl about the centre, and drag
-      var dx = q.x - W / 2, dy = q.y - H / 2;
-      q.vx += -dy * 0.00005 * m; q.vy += dx * 0.00005 * m;
-      q.vx *= Math.pow(0.995, m); q.vy *= Math.pow(0.995, m);
-      q.x += q.vx * m; q.y += q.vy * m;
-      q.life -= q.decay * dt;
-      if (q.life <= 0) { sparks.splice(i, 1); continue; }
-      ctx.strokeStyle = 'rgba(' + q.c.join(',') + ',' + (q.life * 0.15).toFixed(3) + ')';
-      ctx.lineWidth = q.w;
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(q.x, q.y); ctx.stroke();
+    // glints: light running along one line, now and then
+    untilGlint -= dt / 60;
+    if (untilGlint <= 0 && glints.length < 7) {
+      var B = bundles[Math.floor(Math.random() * bundles.length)];
+      var dir = Math.random() < 0.5 ? 1 : -1;
+      glints.push({ B: B, i: Math.floor(Math.random() * B.n), x: dir > 0 ? -40 : W + 40, dir: dir,
+                    sp: 110 + Math.random() * 90, life: 0 });
+      untilGlint = 0.9 + Math.random() * 1.6;
     }
-    if (sparks.length > 9000) sparks.splice(0, sparks.length - 9000);
+    for (var g = glints.length - 1; g >= 0; g--) {
+      var G = glints[g];
+      G.x += G.dir * G.sp * dt / 60; G.life += dt / 60;
+      if (G.x < -80 || G.x > W + 80) { glints.splice(g, 1); continue; }
+      var fade = Math.min(1, G.life / 1.2);
+      // the tail: the last 240 px of the line behind the glint, brightening towards it
+      for (var k = 0; k < 20; k++) {
+        var x0 = G.x - G.dir * (k + 1) * 12, x1 = G.x - G.dir * k * 12;
+        ctx.strokeStyle = 'rgba(' + lift(G.B.c, 0.4).join(',') + ',' + (fade * 0.5 * (1 - k / 20)).toFixed(3) + ')';
+        ctx.lineWidth = 2.8 - k * 0.1;
+        ctx.beginPath(); ctx.moveTo(x0, lineY(G.B, G.i, x0)); ctx.lineTo(x1, lineY(G.B, G.i, x1)); ctx.stroke();
+      }
+      var gy = lineY(G.B, G.i, G.x);
+      var hc = lift(G.B.c, 0.6).join(','), glow = ctx.createRadialGradient(G.x, gy, 0, G.x, gy, 30);
+      glow.addColorStop(0, 'rgba(' + hc + ',' + (fade * 0.42).toFixed(3) + ')');
+      glow.addColorStop(1, 'rgba(' + hc + ',0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(G.x, gy, 30, 0, 2 * Math.PI); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,' + (fade * 0.75).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(G.x, gy, 2.6, 0, 2 * Math.PI); ctx.fill();
+      // a few sparks shed as it passes
+      if (Math.random() < 1.2 * dt) {
+        var a = Math.random() * Math.PI * 2, r = 0.5 + Math.random() * 1.8;
+        sparks.push({ x: G.x, y: gy, vx: Math.cos(a) * r - G.dir * 0.3, vy: Math.sin(a) * r, life: 1,
+                      decay: 0.005 + Math.random() * 0.006, c: lift(G.B.c, 0.5), w: 1.8 + Math.random() * 1.4 });
+      }
+    }
+    for (var s = sparks.length - 1; s >= 0; s--) {
+      var q = sparks[s];
+      q.x += q.vx * dt; q.y += q.vy * dt; q.vx *= Math.pow(0.985, dt); q.vy *= Math.pow(0.985, dt);
+      q.life -= q.decay * dt;
+      if (q.life <= 0) { sparks.splice(s, 1); continue; }
+      ctx.strokeStyle = 'rgba(' + q.c.join(',') + ',' + (q.life * 0.6).toFixed(3) + ')';
+      ctx.lineWidth = q.w;
+      ctx.beginPath(); ctx.moveTo(q.x - q.vx * 6, q.y - q.vy * 6); ctx.lineTo(q.x, q.y); ctx.stroke();
+    }
   }
 
   function loop(now) {
@@ -89,8 +124,8 @@
   function start() {
     if (html.classList.contains('is-print') || raf) return;
     if (!ctx && !setup()) return;
-    if (html.classList.contains('motion-off')) {          // reduced motion: one still frame, drawn at once
-      for (var i = 0; i < 260; i++) frame(1);
+    if (html.classList.contains('motion-off')) {            // reduced motion: one still frame
+      t = 20; frame(0);
       return;
     }
     last = 0;
