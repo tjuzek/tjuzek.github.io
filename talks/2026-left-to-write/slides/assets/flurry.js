@@ -7,6 +7,7 @@
 (function () {
   'use strict';
   var W = 1920, H = 1080, STEP = 12;
+  var SPREAD = 1.45, AMP = 1.55;     // Tommie, 30 Sep: more of the screen, even a bit out: bundles further apart, waves taller
   var canvas = null, ctx = null, raf = 0, last = 0, t = 0, bg = [5, 5, 7];
   var bundles = [], glints = [], sparks = [], untilGlint = 0;
   var html = document.documentElement;
@@ -45,7 +46,8 @@
     var breath = 0.86 + 0.18 * Math.sin(B.br * t + B.ph0);
     var phi = B.ph0 + i * B.dphi + B.w * t, A = B.amp * (1 - i * 0.02) * breath, off = (i - B.n / 2) * 3.2;
     var tau = 2 * Math.PI * (x - B.v * t) / 1920;
-    return B.cy + off + A * Math.sin(B.k1 * tau + phi) + B.b * Math.sin(B.k2 * tau + phi * 1.7);
+    var cy = H / 2 + (B.cy - 620) * SPREAD, wave = A * Math.sin(B.k1 * tau + phi) + B.b * Math.sin(B.k2 * tau + phi * 1.7);
+    return cy + off * 1.6 + wave * AMP;
   }
 
   function frame(dt) {
