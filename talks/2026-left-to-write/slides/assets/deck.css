@@ -378,6 +378,9 @@ html.is-print .reveal .slides section .frame { position: absolute; }
 
 /* loop diagram and schematic strokes */
 .chart .book { font-size: 34px; fill: var(--text-2); }
+.chart .line.dashed { stroke-dasharray: 14 12; }
+.chart .dot.hollow.gold { fill: var(--ground); stroke: var(--s-gold); stroke-width: 5; }
+.chart .tell-q { fill: var(--text-3); }
 .chart .next-slot { stroke: var(--text-3); stroke-width: 3; stroke-dasharray: 10 12; }
 .chart .next-q { font-family: 'Newsreader', Georgia, serif; font-size: 120px; fill: var(--ink); }
 .chart .book.news { fill: var(--ink); font-weight: 600; }
