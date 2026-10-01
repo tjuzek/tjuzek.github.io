@@ -344,6 +344,16 @@ section:has(.step-marker[data-step="3"].visible) .chart .st-3 .draw { stroke-das
 #stakes:has(.step-marker[data-step="open"].visible) .stakes-body { opacity: 1; }
 .chart .loop-past { opacity: 0.3; }
 
+/* ---------- the panel slide: Flurry-like light (assets/flurry.js), the background waves out of the way ---------- */
+#panel canvas.flurry { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#panel .frame { justify-content: flex-end; }
+#panel .panel-line { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; letter-spacing: 0.06em;
+  color: var(--text-3); margin: 0; }
+#panel .panel-line span { margin-left: 18px; padding-left: 18px; border-left: 2px solid var(--axis); }
+#panel .slide-no { display: none; }
+body.panel .waves { opacity: 0; }
+html.is-print #panel canvas.flurry { display: none; }
+
 /* ---------- text fragments: a quiet rise ---------- */
 .reveal .fragment.rise { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal .fragment.rise.visible { opacity: 1; transform: none; }

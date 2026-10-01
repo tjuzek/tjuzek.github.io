@@ -411,20 +411,6 @@
   </div>
 </section>
 
-<section id="close" data-state="grey" data-timing="60">
-  <div class="frame split">
-    <div style="flex:1">
-      <p class="h1">What is left to write?</p>
-      <p class="lede" style="margin-top:40px">Over to the conversation.</p>
-      <p class="small">With Joachim Adams and Susan Bryson</p>
-    </div>
-    <figure class="painting-wrap" style="width:440px; margin:0">
-      <img class="painting" src="assets/img/richter-grey-ngs.jpg" width="1570" height="2635"
-           alt="Gerhard Richter, Spiegel, Grau (Mirror Painting, Grey), 1991.">
-    </figure>
-  </div>
-</section>
-
 <section id="credits" data-state="quiet" data-timing="10">
   <div class="frame">
     <p class="kicker">How these slides were made</p>
@@ -505,10 +491,35 @@
   </div>
 </section>
 
+<!-- the close, moved to the end on 30 Sep (Tommie: after the credits and the appendix), then the panel -->
+<section id="close" data-state="grey" data-timing="60">
+  <div class="frame split">
+    <div style="flex:1">
+      <p class="h1">What is left to write?</p>
+      <p class="lede" style="margin-top:40px">Over to the conversation.</p>
+      <p class="small">With Joachim Adams and Susan Bryson</p>
+    </div>
+    <figure class="painting-wrap" style="width:440px; margin:0">
+      <img class="painting" src="assets/img/richter-grey-ngs.jpg" width="1570" height="2635"
+           alt="Gerhard Richter, Spiegel, Grau (Mirror Painting, Grey), 1991.">
+    </figure>
+  </div>
+</section>
+
+<section id="panel" data-state="panel" data-timing="0">
+  <!-- The panel (Tommie, 30 Sep): calm light in the deck's colours while the conversation runs, after the old
+       Flurry screensaver; our own code (assets/flurry.js). Runs only on this slide. -->
+  <canvas class="flurry" width="1920" height="1080" aria-hidden="true"></canvas>
+  <div class="frame">
+    <p class="panel-line">What is left to write? <span>Panel and questions</span></p>
+  </div>
+</section>
+
 </div>
 </div>
 <script src="assets/reveal/reveal.js"></script>
 <script src="assets/charts.js"></script>
+<script src="assets/flurry.js"></script>
 <script src="assets/deck.js"></script>
 </body>
 </html>
