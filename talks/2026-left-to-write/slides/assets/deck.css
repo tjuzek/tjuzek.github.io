@@ -395,6 +395,7 @@ html.is-print .reveal .slides section .frame { position: absolute; }
 .chart .tell-q { fill: var(--text-3); }
 .chart .next-slot { stroke: var(--text-3); stroke-width: 3; stroke-dasharray: 10 12; }
 .chart .next-q { font-family: 'Newsreader', Georgia, serif; font-size: 120px; fill: var(--ink); }
+.chart .who { font-size: 26px; fill: var(--text-3); }
 .chart .book.news { fill: var(--ink); font-weight: 600; }
 .chart .newsbar { fill: var(--ink-2); }
 .chart .axis-break { fill: var(--ground); }

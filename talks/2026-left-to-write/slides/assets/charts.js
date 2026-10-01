@@ -699,7 +699,46 @@
     txt(nx, x(5), m.t + ph + 50, 'next', 'xlab', { 'text-anchor': 'middle' });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     House styles: em dashes in six 2026 models given the same prompts (EVIDENCE §21; unpublished, work in
+     progress). AI idiolects project (Rudnicka and Juzek), phase 2: Improta et al.'s four prompts, 1,000 texts
+     per model and topic, temperature 0.5; U+2014 as typed, per 1,000 whitespace words, the four topics pooled.
+     Only the coarse split is stable across topics (OLMo top and NeMo bottom in all four; the middle three swap).
+     No human bar: the project's human corpora are not prompt-matched, and its Reuters text cannot hold the glyph.
+     ------------------------------------------------------------------------------------------ */
+  var HOUSES = [
+    { name: 'OLMo 3 7B', who: 'Ai2, open', v: 11.11 },
+    { name: 'Claude Haiku 4.5', who: 'Anthropic', v: 8.56 },
+    { name: 'Qwen3 14B', who: 'Alibaba, open', v: 8.20 },
+    { name: 'Gemini 3 Flash', who: 'Google', v: 7.18 },
+    { name: 'GPT-5.4 mini', who: 'OpenAI', v: 0.88 },
+    { name: 'Mistral NeMo 12B', who: 'Mistral, open', v: 0.027 }
+  ];
+  function housesChart(host) {
+    var W = 1656, top = 30, step = 62, bh = 38, bot = top + step * (HOUSES.length - 1) + 40, H = bot + 50;
+    var xa = 590, xb = 1460, xmax = 12;
+    var X = function (v) { return xa + v / xmax * (xb - xa); };
+    var svg = svgFor(host, W, H, 'Em dashes per 1,000 words, six 2026 models, the same prompts: OLMo 3 7B 11.1, Claude Haiku 4.5 8.6, Qwen3 14B 8.2, Gemini 3 Flash 7.2, GPT-5.4 mini 0.9, Mistral NeMo 12B 0.03.');
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [0, 4, 8, 12].forEach(function (v) {
+      el('line', { x1: X(v), x2: X(v), y1: top - 26, y2: bot }, grid);
+      txt(ticks, X(v), bot + 38, fmt(v), '', { 'text-anchor': 'middle' });
+    });
+    txt(g(svg, 'st-0'), 0, bot + 38, 'em dashes per 1,000 words', 'xlab-2', {});
+    HOUSES.forEach(function (r, i) {
+      var y = top + i * step, grp = g(svg, 'st-1');
+      var lab = txt(grp, 0, y + 11, r.name + ' ', 'book', {});
+      var wt = el('tspan', { 'class': 'who' }, lab); wt.textContent = r.who;
+      var bars = g(grp, 'grow-x');
+      bars.style.transformOrigin = xa + 'px 0px';
+      var b = mark(el('rect', { x: xa, y: y - bh / 2, width: Math.max(3, X(r.v) - xa).toFixed(1), height: bh, rx: 6, 'class': 'bar gold' }, bars), '§21');
+      el('title', null, b).textContent = r.name + ': ' + fmt(r.v, 2) + ' em dashes per 1,000 words';
+      txt(g(grp, 'late'), Math.max(X(r.v), xa + 3) + 18, y + 12, fmt(r.v, r.v < 0.1 ? 2 : 1), 'label', {});
+    });
+  }
+
   var BUILDERS = {
+    'houses': housesChart,
     'tells': tellsChart,
     'books': booksChart,
     'provenance': provenanceChart,

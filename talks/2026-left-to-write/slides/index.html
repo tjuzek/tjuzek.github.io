@@ -283,11 +283,20 @@
   </div>
 </section>
 
-<section id="house-styles" class="placeholder" data-timing="45">
+<section id="house-styles" data-state="quiet" data-timing="45">
+  <!-- Built 30 Sep on Tommie's ask: Rudnicka's Scientific American piece for a quote, the AI idiolects project for data
+       on model differences (EVIDENCE §21). The em-dash rates are the project's own, unpublished; no human bar (its human
+       corpora are not prompt-matched, and its Reuters text cannot hold the glyph). -->
   <div class="frame">
-    <p class="kicker">Placeholder &middot; the trace</p>
-    <p class="h2">House styles, not a language</p>
-    <p class="note">Within one 2026 cohort, contractions range from about 1,200 to over 30,000 per million (§4.1): Rudnicka&rsquo;s idiolects. &ldquo;AI language&rdquo; is the wrong noun.</p>
+    <p class="kicker">The trace</p>
+    <p class="h2" style="margin-bottom:22px">House styles, not a language.</p>
+    <div class="chart" data-chart="houses"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <div class="fragment rise" style="margin-top:6px">
+      <p class="quote aside">&ldquo;&hellip; chatbots&rsquo; models don&rsquo;t just average or mirror their training data but develop distinctive lexical, grammatical or syntactic habits in the process, much like humans are shaped by our experiences.&rdquo;</p>
+      <p class="cite" data-ev="§21">Karolina Rudnicka, <i>Scientific American</i>, 9 July 2025</p>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="§21">Six 2026 models, same four prompts, 4,000 texts each; em dashes per 1,000 words. AI idiolects project with Rudnicka, unpublished. <span class="tag wip">work in progress</span></p>
   </div>
 </section>
 
@@ -418,6 +427,7 @@
         <tr><td class="n">2,077 to 2,288</td><td>GPT-4.1, science; matched human science 0</td><td>§1.3</td></tr>
         <tr><td class="n">42 to 85</td><td>GPT-5.4, science: 1 and 2 dashes in about 23,600 tokens</td><td>§1.4 (counts pending)</td></tr>
         <tr><td class="n">80, 65, 100, 17%; 2, 13, 3, 100%; 23%</td><td><i>delve</i>; the em dash: each as a share of its peak, GPT-4 to GPT-4.1, news (a larger run than the two before); the dash at GPT-5.4, from the runs of slide 9</td><td>§20; §1.2, §1.5</td></tr>
+        <tr><td class="n">11.1 to 0.03</td><td>em dashes per 1,000 words, six 2026 models, the same prompts (unpublished; work in progress)</td><td>§21</td></tr>
         <tr><td class="n">4 up, 2 down</td><td>base to instruction-tuned, six open families</td><td>§3.3 to §3.4</td></tr>
         <tr><td class="n">491</td><td>OLMo-2&rsquo;s pretraining web text (work in progress)</td><td>§16.2</td></tr>
         <tr><td class="n">185; 1,032; 309</td><td>its instruction data: answers by people; from ChatGPT; all answers (work in progress)</td><td>§16.4</td></tr>
@@ -461,7 +471,7 @@
     <p class="kicker">Sources</p>
     <p class="cite">Em dash measurements: Juzek et al., work in preparation (projects 02 and 07; NSF CAREER proof of concept). Idiolects: Rudnicka and Juzek, arXiv 2608.06589. Uptake in speech: Anderson, Galpin and Juzek, AIES 2025. Novels: Gutenberg editions, counted by us.</p>
     <p class="cite">Prize: Commonwealth Foundation statements of 19 May, 22 June and 30 June 2026. Base rates: worked arithmetic with illustrative parameters (a 2% or 1% prior, 95% caught, 0.5% or 1% false positives).</p>
-    <p class="cite">Format bias: Zhang, Xiong, Chen, Zhou, Huang and Zhang, &ldquo;From Lists to Emojis&rdquo;, ACL 2025, pp. 26940 to 26961. Literary quality: Bizzoni et al., NoDaLiDa 2023; Feldkamp et al., JCLS 2024.</p>
+    <p class="cite">Format bias: Zhang, Xiong, Chen, Zhou, Huang and Zhang, &ldquo;From Lists to Emojis&rdquo;, ACL 2025, pp. 26940 to 26961. Literary quality: Bizzoni et al., NoDaLiDa 2023; Feldkamp et al., JCLS 2024. House styles: Rudnicka, <i>Sci. Am.</i>, 9 July 2025.</p>
     <p class="cite">Percolation: &ldquo;Isoperimetric dimension &gt; 1 implies p<sub>c</sub> &lt; 1&rdquo;, 28 May 2026; Duminil-Copin, &ldquo;Care for a little more AI?&rdquo;, 30 August 2026. Astronomy: J. Sokol, <i>Science</i>, 4 June 2026; D. W. Hogg, &ldquo;Why do we do astrophysics?&rdquo;, arXiv 2602.10181, 10 February 2026 (preprint). Music: Deezer newsroom, 24 January 2025 and 21 July 2026; Deezer and Ipsos, November 2025. The flood: arXiv&rsquo;s mathematics listings by year, read 30 September 2026; the ACL 2026 programme chairs&rsquo; message; ACL Rolling Review, &ldquo;Sustainable reviewing policy&rdquo;, 11 September 2026.</p>
     <p class="cite">Stage by stage: Ai2&rsquo;s published OLMo-2 training data (olmo-mix-1124, dolmino-mix-1124, the Tulu 3 SFT mix for OLMo-2, the OLMo-2 7B preference mix), counted by us on 29 September 2026 (work in progress); the whole-corpus check with infini-gram; the OLMo-2 1B checkpoints (base, SFT, DPO, instruct, April 2025 release) and their own post-training mixes, continuing 10,000 CC-News articles, sampled and greedy (30 September 2026); the OLMo-2 7B checkpoints (November 2024 release, run in 4-bit) on the first 5,000 of them, sampled (30 September 2026).</p>
     <p class="cite">Stance: Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161v2, 26 August 2026 (preprint). Goncourt: Niklas Bender, &bdquo;Feigheit vor dem Thema?&ldquo;, <i>Frankfurter Allgemeine Zeitung</i>, 28 September 2026; the detector figures and the denial still to be sourced.</p>
