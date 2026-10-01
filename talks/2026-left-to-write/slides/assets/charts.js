@@ -621,7 +621,61 @@
     });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     The tell moves: "delve" and the em dash across OpenAI's flagships, news continuations (EVIDENCE §20).
+     Deep-N tier (20,000 to 100,000 items per model), a different run from the uniform tier of slides 9
+     and 10, so each word is drawn against its own peak and no rate on this slide can be read against
+     theirs. Source: 02 emdashes-prior-work/followup-starter/tables/dash_and_lexical_by_model.tsv.
+     ------------------------------------------------------------------------------------------ */
+  var TELLS = [
+    { label: 'GPT-4',       date: 'Jun 2023', delve: 215.1, em: 7.6 },
+    { label: 'GPT-4 Turbo', date: 'Apr 2024', delve: 174.4, em: 53.2 },
+    { label: 'GPT-4o',      date: 'Aug 2024', delve: 269.7, em: 12.7 },
+    { label: 'GPT-4.1',     date: 'Apr 2025', delve: 46.5,  em: 412.8 }
+  ];
+  function tellsChart(host) {
+    var W = 1656, H = 620, m = { l: 150, r: 250, t: 50, b: 120 };
+    var pw = W - m.l - m.r, ph = H - m.t - m.b, n = TELLS.length + 1;   // one slot more: next
+    var x = function (i) { return m.l + (i + 0.5) * pw / n; };
+    var y = function (p) { return m.t + ph - p / 100 * ph; };
+    var peak = { delve: 269.7, em: 412.8 };
+    var svg = svgFor(host, W, H, 'Each word against its own peak, OpenAI flagship models continuing news: delve 80, 65, 100 and 17 per cent from GPT-4 to GPT-4.1; the em dash 2, 13, 3 and 100 per cent.');
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [0, 50, 100].forEach(function (p) {
+      el('line', { x1: m.l, x2: m.l + pw, y1: y(p), y2: y(p) }, grid);
+      txt(ticks, m.l - 22, y(p) + 10, p + '%', '', { 'text-anchor': 'end' });
+    });
+    txt(g(svg, 'st-0'), m.l, 20, 'each word against its own peak', 'label-2', {});
+    var xl = g(svg, 'st-0');
+    TELLS.forEach(function (r, i) {
+      txt(xl, x(i), m.t + ph + 50, r.label, 'xlab', { 'text-anchor': 'middle' });
+      txt(xl, x(i), m.t + ph + 84, r.date, 'xlab-2', { 'text-anchor': 'middle' });
+    });
+    function series(key, cls, step) {
+      var grp = g(svg, 'st-' + step);
+      polyline(grp, TELLS.map(function (r, i) { return [x(i), y(r[key] / peak[key] * 100)]; }), 'line draw ' + cls);
+      TELLS.forEach(function (r, i) {
+        var c = mark(el('circle', { cx: x(i), cy: y(r[key] / peak[key] * 100), r: 11, 'class': 'dot ' + cls }, grp), '§20');
+        var t = el('title', null, c);
+        t.textContent = r.label + ': ' + (key === 'em' ? 'em dash ' : 'delve ') + fmt(r[key], 1) + ' per million tokens (' + fmt(r[key] / peak[key] * 100) + '% of its peak)';
+      });
+      return grp;
+    }
+    var d = series('delve', 'blue', 1);
+    var dl = txt(d, x(3) + 26, y(TELLS[3].delve / peak.delve * 100) + 11, '', 'label', {});
+    var di = el('tspan', { 'font-style': 'italic' }, dl); di.textContent = 'delve';
+    var e = series('em', 'gold', 2);
+    txt(e, x(3) + 26, y(100) + 11, 'the em dash', 'label', {});
+    // next: an empty slot
+    var nx = g(svg, 'st-3');
+    el('line', { x1: x(4), x2: x(4), y1: y(100), y2: y(50) - 80, 'class': 'next-slot' }, nx);
+    el('line', { x1: x(4), x2: x(4), y1: y(50) + 56, y2: y(0), 'class': 'next-slot' }, nx);
+    txt(nx, x(4), y(50) + 34, '?', 'next-q', { 'text-anchor': 'middle' });
+    txt(nx, x(4), m.t + ph + 50, 'next', 'xlab', { 'text-anchor': 'middle' });
+  }
+
   var BUILDERS = {
+    'tells': tellsChart,
     'books': booksChart,
     'provenance': provenanceChart,
     'provenance-1b': function (h) { stageChart(h, '1b'); },
