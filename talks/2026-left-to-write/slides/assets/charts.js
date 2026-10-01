@@ -411,8 +411,8 @@
   /* ------------------------------------------------------------------------------------------
      8. Provenance: one open model's training data, stage by stage (EVIDENCE §16, work in progress).
         OLMo-2's published training data, counted 29 Sep 2026 (the ledger in wk-talk/olmo-ledger/).
-        Colour is who wrote the text: people (grey), other models (blue). Log scale; every dot
-        labelled. Per million spaCy tokens. The model's own writing is the next slide's (sampled);
+        Colour is who wrote the text: people (grey), other models (blue). Linear bars (log until 30 Sep);
+        every bar labelled. Per million spaCy tokens. The model's own writing is the next slide's (sampled);
         v0.2's step 4, the 7B's greedy science rates (§3.2), left on 30 Sep: greedy decoding
         under-reads a model's dashes several times over (§16.12), which invited a false contrast.
      ------------------------------------------------------------------------------------------ */
@@ -424,14 +424,16 @@
     { step: 3, stage: '', label: 'rejected answers', v: 628.4, kind: 'blue', ev: '§16.5' }
   ];
   function provenanceChart(host) {
-    var W = 1656, H = 510, m = { l: 560, r: 170, t: 78, b: 70 };
-    var pw = W - m.l - m.r, lo = 0, hi = Math.log10(2000);
-    var x = function (v) { return m.l + (Math.log10(v) - lo) / (hi - lo) * pw; };
-    var svg = svgFor(host, W, H, 'Em dashes per million tokens in OLMo-2\'s training data, stage by stage');
+    // linear since 30 Sep (Tommie): with the greedy science step gone, every value sits between 185 and 1,032,
+    // and bars from zero show the gap at its true size (ChatGPT's answers 5.6 times people's)
+    var W = 1656, H = 510, m = { l: 560, r: 150, t: 78, b: 70 }, xmax = 1100, bh = 34;
+    var pw = W - m.l - m.r;
+    var x = function (v) { return m.l + v / xmax * pw; };
+    var svg = svgFor(host, W, H, 'Em dashes per million tokens in OLMo-2\'s training data, stage by stage: web text 491; answers written by people 185, answers from ChatGPT 1,032; preferred answers 411, rejected answers 628');
     // legend: who wrote the text
     var lg = g(svg, 'legend st-0'), lx = m.l;
     [['neutral', 'written by people'], ['blue', 'written by other models']].forEach(function (k) {
-      el('circle', { cx: lx + 11, cy: 22, r: 11, 'class': 'dot ' + k[0] }, lg);
+      el('rect', { x: lx, y: 11, width: 22, height: 22, rx: 4, 'class': 'bar ' + k[0] }, lg);
       txt(lg, lx + 32, 32, k[1], '');
       lx += 32 + k[1].length * 12.6 + 56;
     });
@@ -441,7 +443,7 @@
     var plotBottom = y - 30;
     // grid and ticks
     var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
-    [1, 10, 100, 1000].forEach(function (v) {
+    [0, 250, 500, 750, 1000].forEach(function (v) {
       el('line', { x1: x(v), x2: x(v), y1: m.t + 8, y2: plotBottom }, grid);
       txt(ticks, x(v), plotBottom + 40, fmt(v), '', { 'text-anchor': 'middle' });
     });
@@ -450,10 +452,11 @@
       var grp = g(svg, 'st-' + r.step), yy = ys[i];
       if (r.stage) txt(grp, 0, yy - 14, r.stage.toUpperCase(), 'xlab-2', { 'letter-spacing': '0.08em' });
       txt(grp, 0, yy + 20, r.label, 'label-2', {});
-      el('line', { x1: m.l, x2: m.l + pw, y1: yy + 10, y2: yy + 10, 'class': 'rowguide' }, grp);
-      var c = mark(el('circle', { cx: x(r.v), cy: yy + 10, r: 12, 'class': 'dot ' + r.kind }, grp), r.ev);
-      var t = el('title', null, c); t.textContent = (r.stage ? r.stage + ': ' : '') + r.label + ', ' + fmt(r.v, 1) + ' per million tokens';
-      txt(grp, x(r.v) + 24, yy + 20, fmt(r.v, r.v < 100 ? 1 : 0), 'label', {});
+      var bars = g(grp, 'grow-x');
+      bars.style.transformOrigin = m.l + 'px 0px';
+      var b = mark(el('rect', { x: m.l, y: yy + 10 - bh / 2, width: (x(r.v) - m.l).toFixed(1), height: bh, rx: 6, 'class': 'bar ' + r.kind }, bars), r.ev);
+      var t = el('title', null, b); t.textContent = (r.stage ? r.stage + ': ' : '') + r.label + ', ' + fmt(r.v, 1) + ' per million tokens';
+      txt(g(grp, 'late'), x(r.v) + 20, yy + 21, fmt(r.v, 0), 'label', {});
     });
   }
 
