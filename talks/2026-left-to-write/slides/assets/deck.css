@@ -330,6 +330,15 @@ section:has(.step-marker[data-step="3"].visible) .chart .st-3 .draw { stroke-das
 #why:has(.step-marker[data-step="open"].visible) .why-word { transform: none; }
 #why:has(.step-marker[data-step="open"].visible) .why-body { opacity: 1; }
 
+/* ---------- slide 19, the big turn: from the mark measured to what people do with it ---------- */
+#stakes .stakes-word { margin: 0 0 4px; white-space: nowrap; transform-origin: 0 0; transform: translate(0, 300px) scale(1.72);
+  transition: transform 1.5s cubic-bezier(.6,0,.2,1); }
+#stakes .stakes-body { opacity: 0; transition: opacity 0.9s ease 0.9s; }
+#stakes .stakes-body .chart { width: 1240px; margin: 0 auto; }
+#stakes:has(.step-marker[data-step="open"].visible) .stakes-word { transform: none; }
+#stakes:has(.step-marker[data-step="open"].visible) .stakes-body { opacity: 1; }
+.chart .loop-past { opacity: 0.3; }
+
 /* ---------- text fragments: a quiet rise ---------- */
 .reveal .fragment.rise { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal .fragment.rise.visible { opacity: 1; transform: none; }
@@ -348,6 +357,11 @@ section:has(.step-marker[data-step="3"].visible) .chart .st-3 .draw { stroke-das
 .waves .amp { transform-box: view-box; transform-origin: 50% 93%; transition: transform 1.6s cubic-bezier(.6,0,.2,1), opacity 1.6s ease; }
 .waves { transition: opacity 1.2s ease; opacity: 0.9; }
 body.quiet .waves { opacity: 0.22; }
+/* the big turn (slide 19): a stronger surge than slide 13's, then the same settling */
+body.stakes .waves { opacity: 1; }
+body.stakes .waves .amp { transform: scaleY(2.3); }
+body.stakes:has(.reveal .slides section.present .step-marker[data-step="open"].visible) .waves { opacity: 0.22; }
+body.stakes:has(.reveal .slides section.present .step-marker[data-step="open"].visible) .waves .amp { transform: none; }
 /* the turn (slide 13): the waves come up and swell while "Why?" stands alone, then settle like a chart slide's */
 body.turn .waves { opacity: 1; }
 body.turn .waves .amp { transform: scaleY(1.75); }

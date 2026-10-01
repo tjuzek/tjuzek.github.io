@@ -291,8 +291,10 @@
      5. The loop (convention to avoidance), drawn as a ring around the mark.
      ------------------------------------------------------------------------------------------ */
   var LOOP = ['human convention', 'training data', 'model behaviour', 'folk heuristic', 'automated detection', 'public accusation', 'human avoidance'];
-  function loopChart(host) {
-    var W = 1656, H = 820, cx = W / 2, cy = 410, R = 300;
+  // mode 'turn' (the transition before the flags, Tommie 30 Sep): the whole ring at once, the measured half dimmed
+  // (convention, training data, model behaviour) and the half about people lit (heuristic, detection, accusation, avoidance)
+  function loopChart(host, mode) {
+    var W = 1656, H = 820, cx = W / 2, cy = 410, R = 300, turn = mode === 'turn';
     var svg = svgFor(host, W, H, 'The loop: human convention, training data, model behaviour, folk heuristic, automated detection, public accusation, human avoidance');
     var defs = el('defs', null, svg);
     var mk = el('marker', { id: 'arrow', viewBox: '0 0 12 12', refX: 9, refY: 6, markerWidth: 9, markerHeight: 9, orient: 'auto-start-reverse' }, defs);
@@ -300,20 +302,23 @@
     var n = LOOP.length;
     var ang = function (i) { return -Math.PI / 2 + i * 2 * Math.PI / n; };
     var pos = function (i, r) { return [cx + (r || R) * Math.cos(ang(i)), cy + (r || R) * Math.sin(ang(i))]; };
-    var steps = [[0, 1, 2], [3, 4, 5], [6]];
+    var steps = turn ? [[0, 1, 2, 3, 4, 5, 6]] : [[0, 1, 2], [3, 4, 5], [6]];
     steps.forEach(function (idx, s) {
-      var grp = g(svg, 'st-' + (s + 1));
+      var grp = g(svg, turn ? 'st-0' : 'st-' + (s + 1));
       idx.forEach(function (i) {
+        var past = turn && i <= 2, sub = turn ? g(grp, past ? 'loop-past' : 'loop-now') : grp;
         // arc from node i to node i+1
         var a0 = ang(i) + 0.16, a1 = ang(i + 1) - 0.16;
         var p0 = [cx + R * Math.cos(a0), cy + R * Math.sin(a0)], p1 = [cx + R * Math.cos(a1), cy + R * Math.sin(a1)];
-        var arc = el('path', { d: 'M' + p0[0].toFixed(1) + ' ' + p0[1].toFixed(1) + ' A ' + R + ' ' + R + ' 0 0 1 ' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1), 'class': 'loop-arc', 'marker-end': 'url(#arrow)' }, grp);
+        // in the turn, the arc out of model behaviour belongs to the lit half: it is the step being taken
+        var arcGrp = turn ? (i >= 2 ? g(grp, 'loop-now') : sub) : grp;
+        var arc = el('path', { d: 'M' + p0[0].toFixed(1) + ' ' + p0[1].toFixed(1) + ' A ' + R + ' ' + R + ' 0 0 1 ' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1), 'class': 'loop-arc', 'marker-end': 'url(#arrow)' }, arcGrp);
         var p = pos(i);
-        el('circle', { cx: p[0], cy: p[1], r: 14, 'class': 'loop-node' + (i === 2 || i === 4 ? ' hot' : '') }, grp);
+        el('circle', { cx: p[0], cy: p[1], r: 14, 'class': 'loop-node' + ((turn ? i >= 3 : (i === 2 || i === 4)) ? ' hot' : '') }, sub);
         var q = pos(i, R + 58);
         var anchor = Math.abs(Math.cos(ang(i))) < 0.2 ? 'middle' : (Math.cos(ang(i)) > 0 ? 'start' : 'end');
         var dy = Math.sin(ang(i)) < -0.9 ? -8 : (Math.sin(ang(i)) > 0.6 ? 26 : 11);
-        txt(grp, q[0], q[1] + dy, LOOP[i], 'loop-label', { 'text-anchor': anchor });
+        txt(sub, q[0], q[1] + dy, LOOP[i], 'loop-label', { 'text-anchor': anchor });
       });
     });
     var mid = g(svg, 'st-0');
@@ -751,6 +756,7 @@
     'slope': slopeChart,
     'dots': dotsChart,
     'loop': loopChart,
+    'loop-turn': function (h) { loopChart(h, 'turn'); },
     'ceiling': ceilingChart,
     'stance': stanceChart
   };
