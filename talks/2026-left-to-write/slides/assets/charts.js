@@ -577,7 +577,52 @@
     });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     Human convention: em dashes in five Project Gutenberg works and in human news (EVIDENCE §19, §2.2).
+     Quick and indicative: one public-domain transcription per work; per million spaCy tokens, as in 02's
+     tables, so the news bar (CC-News) is on the same scale; a doubled dash counts once.
+     Counted by gutenberg-dash/count.py on 30 Sep 2026 (twenty works there; Tommie picked these on 30 Sep).
+     ------------------------------------------------------------------------------------------ */
+  var BOOKS = [
+    { who: 'Laurence Sterne', what: 'Tristram Shandy', yr: 1759, v: 40617, ev: '§19' },
+    { who: 'Charlotte Bront\u00eb', what: 'Jane Eyre', yr: 1847, v: 8787, ev: '§19' },
+    { who: 'Virginia Woolf', what: 'Mrs Dalloway', yr: 1925, v: 6945, ev: '§19' },
+    { who: 'Charles Darwin', what: 'Origin of Species', yr: 1859, v: 1900, ev: '§19' },
+    { who: 'human news', what: 'CC-News', v: 1078.3, ev: '§2.2', news: true },
+    { who: 'Ernest Hemingway', what: 'The Sun Also Rises', yr: 1926, v: 389, ev: '§19' }
+  ];
+  function booksChart(host) {
+    var W = 1656, top = 40, step = 92, bh = 50, bot = top + step * (BOOKS.length - 1) + 50, H = bot + 56;
+    var xa = 690, xb = 1470, xmax = 10000;
+    var X = function (v) { return xa + Math.min(v, xmax) / xmax * (xb - xa); };
+    var svg = svgFor(host, W, H, 'Em dashes per million tokens: Sterne, Tristram Shandy, 40,617; Charlotte Bront\u00eb, Jane Eyre, 8,787; Virginia Woolf, Mrs Dalloway, 6,945; Charles Darwin, Origin of Species, 1,900; human news (CC-News), 1,078; Ernest Hemingway, The Sun Also Rises, 389.');
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [0, 5000, 10000].forEach(function (v) {
+      el('line', { x1: X(v), x2: X(v), y1: top - 36, y2: bot }, grid);
+      txt(ticks, X(v), bot + 40, fmt(v), '', { 'text-anchor': 'middle' });
+    });
+    txt(g(svg, 'st-0'), 0, bot + 40, 'em dashes per million tokens', 'label-2', {});
+    BOOKS.forEach(function (r, i) {
+      // the news bar is the point of comparison, so it comes first (step 1); the works follow (step 2)
+      var y = top + i * step, grp = g(svg, 'st-' + (r.news ? 1 : 2));
+      var lab = txt(grp, 0, y + 11, r.news ? 'human news ' : r.who + ', ', r.news ? 'book news' : 'book', {});
+      var ti = el('tspan', r.news ? {} : { 'font-style': 'italic' }, lab); ti.textContent = r.news ? '(CC-News)' : r.what;
+      var bars = g(grp, 'grow-x');
+      bars.style.transformOrigin = xa + 'px 0px';
+      var b = mark(el('rect', { x: xa, y: y - bh / 2, width: (X(r.v) - xa).toFixed(1), height: bh, rx: 6,
+        'class': r.news ? 'bar newsbar' : 'bar neutral' }, bars), r.ev);
+      var t = el('title', null, b);
+      t.textContent = (r.news ? 'Human news (CC-News)' : r.who + ', ' + r.what + ' (' + r.yr + ')') + ': ' + fmt(r.v) + ' em dashes per million tokens';
+      if (r.v > xmax) {   // off the scale: a break in the bar, and its value
+        var bx = X(xmax) - 44, y0 = y - bh / 2 - 6, y1 = y + bh / 2 + 6;
+        el('path', { d: 'M' + bx + ' ' + y0 + 'h14l-14 ' + (y1 - y0) + 'h-14z', 'class': 'axis-break' }, bars);
+      }
+      txt(g(grp, 'late'), X(r.v) + 20, y + 12, fmt(r.v), 'label', {});
+    });
+  }
+
   var BUILDERS = {
+    'books': booksChart,
     'provenance': provenanceChart,
     'provenance-1b': function (h) { stageChart(h, '1b'); },
     'provenance-7b': function (h) { stageChart(h, '7b'); },

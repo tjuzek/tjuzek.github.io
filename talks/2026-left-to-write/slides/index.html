@@ -150,11 +150,17 @@
   </div>
 </section>
 
-<section id="convention" class="placeholder" data-timing="60">
+<section id="convention" data-state="quiet" data-timing="60">
+  <!-- Built 30 Sep on Tommie's idea: a few Gutenberg works against human news, quick and indicative (EVIDENCE §19;
+       gutenberg-dash/ in the talk folder). Dickinson left off: the Gutenberg file is the 1890s printing with the
+       editors' prefaces, so it cannot show what her editors did to her dashes. -->
   <div class="frame">
-    <p class="kicker">Placeholder &middot; human convention</p>
-    <p class="h2">The mark was always ours</p>
-    <p class="note">Dickinson in one line (her editorial history to verify first); human use varies about 45 times across registers (§2.5); newspapers have house styles too (work in progress).</p>
+    <p class="kicker">Human convention: the mark was always ours</p>
+    <div class="chart" data-chart="books"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <p class="body fragment rise" style="margin:6px 0 0">There is no single human rate: Sterne and Hemingway are a hundred times apart.</p>
+    <p class="cite fragment rise" style="margin-top:2px" data-ev="§19">One Gutenberg edition per work, counted like the models&rsquo; text; a doubled dash counts once. Quick and indicative.</p>
   </div>
 </section>
 
@@ -392,6 +398,7 @@
     <table class="numbers">
       <thead><tr><th>Number</th><th>What</th><th>Source</th></tr></thead>
       <tbody>
+        <tr><td class="n">40,617 to 389</td><td>em dashes per million tokens: Sterne&rsquo;s <i>Tristram Shandy</i> to Hemingway&rsquo;s <i>The Sun Also Rises</i> (one Gutenberg edition each; quick)</td><td>§19</td></tr>
         <tr><td class="n">1,078</td><td>em dashes per million tokens, human news (CC-News)</td><td>§2.2</td></tr>
         <tr><td class="n">0.0</td><td>human news (WMT): 0 in 91,317 tokens, below 33 per million</td><td>§2.1</td></tr>
         <tr><td class="n">0 in 3.5 M</td><td>WMT again at 40 times the depth (work in progress)</td><td>02 pilot chunk 1</td></tr>
@@ -441,7 +448,7 @@
 <section id="sources" data-visibility="uncounted">
   <div class="frame" style="padding-top:60px">
     <p class="kicker">Sources</p>
-    <p class="cite">Em dash measurements: Juzek et al., work in preparation (projects 02 and 07; NSF CAREER proof of concept). Idiolects: Rudnicka and Juzek, arXiv 2608.06589. Uptake in speech: Anderson, Galpin and Juzek, AIES 2025.</p>
+    <p class="cite">Em dash measurements: Juzek et al., work in preparation (projects 02 and 07; NSF CAREER proof of concept). Idiolects: Rudnicka and Juzek, arXiv 2608.06589. Uptake in speech: Anderson, Galpin and Juzek, AIES 2025. Novels: Gutenberg editions, counted by us.</p>
     <p class="cite">Prize: Commonwealth Foundation statements of 19 May, 22 June and 30 June 2026. Base rates: worked arithmetic with illustrative parameters (a 2% or 1% prior, 95% caught, 0.5% or 1% false positives).</p>
     <p class="cite">Format bias: Zhang, Xiong, Chen, Zhou, Huang and Zhang, &ldquo;From Lists to Emojis&rdquo;, ACL 2025, pp. 26940 to 26961. Literary quality: Bizzoni et al., NoDaLiDa 2023; Feldkamp et al., JCLS 2024.</p>
     <p class="cite">Percolation: &ldquo;Isoperimetric dimension &gt; 1 implies p<sub>c</sub> &lt; 1&rdquo;, 28 May 2026; Duminil-Copin, &ldquo;Care for a little more AI?&rdquo;, 30 August 2026. Astronomy: J. Sokol, <i>Science</i>, 4 June 2026; D. W. Hogg, &ldquo;Why do we do astrophysics?&rdquo;, arXiv 2602.10181, 10 February 2026 (preprint). Music: Deezer newsroom, 24 January 2025 and 21 July 2026; Deezer and Ipsos, November 2025. The flood: arXiv&rsquo;s mathematics listings by year, read 30 September 2026; the ACL 2026 programme chairs&rsquo; message; ACL Rolling Review, &ldquo;Sustainable reviewing policy&rdquo;, 11 September 2026.</p>
