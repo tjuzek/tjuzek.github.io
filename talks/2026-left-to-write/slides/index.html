@@ -8,6 +8,16 @@
 <!-- draft: kept out of search engines for now -->
 <meta name="robots" content="noindex">
 <script>
+/* Phones go to the phone version (Tommie, 1 Oct): a touch screen without hover whose short side is under 600 px.
+   ?desktop stays here, as do ?present and the print view; a laptop or a projector never matches. */
+(function () { try {
+  if (/(^|[?&])(desktop|present|print-pdf)([=&]|$)/i.test(location.search)) return;
+  var touch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (touch && Math.min(screen.width, screen.height) < 600)
+    location.replace('phone.html' + location.hash.replace(/^#\/?([^\/]*).*$/, '#$1'));
+} catch (e) { /* stay */ } })();
+</script>
+<script>
 /* Every load that opens on the title slide starts in the grey of the mirror (deck.css) and deck.js lifts it
    (Tommie, 30 Sep: "always run"); not in the print view, and not on a reload in the middle of the deck. */
 (function () { try { var h = location.hash.replace(/^#\/?/, '').split('/')[0];
