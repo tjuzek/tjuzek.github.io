@@ -174,7 +174,7 @@
      2. The reference problem: two human news corpora (EVIDENCE §2.1 to §2.4).
      ------------------------------------------------------------------------------------------ */
   function referenceChart(host) {
-    var W = 1656, H = 700, m = { l: 150, r: 520, t: 50, b: 130 };
+    var W = 1656, H = 610, m = { l: 150, r: 520, t: 50, b: 130 };   // 610 (was 700): room for the two-line takeaway
     var pw = W - m.l - m.r, ph = H - m.t - m.b, ymax = 4500;
     var svg = svgFor(host, W, H, 'Em dashes per million tokens: two human news corpora and GPT-4.1');
     var y = function (v) { return m.t + ph - (v / ymax) * ph; };
