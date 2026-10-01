@@ -60,17 +60,17 @@
       ymax: 5000, ystep: 1000,
       human: { v: 1078.3, label: 'human news (CC-News): 1,078', ev: '§2.2' },
       flagship: [
-        { g: '3.5', runs: [92.5, 92.7], pending: true },
-        { g: '4o',  runs: [478.8, 612.4], pending: true },
+        { g: '3.5', runs: [92.5, 92.7], ev: '§1.10' },
+        { g: '4o',  runs: [478.8, 612.4], ev: '§1.10' },
         { g: '4.1', runs: [3406.9, 4161.2], ev: '§1.2' },
-        { g: '5',   runs: [2875.1, 2760.7], pending: true },
-        { g: '5.2', runs: [2034.6, 2342.4], pending: true },
+        { g: '5',   runs: [2875.1, 2760.7], ev: '§1.10' },
+        { g: '5.2', runs: [2034.6, 2342.4], ev: '§1.10' },
         { g: '5.4', runs: [924.4, 837.3], ev: '§1.5' }
       ],
       small: [
-        { g: '4o',  name: '4o-mini',  runs: [437.6, 526.1], pending: true },
-        { g: '4.1', name: '4.1-nano', runs: [1228.0, 1142.5], pending: true },
-        { g: '5',   name: '5-nano',   runs: [1274.3, 1447.9], pending: true },
+        { g: '4o',  name: '4o-mini',  runs: [437.6, 526.1], ev: '§1.10' },
+        { g: '4.1', name: '4.1-nano', runs: [1228.0, 1142.5], ev: '§1.10' },
+        { g: '5',   name: '5-nano',   runs: [1274.3, 1447.9], ev: '§1.10' },
         { g: '5.4', name: '5.4-nano', runs: [4203.4, 4553.0], ev: '§1.6' }
       ],
       labels: [
@@ -84,17 +84,17 @@
       ymax: 2500, ystep: 500,
       human: { v: 0, label: 'human science: 0 in 28,988 tokens', ev: '§1.3' },
       flagship: [
-        { g: '3.5', runs: [0, 0], pending: true },
+        { g: '3.5', runs: [0, 0], ev: '§1.10' },
         { g: '4o',  runs: [173.8, 86.8], ev: '§1.4' },
         { g: '4.1', runs: [2287.8, 2077.1], ev: '§1.3' },
-        { g: '5',   runs: [2094.5, 1564.0], pending: true },
-        { g: '5.2', runs: [417.0, 914.8], pending: true },
+        { g: '5',   runs: [2094.5, 1564.0], ev: '§1.10' },
+        { g: '5.2', runs: [417.0, 914.8], ev: '§1.10' },
         { g: '5.4', runs: [84.6, 42.4], ev: '§1.4' }
       ],
       small: [
         { g: '4o',  name: '4o-mini',  runs: [173.9, 216.9], ev: '§1.4' },
-        { g: '4.1', name: '4.1-nano', runs: [646.8, 514.4], pending: true },
-        { g: '5',   name: '5-nano',   runs: [997.4, 582.7], pending: true },
+        { g: '4.1', name: '4.1-nano', runs: [646.8, 514.4], ev: '§1.10' },
+        { g: '5',   name: '5-nano',   runs: [997.4, 582.7], ev: '§1.10' },
         { g: '5.4', name: '5.4-nano', runs: [1712.3, 1329.0], ev: '§1.7' }
       ],
       labels: [
@@ -165,9 +165,6 @@
       var ly = L.above !== undefined ? y(L.above) - 30 : y(L.below) + 50;
       mark(txt(lab, x(L.g) + L.dx, ly, L.text, 'label', { 'text-anchor': 'middle' }), L.ev);
     });
-    // pending note (to be removed once the rows are in EVIDENCE.md)
-    var pend = g(svg, 'st-0');
-    txt(pend, m.l, H - 8, 'PENDING EVIDENCE ROWS: GPT-3.5, GPT-5, GPT-5.2, and the 2024 to 2025 small tier (checked against the TSV, 28 Sep)', 'pendingmark', {});
   }
 
   /* ------------------------------------------------------------------------------------------
