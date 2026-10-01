@@ -44,19 +44,22 @@
             H / 2 + 270 * Math.sin(s.ay * tt + s.ph * 0.7) + 120 * Math.cos(s.by * tt * 1.9 + s.ph)];
   }
 
+  var PACE = 0.5;                                              // Tommie, 30 Sep: half the speed
   function frame(dt) {
-    t += dt * 0.016;                                            // seconds, roughly
+    var m = dt * PACE;                                          // motion runs at half speed; light fades in real time
+    t += m * 0.016;                                             // seconds, roughly
     // fade what was drawn towards the ground: the trails
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(' + bg.join(',') + ',0.032)';
+    ctx.fillStyle = 'rgba(' + bg.join(',') + ',0.022)';     // slower fade: the light lasts longer
     ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = 'lighter';
     streams.forEach(function (s) {
       var p = head(s, t), vx = p[0] - s.x, vy = p[1] - s.y;
-      for (var k = 0; k < 6; k++) {
-        var a = Math.random() * Math.PI * 2, r = Math.random() * 1.7;
-        sparks.push({ x: p[0], y: p[1], vx: vx * 0.9 + Math.cos(a) * r, vy: vy * 0.9 + Math.sin(a) * r,
-                      life: 1, decay: 0.003 + Math.random() * 0.0035, c: s.c, w: 1 + Math.random() * 1.6 });
+      for (var k = 0; k < 5; k++) {
+        // per unit of motion: the head's own velocity, and a wider spray, so the sparks go out further
+        var a = Math.random() * Math.PI * 2, r = Math.random() * 4.2;
+        sparks.push({ x: p[0], y: p[1], vx: vx / PACE * 0.9 + Math.cos(a) * r, vy: vy / PACE * 0.9 + Math.sin(a) * r,
+                      life: 1, decay: 0.0018 + Math.random() * 0.0022, c: s.c, w: 1.8 + Math.random() * 2.6 });
       }
       s.x = p[0]; s.y = p[1];
     });
@@ -64,16 +67,16 @@
       var q = sparks[i], px = q.x, py = q.y;
       // a gentle swirl about the centre, and drag
       var dx = q.x - W / 2, dy = q.y - H / 2;
-      q.vx += -dy * 0.00005 * dt; q.vy += dx * 0.00005 * dt;
-      q.vx *= Math.pow(0.993, dt); q.vy *= Math.pow(0.993, dt);
-      q.x += q.vx * dt; q.y += q.vy * dt;
+      q.vx += -dy * 0.00005 * m; q.vy += dx * 0.00005 * m;
+      q.vx *= Math.pow(0.995, m); q.vy *= Math.pow(0.995, m);
+      q.x += q.vx * m; q.y += q.vy * m;
       q.life -= q.decay * dt;
       if (q.life <= 0) { sparks.splice(i, 1); continue; }
-      ctx.strokeStyle = 'rgba(' + q.c.join(',') + ',' + (q.life * 0.2).toFixed(3) + ')';
+      ctx.strokeStyle = 'rgba(' + q.c.join(',') + ',' + (q.life * 0.15).toFixed(3) + ')';
       ctx.lineWidth = q.w;
       ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(q.x, q.y); ctx.stroke();
     }
-    if (sparks.length > 7000) sparks.splice(0, sparks.length - 7000);
+    if (sparks.length > 9000) sparks.splice(0, sparks.length - 9000);
   }
 
   function loop(now) {

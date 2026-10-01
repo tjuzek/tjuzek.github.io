@@ -255,7 +255,8 @@ html.is-print .tag.pending, html.is-print .tag.wip { border-width: 1px; }
   margin: 0 0 12px -12px;
 }
 
-#question .bigdash { margin-bottom: -56px; }   /* slide 6: three lines under the dash, so less air */
+#question .bigdash { margin-bottom: -56px; }
+#thanks .bigdash { margin-bottom: -40px; }   /* slide 6: three lines under the dash, so less air */
 
 /* two prizes */
 .prize-table { display: grid; grid-template-columns: 300px 1fr 1fr; column-gap: 56px; row-gap: 26px; align-items: start; }
@@ -372,6 +373,9 @@ html.is-print #panel canvas.flurry { display: none; }
 .waves .amp { transform-box: view-box; transform-origin: 50% 93%; transition: transform 1.6s cubic-bezier(.6,0,.2,1), opacity 1.6s ease; }
 .waves { transition: opacity 1.2s ease; opacity: 0.9; }
 body.quiet .waves { opacity: 0.22; }
+/* thank you (before the credits): the waves at full strength, a gentle swell */
+body.thanks .waves { opacity: 1; }
+body.thanks .waves .amp { transform: scaleY(1.35); }
 /* the big turn (slide 19): a stronger surge than slide 13's, then the same settling */
 body.stakes .waves { opacity: 1; }
 body.stakes .waves .amp { transform: scaleY(2.3); }
