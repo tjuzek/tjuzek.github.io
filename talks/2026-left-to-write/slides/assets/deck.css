@@ -249,6 +249,8 @@ html.is-print .tag.pending, html.is-print .tag.wip { border-width: 1px; }
   margin: 0 0 12px -12px;
 }
 
+#question .bigdash { margin-bottom: -56px; }   /* slide 6: three lines under the dash, so less air */
+
 /* two prizes */
 .prize-table { display: grid; grid-template-columns: 300px 1fr 1fr; column-gap: 56px; row-gap: 26px; align-items: start; }
 .prize-table .rowhead { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 600;
