@@ -225,6 +225,17 @@ html.is-print .tag.pending, html.is-print .tag.wip { border-width: 1px; }
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
 .ledger .what { font-size: 46px; line-height: 1.25; color: var(--text-2); }
 .lede.point { font-size: 64px; line-height: 1.2; margin-bottom: 20px; }
+/* slide 3: the fields, one after another, in one click */
+.fields { font-family: 'Inter', system-ui, sans-serif; font-size: 34px; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--text-2); margin: 0 0 26px; display: flex; flex-wrap: wrap; gap: 0 0; }
+.fields span { opacity: 0; transition: opacity 0.6s ease; }
+.fields span + span::before { content: '\2192'; margin: 0 22px; color: var(--text-3); font-weight: 400; }
+.fields.visible span { opacity: 1; }
+.fields.visible span:nth-child(2) { transition-delay: 0.45s; }
+.fields.visible span:nth-child(3) { transition-delay: 0.9s; }
+.fields.visible span:nth-child(4) { transition-delay: 1.35s; }
+.fields.visible span:nth-child(5) { transition-delay: 1.8s; }
+html.is-print .fields span { opacity: 1; }
 /* the two prize slides (21, 22): a wider label column, the case told row by row */
 .ledger.case .row { grid-template-columns: 400px 1fr; padding: 19px 0; }
 /* slide 23, away and towards */
