@@ -543,8 +543,8 @@
   }
 
   /* ------------------------------------------------------------------------------------------
-     10. The dash's form, stage by stage: the share of em dashes closed up ("word\u2014word") rather
-         than spaced ("word \u2014 word") in the first 40 words, for the same 10,000 news articles'
+     10. The dash's form, stage by stage: em dashes spaced ("word \u2014 word") or closed up ("word\u2014word"),
+         as one 100% bar per row (since 30 Sep), in the first 40 words, for the same 10,000 news articles'
          writers and OLMo-2 1B's sampled continuations of them (EVIDENCE §16.13; work in progress).
      ------------------------------------------------------------------------------------------ */
   var CLOSED = [
@@ -555,28 +555,36 @@
     { step: 2, label: 'the final model', v: 80.48, kind: 'gold' }                      // 400 of 497
   ];
   function closedUpChart(host) {
-    var W = 1656, H = 610, xa = 560, xb = 1540, bh = 50, top = 150, step = 82;
+    // one full bar per row (Tommie, 30 Sep): spaced from the left in grey, the news convention; closed up from the
+    // right in gold, the model's habit; the two add up to 100 (dashes spaced on one side only are left out)
+    var W = 1656, H = 610, xa = 560, xb = 1540, bh = 50, top = 150, step = 82, gap = 3;
     var X = function (v) { return xa + v / 100 * (xb - xa); };
-    var svg = svgFor(host, W, H, 'Share of em dashes closed up rather than spaced: people 13%; OLMo-2 1B base 35%, SFT 61%, DPO 78%, final 80%.');
-    // the two forms, at the two ends of the scale
+    var svg = svgFor(host, W, H, 'Em dashes spaced or closed up: people 87% spaced, 13% closed up; OLMo-2 1B base 65 and 35%, SFT 39 and 61%, DPO 22 and 78%, final 20 and 80%.');
+    // the two forms, at the two ends of the bars; the swatches make them the legend
     var sp = g(svg, 'st-0');
     txt(sp, xa, 40, 'word \u2014 word', 'label', { 'text-anchor': 'start' });
-    txt(sp, xa, 74, 'spaced', 'label-2', { 'text-anchor': 'start' });
+    el('rect', { x: xa, y: 54, width: 22, height: 22, rx: 4, 'class': 'bar neutral' }, sp);
+    txt(sp, xa + 32, 74, 'spaced', 'label-2', { 'text-anchor': 'start' });
     txt(sp, xb, 40, 'word\u2014word', 'label', { 'text-anchor': 'end' });
-    txt(sp, xb, 74, 'closed up', 'label-2', { 'text-anchor': 'end' });
-    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
-    [0, 25, 50, 75, 100].forEach(function (v) {
-      el('line', { x1: X(v), x2: X(v), y1: top - 40, y2: top + step * CLOSED.length - 20 }, grid);
+    el('rect', { x: xb - 22, y: 54, width: 22, height: 22, rx: 4, 'class': 'bar gold' }, sp);
+    txt(sp, xb - 32, 74, 'closed up', 'label-2', { 'text-anchor': 'end' });
+    var ticks = g(svg, 'tick st-0');
+    [0, 50, 100].forEach(function (v) {
       txt(ticks, X(v), top + step * CLOSED.length + 18, v + '%', '', { 'text-anchor': 'middle' });
     });
     CLOSED.forEach(function (r, i) {
-      var y = top + i * step, grp = g(svg, 'st-' + r.step);
+      var y = top + i * step, grp = g(svg, 'st-' + r.step), cut = X(100 - r.v);
+      var closed = Math.round(r.v), spaced = 100 - closed;
       txt(grp, 0, y + 10, r.label, i === 0 ? 'label' : 'label-2', {});
       var bars = g(grp, 'grow-x');
       bars.style.transformOrigin = xa + 'px 0px';
-      var b = mark(el('rect', { x: xa, y: y - bh / 2, width: (X(r.v) - xa).toFixed(1), height: bh, rx: 6, 'class': 'bar ' + r.kind }, bars), '§16.13');
-      var t = el('title', null, b); t.textContent = r.label + ': ' + fmt(r.v, 1) + '% of em dashes closed up';
-      txt(g(grp, 'late'), X(r.v) + 18, y + 11, fmt(r.v, 0) + '%', 'label', {});
+      var a = mark(el('rect', { x: xa, y: y - bh / 2, width: (cut - gap / 2 - xa).toFixed(1), height: bh, rx: 6, 'class': 'bar neutral' }, bars), '§16.13');
+      el('title', null, a).textContent = r.label + ': ' + spaced + '% of em dashes spaced (word \u2014 word)';
+      var b = mark(el('rect', { x: (cut + gap / 2).toFixed(1), y: y - bh / 2, width: (xb - cut - gap / 2).toFixed(1), height: bh, rx: 6, 'class': 'bar gold' }, bars), '§16.13');
+      el('title', null, b).textContent = r.label + ': ' + closed + '% of em dashes closed up (word\u2014word)';
+      var labs = g(grp, 'late');
+      txt(labs, ((xa + cut) / 2).toFixed(1), y + 11, spaced + '%', 'seglabel', { 'text-anchor': 'middle' });
+      txt(labs, ((cut + xb) / 2).toFixed(1), y + 11, closed + '%', 'seglabel', { 'text-anchor': 'middle' });
     });
   }
 
