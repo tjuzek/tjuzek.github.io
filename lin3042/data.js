@@ -12,6 +12,10 @@
  * Dates are YYYY-MM-DD. THAs go out by the Sunday of their week at the latest and are due
  * the Sunday two weeks later at 11:59 pm, unless something comes up. A THA counts as open
  * from `out` to the end of `due`. Session readings follow syllabus/LIN3042-F26_schedule-readings.tex.
+ *
+ * `url` is the THA's Canvas assignment link; the page links the title to it. Add it once the
+ * THA is published on Canvas (before that, students would get an error page), and take its
+ * title from Canvas too.
  */
 window.LIN3042 = {
   updated: '2026-10-07',
@@ -19,7 +23,8 @@ window.LIN3042 = {
   dueTime: '11:59 pm',
 
   thas: [
-    { n: 4, title: 'Hypotheses and Evidence',      out: '2026-10-05', due: '2026-10-19' },
+    { n: 4, title: 'Research Questions, Hypotheses, and Evidence', out: '2026-10-05', due: '2026-10-19',
+      url: 'https://canvas.fsu.edu/courses/354011/assignments/3312875' },
     { n: 5, title: 'Second Language Acquisition',  out: '2026-10-18', due: '2026-11-01' },
     { n: 6, title: 'Bilingualism & the brain',     out: '2026-11-01', due: '2026-11-15' },
     { n: 7, title: 'Psycho- and Neurolinguistics', out: '2026-11-08', due: '2026-11-22' },

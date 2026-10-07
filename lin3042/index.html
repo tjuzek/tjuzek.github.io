@@ -115,7 +115,8 @@
   <noscript>
     <section>
       <p>This page needs JavaScript to show what is coming up. Everything is also in the
-         <a href="LIN3042-F26_schedule-readings.pdf">schedule and readings (PDF)</a> and on Canvas.</p>
+         <a href="LIN3042-F26_schedule-readings.pdf">schedule and readings (PDF)</a> and on
+         <a href="https://canvas.fsu.edu/courses/354011">Canvas</a>.</p>
     </section>
   </noscript>
 
@@ -139,7 +140,8 @@
   </section>
 
   <section class="course-foot">
-    <p id="canvas-note">Assignments are set and submitted on Canvas. If this page and Canvas ever disagree,
+    <p id="canvas-note">Assignments are set and submitted on
+       <a href="https://canvas.fsu.edu/courses/354011/assignments">Canvas</a>. If this page and Canvas ever disagree,
        Canvas is right; please let me know.</p>
     <p><a href="LIN3042-F26_schedule-readings.pdf">Schedule and readings (PDF)</a> &middot;
        <a href="https://forms.gle/efCuFB52i3dzMJQ1A">Anonymous feedback</a> &middot;
@@ -189,12 +191,13 @@
     if (text) e.textContent = text;
     return e;
   }
-  function row(label, date, hot, title, detail) {
-    var li = el('li'), when = el('div', 'when'), what = el('div', 'what');
+  function row(label, date, hot, title, detail, url) {
+    var li = el('li'), when = el('div', 'when'), what = el('div', 'what'), t = el(url ? 'a' : 'span', 't', title);
     if (label) when.appendChild(el('span', 'lab', label));
     when.appendChild(el('span', 'd', fmt(date)));
     when.appendChild(el('span', hot ? 'cd hot' : 'cd', countdown(date)));
-    what.appendChild(el('span', 't', title));
+    if (url) t.href = url;
+    what.appendChild(t);
     if (detail) what.appendChild(el('span', 'x', detail));
     li.appendChild(when);
     li.appendChild(what);
@@ -220,11 +223,11 @@
                    .sort(function (a, b) { return a.out < b.out ? -1 : 1; })[0];
   open.forEach(function (t) {
     list('tha').appendChild(row('Due', t.due, true, 'THA' + t.n + ': ' + t.title,
-      D.dueTime + ', on Canvas'));
+      D.dueTime + ', on Canvas', t.url));
   });
   if (next) {
     list('tha').appendChild(row('Out by', next.out, false, 'THA' + next.n + ': ' + next.title,
-      'Due ' + fmt(next.due) + ', ' + D.dueTime));
+      'Due ' + fmt(next.due) + ', ' + D.dueTime, next.url));
   }
   if (!open.length && !next) list('tha').appendChild(el('li', 'none', 'No more take-home assignments this term.'));
   show('tha');
