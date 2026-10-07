@@ -32,6 +32,7 @@ window.LIN3042 = {
   ],
 
   // No class on Thu 26 Nov (Thanksgiving). `read: null` means no reading for that session.
+  // `presentation: true` marks the presentation days; after the last quiz they take the quiz slot.
   sessions: [
     { date: '2026-10-08', topic: 'Bilingual Education', read: 'pp. 413–421' },
     { date: '2026-10-13', topic: 'Methods of psycholinguistic research', read: 'pp. 425–436' },
@@ -47,7 +48,7 @@ window.LIN3042 = {
     { date: '2026-11-17', topic: 'Computational Linguistics I: But what is a neural network?', read: 'Grishman (1986); Sparck Jones (2007), on Canvas' },
     { date: '2026-11-19', topic: 'Computational Linguistics II', read: 'Manning (2015); gradient-descent video, on Canvas', tag: 'Quiz 3' },
     { date: '2026-11-24', topic: 'Writing workshop: Article Summary & Critique + catch-up/review', read: null },
-    { date: '2026-12-01', topic: 'Article Summary & Critique presentations', read: null, tag: 'No unexcused absences' },
-    { date: '2026-12-03', topic: 'Article Summary & Critique presentations', read: null, tag: 'No unexcused absences' }
+    { date: '2026-12-01', topic: 'Article Summary & Critique presentations', read: null, tag: 'No unexcused absences', presentation: true },
+    { date: '2026-12-03', topic: 'Article Summary & Critique presentations', read: null, tag: 'No unexcused absences', presentation: true }
   ]
 };

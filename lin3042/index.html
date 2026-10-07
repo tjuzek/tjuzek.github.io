@@ -65,6 +65,9 @@
   .course-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.3px; }
   .course-head .lead { margin: 0; color: var(--muted); font-size: 16px; padding-left: 12px;
     border-left: 3px solid var(--gold); }
+  section.cur { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
+    padding: 16px 20px 4px; margin: 0 0 14px; }
+  section.cur + .course-foot { margin-top: 12px; }
   section.cur h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
     color: var(--muted); margin: 0 0 6px; }
   ul.cur { list-style: none; padding: 0; margin: 0; }
@@ -83,6 +86,7 @@
   @media (max-width: 620px) {
     .course-head h1 { font-size: 27px; }
     ul.cur li { grid-template-columns: 96px 1fr; gap: 0 12px; }
+    section.cur { padding: 14px 16px 2px; }
   }
 </style>
 </head>
@@ -115,19 +119,19 @@
     </section>
   </noscript>
 
+  <section class="cur" id="sessions" hidden>
+    <h2>Next sessions</h2>
+    <ul class="cur" id="session-list"></ul>
+  </section>
+
   <section class="cur" id="tha" hidden>
     <h2>Take-home assignments</h2>
     <ul class="cur" id="tha-list"></ul>
   </section>
 
   <section class="cur" id="quiz" hidden>
-    <h2>Next quiz</h2>
+    <h2 id="quiz-h">Next quiz</h2>
     <ul class="cur" id="quiz-list"></ul>
-  </section>
-
-  <section class="cur" id="sessions" hidden>
-    <h2>Next sessions</h2>
-    <ul class="cur" id="session-list"></ul>
   </section>
 
   <section class="cur" id="ended" hidden>
@@ -225,10 +229,17 @@
   if (!open.length && !next) list('tha').appendChild(el('li', 'none', 'No more take-home assignments this term.'));
   show('tha');
 
-  // Next quiz, if any is left
+  // Next quiz; once the last quiz is over, the presentations take this slot
   var quiz = D.quizzes.filter(function (z) { return z.date >= today; })[0];
+  var pres = D.sessions.filter(function (s) { return s.presentation && s.date >= today; });
   if (quiz) {
     list('quiz').appendChild(row('In class', quiz.date, true, 'Quiz ' + quiz.n, null));
+    show('quiz');
+  } else if (pres.length) {
+    document.getElementById('quiz-h').textContent = 'Presentations';
+    list('quiz').appendChild(row('In class', pres[0].date, true, 'Article presentations',
+      (pres.length > 1 ? pres.map(function (s) { return fmt(s.date); }).join(' and ') + ' \u00b7 ' : '') +
+      'No unexcused absences'));
     show('quiz');
   }
 
