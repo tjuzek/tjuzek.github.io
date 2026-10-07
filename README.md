@@ -33,6 +33,12 @@ python3 -m http.server 8000
   change often), then bump the footer date, the JSON-LD `dateModified`, and the sitemap
   `lastmod`. FSU students are routed to `teaching.html#students`, not to `/phd/`. See the
   comment in `phd/index.html`.
+- `/lin3042/` (from 2026-10-07) is a data-driven course page: what is coming up in LIN 3042,
+  Fall 2026 (open take-home assignments, the next quiz, the next two sessions). Every date
+  lives in `lin3042/data.js`; a routine update edits that file only, and its `updated` field
+  sets the visible "Last updated" date (the exception to the policy below). The page works
+  out today's date itself; `?today=YYYY-MM-DD` previews another day. Procedure and drift
+  checklist: `~/claudecode/lin3042/course/course-page/README.md`.
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
@@ -64,7 +70,7 @@ python3 -m http.server 8000
 
 ## Files
 `index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html` · `phd/index.html`
-· `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
+· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
