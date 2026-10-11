@@ -18,7 +18,7 @@
  * title from Canvas too.
  */
 window.LIN3042 = {
-  updated: '2026-10-07',
+  updated: '2026-10-11',
   lastSession: '2026-12-03',
   dueTime: '11:59 pm',
 
