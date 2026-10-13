@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priming demo: LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
+<meta name="description" content="LIN 3042 Applied Linguistics, Fall 2026: a two-minute lexical decision experiment with semantic priming, after Figure 11.2 of the course textbook. Each student gets their own priming effect in milliseconds.">
+<link rel="canonical" href="https://tjuzek.com/lin3042/priming/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Priming demo: LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta property="og:description" content="A two-minute word experiment: how much faster do you recognise a word after a related one?">
+<meta property="og:url" content="https://tjuzek.com/lin3042/priming/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Priming demo: LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta name="twitter:description" content="A two-minute word experiment: how much faster do you recognise a word after a related one?">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tjuzek.com/#website",
+      "url": "https://tjuzek.com/",
+      "name": "Thomas Stephan Juzek",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://tjuzek.com/#person",
+      "name": "Thomas Stephan Juzek",
+      "url": "https://tjuzek.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tjuzek.com/lin3042/priming/#webpage",
+      "url": "https://tjuzek.com/lin3042/priming/",
+      "name": "Priming demo: LIN 3042 Applied Linguistics, Fall 2026",
+      "description": "A two-minute lexical decision experiment with semantic priming, after Figure 11.2 of the course textbook.",
+      "author": { "@id": "https://tjuzek.com/#person" },
+      "isPartOf": { "@id": "https://tjuzek.com/#website" },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-10-12"
+    }
+  ]
+}
+</script>
+<style>
+  [hidden] { display: none !important; }
+  .course-head { padding: 34px 0 16px; }
+  .course-head .kicker { color: var(--garnet); font-size: 13px; font-weight: 700; letter-spacing: .9px;
+    text-transform: uppercase; margin: 0 0 6px; }
+  .course-head .kicker a { color: inherit; }
+  .course-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.3px; }
+  .course-head .lead { margin: 0; color: var(--muted); font-size: 16px; padding-left: 12px;
+    border-left: 3px solid var(--gold); }
+  .disclaimer { font-size: 13.5px; color: var(--muted); margin: 12px 0 0; }
+  section.box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
+    padding: 14px 20px 6px; margin: 0 0 14px; }
+  section.box p, section.box li { font-size: 16px; }
+  section.box h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
+    color: var(--muted); margin: 0 0 6px; }
+  section.box h3 { font-size: 16px; margin: 18px 0 4px; }
+  kbd { font: 600 14px/1 ui-monospace, Menlo, Consolas, monospace; border: 1px solid var(--line);
+    border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: var(--bg); }
+  button.go { font: inherit; font-size: 17px; font-weight: 600; color: #fff; background: var(--garnet);
+    border: 0; border-radius: 8px; padding: 10px 22px; cursor: pointer; }
+  button.go:hover { background: var(--garnet-dark); }
+
+  /* The task: while it runs, the page chrome goes and the stage fills the screen. */
+  body.running header.site, body.running footer.site, body.running .course-head,
+  body.running .course-foot { display: none; }
+  #task { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+    justify-content: center; padding: 16px 0 24px; border-top: 0; }
+  #task, #task * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+    touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .prog { text-align: center; font-size: 13px; color: var(--muted); margin: 0; }
+  .stage { height: 170px; display: flex; align-items: center; justify-content: center; }
+  #stim { font-size: 46px; font-weight: 600; letter-spacing: 1.5px; line-height: 1; }
+  #stim.fix { font-weight: 400; color: var(--muted); }
+  .fb { height: 28px; text-align: center; font-size: 18px; font-weight: 600; margin: 0 0 18px; }
+  .fb.bad { color: var(--garnet); }
+  .fb.ok { color: #2e6b3f; }
+  .resp { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 520px; width: 100%;
+    margin: 0 auto; }
+  .resp button { font: inherit; font-size: 19px; font-weight: 600; min-height: 76px; border-radius: 12px;
+    border: 2px solid var(--garnet); background: var(--bg); color: var(--garnet); cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .resp button:active { background: var(--bg-soft); }
+  .resp button span { font-size: 12.5px; font-weight: 600; color: var(--muted); display: none; }
+  @media (hover: hover) and (pointer: fine) { .resp button span { display: block; } }
+
+  /* The result */
+  section.box p.big { font-size: 46px; font-weight: 700; line-height: 1.1; margin: 4px 0 4px; color: var(--garnet); }
+  .hands { border-left: 3px solid var(--gold); padding-left: 12px; }
+  .warn { color: var(--garnet); }
+  table.sum, table.trials { border-collapse: collapse; width: 100%; margin: 4px 0 12px; }
+  table.sum th, table.sum td { text-align: left; font-size: 15.5px; padding: 7px 0; border-bottom: 1px solid var(--line);
+    vertical-align: top; }
+  table.sum th { font-weight: 400; padding-right: 14px; }
+  table.sum td { font-weight: 600; white-space: nowrap; }
+  details { margin: 6px 0 14px; }
+  summary { cursor: pointer; font-size: 15.5px; color: var(--garnet); }
+  table.trials th, table.trials td { font-size: 13.5px; text-align: left; padding: 4px 8px 4px 0;
+    border-bottom: 1px solid var(--line); }
+  table.trials th { color: var(--muted); font-weight: 600; }
+  table.trials td.n { color: var(--muted); }
+  .course-foot p { margin: 0 0 8px; font-size: 14.5px; color: var(--muted); }
+  @media (max-width: 620px) {
+    .course-head h1 { font-size: 27px; }
+    section.box { padding: 12px 16px 4px; }
+    #stim { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html" class="active">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="course-head">
+    <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; Fall 2026</p>
+    <h1>Priming demo</h1>
+    <p class="lead">A two-minute word experiment from this week&rsquo;s reading. Please do it once, on one device.</p>
+    <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his prompting by an AI assistant (Claude Opus 5.5, Anthropic); reviewed and approved by Tommie Juzek.</p>
+  </section>
+
+  <noscript>
+    <section class="box">
+      <p>This experiment needs JavaScript. Please turn it on, or use another browser.</p>
+    </section>
+  </noscript>
+
+  <section class="box" id="intro" hidden>
+    <p><strong>How it works.</strong> A <strong>+</strong> appears, then a short word flashes very briefly,
+       then a word in CAPITALS appears. Decide as fast as you can whether the word in CAPITALS is a real
+       English word:</p>
+    <ul>
+      <li>a real word: tap <strong>Word</strong> (on a laptop, press <kbd>J</kbd>);</li>
+      <li>not a real word: tap <strong>Not a word</strong> (on a laptop, press <kbd>F</kbd>).</li>
+    </ul>
+    <p>Be quick, but try not to make mistakes. You do not need to do anything with the short word; just
+       keep your eyes on the +.</p>
+    <p>It takes about two minutes: 4 practice trials, then 48 for real. Your answers stay in your
+       browser; nothing is sent anywhere.</p>
+    <p><button type="button" class="go" id="start-practice">Start the practice</button></p>
+  </section>
+
+  <section class="box" id="ready" hidden>
+    <p>That was the practice. Now 48 for real, about two minutes, without a break. Same task: as fast as
+       you can, with as few mistakes as you can.</p>
+    <p><button type="button" class="go" id="start-main">Start</button></p>
+  </section>
+
+  <section id="task" hidden>
+    <p class="prog" id="prog"></p>
+    <div class="stage"><span id="stim"></span></div>
+    <p class="fb" id="fb"></p>
+    <div class="resp">
+      <button type="button" id="b-no">Not a word<span>F</span></button>
+      <button type="button" id="b-yes">Word<span>J</span></button>
+    </div>
+  </section>
+
+  <section class="box" id="result" hidden>
+    <h2>Your result</h2>
+    <p class="big" id="r-effect"></p>
+    <p id="r-say"></p>
+    <p class="hands" id="r-hands">For the show of hands in class, your bracket is
+       <strong id="r-bracket"></strong>.</p>
+    <p class="warn" id="r-warn" hidden></p>
+    <table class="sum">
+      <tr><th>After a related word (like <em>cat</em> &rarr; DOG)</th><td id="r-rel"></td></tr>
+      <tr><th>After an unrelated word (like <em>bat</em> &rarr; DOG)</th><td id="r-unr"></td></tr>
+      <tr><th>Correct answers</th><td id="r-acc"></td></tr>
+    </table>
+
+    <h3>What was going on</h3>
+    <p>Half of the real words came after a related word (<em>cat</em> &rarr; DOG), half after an
+       unrelated one (<em>bat</em> &rarr; DOG). This is the experiment in Figure 11.2 of the textbook
+       (p. 431). If seeing <em>cat</em> warms up <em>dog</em> in your mental lexicon, you should answer
+       faster after a related word. Your priming effect is the difference: your time after an unrelated
+       word minus your time after a related word. A positive number means priming.</p>
+    <p>For each kind, this uses your middle response time (the median), so one slow trial does not throw
+       the number off. Only correct answers count.</p>
+    <p>Twelve trials of each kind give a noisy number for one person. Zero or negative results are
+       common and do not mean anything went wrong. The class as a whole is the real test.</p>
+
+    <details>
+      <summary>Your trials</summary>
+      <table class="trials">
+        <thead><tr><th>#</th><th>Short word</th><th>CAPITALS</th><th>Kind</th><th>Your answer</th><th>Time</th></tr></thead>
+        <tbody id="r-trials"></tbody>
+      </table>
+    </details>
+  </section>
+
+  <section class="course-foot">
+    <p><a href="/lin3042/">LIN 3042 course page</a></p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="/teaching.html">Teaching</a> &middot;
+    <a href="/lin3042/">LIN 3042</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-10-12</p>
+</div></footer>
+
+<!-- The items, the trial list and the scoring are in priming.js; this script only runs the
+     trials. Timing follows Figure 11.2 (p. 431): prime 100 ms, target up to 2000 ms. Onsets are
+     taken from animation frames, so the prime stays up for the frame count nearest 100 ms; the
+     measured prime durations go to the console at the end. Nothing is stored or sent. -->
+
+<script src="priming.js"></script>
+<script>
+(function () {
+  var P = window.Priming;
+  if (!P || !window.requestAnimationFrame || !window.performance) return;
+  var FIX = 500, PRIME = 100, LIMIT = P.MAX_RT, FEEDBACK = 700, ITI = 500;
+
+  function $(id) { return document.getElementById(id); }
+  var stim = $('stim'), fb = $('fb'), prog = $('prog');
+  var list, idx, practice, onDone, cur, targetOn, timer, accepting = false;
+
+  function runBlock(trials, isPractice, done) {
+    list = trials; idx = 0; practice = isPractice; onDone = done;
+    document.body.classList.add('running');
+    $('intro').hidden = true;
+    $('ready').hidden = true;
+    $('task').hidden = false;
+    window.scrollTo(0, 0);
+    next();
+  }
+
+  function next() {
+    if (idx >= list.length) {
+      document.body.classList.remove('running');
+      $('task').hidden = true;
+      window.scrollTo(0, 0);
+      onDone(list);
+      return;
+    }
+    cur = list[idx];
+    prog.textContent = (practice ? 'Practice ' : '') + (idx + 1) + ' of ' + list.length;
+    stim.className = 'fix';
+    stim.textContent = '+';
+    setTimeout(showPrime, FIX);
+  }
+
+  // The prime goes up in one animation frame; the target replaces it in the first frame
+  // at least 100 ms later (to the nearest frame). Times are frame times on the
+  // performance.now() clock, and the response is timed from the target's frame.
+  function showPrime() {
+    requestAnimationFrame(function (t0) {
+      stim.className = 'prime';
+      stim.textContent = cur.prime;
+      function tick(t) {
+        if (t - t0 < PRIME - 8) { requestAnimationFrame(tick); return; }
+        stim.className = 'target';
+        stim.textContent = cur.target.toUpperCase();
+        cur.primeMs = Math.round(t - t0);
+        if (cur.primeMs > 150) cur.interrupted = true;
+        targetOn = t;
+        accepting = true;
+        timer = setTimeout(tooSlow, LIMIT);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  function respond(saysWord) {
+    if (!accepting) return;
+    var rt = performance.now() - targetOn;
+    accepting = false;
+    clearTimeout(timer);
+    stim.textContent = '';
+    cur.answer = saysWord;
+    cur.rt = Math.round(rt);
+    cur.correct = saysWord === cur.word;
+    if (practice) feedback(cur.correct ? 'Correct' : 'Wrong', cur.correct ? 'ok' : 'bad');
+    else if (!cur.correct) feedback('Wrong', 'bad');
+    else after(ITI);
+  }
+
+  function tooSlow() {
+    if (!accepting) return;
+    accepting = false;
+    stim.textContent = '';
+    cur.answer = null;
+    cur.rt = null;
+    cur.correct = false;
+    feedback('Too slow', 'bad');
+  }
+
+  function feedback(text, cls) {
+    fb.textContent = text;
+    fb.className = 'fb ' + cls;
+    setTimeout(function () {
+      fb.textContent = '';
+      fb.className = 'fb';
+      after(ITI);
+    }, FEEDBACK);
+  }
+
+  function after(ms) { setTimeout(function () { idx++; next(); }, ms); }
+
+  // A trial during which the page went into the background (a notification, another app)
+  // is not counted: its timing means nothing.
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && cur && !$('task').hidden) cur.interrupted = true;
+  });
+
+  // Responses: buttons on pointer-down (a click fires only on release), F and J on a keyboard.
+  var downs = window.PointerEvent ? ['pointerdown'] : ['touchstart', 'mousedown'];
+  [['b-no', false], ['b-yes', true]].forEach(function (b) {
+    downs.forEach(function (ev) {
+      $(b[0]).addEventListener(ev, function (e) { e.preventDefault(); respond(b[1]); });
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if ($('task').hidden || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = (e.key || '').toLowerCase();
+    if (k !== 'f' && k !== 'j') return;
+    e.preventDefault();
+    respond(k === 'j');
+  });
+
+  function ms(x, n) { return x === null ? 'no usable trials' : x + ' ms (' + n + ' trials)'; }
+  function signed(e) { return e > 0 ? '+' + e : e < 0 ? '−' + (-e) : '0'; }
+
+  function showResult(trials) {
+    var s = P.score(trials), e = s.effect;
+    $('r-effect').textContent = e === null ? 'No number' : signed(e) + ' ms';
+    $('r-say').textContent = e === null ? 'Not enough correct answers to work out a priming effect.' :
+      e > 0 ? 'Your priming effect: you were ' + e + ' ms faster after a related word.' :
+      e < 0 ? 'Your priming effect: you were ' + (-e) + ' ms slower after a related word.' :
+              'Your priming effect: no difference between related and unrelated words.';
+    $('r-hands').hidden = e === null;
+    if (e !== null) $('r-bracket').textContent = P.bracket(e);
+    if (e !== null && !s.reliable) {
+      $('r-warn').textContent = 'Only ' + Math.min(s.nRelated, s.nUnrelated) + ' usable trials in one of the ' +
+        'two kinds (usable means a correct answer within two seconds, with the page kept open), so this ' +
+        'number means very little.';
+      $('r-warn').hidden = false;
+    }
+    $('r-rel').textContent = ms(s.related, s.nRelated);
+    $('r-unr').textContent = ms(s.unrelated, s.nUnrelated);
+    $('r-acc').textContent = s.correct + ' of ' + s.total;
+
+    var kind = { related: 'related', unrelated: 'unrelated', nonword: 'not a word' };
+    trials.forEach(function (t, i) {
+      var tr = document.createElement('tr');
+      [i + 1, t.prime, t.target.toUpperCase(), kind[t.cond],
+       t.interrupted ? 'not counted' : t.rt === null ? 'too slow' : t.correct ? 'correct' : 'wrong',
+       t.rt === null ? '' : t.rt + ' ms'].forEach(function (v, j) {
+        var td = document.createElement('td');
+        if (j === 0) td.className = 'n';
+        td.textContent = v;
+        tr.appendChild(td);
+      });
+      $('r-trials').appendChild(tr);
+    });
+    $('result').hidden = false;
+
+    var pd = trials.map(function (t) { return t.primeMs; }).filter(function (x) { return x; })
+                   .sort(function (a, b) { return a - b; });
+    if (window.console && pd.length) console.log('Prime durations (ms, aim 100): min ' + pd[0] +
+      ', median ' + P.median(pd) + ', max ' + pd[pd.length - 1] + ', n = ' + pd.length);
+  }
+
+  $('intro').hidden = false;
+  $('start-practice').addEventListener('click', function () {
+    runBlock(P.PRACTICE.map(function (t) { return Object.assign({}, t); }), true, function () {
+      $('ready').hidden = false;
+    });
+  });
+  $('start-main').addEventListener('click', function () {
+    runBlock(P.buildTrials(), false, showResult);
+  });
+})();
+</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

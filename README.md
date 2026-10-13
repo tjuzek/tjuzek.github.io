@@ -39,6 +39,10 @@ python3 -m http.server 8000
   sets the visible "Last updated" date (the exception to the policy below). The page works
   out today's date itself; `?today=YYYY-MM-DD` previews another day. Procedure and drift
   checklist: `~/claudecode/lin3042/course/course-page/README.md`.
+- `/lin3042/priming/` (from 2026-10-12) is a self-contained class demo: a two-minute lexical
+  decision task with semantic priming (textbook Figure 11.2). Items and scoring live in
+  `priming.js`, the runner in `index.html`; nothing is stored or sent. Design notes, item list
+  and class run sheet: `~/claudecode/lin3042/course/modules/priming-demo/README.md`.
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
@@ -70,7 +74,7 @@ python3 -m http.server 8000
 
 ## Files
 `index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html` · `phd/index.html`
-· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
+· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
