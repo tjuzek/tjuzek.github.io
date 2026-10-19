@@ -30,19 +30,17 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="me" href="https://scholar.google.com/citations?user=ETFTr6sAAAAJ">
 <link rel="stylesheet" href="style.css">
-<!-- ==== TEMPORARY: the talk banner and the grey page (added 2026-09-30 for the 1 October talk; since 2026-10-19
-     it points to the slides of the 20 October Carothers lecture).
+<!-- ==== TEMPORARY: the talk banner (added 2026-09-30 for the 1 October talk; since 2026-10-19 it points to the
+     slides of the 20 October Carothers lecture, and the grey-page effect of the first banner is gone).
      To remove: this <script> and <style>, the <aside class="talk-banner"> at the top of <main>,
-     and the script after it. The page is grey until the banner is closed. Nothing is remembered (Tommie,
-     30 Sep): every load, and every return with the back button, brings the banner and the grey back. ==== -->
-<script>document.documentElement.classList.add('talk-grey');</script>
+     and the script after it. Nothing is remembered: every load, and every return with the back button,
+     brings the banner back. ==== -->
+<script>document.documentElement.classList.add('talk-anim');</script>
 <style>
 @font-face {
   font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap;
   src: url(/talks/2026-left-to-write/slides/assets/fonts/newsreader-latin-standard-normal.woff2) format('woff2-variations');
 }
-header.site, main.wrap > *, footer.site { transition: filter 1.6s ease; }
-html.talk-grey header.site, html.talk-grey main.wrap > :not(.talk-banner), html.talk-grey footer.site { filter: grayscale(1); }
 .talk-banner {
   position: relative; overflow: hidden; margin: 22px 0 8px; border-radius: 14px;
   background: #050507; color: #f4f1ea; font-family: 'Newsreader', Georgia, serif;
@@ -65,7 +63,7 @@ html.talk-grey header.site, html.talk-grey main.wrap > :not(.talk-banner), html.
   50%  { opacity: 1; }
   to   { max-height: var(--tb-h, 640px); opacity: 1; margin-top: 22px; margin-bottom: 8px; }
 }
-html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1) .3s backwards; }
+html.talk-anim .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1) .3s backwards; }
 .talk-banner .tb-dash { color: #d8b765; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 300; }
 .talk-banner .tb-go { font: 500 17px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #d8b765; margin-top: 36px; }
 .talk-banner a.tb-link:hover .tb-go { text-decoration: underline; text-underline-offset: .18em; }
@@ -90,8 +88,8 @@ html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1)
   .talk-banner .tb-go { font-size: 16px; margin-top: 30px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  header.site, main.wrap > *, footer.site, .talk-banner.leaving { transition: none; }
-  html.talk-grey .talk-banner { animation: none; }
+  .talk-banner.leaving { transition: none; }
+  html.talk-anim .talk-banner { animation: none; }
 }
 </style>
 <!-- ==== END TEMPORARY ==== -->
@@ -201,7 +199,7 @@ html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1)
       <p class="tb-sub">AI and Human Language, with Zina Ward</p>
       <p class="tb-go">Slides &rarr;</p>
     </a>
-    <button class="tb-close" type="button" aria-label="Close the banner" title="Close, and the colour comes back" hidden>&times;</button>
+    <button class="tb-close" type="button" aria-label="Close the banner" title="Close the banner" hidden>&times;</button>
   </aside>
   <script>
   (function () {
@@ -231,7 +229,6 @@ html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1)
     var closed = false;
     btn.addEventListener('click', function () {
       closed = true;
-      document.documentElement.classList.remove('talk-grey');
       b.style.height = b.offsetHeight + 'px';
       void b.offsetHeight;
       b.classList.add('leaving');
@@ -242,7 +239,6 @@ html.talk-grey .talk-banner { animation: tb-open 1.2s cubic-bezier(.25,.8,.25,1)
       closed = false;
       b.classList.remove('leaving');
       b.style.height = '';
-      document.documentElement.classList.add('talk-grey');
     });
   })();
   </script>
