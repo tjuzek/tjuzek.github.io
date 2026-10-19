@@ -48,9 +48,10 @@ python3 -m http.server 8000
   Syndicated reprints: one story, one entry.
 - House style: UK English (`en-GB`); no em-dashes in served files; hedged register on
   AI-and-language claims (association, not causation). One documented exception to the
-  em-dash rule: the talk *What Is Left to Write?* (`talks/2026-left-to-write/`, its slides, and
-  the temporary home-page banner that points to it), a talk about the mark itself, where it
-  appears only as the object of study and in the talk's title.
+  em-dash rule: the talk *What Is Left to Write?* (`talks/2026-left-to-write/` and its slides), a
+  talk about the mark itself, where it appears only as the object of study and in the talk's title.
+  (The temporary home-page banner pointed there until 2026-10-19; it now points to the Carothers
+  lecture slides and has no em dash.)
 - Talk pages (from 2026-09-30): `talks/<year>-<slug>/` is the talk's landing page (phone first:
   slides, reading, anything the audience needs); `talks/<year>-<slug>/slides/` is the deck. Flat,
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
