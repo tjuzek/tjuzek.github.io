@@ -238,7 +238,13 @@
   var quiz = D.quizzes.filter(function (z) { return z.date >= today; })[0];
   var pres = D.sessions.filter(function (s) { return s.presentation && s.date >= today; });
   if (quiz) {
-    list('quiz').appendChild(row('In class', quiz.date, true, 'Quiz ' + quiz.n, null));
+    var qr = row('In class', quiz.date, true, 'Quiz ' + quiz.n, null);
+    if (quiz.guide) {
+      var g = el('a', 'x', 'Study guide, on Canvas');
+      g.href = quiz.guide;
+      qr.querySelector('.what').appendChild(g);
+    }
+    list('quiz').appendChild(qr);
     show('quiz');
   } else if (pres.length) {
     document.getElementById('quiz-h').textContent = 'Presentations';
@@ -255,7 +261,7 @@
       var bits = [];
       if (s.read) bits.push('Reading: ' + s.read);
       if (s.tag) bits.push(s.tag);
-      list('session').appendChild(row(null, s.date, false, s.topic, bits.join(' · ')));
+      list('session').appendChild(row(null, s.date, false, s.topic, bits.join(' · '), s.url));
     });
   if (list('session').children.length) show('sessions');
 })();

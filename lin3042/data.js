@@ -18,31 +18,36 @@
  * title from Canvas too.
  */
 window.LIN3042 = {
-  updated: '2026-10-12',
+  updated: '2026-10-19',
   lastSession: '2026-12-03',
   dueTime: '11:59 pm',
 
   thas: [
     { n: 4, title: 'Research Questions, Hypotheses, and Evidence', out: '2026-10-05', due: '2026-10-19',
       url: 'https://canvas.fsu.edu/courses/354011/assignments/3312875' },
-    { n: 5, title: 'Second Language Acquisition',  out: '2026-10-18', due: '2026-11-01' },
+    { n: 5, title: 'Test reflections', out: '2026-10-19', due: '2026-11-01',
+      url: 'https://canvas.fsu.edu/courses/354011/assignments/3321281' },
     { n: 6, title: 'Bilingualism & the brain',     out: '2026-11-01', due: '2026-11-15' },
     { n: 7, title: 'Psycho- and Neurolinguistics', out: '2026-11-08', due: '2026-11-22' },
     { n: 8, title: 'Animal communication (final take-home assignment)', out: '2026-11-15', due: '2026-11-29' }
   ],
 
+  // `guide` is the quiz's study guide on Canvas; the page links it below the quiz.
   quizzes: [
-    { n: 2, date: '2026-10-22' },
+    { n: 2, date: '2026-10-22',
+      guide: 'https://canvas.fsu.edu/courses/354011/files/42914413?module_item_id=8642786' },
     { n: 3, date: '2026-11-19' }
   ],
 
   // No class on Thu 26 Nov (Thanksgiving). `read: null` means no reading for that session.
+  // `url` (optional) links the session's topic, e.g. to the article read for it.
   // `presentation: true` marks the presentation days; after the last quiz they take the quiz slot.
   sessions: [
     { date: '2026-10-08', topic: 'Bilingual Education', read: 'pp. 413–421' },
     { date: '2026-10-13', topic: 'Methods of psycholinguistic research', read: 'pp. 425–436' },
     { date: '2026-10-15', topic: 'Language processing and linguistics', read: 'pp. 436–446' },
-    { date: '2026-10-20', topic: 'Linck, Kroll & Sunderman (2009), “Losing Access to the Native Language”', read: 'the article' },
+    { date: '2026-10-20', topic: 'Linck, Kroll & Sunderman (2009), “Losing Access to the Native Language”', read: 'the article',
+      url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2858781/' },
     { date: '2026-10-22', topic: 'Psycholinguistic modelling', read: 'pp. 446–453', tag: 'Quiz 2' },
     { date: '2026-10-27', topic: 'The human brain', read: 'pp. 455–460' },
     { date: '2026-10-29', topic: 'Aphasia and Dyslexia', read: 'pp. 467–479' },
