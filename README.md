@@ -43,6 +43,8 @@ python3 -m http.server 8000
   decision task with semantic priming (textbook Figure 11.2). Items and scoring live in
   `priming.js`, the runner in `index.html`; nothing is stored or sent. Design notes, item list
   and class run sheet: `~/claudecode/lin3042/course/modules/priming-demo/README.md`.
+  `priming/items/` (from 2026-10-20) lists every item for review in class; it renders from
+  `../priming.js`, so it needs no edit when an item changes.
 - `/lin3042/linck/` (from 2026-10-20) is the same kind of demo: toy versions of the four tasks in
   Linck, Kroll & Sunderman (2009), namely translation recognition, verbal fluency, reading span
   and the Simon task, with colour-coded conditions. A hub (`linck/`, what each task is for) and one
