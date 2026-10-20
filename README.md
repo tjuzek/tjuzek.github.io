@@ -43,6 +43,10 @@ python3 -m http.server 8000
   decision task with semantic priming (textbook Figure 11.2). Items and scoring live in
   `priming.js`, the runner in `index.html`; nothing is stored or sent. Design notes, item list
   and class run sheet: `~/claudecode/lin3042/course/modules/priming-demo/README.md`.
+- `/lin3042/linck/` (from 2026-10-20) is the same kind of demo: toy versions of the four tasks in
+  Linck, Kroll & Sunderman (2009), namely translation recognition, verbal fluency, reading span
+  and the Simon task, with colour-coded conditions. Items and scoring in `linck.js`, runners in
+  `index.html`; nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/linck-demo/README.md`.
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
@@ -75,7 +79,7 @@ python3 -m http.server 8000
 
 ## Files
 `index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html` · `phd/index.html`
-· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
+· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo; `linck/`, the Linck et al. tasks) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
