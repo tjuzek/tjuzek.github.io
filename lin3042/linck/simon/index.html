@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simon task | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
+<meta name="description" content="Toy version of the Simon task in Linck, Kroll and Sunderman (2009): answer by a square’s colour, and ignore where it is.">
+<link rel="canonical" href="https://tjuzek.com/lin3042/linck/simon/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simon task | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta property="og:description" content="Answer by a square’s colour, and ignore where it is. A toy version of a task from Linck et al. (2009).">
+<meta property="og:url" content="https://tjuzek.com/lin3042/linck/simon/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Simon task | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta name="twitter:description" content="Answer by a square’s colour, and ignore where it is. A toy version of a task from Linck et al. (2009).">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="../linck.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tjuzek.com/#website",
+      "url": "https://tjuzek.com/",
+      "name": "Thomas Stephan Juzek",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://tjuzek.com/#person",
+      "name": "Thomas Stephan Juzek",
+      "url": "https://tjuzek.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tjuzek.com/lin3042/linck/simon/#webpage",
+      "url": "https://tjuzek.com/lin3042/linck/simon/",
+      "name": "Simon task: Linck et al. (2009) tasks. LIN 3042 Applied Linguistics, Fall 2026",
+      "description": "Toy version of the Simon task in Linck, Kroll and Sunderman (2009): answer by a square’s colour, and ignore where it is.",
+      "author": { "@id": "https://tjuzek.com/#person" },
+      "isPartOf": { "@id": "https://tjuzek.com/#website" },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-10-20"
+    }
+  ]
+}
+</script>
+</head>
+<body data-task="simon">
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html" class="active">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="course-head">
+    <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; <a href="../">Linck et al. (2009) tasks</a></p>
+    <h1>4 &middot; Simon task</h1>
+    <p class="lead"><span class="purpose check">Background check &middot; cognitive ability (inhibitory control)</span> &nbsp;about 2 minutes</p>
+    <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his prompting by an AI assistant (Claude Opus 5.5, Anthropic); reviewed and approved by Tommie Juzek.</p>
+  </section>
+
+  <noscript>
+    <section class="box">
+      <p>This task needs JavaScript. Please turn it on, or use another browser.</p>
+    </section>
+  </noscript>
+
+  <section class="box role check" id="role">
+    <h2>Its role in the study</h2>
+    <p><strong>Background check: cognitive ability (inhibitory control).</strong> Not a test of the hypothesis, and not about language. It measures how well you hold back a response that the situation pulls you towards. The paper&rsquo;s theory is about inhibition, so this check matters: were the groups alike in general inhibitory control? Not quite (38 against 20 ms, Table 1; the classroom group did better). The authors say that, if anything, this works against their conclusion.</p>
+  </section>
+
+  <section class="box" id="intro" hidden>
+    <h2>How it works</h2>
+    <p>A coloured square appears to the left or the right of a <strong>+</strong>. Answer by its colour only:</p>
+    <ul>
+      <li>a <strong style="color: var(--sq-blue)">blue</strong> square: tap <strong>Blue</strong>, the left
+          button (on a laptop, <kbd>F</kbd>);</li>
+      <li>a <strong style="color: #8a6d00">yellow</strong> square: tap <strong>Yellow</strong>, the right
+          button (<kbd>J</kbd>).</li>
+    </ul>
+    <p>Where the square appears does not matter. As fast as you can, with as few mistakes as you can.</p>
+    <p>Six practice trials first, each with an explanation, then 48 for real (about a minute and a half).</p>
+    <p><button type="button" class="go" id="start">Start the practice</button></p>
+    <p><a href="../">Back to the four tasks</a></p>
+  </section>
+
+  <section class="box" id="ready" hidden>
+    <div id="ready-text"></div>
+    <p><button type="button" class="go" id="ready-go"></button></p>
+  </section>
+
+  <section id="task" hidden>
+    <p class="prog" id="prog"></p>
+    <div class="stage">
+      <span class="fix">+</span>
+      <div id="sq"></div>
+    </div>
+    <div class="band" id="band">
+      <div id="band-chip"></div>
+      <div class="explain" id="band-explain" hidden></div>
+      <button type="button" class="go" id="band-next" hidden>Next</button>
+    </div>
+    <div class="resp">
+      <button type="button" class="blue" data-choice="left">Blue<span>F</span></button>
+      <button type="button" class="yellow" data-choice="right">Yellow<span>J</span></button>
+    </div>
+  </section>
+
+  <section class="box" id="result" hidden>
+    <div id="result-body"></div>
+    <p class="result-links">
+      <a class="go" href="../">All four tasks</a>
+    </p>
+  </section>
+
+  <section class="course-foot">
+    <p>The article: Linck, J. A., Kroll, J. F., &amp; Sunderman, G. (2009). Losing access to the native
+       language while immersed in a second language: Evidence for the role of inhibition in
+       second-language learning. <em>Psychological Science, 20</em>(12), 1507&ndash;1515.
+       <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2858781/">Free version</a></p>
+    <p><a href="../">All four tasks</a> &middot; <a href="/lin3042/">LIN 3042 course page</a></p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="/teaching.html">Teaching</a> &middot;
+    <a href="/lin3042/">LIN 3042</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-10-20</p>
+</div></footer>
+
+<!-- Items and scoring: ../linck.js; trial runners: ../tasks.js. Nothing is stored or sent. -->
+<script src="../linck.js"></script>
+<script src="../tasks.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

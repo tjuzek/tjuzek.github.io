@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading span | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
+<meta name="description" content="Toy version of the reading-span task in Linck, Kroll and Sunderman (2009): judge sentences while you hold on to a growing list of words.">
+<link rel="canonical" href="https://tjuzek.com/lin3042/linck/reading-span/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Reading span | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta property="og:description" content="Judge sentences while you hold on to a growing list of words. A toy version of a task from Linck et al. (2009).">
+<meta property="og:url" content="https://tjuzek.com/lin3042/linck/reading-span/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reading span | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta name="twitter:description" content="Judge sentences while you hold on to a growing list of words. A toy version of a task from Linck et al. (2009).">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="../linck.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tjuzek.com/#website",
+      "url": "https://tjuzek.com/",
+      "name": "Thomas Stephan Juzek",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://tjuzek.com/#person",
+      "name": "Thomas Stephan Juzek",
+      "url": "https://tjuzek.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tjuzek.com/lin3042/linck/reading-span/#webpage",
+      "url": "https://tjuzek.com/lin3042/linck/reading-span/",
+      "name": "Reading span: Linck et al. (2009) tasks. LIN 3042 Applied Linguistics, Fall 2026",
+      "description": "Toy version of the reading-span task in Linck, Kroll and Sunderman (2009): judge sentences while you hold on to a growing list of words.",
+      "author": { "@id": "https://tjuzek.com/#person" },
+      "isPartOf": { "@id": "https://tjuzek.com/#website" },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-10-20"
+    }
+  ]
+}
+</script>
+</head>
+<body data-task="reading-span">
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html" class="active">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="course-head">
+    <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; <a href="../">Linck et al. (2009) tasks</a></p>
+    <h1>3 &middot; Reading span</h1>
+    <p class="lead"><span class="purpose check">Background check &middot; cognitive ability (working memory)</span> &nbsp;about 3 minutes</p>
+    <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his prompting by an AI assistant (Claude Opus 5.5, Anthropic); reviewed and approved by Tommie Juzek.</p>
+  </section>
+
+  <noscript>
+    <section class="box">
+      <p>This task needs JavaScript. Please turn it on, or use another browser.</p>
+    </section>
+  </noscript>
+
+  <section class="box role check" id="role">
+    <h2>Its role in the study</h2>
+    <p><strong>Background check: cognitive ability (working memory).</strong> Not a test of the hypothesis, and not about Spanish. It measures how much you can hold in mind while doing something else. Linck et al. used it to check that the two groups started out alike. They did (51.5 and 51.8 of 80 words, Table 1), so a difference in the main tasks cannot be put down to working memory.</p>
+  </section>
+
+  <section class="box" id="intro" hidden>
+    <h2>How it works</h2>
+    <p>You see a sentence. Does it make sense? Tap <strong>Makes sense</strong> (<kbd>J</kbd>) or
+       <strong>Doesn&rsquo;t</strong> (<kbd>F</kbd>). Then a word appears for one second: remember it.
+       After a few sentences, type all the words of that set, in any order.</p>
+    <p>The sets get longer: 2, 3, 4, then 5 words. One practice set of 2 first, with explanations.</p>
+    <p><button type="button" class="go" id="start">Start the practice</button></p>
+    <p><a href="../">Back to the four tasks</a></p>
+  </section>
+
+  <section class="box" id="ready" hidden>
+    <div id="ready-text"></div>
+    <p><button type="button" class="go" id="ready-go"></button></p>
+  </section>
+
+  <section id="task" hidden>
+    <p class="prog" id="prog"></p>
+    <div class="stage" id="stage-rs">
+      <span id="rs-text"></span>
+    </div>
+    <div class="band" id="band">
+      <div id="band-chip"></div>
+      <div class="explain" id="band-explain" hidden></div>
+      <button type="button" class="go" id="band-next" hidden>Next</button>
+    </div>
+    <div class="resp" id="resp-rs">
+      <button type="button" data-choice="left">Doesn&rsquo;t make sense<span>F</span></button>
+      <button type="button" data-choice="right">Makes sense<span>J</span></button>
+    </div>
+    <div id="recall" hidden>
+      <textarea id="recall-in" rows="2" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false" aria-label="The words from this set"></textarea>
+      <p><button type="button" class="go" id="recall-done">Done</button></p>
+      <div id="recall-fb"></div>
+      <p><button type="button" class="go" id="recall-next" hidden></button></p>
+    </div>
+  </section>
+
+  <section class="box" id="result" hidden>
+    <div id="result-body"></div>
+    <p class="result-links">
+      <a class="go" href="../simon/">Next: 4 &middot; Simon task</a>
+      <a href="../">All four tasks</a>
+    </p>
+  </section>
+
+  <section class="course-foot">
+    <p>The article: Linck, J. A., Kroll, J. F., &amp; Sunderman, G. (2009). Losing access to the native
+       language while immersed in a second language: Evidence for the role of inhibition in
+       second-language learning. <em>Psychological Science, 20</em>(12), 1507&ndash;1515.
+       <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2858781/">Free version</a></p>
+    <p><a href="../">All four tasks</a> &middot; <a href="/lin3042/">LIN 3042 course page</a></p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="/teaching.html">Teaching</a> &middot;
+    <a href="/lin3042/">LIN 3042</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-10-20</p>
+</div></footer>
+
+<!-- Items and scoring: ../linck.js; trial runners: ../tasks.js. Nothing is stored or sent. -->
+<script src="../linck.js"></script>
+<script src="../tasks.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

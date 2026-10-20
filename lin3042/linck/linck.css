@@ -1,0 +1,157 @@
+/* LIN 3042, Linck et al. (2009) tasks: styles shared by the hub and the four task pages. */
+[hidden] { display: none !important; }
+/* One colour per condition, always with its label: the band after each answer, the practice
+   explanations and the result use the same ones. Simon's square colours (blue, yellow) are
+   kept apart from these. */
+:root { --c-same: #2e7d5b; --c-opp: #b5442e; --c-yes: #2e7d5b; --c-lex: #7b4fa0; --c-trn: #a85a0c;
+  --c-sem: #2b6cb0; --c-unr: #6b6b72; --sq-blue: #1f5fd1; --sq-yellow: #f2c230;
+  --p-main: #782F40; --p-check: #4a5568; }
+.course-head { padding: 34px 0 16px; }
+.course-head .kicker { color: var(--garnet); font-size: 13px; font-weight: 700; letter-spacing: .9px;
+  text-transform: uppercase; margin: 0 0 6px; }
+.course-head .kicker a { color: inherit; }
+.course-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.3px; }
+.course-head .lead { margin: 0; color: var(--muted); font-size: 16px; padding-left: 12px;
+  border-left: 3px solid var(--gold); }
+.disclaimer { font-size: 13.5px; color: var(--muted); margin: 12px 0 0; }
+section.box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
+  padding: 14px 20px 6px; margin: 0 0 14px; }
+section.box p, section.box li { font-size: 16px; }
+section.box h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
+  color: var(--muted); margin: 0 0 6px; }
+section.box h3 { font-size: 16px; margin: 18px 0 4px; }
+section.role { background: var(--bg); border-left: 4px solid var(--p-main); }
+section.role.check { border-left-color: var(--p-check); }
+kbd { font: 600 14px/1 ui-monospace, Menlo, Consolas, monospace; border: 1px solid var(--line);
+  border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: var(--bg); }
+.go { display: inline-block; font: inherit; font-size: 17px; font-weight: 600; color: #fff !important;
+  background: var(--garnet); border: 0; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+  text-decoration: none !important; }
+.go:hover { background: var(--garnet-dark); }
+button.go:disabled { background: var(--line); color: var(--muted) !important; cursor: default; }
+.small { font-size: 14px !important; color: var(--muted); }
+.chip { display: inline-block; color: #fff; font-weight: 700; font-size: 14.5px; line-height: 1.2;
+  padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.purpose { display: inline-block; color: #fff; font-weight: 700; font-size: 12.5px; letter-spacing: .4px;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 6px; background: var(--p-main); }
+.purpose.check { background: var(--p-check); }
+.result-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+
+/* The hub */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0 14px; }
+.card { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 12px 14px;
+  border-top: 4px solid var(--p-main); }
+.card.check { border-top-color: var(--p-check); }
+.card h3 { margin: 6px 0 4px !important; font-size: 17px !important; }
+.card .num { color: var(--garnet); margin-right: 4px; }
+.card p { font-size: 15px !important; margin: 0 0 8px; }
+.card .tags { color: var(--muted); font-size: 13.5px !important; }
+.card .go { font-size: 16px; padding: 8px 18px; }
+@media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+
+/* Translation recognition: the study list */
+.study { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 18px;
+  margin: 6px 0 10px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; }
+.study div { font-size: 17px; padding: 3px 0; }
+.study em { color: var(--garnet); font-weight: 600; }
+.timer { font-weight: 600; color: var(--garnet); }
+
+/* Choices on the verbal-fluency set-up */
+fieldset { border: 0; padding: 0; margin: 0 0 12px; }
+legend { font-size: 16px; font-weight: 600; padding: 0; margin: 0 0 6px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { border: 2px solid var(--line); border-radius: 8px; padding: 7px 12px; background: var(--bg);
+  cursor: pointer; font-size: 15.5px; }
+.opts input { margin: 0 6px 0 0; accent-color: var(--garnet); }
+.opts label:has(input:checked) { border-color: var(--garnet); }
+
+/* The task: while it runs, the page chrome goes and the stage fills the screen. */
+body.running header.site, body.running footer.site, body.running .course-head,
+body.running .course-foot { display: none; }
+#task { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+  justify-content: center; padding: 16px 0 24px; border-top: 0; }
+#task, #task * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+#task textarea { -webkit-user-select: text; user-select: text; }
+.prog { text-align: center; font-size: 13px; color: var(--muted); margin: 0; }
+.stage { height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  max-width: 560px; width: 100%; margin: 0 auto; position: relative; }
+.fix { font-size: 46px; font-weight: 400; color: var(--muted); line-height: 1; }
+.band { min-height: 64px; text-align: center; margin: 0 auto 14px; max-width: 560px; }
+.band .mark { font-weight: 700; font-size: 16px; margin-left: 6px; }
+.band .mark.bad { color: var(--garnet); }
+.band .explain { font-size: 15.5px; line-height: 1.45; margin: 10px 0 10px; text-align: left;
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+.resp { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 520px; width: 100%;
+  margin: 0 auto; }
+.resp button { font: inherit; font-size: 19px; font-weight: 600; min-height: 76px; border-radius: 12px;
+  border: 2px solid var(--garnet); background: var(--bg); color: var(--garnet); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.resp button:active { background: var(--bg-soft); }
+.resp button span { font-size: 12.5px; font-weight: 600; color: var(--muted); display: none; }
+@media (hover: hover) and (pointer: fine) { .resp button span { display: block; } }
+.resp button.blue { border-color: var(--sq-blue); color: var(--sq-blue); }
+.resp button.yellow { border-color: #c9a000; color: #6f5800; background: #fff8dc; }
+
+/* Simon: a square left or right of the + */
+#sq { display: none; position: absolute; top: 50%; width: 72px; height: 72px; margin-top: -36px; border-radius: 8px; }
+#sq.blue, #sq.yellow { display: block; }
+#sq.blue { background: var(--sq-blue); }
+#sq.yellow { background: var(--sq-yellow); box-shadow: inset 0 0 0 2px #c9a000; }
+#sq.left { left: 6%; }
+#sq.right { right: 6%; }
+
+/* Translation recognition */
+#tr-word { font-size: 44px; font-weight: 600; letter-spacing: 1px; line-height: 1; }
+#tr-word.es { font-style: italic; color: var(--garnet); letter-spacing: 0; }
+#tr-cap { font-size: 14px; color: var(--muted); margin-top: 12px; height: 18px; }
+
+/* Verbal fluency */
+#stage-flu.stage { height: auto; min-height: 170px; }
+#flu-cat { font-size: 32px; font-weight: 700; margin: 8px 0 2px; text-align: center; }
+#flu-time { font-size: 60px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--garnet); }
+#flu-stop { min-height: 26px; font-size: 19px; font-weight: 600; text-align: center; margin: 4px 0; }
+.flu-ctl { max-width: 520px; width: 100%; margin: 0 auto; text-align: center; }
+#flu-plus { font: inherit; font-size: 30px; font-weight: 700; width: 100%; min-height: 120px; border-radius: 14px;
+  border: 2px solid var(--garnet); background: var(--bg); color: var(--garnet); cursor: pointer; }
+#flu-plus:active { background: var(--bg-soft); }
+#flu-plus:disabled, #flu-undo:disabled { opacity: .4; cursor: default; }
+#flu-count-line { font-size: 17px; margin: 10px 0 4px; }
+#flu-count { font-weight: 700; font-size: 22px; }
+button.link { font: inherit; font-size: 15px; color: var(--garnet); background: none; border: 0; padding: 0;
+  cursor: pointer; text-decoration: underline; }
+
+/* Reading span */
+#stage-rs.stage { height: auto; min-height: 170px; }
+#rs-text { text-align: center; padding: 0 6px; }
+#rs-text.sentence { font-size: 23px; line-height: 1.35; font-weight: 500; }
+#rs-text.word { font-size: 44px; font-weight: 700; letter-spacing: 1.5px; }
+#recall { max-width: 520px; width: 100%; margin: 0 auto; text-align: center; }
+#recall-in { width: 100%; box-sizing: border-box; font: inherit; font-size: 19px; padding: 10px 12px;
+  border: 2px solid var(--line); border-radius: 10px; margin: 0 0 10px; resize: none; }
+#recall-in:focus { outline: none; border-color: var(--garnet); }
+#recall-fb { font-size: 17px; margin: 0 0 12px; line-height: 2; }
+.rw { display: inline-block; padding: 1px 10px; border-radius: 999px; color: #fff; font-weight: 600; margin: 0 2px; }
+.rw.hit { background: var(--c-same); }
+.rw.miss { background: #9a9aa2; }
+
+/* The result */
+section.box p.big { font-size: 46px; font-weight: 700; line-height: 1.1; margin: 4px 0 4px; color: var(--garnet); }
+section.box p.big .chip { font-size: 24px; padding: 6px 16px; }
+.hands { border-left: 3px solid var(--gold); padding-left: 12px; }
+.warn { color: var(--garnet); }
+table.sum { border-collapse: collapse; width: 100%; margin: 4px 0 12px; }
+table.sum th, table.sum td { text-align: left; font-size: 15.5px; padding: 7px 8px 7px 0; border-bottom: 1px solid var(--line);
+  vertical-align: top; }
+table.sum th { font-weight: 400; }
+table.sum td { font-weight: 600; white-space: nowrap; }
+table.sum thead th { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+.course-foot p { margin: 0 0 8px; font-size: 14.5px; color: var(--muted); }
+@media (max-width: 620px) {
+  .course-head h1 { font-size: 27px; }
+  section.box { padding: 12px 16px 4px; }
+  #tr-word, #rs-text.word { font-size: 38px; }
+  #rs-text.sentence { font-size: 21px; }
+  #sq { width: 64px; height: 64px; margin-top: -32px; }
+  table.sum th, table.sum td { font-size: 14.5px; }
+}

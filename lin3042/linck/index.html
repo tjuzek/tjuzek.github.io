@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Linck et al. (2009): the four tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
-<meta name="description" content="LIN 3042 Applied Linguistics, Fall 2026: toy versions of the four tasks in Linck, Kroll and Sunderman (2009): translation recognition, verbal fluency, reading span and the Simon task.">
+<meta name="description" content="LIN 3042 Applied Linguistics, Fall 2026: toy versions of the four tasks in Linck, Kroll and Sunderman (2009): translation recognition, verbal fluency, reading span and the Simon task, with what each task is for.">
 <link rel="canonical" href="https://tjuzek.com/lin3042/linck/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Linck et al. (2009): the four tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
@@ -27,6 +27,7 @@
 <link rel="icon" href="/favicon.ico?v=3">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="linck.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -49,7 +50,7 @@
       "@id": "https://tjuzek.com/lin3042/linck/#webpage",
       "url": "https://tjuzek.com/lin3042/linck/",
       "name": "Linck et al. (2009): the four tasks. LIN 3042 Applied Linguistics, Fall 2026",
-      "description": "Toy versions of the four tasks in Linck, Kroll and Sunderman (2009): translation recognition, verbal fluency, reading span and the Simon task.",
+      "description": "LIN 3042 Applied Linguistics, Fall 2026: toy versions of the four tasks in Linck, Kroll and Sunderman (2009): translation recognition, verbal fluency, reading span and the Simon task, with what each task is for.",
       "author": { "@id": "https://tjuzek.com/#person" },
       "isPartOf": { "@id": "https://tjuzek.com/#website" },
       "inLanguage": "en-GB",
@@ -58,156 +59,6 @@
   ]
 }
 </script>
-<style>
-  [hidden] { display: none !important; }
-  /* One colour per condition, always with its label: the band after each answer, the
-     practice explanations and the result use the same ones. Simon's square colours (blue,
-     yellow) are kept apart from these. */
-  :root { --c-same: #2e7d5b; --c-opp: #b5442e; --c-yes: #2e7d5b; --c-lex: #7b4fa0; --c-trn: #a85a0c;
-    --c-sem: #2b6cb0; --c-unr: #6b6b72; --sq-blue: #1f5fd1; --sq-yellow: #f2c230; }
-  .course-head { padding: 34px 0 16px; }
-  .course-head .kicker { color: var(--garnet); font-size: 13px; font-weight: 700; letter-spacing: .9px;
-    text-transform: uppercase; margin: 0 0 6px; }
-  .course-head .kicker a { color: inherit; }
-  .course-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.3px; }
-  .course-head .lead { margin: 0; color: var(--muted); font-size: 16px; padding-left: 12px;
-    border-left: 3px solid var(--gold); }
-  .disclaimer { font-size: 13.5px; color: var(--muted); margin: 12px 0 0; }
-  section.box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
-    padding: 14px 20px 6px; margin: 0 0 14px; }
-  section.box p, section.box li { font-size: 16px; }
-  section.box h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
-    color: var(--muted); margin: 0 0 6px; }
-  section.box h3 { font-size: 16px; margin: 18px 0 4px; }
-  kbd { font: 600 14px/1 ui-monospace, Menlo, Consolas, monospace; border: 1px solid var(--line);
-    border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: var(--bg); }
-  button.go { font: inherit; font-size: 17px; font-weight: 600; color: #fff; background: var(--garnet);
-    border: 0; border-radius: 8px; padding: 10px 22px; cursor: pointer; }
-  button.go:hover { background: var(--garnet-dark); }
-  button.go:disabled { background: var(--line); color: var(--muted); cursor: default; }
-  button.link { font: inherit; font-size: 15px; color: var(--garnet); background: none; border: 0; padding: 0;
-    cursor: pointer; text-decoration: underline; }
-  .small { font-size: 14px !important; color: var(--muted); }
-  .chip { display: inline-block; color: #fff; font-weight: 700; font-size: 14.5px; line-height: 1.2;
-    padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
-
-  /* The hub */
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0 14px; }
-  .card { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 12px 14px; }
-  .card h3 { margin: 0 0 4px !important; font-size: 17px !important; }
-  .card .num { color: var(--garnet); margin-right: 4px; }
-  .card p { font-size: 15px !important; margin: 0 0 8px; }
-  .card .tags { color: var(--muted); font-size: 13.5px !important; }
-  .card .paper { color: var(--muted); }
-  .card .status { color: var(--c-same); font-weight: 600; }
-  .card button.go { font-size: 16px; padding: 8px 18px; }
-  @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
-
-  /* Translation recognition: the study list */
-  .study { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 18px;
-    margin: 6px 0 10px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; }
-  .study div { font-size: 17px; padding: 3px 0; }
-  .study em { color: var(--garnet); font-weight: 600; }
-  .timer { font-weight: 600; color: var(--garnet); }
-
-  /* Choices on the verbal-fluency set-up */
-  fieldset { border: 0; padding: 0; margin: 0 0 12px; }
-  legend { font-size: 16px; font-weight: 600; padding: 0; margin: 0 0 6px; }
-  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
-  .opts label { border: 2px solid var(--line); border-radius: 8px; padding: 7px 12px; background: var(--bg);
-    cursor: pointer; font-size: 15.5px; }
-  .opts input { margin: 0 6px 0 0; accent-color: var(--garnet); }
-  .opts label:has(input:checked) { border-color: var(--garnet); }
-
-  /* The task: while it runs, the page chrome goes and the stage fills the screen. */
-  body.running header.site, body.running footer.site, body.running .course-head,
-  body.running .course-foot { display: none; }
-  #task { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
-    justify-content: center; padding: 16px 0 24px; border-top: 0; }
-  #task, #task * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
-    touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-  #task textarea { -webkit-user-select: text; user-select: text; }
-  .prog { text-align: center; font-size: 13px; color: var(--muted); margin: 0; }
-  .stage { height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    max-width: 560px; width: 100%; margin: 0 auto; position: relative; }
-  .fix { font-size: 46px; font-weight: 400; color: var(--muted); line-height: 1; }
-  .band { min-height: 64px; text-align: center; margin: 0 auto 14px; max-width: 560px; }
-  .band .mark { font-weight: 700; font-size: 16px; margin-left: 6px; }
-  .band .mark.bad { color: var(--garnet); }
-  .band .explain { font-size: 15.5px; line-height: 1.45; margin: 10px 0 10px; text-align: left;
-    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
-  .resp { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 520px; width: 100%;
-    margin: 0 auto; }
-  .resp button { font: inherit; font-size: 19px; font-weight: 600; min-height: 76px; border-radius: 12px;
-    border: 2px solid var(--garnet); background: var(--bg); color: var(--garnet); cursor: pointer;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
-  .resp button:active { background: var(--bg-soft); }
-  .resp button span { font-size: 12.5px; font-weight: 600; color: var(--muted); display: none; }
-  @media (hover: hover) and (pointer: fine) { .resp button span { display: block; } }
-  .resp button.blue { border-color: var(--sq-blue); color: var(--sq-blue); }
-  .resp button.yellow { border-color: #c9a000; color: #6f5800; background: #fff8dc; }
-
-  /* Simon: a square left or right of the + */
-  #sq { display: none; position: absolute; top: 50%; width: 72px; height: 72px; margin-top: -36px; border-radius: 8px; }
-  #sq.blue, #sq.yellow { display: block; }
-  #sq.blue { background: var(--sq-blue); }
-  #sq.yellow { background: var(--sq-yellow); box-shadow: inset 0 0 0 2px #c9a000; }
-  #sq.left { left: 6%; }
-  #sq.right { right: 6%; }
-
-  /* Translation recognition */
-  #tr-word { font-size: 44px; font-weight: 600; letter-spacing: 1px; line-height: 1; }
-  #tr-word.es { font-style: italic; color: var(--garnet); letter-spacing: 0; }
-  #tr-cap { font-size: 14px; color: var(--muted); margin-top: 12px; height: 18px; }
-
-  /* Verbal fluency */
-  #stage-flu.stage { height: auto; min-height: 170px; }
-  #flu-cat { font-size: 32px; font-weight: 700; margin: 8px 0 2px; text-align: center; }
-  #flu-time { font-size: 60px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--garnet); }
-  #flu-stop { min-height: 26px; font-size: 19px; font-weight: 600; text-align: center; margin: 4px 0; }
-  .flu-ctl { max-width: 520px; width: 100%; margin: 0 auto; text-align: center; }
-  #flu-plus { font: inherit; font-size: 30px; font-weight: 700; width: 100%; min-height: 120px; border-radius: 14px;
-    border: 2px solid var(--garnet); background: var(--bg); color: var(--garnet); cursor: pointer; }
-  #flu-plus:active { background: var(--bg-soft); }
-  #flu-plus:disabled, #flu-undo:disabled { opacity: .4; cursor: default; }
-  #flu-count-line { font-size: 17px; margin: 10px 0 4px; }
-  #flu-count { font-weight: 700; font-size: 22px; }
-
-  /* Reading span */
-  #stage-rs.stage { height: auto; min-height: 170px; }
-  #rs-text { text-align: center; padding: 0 6px; }
-  #rs-text.sentence { font-size: 23px; line-height: 1.35; font-weight: 500; }
-  #rs-text.word { font-size: 44px; font-weight: 700; letter-spacing: 1.5px; }
-  #recall { max-width: 520px; width: 100%; margin: 0 auto; text-align: center; }
-  #recall-in { width: 100%; box-sizing: border-box; font: inherit; font-size: 19px; padding: 10px 12px;
-    border: 2px solid var(--line); border-radius: 10px; margin: 0 0 10px; resize: none; }
-  #recall-in:focus { outline: none; border-color: var(--garnet); }
-  #recall-fb { font-size: 17px; margin: 0 0 12px; line-height: 2; }
-  .rw { display: inline-block; padding: 1px 10px; border-radius: 999px; color: #fff; font-weight: 600; margin: 0 2px; }
-  .rw.hit { background: var(--c-same); }
-  .rw.miss { background: #9a9aa2; }
-
-  /* The result */
-  section.box p.big { font-size: 46px; font-weight: 700; line-height: 1.1; margin: 4px 0 4px; color: var(--garnet); }
-  section.box p.big .chip { font-size: 24px; padding: 6px 16px; }
-  .hands { border-left: 3px solid var(--gold); padding-left: 12px; }
-  .warn { color: var(--garnet); }
-  table.sum { border-collapse: collapse; width: 100%; margin: 4px 0 12px; }
-  table.sum th, table.sum td { text-align: left; font-size: 15.5px; padding: 7px 8px 7px 0; border-bottom: 1px solid var(--line);
-    vertical-align: top; }
-  table.sum th { font-weight: 400; }
-  table.sum td { font-weight: 600; white-space: nowrap; }
-  table.sum thead th { font-size: 13.5px; color: var(--muted); font-weight: 600; }
-  .course-foot p { margin: 0 0 8px; font-size: 14.5px; color: var(--muted); }
-  @media (max-width: 620px) {
-    .course-head h1 { font-size: 27px; }
-    section.box { padding: 12px 16px 4px; }
-    #tr-word, #rs-text.word { font-size: 38px; }
-    #rs-text.sentence { font-size: 21px; }
-    #sq { width: 64px; height: 64px; margin-top: -32px; }
-    table.sum th, table.sum td { font-size: 14.5px; }
-  }
-</style>
 </head>
 <body>
 
@@ -228,185 +79,61 @@
   <section class="course-head">
     <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; Fall 2026</p>
     <h1>Linck et al. (2009): the four tasks</h1>
-    <p class="lead">Toy versions of the tasks in today&rsquo;s article, a couple of minutes each. Please use one
-       device, and do each task once.</p>
+    <p class="lead">Toy versions of the four tasks in Linck, Kroll and Sunderman (2009), a couple of minutes each.
+       Please use one device, and do each task once.</p>
     <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his prompting by an AI assistant (Claude Opus 5.5, Anthropic); reviewed and approved by Tommie Juzek.</p>
   </section>
 
-  <noscript>
-    <section class="box">
-      <p>These tasks need JavaScript. Please turn it on, or use another browser.</p>
-    </section>
-  </noscript>
-
-  <section class="box" id="hub" hidden>
-    <p>Linck, Kroll and Sunderman (2009) compared two groups of American students learning Spanish: 25
-       on a semester abroad in Spain, and 20 in the classroom at home. Everyone did the same four tasks.
-       Here you can try toy versions. After each answer, a coloured band tells you what kind of trial it
-       was; the practice rounds explain each kind.</p>
+  <section class="box">
+    <h2>The study</h2>
+    <p>Linck, Kroll and Sunderman (2009) compared two groups of American students learning Spanish: 25 on a
+       semester abroad in Spain, and 20 in the classroom at home. Their hypothesis: immersion helps learners
+       because it holds back (inhibits) their native language, English.</p>
+    <h3>What the four tasks are for</h3>
+    <ul>
+      <li><span class="purpose">Main task</span> <strong>Two main tasks test the hypothesis.</strong> They
+          measure how easily the learners get at their English while Spanish is in play: translation
+          recognition (comprehension) and verbal fluency (production).</li>
+      <li><span class="purpose check">Background check</span> <strong>Two background checks measure general
+          cognitive ability</strong>, not language: reading span (working memory) and the Simon task
+          (inhibitory control). They show whether the two groups started out alike, so that differences in
+          the main tasks can be put down to immersion, and not to one group being better at this kind of
+          thing anyway.</li>
+    </ul>
+    <p>In each task, a coloured band after every answer tells you what kind of trial it was; the practice
+       round explains each kind.</p>
     <div class="cards">
       <div class="card">
+        <span class="purpose">Main task &middot; language comprehension</span>
         <h3><span class="num">1</span> Translation recognition</h3>
-        <p class="tags">linguistic &middot; comprehension &middot; about 3 min</p>
-        <p>Is the English word the translation of the Spanish one? Starts with a one-minute word list.</p>
-        <p class="paper">In the paper: do English words that look like the Spanish word still get in the way?</p>
-        <p class="status" id="st-tr" hidden></p>
-        <button type="button" class="go" data-open="tr">Start</button>
+        <p class="tags">about 3 minutes</p>
+        <p>Is the English word the translation of the Spanish one? Starts with a one-minute word list. <em>In the paper:</em> immersed learners were hardly slowed by English look-alikes of the Spanish word (<em>cara</em> &ndash; CARD); classroom learners were.</p>
+        <p><a class="go" href="translation/">Start</a></p>
       </div>
       <div class="card">
+        <span class="purpose">Main task &middot; language production</span>
         <h3><span class="num">2</span> Verbal fluency</h3>
-        <p class="tags">linguistic &middot; production &middot; about 3 min</p>
-        <p>As many animals (and so on) as you can think of in 30 seconds.</p>
-        <p class="paper">In the paper: did immersion make English words come more slowly?</p>
-        <p class="status" id="st-flu" hidden></p>
-        <button type="button" class="go" data-open="flu">Start</button>
+        <p class="tags">about 3 minutes</p>
+        <p>As many animals (and so on) as you can think of in 30 seconds. <em>In the paper:</em> immersed learners came up with more Spanish words, but fewer English ones.</p>
+        <p><a class="go" href="verbal/">Start</a></p>
       </div>
-      <div class="card">
+      <div class="card check">
+        <span class="purpose check">Background check &middot; cognitive ability (working memory)</span>
         <h3><span class="num">3</span> Reading span</h3>
-        <p class="tags">cognitive &middot; working memory &middot; about 3 min</p>
-        <p>Judge sentences while you hold on to a growing list of words.</p>
-        <p class="paper">In the paper: a check that the two groups started out alike.</p>
-        <p class="status" id="st-rs" hidden></p>
-        <button type="button" class="go" data-open="rs">Start</button>
+        <p class="tags">about 3 minutes</p>
+        <p>Judge sentences while you hold on to a growing list of words. <em>In the paper:</em> the two groups were alike (51.5 and 51.8 of 80 words).</p>
+        <p><a class="go" href="reading-span/">Start</a></p>
       </div>
-      <div class="card">
+      <div class="card check">
+        <span class="purpose check">Background check &middot; cognitive ability (inhibitory control)</span>
         <h3><span class="num">4</span> Simon task</h3>
-        <p class="tags">cognitive &middot; inhibitory control &middot; about 2 min</p>
-        <p>Answer by a square&rsquo;s colour, and ignore where it is.</p>
-        <p class="paper">In the paper: another check that the two groups started out alike.</p>
-        <p class="status" id="st-simon" hidden></p>
-        <button type="button" class="go" data-open="simon">Start</button>
+        <p class="tags">about 2 minutes</p>
+        <p>Answer by a square&rsquo;s colour, and ignore where it is. <em>In the paper:</em> the groups were not quite alike (38 against 20 ms); the classroom group did better.</p>
+        <p><a class="go" href="simon/">Start</a></p>
       </div>
     </div>
-    <p class="small">These are toy versions: the words, timings and numbers of trials are ours, not the paper&rsquo;s.
-       Your answers stay in your browser; nothing is stored or sent.</p>
-  </section>
-
-  <section class="box" id="intro-tr" hidden>
-    <h2>1 &middot; Translation recognition</h2>
-    <p><strong>First, one minute.</strong> Learn these Spanish words as well as you can. If you know Spanish
-       already, you have a head start, just like the learners in the paper.</p>
-    <div class="study" id="study"></div>
-    <p class="timer" id="tr-timer"></p>
-    <p><strong>Then the task.</strong> A Spanish word appears, then an English word in CAPITALS. Is the
-       English word its translation? As fast as you can:</p>
-    <ul>
-      <li>the translation: tap <strong>Yes</strong> (on a laptop, press <kbd>J</kbd>);</li>
-      <li>not the translation: tap <strong>No</strong> (on a laptop, press <kbd>F</kbd>).</li>
-    </ul>
-    <p>Six practice trials first, each with an explanation, then 24 for real (about a minute and a half).</p>
-    <p><button type="button" class="go" id="tr-start">Start the practice</button></p>
-    <p><button type="button" class="link" data-back>Back to the four tasks</button></p>
-  </section>
-
-  <section class="box" id="intro-flu" hidden>
-    <h2>2 &middot; Verbal fluency</h2>
-    <p>You get a category, say <em>animals</em>, and 30 seconds. Think of as many as you can, in your head,
-       and tap <strong>+1</strong> for each one (on a laptop, the space bar). If you prefer, write them on
-       paper and tap as you write.</p>
-    <fieldset>
-      <legend>Do you have a second language, even a bit? Spanish from school counts.</legend>
-      <div class="opts">
-        <label><input type="radio" name="flu-lang" value="spanish">Yes: Spanish</label>
-        <label><input type="radio" name="flu-lang" value="another">Yes: another language</label>
-        <label><input type="radio" name="flu-lang" value="none">English only</label>
-      </div>
-    </fieldset>
-    <fieldset id="flu-half-set">
-      <legend>When is your birthday? This only sets which language comes first.</legend>
-      <div class="opts">
-        <label><input type="radio" name="flu-half" value="first">January to June</label>
-        <label><input type="radio" name="flu-half" value="second">July to December</label>
-      </div>
-    </fieldset>
-    <p id="flu-plan" class="small"></p>
-    <p><button type="button" class="go" id="flu-start" disabled>Start</button></p>
-    <p><button type="button" class="link" data-back>Back to the four tasks</button></p>
-  </section>
-
-  <section class="box" id="intro-rs" hidden>
-    <h2>3 &middot; Reading span</h2>
-    <p>You see a sentence. Does it make sense? Tap <strong>Makes sense</strong> (<kbd>J</kbd>) or
-       <strong>Doesn&rsquo;t</strong> (<kbd>F</kbd>). Then a word appears for one second: remember it.
-       After a few sentences, type all the words of that set, in any order.</p>
-    <p>The sets get longer: 2, 3, 4, then 5 words. One practice set of 2 first, with explanations.</p>
-    <p><button type="button" class="go" id="rs-start">Start the practice</button></p>
-    <p><button type="button" class="link" data-back>Back to the four tasks</button></p>
-  </section>
-
-  <section class="box" id="intro-simon" hidden>
-    <h2>4 &middot; Simon task</h2>
-    <p>A coloured square appears to the left or the right of a <strong>+</strong>. Answer by its colour only:</p>
-    <ul>
-      <li>a <strong style="color: var(--sq-blue)">blue</strong> square: tap <strong>Blue</strong>, the left
-          button (on a laptop, <kbd>F</kbd>);</li>
-      <li>a <strong style="color: #8a6d00">yellow</strong> square: tap <strong>Yellow</strong>, the right
-          button (<kbd>J</kbd>).</li>
-    </ul>
-    <p>Where the square appears does not matter. As fast as you can, with as few mistakes as you can.</p>
-    <p>Six practice trials first, each with an explanation, then 48 for real (about a minute and a half).</p>
-    <p><button type="button" class="go" id="simon-start">Start the practice</button></p>
-    <p><button type="button" class="link" data-back>Back to the four tasks</button></p>
-  </section>
-
-  <section class="box" id="ready" hidden>
-    <div id="ready-text"></div>
-    <p><button type="button" class="go" id="ready-go"></button></p>
-  </section>
-
-  <section id="task" hidden>
-    <p class="prog" id="prog"></p>
-    <div class="stage" id="stage-simon">
-      <span class="fix">+</span>
-      <div id="sq"></div>
-    </div>
-    <div class="stage" id="stage-tr">
-      <span id="tr-word"></span>
-      <span id="tr-cap"></span>
-    </div>
-    <div class="stage" id="stage-flu">
-      <div id="flu-chip"></div>
-      <div id="flu-cat"></div>
-      <div id="flu-time"></div>
-      <div id="flu-stop"></div>
-    </div>
-    <div class="stage" id="stage-rs">
-      <span id="rs-text"></span>
-    </div>
-    <div class="band" id="band">
-      <div id="band-chip"></div>
-      <div class="explain" id="band-explain" hidden></div>
-      <button type="button" class="go" id="band-next" hidden>Next</button>
-    </div>
-    <div class="resp" id="resp-simon">
-      <button type="button" class="blue" data-choice="left">Blue<span>F</span></button>
-      <button type="button" class="yellow" data-choice="right">Yellow<span>J</span></button>
-    </div>
-    <div class="resp" id="resp-tr">
-      <button type="button" data-choice="left">No<span>F</span></button>
-      <button type="button" data-choice="right">Yes<span>J</span></button>
-    </div>
-    <div class="resp" id="resp-rs">
-      <button type="button" data-choice="left">Doesn&rsquo;t make sense<span>F</span></button>
-      <button type="button" data-choice="right">Makes sense<span>J</span></button>
-    </div>
-    <div class="flu-ctl" id="flu-ctl">
-      <button type="button" id="flu-plus">+1</button>
-      <p id="flu-count-line">Counted: <span id="flu-count">0</span> &nbsp;
-        <button type="button" class="link" id="flu-undo">undo one</button></p>
-    </div>
-    <div id="recall" hidden>
-      <textarea id="recall-in" rows="2" autocomplete="off" autocorrect="off" autocapitalize="off"
-                spellcheck="false" aria-label="The words from this set"></textarea>
-      <p><button type="button" class="go" id="recall-done">Done</button></p>
-      <div id="recall-fb"></div>
-      <p><button type="button" class="go" id="recall-next" hidden></button></p>
-    </div>
-  </section>
-
-  <section class="box" id="result" hidden>
-    <div id="result-body"></div>
-    <p><button type="button" class="go" data-back>Back to the four tasks</button></p>
+    <p class="small">These are toy versions: the words, timings and numbers of trials are ours, not the
+       paper&rsquo;s. Your answers stay in your browser; nothing is stored or sent.</p>
   </section>
 
   <section class="course-foot">
@@ -431,580 +158,6 @@
     Last updated: 2026-10-20</p>
 </div></footer>
 
-<!-- The items, the trial lists and the scoring are in linck.js; this script only runs the
-     trials. Onsets are animation-frame times, as in ../priming/. Nothing is stored or sent. -->
-
-<script src="linck.js"></script>
-<script>
-(function () {
-  var L = window.Linck;
-  if (!L || !window.requestAnimationFrame || !window.performance) return;
-  var FIX = 500, BAND = 600, ITI = 400, TR_SPANISH = 750, RS_LIMIT = 6000, RS_WORD = 1000, RS_GAP = 300;
-
-  function $(id) { return document.getElementById(id); }
-  function esc(s) {
-    return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
-  }
-  function signed(e) { return e > 0 ? '+' + e : e < 0 ? '−' + (-e) : '0'; }
-  function copy(xs) { return xs.map(function (x) { return Object.assign({}, x); }); }
-
-  var COND = {
-    same:        { label: 'Same side',             colour: 'var(--c-same)' },
-    opposite:    { label: 'Opposite side',         colour: 'var(--c-opp)' },
-    yes:         { label: 'The translation',       colour: 'var(--c-yes)' },
-    lexical:     { label: 'Lexical neighbour',     colour: 'var(--c-lex)' },
-    translation: { label: 'Translation neighbour', colour: 'var(--c-trn)' },
-    semantic:    { label: 'Semantic neighbour',    colour: 'var(--c-sem)' },
-    unrelated:   { label: 'Unrelated',             colour: 'var(--c-unr)' },
-    sense:       { label: 'Makes sense',           colour: 'var(--c-yes)' },
-    nonsense:    { label: 'Doesn’t make sense',    colour: 'var(--c-trn)' },
-    english:     { label: 'English',               colour: 'var(--garnet)' },
-    other:       { label: 'Other language',        colour: 'var(--c-sem)' }
-  };
-  function chip(cond, text) {
-    return '<span class="chip" style="background:' + COND[cond].colour + '">' + esc(text || COND[cond].label) + '</span>';
-  }
-
-  /* ------------------------------------------------------------ panels */
-  var PANELS = ['hub', 'intro-tr', 'intro-flu', 'intro-rs', 'intro-simon', 'ready', 'task', 'result'];
-  function showPanel(id) {
-    PANELS.forEach(function (p) { $(p).hidden = p !== id; });
-    document.body.classList.toggle('running', id === 'task');
-    window.scrollTo(0, 0);
-  }
-  var STAGES = ['stage-simon', 'stage-tr', 'stage-flu', 'stage-rs'];
-  var CONTROLS = ['resp-simon', 'resp-tr', 'resp-rs', 'flu-ctl', 'recall'];
-  function showStage(stage, control) {
-    STAGES.forEach(function (s) { $(s).hidden = s !== stage; });
-    CONTROLS.forEach(function (c) { $(c).hidden = c !== control; });
-    clearBand();
-    showPanel('task');
-  }
-
-  var readyFn = null;
-  function setReady(html, label, fn) {
-    $('ready-text').innerHTML = html;
-    $('ready-go').textContent = label;
-    readyFn = fn;
-    showPanel('ready');
-  }
-  $('ready-go').addEventListener('click', function () { if (readyFn) readyFn(); });
-
-  var done = {};
-  function showResult(key, html, status) {
-    done[key] = status;
-    $('result-body').innerHTML = html;
-    showPanel('result');
-  }
-  function showHub() {
-    ['tr', 'flu', 'rs', 'simon'].forEach(function (k) {
-      if (done[k]) { $('st-' + k).textContent = 'Done: ' + done[k]; $('st-' + k).hidden = false; }
-    });
-    showPanel('hub');
-  }
-  Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function (b) {
-    b.addEventListener('click', function () { clearInterval(trTick); showHub(); });
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-open]'), function (b) {
-    b.addEventListener('click', function () { OPEN[b.getAttribute('data-open')](); });
-  });
-
-  /* ------------------------------------------------------------ the band after each answer
-     In a practice round it explains the trial and waits for Next; in a real round it shows the
-     condition for 600 ms. */
-  var bandWait = null;
-  function band(cond, mark, explain, practice, cont) {
-    var bad = mark !== '✓';
-    $('band-chip').innerHTML = chip(cond) + ' <span class="mark' + (bad ? ' bad' : '') + '">' + esc(mark) + '</span>';
-    if (practice) {
-      $('band-explain').innerHTML = explain;
-      $('band-explain').hidden = false;
-      $('band-next').hidden = false;
-      bandWait = function () { bandWait = null; clearBand(); cont(); };
-    } else {
-      setTimeout(function () { clearBand(); cont(); }, BAND);
-    }
-  }
-  function clearBand() {
-    $('band-chip').innerHTML = '';
-    $('band-explain').innerHTML = '';
-    $('band-explain').hidden = true;
-    $('band-next').hidden = true;
-  }
-  $('band-next').addEventListener('click', function () { if (bandWait) bandWait(); });
-
-  /* ------------------------------------------------------------ responses */
-  var onChoice = null, cur = null;
-  function choose(c) { if (onChoice) onChoice(c); }
-
-  // Buttons answer on pointer-down (a click fires only on release); F and J on a keyboard.
-  var downs = window.PointerEvent ? ['pointerdown'] : ['touchstart', 'mousedown'];
-  Array.prototype.forEach.call(document.querySelectorAll('[data-choice]'), function (b) {
-    downs.forEach(function (ev) {
-      b.addEventListener(ev, function (e) { e.preventDefault(); choose(b.getAttribute('data-choice')); });
-    });
-  });
-  downs.forEach(function (ev) {
-    $('flu-plus').addEventListener(ev, function (e) { e.preventDefault(); plusOne(1); });
-  });
-  $('flu-undo').addEventListener('click', function () { plusOne(-1); });
-
-  document.addEventListener('keydown', function (e) {
-    if ($('task').hidden || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
-    var tag = (e.target && e.target.tagName) || '';
-    if (tag === 'TEXTAREA' || tag === 'INPUT') return;
-    var k = (e.key || '').toLowerCase();
-    if (bandWait && (k === 'enter' || k === ' ')) { e.preventDefault(); bandWait(); return; }
-    if (!$('stage-flu').hidden) {
-      if (k === ' ' || k === 'j') { e.preventDefault(); plusOne(1); }
-      return;
-    }
-    if (k === 'f' || k === 'j') { e.preventDefault(); choose(k === 'f' ? 'left' : 'right'); }
-  });
-
-  // A trial during which the page went into the background (a notification, another app)
-  // is not counted: its timing means nothing.
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden && cur && !$('task').hidden) cur.interrupted = true;
-  });
-
-  /* ------------------------------------------------------------ timed two-button trials
-     Simon and translation recognition. spec.present shows the stimuli and calls back with the
-     frame time of the one to answer; the response is timed from that frame. */
-  var R = {};
-  function runRT(spec, trials, practice, finish) {
-    R = { spec: spec, list: trials, idx: 0, practice: practice, finish: finish, accepting: false };
-    showStage(spec.stage, spec.resp);
-    nextRT();
-  }
-  function nextRT() {
-    if (R.idx >= R.list.length) { cur = null; onChoice = null; R.finish(R.list); return; }
-    cur = R.list[R.idx];
-    $('prog').textContent = (R.practice ? 'Practice ' : '') + (R.idx + 1) + ' of ' + R.list.length;
-    onChoice = answerRT;
-    R.spec.present(cur, function (t) {
-      R.onset = t;
-      R.accepting = true;
-      R.timer = setTimeout(tooSlowRT, R.spec.limit);
-    });
-  }
-  function answerRT(c) {
-    if (!R.accepting) return;
-    var rt = performance.now() - R.onset;
-    R.accepting = false;
-    clearTimeout(R.timer);
-    cur.choice = c;
-    cur.rt = Math.round(rt);
-    cur.correct = c === R.spec.answerOf(cur);
-    afterRT();
-  }
-  function tooSlowRT() {
-    if (!R.accepting) return;
-    R.accepting = false;
-    cur.choice = null;
-    cur.rt = null;
-    cur.correct = false;
-    afterRT();
-  }
-  function afterRT() {
-    R.spec.clear();
-    var mark = cur.rt === null ? 'too slow' : cur.correct ? '✓' : '✗ wrong';
-    band(cur.cond, mark, R.spec.explain(cur), R.practice, function () {
-      setTimeout(function () { R.idx++; nextRT(); }, ITI);
-    });
-  }
-
-  /* ------------------------------------------------------------ 4 · Simon */
-  var SIMON = {
-    stage: 'stage-simon', resp: 'resp-simon', limit: L.SIMON_MAX_RT,
-    present: function (t, go) {
-      $('sq').className = '';
-      setTimeout(function () {
-        requestAnimationFrame(function (t0) {
-          $('sq').className = t.colour + ' ' + t.side;
-          go(t0);
-        });
-      }, FIX);
-    },
-    clear: function () { $('sq').className = ''; },
-    answerOf: function (t) { return t.answer; },
-    explain: function (t) {
-      var col = t.colour === 'blue' ? 'blue' : 'yellow';
-      return t.cond === 'same'
-        ? 'A ' + col + ' square on the ' + t.side + ', and the ' + col + ' button is on the ' + t.answer +
-          ' too. Where the square is and what colour it is point the same way: the easy kind.'
-        : 'A ' + col + ' square on the ' + t.side + ', but the ' + col + ' button is on the ' + t.answer +
-          '. Where the square is pulls you towards the wrong button, and you have to hold that back. ' +
-          'Holding back is <strong>inhibition</strong>; the extra time it costs is the <strong>Simon effect</strong>.';
-    }
-  };
-
-  function openSimon() { showPanel('intro-simon'); }
-  $('simon-start').addEventListener('click', function () {
-    runRT(SIMON, copy(L.SIMON_PRACTICE), true, function () {
-      setReady('<p>That was the practice. Now 48 for real, about a minute and a half, without a break. ' +
-        'No explanations now: just a coloured band after each answer, ' + chip('same') + ' or ' +
-        chip('opposite') + '.</p><p>Blue: left. Yellow: right. Ignore where the square is.</p>', 'Start',
-        function () { runRT(SIMON, L.buildSimon(), false, resultSimon); });
-    });
-  });
-
-  function resultSimon(trials) {
-    var s = L.scoreSimon(trials), e = s.effect, html = '<h2>Your result: Simon task</h2>';
-    html += '<p class="big">' + (e === null ? 'No number' : signed(e) + ' ms') + '</p>';
-    html += '<p>' + (e === null ? 'Not enough correct answers to work out a Simon effect.' :
-      e > 0 ? 'Your Simon effect: ' + chip('opposite') + ' squares took you ' + e + ' ms longer than ' + chip('same') + ' ones.' :
-      e < 0 ? 'Your Simon effect: ' + chip('opposite') + ' squares took you ' + (-e) + ' ms less than ' + chip('same') + ' ones.' :
-              'Your Simon effect: no difference between ' + chip('opposite') + ' and ' + chip('same') + ' squares.') + '</p>';
-    if (e !== null) html += '<p class="hands">For the show of hands in class, your bracket is <strong>' + L.simonBracket(e) + '</strong>.</p>';
-    if (e !== null && !s.reliable) html += '<p class="warn">Only ' + Math.min(s.nSame, s.nOpposite) +
-      ' usable trials in one of the two kinds (usable means a correct answer within 1.5 seconds, with the page kept open), so this number means very little.</p>';
-    function ms(x, n) { return x === null ? 'no usable trials' : x + ' ms (' + n + ' trials)'; }
-    html += '<table class="sum">' +
-      '<tr><th>' + chip('same') + ' your middle time</th><td>' + ms(s.same, s.nSame) + '</td></tr>' +
-      '<tr><th>' + chip('opposite') + ' your middle time</th><td>' + ms(s.opposite, s.nOpposite) + '</td></tr>' +
-      '<tr><th>Correct answers, same side</th><td>' + s.accSame.correct + ' of ' + s.accSame.total + '</td></tr>' +
-      '<tr><th>Correct answers, opposite side</th><td>' + s.accOpposite.correct + ' of ' + s.accOpposite.total + '</td></tr></table>';
-    html += '<h3>What was going on</h3>' +
-      '<p>Only the colour decided the button; where the square appeared did not matter. Even so, a square on the right ' +
-      'pulls you towards the right-hand button. On ' + chip('opposite') + ' trials you have to hold that pull back, and that ' +
-      'costs time. The cost is the <strong>Simon effect</strong>. Linck et al. used it as their measure of ' +
-      '<strong>inhibitory control</strong>: the smaller the effect, the better you are at holding back the wrong response.</p>' +
-      '<p>In the paper (Table 1), the immersed group&rsquo;s Simon effect was <strong>38 ms</strong> and the classroom ' +
-      'group&rsquo;s <strong>20 ms</strong>. The task was there to check that the two groups started out alike, so that ' +
-      'differences in the language tasks could be put down to immersion. The text calls the groups similar on this measure, ' +
-      'but Table 1 marks the difference as reliable. The authors say that any edge lay with the classroom group.</p>' +
-      '<p>Your number is the difference between your middle (median) times for the two kinds, correct answers only. ' +
-      'Twenty-four trials of each kind give a noisy number for one person: zero or negative results happen and do not ' +
-      'mean anything went wrong. The class as a whole is the real test.</p>';
-    showResult('simon', html, e === null ? 'no number' : 'Simon effect ' + signed(e) + ' ms');
-  }
-
-  /* ------------------------------------------------------------ 1 · Translation recognition */
-  var GLOSS = {};
-  L.TR_PRACTICE_WORDS.concat(L.TR_WORDS).forEach(function (w) { GLOSS[w.es] = w.en; });
-
-  var TR = {
-    stage: 'stage-tr', resp: 'resp-tr', limit: L.TR_MAX_RT,
-    present: function (t, go) {
-      var w = $('tr-word'), cap = $('tr-cap');
-      w.className = 'fix';
-      w.textContent = '+';
-      cap.textContent = '';
-      setTimeout(function () {
-        requestAnimationFrame(function (t0) {
-          w.className = 'es';
-          w.textContent = t.es;
-          cap.textContent = 'Spanish';
-          function tick(tt) {
-            if (tt - t0 < TR_SPANISH - 8) { requestAnimationFrame(tick); return; }
-            w.className = '';
-            w.textContent = t.en.toUpperCase();
-            cap.textContent = 'English: is it the translation?';
-            if (tt - t0 > TR_SPANISH + 150) t.interrupted = true;
-            go(tt);
-          }
-          requestAnimationFrame(tick);
-        });
-      }, FIX);
-    },
-    clear: function () { $('tr-word').textContent = ''; $('tr-word').className = ''; $('tr-cap').textContent = ''; },
-    answerOf: function (t) { return t.yes ? 'right' : 'left'; },
-    explain: function (t) {
-      var es = '<em>' + esc(t.es) + '</em>', en = '<strong>' + esc(t.en.toUpperCase()) + '</strong>',
-          gl = '<em>' + esc(GLOSS[t.es]) + '</em>';
-      switch (t.cond) {
-        case 'yes': return es + ' means ' + gl + ', so the answer is Yes.';
-        case 'lexical': return en + ' <strong>looks like the Spanish word</strong> ' + es + ', but ' + es + ' means ' + gl +
-          '. The paper&rsquo;s example: <em>cara</em> (face) with CARD.';
-        case 'translation': return en + ' <strong>looks like the right translation</strong>, ' + gl +
-          '. The paper&rsquo;s example: <em>cara</em> (face) with FACT.';
-        case 'semantic': return en + ' is <strong>related in meaning</strong> to ' + gl + ', the right translation. ' +
-          'The paper&rsquo;s example: <em>cara</em> (face) with HEAD.';
-        case 'unrelated': return en + ' has <strong>nothing to do</strong> with ' + es + ' or ' + gl + '. This is the ' +
-          'baseline: is a lexical, translation or semantic neighbour harder to turn down than this?';
-      }
-    }
-  };
-
-  var trTick = null;
-  function openTR() {
-    $('study').innerHTML = L.TR_PRACTICE_WORDS.concat(L.TR_WORDS).map(function (w) {
-      return '<div><em>' + esc(w.es) + '</em> &nbsp;' + esc(w.en) + '</div>';
-    }).join('');
-    showPanel('intro-tr');
-    var end = performance.now() + 60000;
-    clearInterval(trTick);
-    function tick() {
-      var left = Math.ceil((end - performance.now()) / 1000);
-      $('tr-timer').textContent = left > 0 ? left + ' seconds left' : 'Time’s up: start when you’re ready.';
-      if (left <= 0) clearInterval(trTick);
-    }
-    tick();
-    trTick = setInterval(tick, 250);
-  }
-  $('tr-start').addEventListener('click', function () {
-    clearInterval(trTick);
-    runRT(TR, copy(L.TR_PRACTICE), true, function () {
-      setReady('<p>That was the practice. Now 24 for real, about a minute and a half. No explanations now: just a ' +
-        'coloured band after each answer that tells you what kind of pair it was:</p><p>' +
-        ['yes', 'lexical', 'translation', 'semantic', 'unrelated'].map(function (k) { return chip(k); }).join(' ') + '</p>',
-        'Start', function () { runRT(TR, L.buildTR(), false, resultTR); });
-    });
-  });
-
-  function resultTR(trials) {
-    var s = L.scoreTR(trials), html = '<h2>Your result: translation recognition</h2>';
-    var EX = { yes: 'face', lexical: 'card', translation: 'fact', semantic: 'head', unrelated: 'lamp' };
-    html += s.slowest ? '<p>Your slowest kind of No:</p><p class="big">' + chip(s.slowest) + '</p>' +
-      '<p class="hands">For the show of hands in class: which colour was your slowest No? Yours was ' + chip(s.slowest) + '.</p>'
-      : '<p class="big">No answer</p><p>Not enough correct No answers to say which kind was slowest.</p>';
-    html += '<table class="sum"><thead><tr><th>Kind of pair</th><th>Correct</th><th>Your middle time</th></tr></thead>';
-    ['yes', 'lexical', 'translation', 'semantic', 'unrelated'].forEach(function (k) {
-      var r = s[k];
-      html += '<tr><th>' + chip(k) + '<br><span class="small"><em>cara</em> &ndash; ' + EX[k].toUpperCase() + '</span></th>' +
-        '<td>' + r.correct + ' of ' + r.total + '</td><td>' + (r.time === null ? '&ndash;' : r.time + ' ms') + '</td></tr>';
-    });
-    html += '</table>';
-    html += '<h3>What was going on</h3>' +
-      '<p>Every No pair except the ' + chip('unrelated') + ' ones shared something with the right answer: a ' +
-      chip('lexical') + ' looks like the Spanish word, a ' + chip('translation') + ' looks like the right English word, ' +
-      'and a ' + chip('semantic') + ' means something close to it. If one kind is harder to turn down than an unrelated ' +
-      'word, that kind of similarity is getting in the way.</p>' +
-      '<p>In the paper (Figures 1 and 2), the classroom learners were slowed down by all three kinds, by about 45 to 65 ms. ' +
-      'The immersed learners were slowed down a lot by semantic neighbours (about 120 ms), but hardly at all by lexical ' +
-      'neighbours (about 5 ms). Lexical neighbours like CARD are <strong>English</strong> words that look like the Spanish ' +
-      'word. The authors read the immersed learners&rsquo; immunity to them as a sign that their English was being held ' +
-      'down: <strong>inhibited</strong>. (The figures are read off the bar charts; only the translation-neighbour numbers, ' +
-      '25 against 65 ms, are given in the text, and that group difference was only a trend.)</p>' +
-      '<p>Worth testing with the hands: the paper&rsquo;s background (p. 1508) says that beginners are caught by the ' +
-      '<em>form</em> of the translation (' + chip('translation') + '), and that as learners improve, <em>meaning</em> ' +
-      'matters more (' + chip('semantic') + '). Do the people with little Spanish and the people with a lot of it differ?</p>' +
-      '<p class="warn">Three trials per kind is far too few for a personal number: one slow trial decides it. The paper had ' +
-      '45 learners, many more trials each, and a matched control word for every distractor; here one shared unrelated ' +
-      'baseline stands in for those. Only correct answers count towards the times.</p>';
-    showResult('tr', html, s.slowest ? 'slowest No: ' + COND[s.slowest].label.toLowerCase() : 'no answer');
-  }
-
-  /* ------------------------------------------------------------ 2 · Verbal fluency */
-  var F = {};
-  function fluencyChoice() {
-    var lang = document.querySelector('input[name="flu-lang"]:checked'),
-        half = document.querySelector('input[name="flu-half"]:checked');
-    lang = lang && lang.value;
-    half = half && half.value;
-    $('flu-half-set').hidden = lang === 'none';
-    var ok = lang === 'none' || (lang && half);
-    $('flu-start').disabled = !ok;
-    if (!ok) { $('flu-plan').textContent = ''; return null; }
-    var order = L.fluencyOrder(half === 'first' ? 1 : 7, lang !== 'none');
-    var name = { english: 'English', other: lang === 'spanish' ? 'Spanish' : 'your other language' };
-    $('flu-plan').textContent = 'Your order: ' + order.map(function (b) { return name[b]; }).join(', then ') +
-      '. Two categories each, 30 seconds per category.';
-    return { lang: lang, half: lang === 'none' ? null : half, order: order, name: name };
-  }
-  Array.prototype.forEach.call(document.querySelectorAll('#intro-flu input'), function (i) {
-    i.addEventListener('change', fluencyChoice);
-  });
-  function openFluency() { fluencyChoice(); showPanel('intro-flu'); }
-  $('flu-start').addEventListener('click', function () {
-    var c = fluencyChoice();
-    if (!c) return;
-    F = { c: c, steps: [], i: 0, counts: [], live: false };
-    c.order.forEach(function (b) {
-      L.FLUENCY_BLOCKS[b].cats.forEach(function (cat) { F.steps.push({ block: b, cat: cat }); });
-    });
-    readyFluency();
-  });
-  function readyFluency() {
-    if (F.i >= F.steps.length) { resultFluency(); return; }
-    var s = F.steps[F.i], lang = F.c.name[s.block];
-    setReady('<p>' + chip(s.block, lang) + ' &nbsp;Category ' + (F.i + 1) + ' of ' + F.steps.length + '</p>' +
-      '<p>Think of as many <strong>' + esc(s.cat) + '</strong> as you can, <strong>in ' + esc(lang) + '</strong>, ' +
-      'and tap <strong>+1</strong> for each one. 30 seconds.</p>', 'Start the 30 seconds', runFluencyStep);
-  }
-  function runFluencyStep() {
-    var s = F.steps[F.i];
-    showStage('stage-flu', 'flu-ctl');
-    $('prog').textContent = 'Category ' + (F.i + 1) + ' of ' + F.steps.length;
-    $('flu-chip').innerHTML = chip(s.block, F.c.name[s.block]);
-    $('flu-cat').textContent = s.cat;
-    $('flu-stop').textContent = '';
-    F.count = 0;
-    $('flu-count').textContent = '0';
-    $('flu-plus').disabled = false;
-    $('flu-undo').disabled = false;
-    F.live = true;
-    var end = performance.now() + L.FLUENCY_SECONDS * 1000;
-    $('flu-time').textContent = L.FLUENCY_SECONDS;
-    F.timer = setInterval(function () {
-      var left = Math.ceil((end - performance.now()) / 1000);
-      if (left > 0) { $('flu-time').textContent = left; return; }
-      clearInterval(F.timer);
-      F.live = false;
-      $('flu-time').textContent = '0';
-      $('flu-plus').disabled = true;
-      $('flu-undo').disabled = true;
-      F.counts.push({ block: s.block, cat: s.cat, n: F.count });
-      $('flu-stop').textContent = 'Time! You counted ' + F.count + '.';
-      setTimeout(function () { F.i++; readyFluency(); }, 1500);
-    }, 100);
-  }
-  function plusOne(d) {
-    if (!F.live) return;
-    F.count = Math.max(0, F.count + d);
-    $('flu-count').textContent = F.count;
-  }
-
-  function resultFluency() {
-    var html = '<h2>Your result: verbal fluency</h2>', animals = null, both = F.c.order.length > 1;
-    F.counts.forEach(function (r) { if (r.cat === 'animals') animals = r.n; });
-    html += '<p class="big">' + animals + ' animals</p>';
-    html += '<p class="hands">For the show of hands in class: animals in 30 seconds, your bracket is <strong>' +
-      L.fluencyBracket(animals) + '</strong>' + (both ? ', and you did ' + esc(F.c.name[F.c.order[0]]) + ' first' : '') + '.</p>';
-    html += '<table class="sum"><thead><tr><th>In the order you did them</th><th>Counted</th></tr></thead>';
-    F.counts.forEach(function (r) {
-      html += '<tr><th>' + chip(r.block, F.c.name[r.block]) + ' ' + esc(r.cat) + '</th><td>' + r.n + '</td></tr>';
-    });
-    html += '</table>';
-    html += '<h3>What was going on</h3>' +
-      '<p>Verbal fluency is a production task: how easily do words come? Linck et al. gave their learners 30 seconds per ' +
-      'category, in English and in Spanish. The immersed learners came up with more Spanish words than the classroom ' +
-      'learners, but <strong>fewer English ones</strong> (Figure 3: in English about 47 against 59, in Spanish about 32 ' +
-      'against 24; totals over all their categories, so not comparable with your counts). Six months after coming home, ' +
-      'the immersed learners&rsquo; English had bounced back (Figure 5). The authors read this as English being ' +
-      '<strong>inhibited</strong> during immersion.</p>' +
-      '<p><strong>The order of the blocks.</strong> In the paper, the immersed learners did Spanish first and English ' +
-      'second; the classroom learners did English first (p. 1509). So group and order went together. In class we split ' +
-      'the order by birthday. Does a block in another language first make the English words come more slowly? ' +
-      'Compare the hands for animals: January to June against July to December, among those who did both blocks.</p>';
-    showResult('flu', html, animals + ' animals');
-  }
-
-  /* ------------------------------------------------------------ 3 · Reading span */
-  var S = {};
-  function openRspan() { showPanel('intro-rs'); }
-  function runRspan(sets, practice, finish) {
-    S = { sets: sets.map(copy), si: 0, ii: 0, practice: practice, finish: finish, recalled: [], accepting: false };
-    showStage('stage-rs', 'resp-rs');
-    nextRS();
-  }
-  function nextRS() {
-    var set = S.sets[S.si];
-    if (S.ii >= set.length) { recallRS(); return; }
-    cur = set[S.ii];
-    $('prog').textContent = (S.practice ? 'Practice · ' : '') + 'Set ' + (S.si + 1) + ' of ' + S.sets.length +
-      ' · sentence ' + (S.ii + 1) + ' of ' + set.length;
-    $('rs-text').className = 'sentence';
-    $('rs-text').textContent = cur.s;
-    $('resp-rs').hidden = false;
-    S.accepting = true;
-    onChoice = answerRS;
-    S.timer = setTimeout(function () {
-      if (!S.accepting) return;
-      S.accepting = false;
-      cur.choice = null;
-      cur.correct = false;
-      afterRS('too slow');
-    }, RS_LIMIT);
-  }
-  function answerRS(c) {
-    if (!S.accepting) return;
-    S.accepting = false;
-    clearTimeout(S.timer);
-    cur.choice = c;
-    cur.correct = (c === 'right') === cur.ok;
-    afterRS(cur.correct ? '✓' : '✗');
-  }
-  function afterRS(mark) {
-    $('rs-text').textContent = '';
-    var explain = (cur.ok ? 'This one makes sense.' : 'This one doesn&rsquo;t make sense.') +
-      ' Judging the sentence keeps your mind busy while you hold on to the words: <strong>working memory</strong> has ' +
-      'to store and process at the same time. Now remember the word that comes next.';
-    band(cur.ok ? 'sense' : 'nonsense', mark, explain, S.practice, function () {
-      $('rs-text').className = 'word';
-      $('rs-text').textContent = cur.w.toUpperCase();
-      setTimeout(function () {
-        $('rs-text').textContent = '';
-        setTimeout(function () { S.ii++; nextRS(); }, RS_GAP);
-      }, RS_WORD);
-    });
-  }
-  function recallRS() {
-    onChoice = null;
-    cur = null;
-    var set = S.sets[S.si];
-    $('prog').textContent = (S.practice ? 'Practice · ' : '') + 'Set ' + (S.si + 1) + ' of ' + S.sets.length + ' · recall';
-    $('resp-rs').hidden = true;
-    $('rs-text').className = 'sentence';
-    $('rs-text').textContent = 'Type the ' + set.length + ' words from this set, in any order.';
-    $('recall').hidden = false;
-    $('recall-in').value = '';
-    $('recall-in').disabled = false;
-    $('recall-fb').innerHTML = '';
-    $('recall-done').hidden = false;
-    $('recall-next').hidden = true;
-    $('recall-in').focus();
-  }
-  function recallDone() {
-    if ($('recall-done').hidden) return;
-    var words = S.sets[S.si].map(function (x) { return x.w; }), r = L.scoreRecall($('recall-in').value, words);
-    S.recalled.push(r.n);
-    $('recall-in').disabled = true;
-    $('recall-done').hidden = true;
-    $('recall-fb').innerHTML = words.map(function (w, i) {
-      return '<span class="rw ' + (r.hits[i] ? 'hit' : 'miss') + '">' + esc(w) + '</span>';
-    }).join(' ') + '<br>' + r.n + ' of ' + words.length + ' (green: you had it; grey: missed)';
-    $('recall-next').textContent = S.si + 1 < S.sets.length ? 'Next set' : S.practice ? 'Continue' : 'See your result';
-    $('recall-next').hidden = false;
-  }
-  $('recall-done').addEventListener('click', recallDone);
-  $('recall-in').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); recallDone(); }
-  });
-  $('recall-next').addEventListener('click', function () {
-    $('recall').hidden = true;
-    S.si++;
-    S.ii = 0;
-    if (S.si >= S.sets.length) { S.finish(S); return; }
-    $('resp-rs').hidden = false;
-    nextRS();
-  });
-  $('rs-start').addEventListener('click', function () {
-    runRspan([L.RSPAN_PRACTICE], true, function () {
-      setReady('<p>That was the practice. Now four sets of 2, 3, 4 and 5 sentences, about three minutes. After each ' +
-        'sentence a band shows whether it made sense, ' + chip('sense') + ' or ' + chip('nonsense') +
-        ', and after each set your words in green (had it) or grey (missed).</p>', 'Start',
-        function () { runRspan(L.RSPAN_SETS, false, resultRspan); });
-    });
-  });
-
-  function resultRspan(st) {
-    var n = st.recalled.reduce(function (a, b) { return a + b; }, 0),
-        total = st.sets.reduce(function (a, s) { return a + s.length; }, 0),
-        judged = st.sets.reduce(function (a, s) { return a + s.filter(function (x) { return x.correct; }).length; }, 0),
-        pct = Math.round(100 * n / total), html = '<h2>Your result: reading span</h2>';
-    html += '<p class="big">' + n + ' of ' + total + '</p>';
-    html += '<p>words recalled (' + pct + '%).</p>';
-    html += '<p class="hands">For the show of hands in class, your bracket is <strong>' + L.rspanBracket(n) + '</strong>.</p>';
-    html += '<table class="sum">';
-    st.sets.forEach(function (s, i) {
-      html += '<tr><th>Set of ' + s.length + '</th><td>' + st.recalled[i] + ' of ' + s.length + '</td></tr>';
-    });
-    html += '<tr><th>Sentences judged right</th><td>' + judged + ' of ' + total + '</td></tr></table>';
-    html += '<h3>What was going on</h3>' +
-      '<p>Reading span measures <strong>working memory</strong>: holding on to words while you process sentences. ' +
-      'Linck et al. used it, like the Simon task, to check that the two groups started out alike, and on this one they ' +
-      'did: <strong>51.5 and 51.8 words out of 80</strong> (Table 1), about 65%. Yours: ' + pct + '%.</p>' +
-      '<p>Ours had 14 words in sets of 2 to 5; theirs had 80, in sets of 2 to 6, so the percentages are only a rough ' +
-      'comparison. The sentence judgements matter too: without them, you could just rehearse the words.</p>';
-    showResult('rs', html, n + ' of ' + total + ' words');
-  }
-
-  var OPEN = { tr: openTR, flu: openFluency, rs: openRspan, simon: openSimon };
-  showHub();
-})();
-</script>
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
   document.querySelectorAll('a[href^="http"]').forEach(function (a) {

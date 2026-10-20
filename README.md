@@ -45,8 +45,10 @@ python3 -m http.server 8000
   and class run sheet: `~/claudecode/lin3042/course/modules/priming-demo/README.md`.
 - `/lin3042/linck/` (from 2026-10-20) is the same kind of demo: toy versions of the four tasks in
   Linck, Kroll & Sunderman (2009), namely translation recognition, verbal fluency, reading span
-  and the Simon task, with colour-coded conditions. Items and scoring in `linck.js`, runners in
-  `index.html`; nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/linck-demo/README.md`.
+  and the Simon task, with colour-coded conditions. A hub (`linck/`, what each task is for) and one
+  page per task (`translation/`, `verbal/`, `reading-span/`, `simon/`, each naming its task in
+  `<body data-task>`). Shared: `linck.js` (items, scoring), `tasks.js` (runners), `linck.css`.
+  Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/linck-demo/README.md`.
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.

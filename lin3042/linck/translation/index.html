@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Translation recognition | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
+<meta name="description" content="Toy version of the translation-recognition task in Linck, Kroll and Sunderman (2009): is the English word the translation of the Spanish one?">
+<link rel="canonical" href="https://tjuzek.com/lin3042/linck/translation/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Translation recognition | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta property="og:description" content="Is the English word the translation of the Spanish one? A toy version of a task from Linck et al. (2009).">
+<meta property="og:url" content="https://tjuzek.com/lin3042/linck/translation/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Translation recognition | Linck et al. (2009) tasks | LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta name="twitter:description" content="Is the English word the translation of the Spanish one? A toy version of a task from Linck et al. (2009).">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="../linck.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tjuzek.com/#website",
+      "url": "https://tjuzek.com/",
+      "name": "Thomas Stephan Juzek",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://tjuzek.com/#person",
+      "name": "Thomas Stephan Juzek",
+      "url": "https://tjuzek.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tjuzek.com/lin3042/linck/translation/#webpage",
+      "url": "https://tjuzek.com/lin3042/linck/translation/",
+      "name": "Translation recognition: Linck et al. (2009) tasks. LIN 3042 Applied Linguistics, Fall 2026",
+      "description": "Toy version of the translation-recognition task in Linck, Kroll and Sunderman (2009): is the English word the translation of the Spanish one?",
+      "author": { "@id": "https://tjuzek.com/#person" },
+      "isPartOf": { "@id": "https://tjuzek.com/#website" },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-10-20"
+    }
+  ]
+}
+</script>
+</head>
+<body data-task="translation">
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html" class="active">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="course-head">
+    <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; <a href="../">Linck et al. (2009) tasks</a></p>
+    <h1>1 &middot; Translation recognition</h1>
+    <p class="lead"><span class="purpose">Main task &middot; language comprehension</span> &nbsp;about 3 minutes</p>
+    <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his prompting by an AI assistant (Claude Opus 5.5, Anthropic); reviewed and approved by Tommie Juzek.</p>
+  </section>
+
+  <noscript>
+    <section class="box">
+      <p>This task needs JavaScript. Please turn it on, or use another browser.</p>
+    </section>
+  </noscript>
+
+  <section class="box role" id="role">
+    <h2>Its role in the study</h2>
+    <p><strong>Main task: language comprehension.</strong> One of the two tasks that test the hypothesis. A Spanish word is followed by an English one, and learners decide whether it is the translation. The key question: do English words that look like the Spanish word (<em>cara</em> &ndash; CARD) still slow learners down? If immersion holds English back, immersed learners should be less bothered by them. They were (p. 1511).</p>
+  </section>
+
+  <section class="box" id="intro" hidden>
+    <h2>How it works</h2>
+    <p><strong>First, one minute.</strong> Learn these Spanish words as well as you can. If you know Spanish
+       already, you have a head start, just like the learners in the paper.</p>
+    <div class="study" id="study"></div>
+    <p class="timer" id="tr-timer"></p>
+    <p><strong>Then the task.</strong> A Spanish word appears, then an English word in CAPITALS. Is the
+       English word its translation? As fast as you can:</p>
+    <ul>
+      <li>the translation: tap <strong>Yes</strong> (on a laptop, press <kbd>J</kbd>);</li>
+      <li>not the translation: tap <strong>No</strong> (on a laptop, press <kbd>F</kbd>).</li>
+    </ul>
+    <p>Six practice trials first, each with an explanation, then 24 for real (about a minute and a half).</p>
+    <p><button type="button" class="go" id="start">Start the practice</button></p>
+    <p><a href="../">Back to the four tasks</a></p>
+  </section>
+
+  <section class="box" id="ready" hidden>
+    <div id="ready-text"></div>
+    <p><button type="button" class="go" id="ready-go"></button></p>
+  </section>
+
+  <section id="task" hidden>
+    <p class="prog" id="prog"></p>
+    <div class="stage">
+      <span id="tr-word"></span>
+      <span id="tr-cap"></span>
+    </div>
+    <div class="band" id="band">
+      <div id="band-chip"></div>
+      <div class="explain" id="band-explain" hidden></div>
+      <button type="button" class="go" id="band-next" hidden>Next</button>
+    </div>
+    <div class="resp">
+      <button type="button" data-choice="left">No<span>F</span></button>
+      <button type="button" data-choice="right">Yes<span>J</span></button>
+    </div>
+  </section>
+
+  <section class="box" id="result" hidden>
+    <div id="result-body"></div>
+    <p class="result-links">
+      <a class="go" href="../verbal/">Next: 2 &middot; Verbal fluency</a>
+      <a href="../">All four tasks</a>
+    </p>
+  </section>
+
+  <section class="course-foot">
+    <p>The article: Linck, J. A., Kroll, J. F., &amp; Sunderman, G. (2009). Losing access to the native
+       language while immersed in a second language: Evidence for the role of inhibition in
+       second-language learning. <em>Psychological Science, 20</em>(12), 1507&ndash;1515.
+       <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2858781/">Free version</a></p>
+    <p><a href="../">All four tasks</a> &middot; <a href="/lin3042/">LIN 3042 course page</a></p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="/teaching.html">Teaching</a> &middot;
+    <a href="/lin3042/">LIN 3042</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-10-20</p>
+</div></footer>
+
+<!-- Items and scoring: ../linck.js; trial runners: ../tasks.js. Nothing is stored or sent. -->
+<script src="../linck.js"></script>
+<script src="../tasks.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
