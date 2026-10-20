@@ -59,7 +59,7 @@ python3 -m http.server 8000
   em-dash rule: the talk *What Is Left to Write?* (`talks/2026-left-to-write/` and its slides), a
   talk about the mark itself, where it appears only as the object of study and in the talk's title.
   (The temporary home-page banner pointed there until 2026-10-19; it now points to the Carothers
-  lecture slides and has no em dash.)
+  lecture slides, since 2026-10-20 the PDF `talks/2026-carothers/2026-Carothers-Lecture.pdf`, and has no em dash.)
 - Talk pages (from 2026-09-30): `talks/<year>-<slug>/` is the talk's landing page (phone first:
   slides, reading, anything the audience needs); `talks/<year>-<slug>/slides/` is the deck. Flat,
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
@@ -87,7 +87,7 @@ python3 -m http.server 8000
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
-to the slides' old address) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
+to the slides' old address) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
 `favicon.ico`, `apple-touch-icon.png`)
 
