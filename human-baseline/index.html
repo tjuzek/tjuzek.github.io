@@ -48,7 +48,10 @@
     font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px;
     border-radius: 5px; margin-right: 6px; vertical-align: middle; }
   .hl { background: #fff1a8; padding: 0 1px; border-radius: 3px; }
-  .new-thoughts, .tag-new, .hl { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .hl-green { background: #7dff4f; padding: 0 2px; border-radius: 3px;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .levers + .levers { margin-top: 8px; }
+  .new-thoughts, .tag-new, .hl, .hl-green { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
   @media print {
     @page { margin: 13mm; }
@@ -95,7 +98,8 @@
     <p class="pitch">Computational linguistics papers — discussed by humans.</p>
     <p>Yuri — here is what Tommie has been thinking about a podcast for the two of you. A draft
        for discussion, 25 October 2026; <span class="hl">new thoughts from 26 October are
-       highlighted in yellow</span>.</p>
+       highlighted in yellow</span>; <span class="hl-green">the latest changes, made after a
+       round of feedback, are in neon green</span>.</p>
     <p class="open-note"><strong>All of this is open — nothing is set.</strong> You can give full
        input and change direction on anything, the name included.</p>
     <p class="disclaimer in-hero"><strong>AI disclaimer.</strong> The content of this write-up
@@ -138,13 +142,19 @@
             table. A working title, not a decision; directory and domain checks still to do.</li>
         <li><strong>Idea:</strong> one paper per episode, rotating: one of yours, one of
             Tommie's, and an outside paper you both like.</li>
+        <li><span class="hl-green"><strong>Mix:</strong> at first, mostly your own papers and
+            your students' — less work, and the authors are in the room. Say so openly in the
+            show description. For the outside slot, invite the author when you can — guests
+            bring listeners. Review the mix after season one.</span></li>
         <li><strong>Rhythm:</strong> every other month, seasons of six — pilot first, launch in
             early 2027.</li>
         <li><strong>Length:</strong> 20 to 40 minutes — stop when done, no padding.</li>
         <li><strong>Formats:</strong> audio feed plus full video on YouTube; clips later.</li>
         <li><strong>Cost:</strong> about 250 to 600 USD of kit per host; free software to start.</li>
         <li><strong>Time:</strong> roughly half a day each per episode — a guess, not a
-            measurement.</li>
+            measurement. <span class="hl-green">That holds once you are in a rhythm; expect more
+            for the first few episodes and for whoever edits. Knowing the paper cuts preparation,
+            not recording, editing, or publishing. The test run logs hours per task.</span></li>
       </ul>
     </div>
   </section>
@@ -156,7 +166,21 @@
           interested in, they increasingly hear as AI-generated podcasts.</li>
       <li>Those listeners could hear your papers from you — not from a synthetic host — with
           what only humans add: the backstory, what did not work, honest disagreement, and the
-          authors as guests.</li>
+          authors as guests. <span class="hl-green">In one line: everything an AI podcast says
+          is in the PDF — you talk about what isn't.</span></li>
+      <li><span class="hl-green"><strong>Who it is for:</strong> anyone who would otherwise put
+          the paper into NotebookLM — researchers and students in and around the field. So:
+          assume the field, explain the methods. And since these listeners start from the paper,
+          not from a podcast app, the episode link goes wherever the paper is: publication
+          pages, the code README, a QR code on posters and slides, the post announcing the
+          paper.</span></li>
+      <li><span class="hl-green"><strong>The gap:</strong> a quick search — not a survey — found
+          no active podcast that discusses computational linguistics papers with their authors.
+          The closest, AI2's NLP Highlights, has been on hiatus since 2024; Talking Papers
+          discusses papers with their authors, but in vision and machine learning; The Gradient
+          runs long interviews with researchers. Human Baseline would be shorter, one paper at a
+          time, with two co-hosts who are often the authors, and about language and literature.
+          The real competitor is the AI podcast itself.</span></li>
     </ul>
   </section>
 
@@ -187,15 +211,22 @@
       <li><strong>Why this paper</strong> (3 to 5): where it sits in the field.</li>
       <li><strong>The paper</strong> (10 to 15): what was done and found; what is shown, and
           what is not.</li>
-      <li><strong>The AI version</strong> (3 to 5): a minute of an AI podcast on the paper — and
-          what it got wrong.</li>
-      <li><strong>Behind the paper</strong> (5): what did not work, what is next.</li>
+      <li><span class="hl-green"><strong>Not in the paper</strong> (8 to 10): what only the
+          authors can tell — dead ends, a reviewer's comment, the figure that was cut, what is
+          next.</span></li>
       <li><strong>Close</strong> (1).</li>
     </ol>
+    <p class="levers"><span class="hl-green"><strong>Suggested change:</strong> the fixed
+       &ldquo;AI version&rdquo; segment (a minute of an AI podcast on the paper, and what it got
+       wrong) becomes an occasional special. As a fixed segment it costs time every episode,
+       the terms for reusing the AI audio are unclear, it invites hunting for errors, and the
+       name already makes the comparison. Alternatively, try it once in the test run and decide
+       then.</span></p>
     <p class="levers"><strong>Now and then:</strong> classics on anniversaries (&ldquo;Attention
        Is All You Need&rdquo; turns 10 in June 2027), one paper through two lenses (literary,
-       and AI and language), students&rsquo; first papers, conference specials. Firth&rsquo;s
-       &ldquo;company it keeps&rdquo; synopsis turns 70 in 2027, too.</p>
+       and AI and language), students&rsquo; first papers, conference specials<span
+       class="hl-green">, an AI podcast on a paper set side by side with yours</span>.
+       Firth&rsquo;s &ldquo;company it keeps&rdquo; synopsis turns 70 in 2027, too.</p>
   </section>
 
   <section>
@@ -250,6 +281,8 @@
         <h2>What it is — and is not</h2>
         <ul>
           <li>A conversation, not a lecture.</li>
+          <li><span class="hl-green">One paper with its authors, not a career
+              interview.</span></li>
           <li>Papers you both like — never takedowns.</li>
           <li>Pre-recorded and edited, never live.</li>
           <li>A side project, not a second job.</li>
@@ -262,8 +295,9 @@
   <section>
     <h2>Over to you, Yuri</h2>
     <p class="over-to-you">Everything above is a starting point, not a set agenda. Tommie would
-       value your view on anything — the name, the rhythm, video, who does what, or a different
-       direction altogether. Once you two agree, possible next steps: check the name, pick the
+       value your view on anything — the name, the rhythm, video, who does what, <span
+       class="hl-green">the AI segment, the mix of papers,</span> or a different direction
+       altogether. Once you two agree, possible next steps: check the name, pick the
        first season's papers, set a pilot date, get the kit, ask the communications offices, and
        set up hosting and the log.</p>
   </section>
