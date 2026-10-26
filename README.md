@@ -55,9 +55,11 @@ python3 -m http.server 8000
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
 - House style: UK English (`en-GB`); no em-dashes in served files; hedged register on
-  AI-and-language claims (association, not causation). One documented exception to the
+  AI-and-language claims (association, not causation). Two documented exceptions to the
   em-dash rule: the talk *What Is Left to Write?* (`talks/2026-left-to-write/` and its slides), a
-  talk about the mark itself, where it appears only as the object of study and in the talk's title.
+  talk about the mark itself, where it appears only as the object of study and in the talk's title;
+  and `/human-baseline/` (from 2026-10-25, at Tommie's request), an openly AI-drafted page with the
+  AI disclaimer first, whose em dashes and "X, not Y" contrasts are deliberate. Do not "fix" them.
   (The temporary home-page banner pointed there until 2026-10-19; it now points to the Carothers
   lecture slides, since 2026-10-20 the PDF `talks/2026-carothers/2026-Carothers-Lecture.pdf`, and has no em dash.)
 - Talk pages (from 2026-09-30): `talks/<year>-<slug>/` is the talk's landing page (phone first:
