@@ -65,6 +65,12 @@ python3 -m http.server 8000
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
   published by rsync from its source folder, never with `--delete`, so the two do not touch.
   `talks/left-to-write/` is a redirect stub (`noindex`) to the 2026 slides, keeping the slide hash.
+- `/human-baseline/` (from 2026-10-25) is an unlisted proposal page for Yuri Bizzoni (Aarhus)
+  about a planned research podcast: `noindex`, not in the sitemap, `llms.txt` or the nav, and
+  linked from no page. Its print stylesheet keeps it to two pages at 13 pt (Letter and A4);
+  re-check with a headless print after any content change. Planning notes behind it live in
+  `~/claudecode/podcast/`. Replace it with a proper show page, or remove it, if the podcast
+  launches.
 - "Last updated" policy (decided 2026-08-14): the visible footer date and the JSON-LD
   `dateModified` track the last CONTENT change (what a reader means by "updated"); the
   sitemap `lastmod` tracks the last file change (what a crawler needs for recrawl).
@@ -87,7 +93,8 @@ python3 -m http.server 8000
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
-to the slides' old address) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
+to the slides' old address) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline/` (unlisted podcast proposal for
+Yuri Bizzoni, 25 October 2026; `noindex`, not in the sitemap; notes in `~/claudecode/podcast/`) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
 `favicon.ico`, `apple-touch-icon.png`)
 
