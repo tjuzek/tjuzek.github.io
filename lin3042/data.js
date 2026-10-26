@@ -18,7 +18,7 @@
  * title from Canvas too.
  */
 window.LIN3042 = {
-  updated: '2026-10-20',
+  updated: '2026-10-26',
   lastSession: '2026-12-03',
   dueTime: '11:59 pm',
 
@@ -27,9 +27,10 @@ window.LIN3042 = {
       url: 'https://canvas.fsu.edu/courses/354011/assignments/3312875' },
     { n: 5, title: 'Test reflections', out: '2026-10-19', due: '2026-11-01',
       url: 'https://canvas.fsu.edu/courses/354011/assignments/3321281' },
-    { n: 6, title: 'Bilingualism & the brain',     out: '2026-11-01', due: '2026-11-15' },
-    { n: 7, title: 'Psycho- and Neurolinguistics', out: '2026-11-08', due: '2026-11-22' },
-    { n: 8, title: 'Animal communication (final take-home assignment)', out: '2026-11-15', due: '2026-11-29' }
+    { n: 6, title: 'Follow-up study', out: '2026-10-26', due: '2026-11-08',
+      url: 'https://canvas.fsu.edu/courses/354011/assignments/3325148' },
+    { n: 7, title: 'Psycho- and Neurolinguistics', out: '2026-11-01', due: '2026-11-15' },
+    { n: 8, title: 'Animal communication (final take-home assignment)', out: '2026-11-08', due: '2026-11-22' }
   ],
 
   // `guide` is the quiz's study guide on Canvas; the page links it below the quiz.
