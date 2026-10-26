@@ -69,8 +69,8 @@ python3 -m http.server 8000
   `talks/left-to-write/` is a redirect stub (`noindex`) to the 2026 slides, keeping the slide hash.
 - `/human-baseline/` (from 2026-10-25) is an unlisted proposal page for Yuri Bizzoni (Aarhus)
   about a planned research podcast: `noindex`, not in the sitemap, `llms.txt` or the nav, and
-  linked from no page. Its print stylesheet keeps it to two pages at 13 pt (Letter and A4);
-  re-check with a headless print after any content change. Planning notes behind it live in
+  linked from no page. Its print stylesheet was tuned towards two pages at 13 pt, but length is
+  no longer a hard limit (Tommie, 2026-10-25). Planning notes behind it live in
   `~/claudecode/podcast/`. Replace it with a proper show page, or remove it, if the podcast
   launches.
 - "Last updated" policy (decided 2026-08-14): the visible footer date and the JSON-LD
