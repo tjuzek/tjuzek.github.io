@@ -41,6 +41,14 @@
   .duo .callout li { font-size: 15.5px; margin: 3px 0; }
   .disclaimer { font-size: 13.5px; color: var(--muted); margin: 0; }
   .disclaimer.in-hero { margin: 14px 0 0; }
+  .new-thoughts { background: #fff6bf; border: 1px solid #f0d860; border-left: 4px solid #e0b800;
+    border-radius: 8px; padding: 14px 18px; }
+  .new-thoughts h2 { font-size: 17px; margin: 0 0 6px; }
+  .tag-new { display: inline-block; background: #e0b800; color: var(--ink); font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px;
+    border-radius: 5px; margin-right: 6px; vertical-align: middle; }
+  .hl { background: #fff1a8; padding: 0 1px; border-radius: 3px; }
+  .new-thoughts, .tag-new, .hl { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
   @media print {
     @page { margin: 13mm; }
@@ -61,6 +69,8 @@
     .hb-list li, .card li { margin: 1pt 0; }
     .disclaimer { font-size: 10pt; }
     .disclaimer.in-hero { margin: 6pt 0 0; }
+    .new-thoughts { padding: 6pt 10pt; }
+    .new-thoughts h2 { font-size: 14.5pt; }
   }
 </style>
 </head>
@@ -84,12 +94,40 @@
     <h1>Human Baseline</h1>
     <p class="pitch">Computational linguistics papers — discussed by humans.</p>
     <p>Yuri — here is what Tommie has been thinking about a podcast for the two of you. A draft
-       for discussion, 25 October 2026.</p>
+       for discussion, 25 October 2026; <span class="hl">new thoughts from 26 October are
+       highlighted in yellow</span>.</p>
     <p class="open-note"><strong>All of this is open — nothing is set.</strong> You can give full
        input and change direction on anything, the name included.</p>
     <p class="disclaimer in-hero"><strong>AI disclaimer.</strong> The content of this write-up
        was co-developed by Tommie Juzek and an AI assistant (Claude, Anthropic). The assistant
        drafted the text upon Tommie Juzek's prompting; Tommie Juzek reviewed and approved it.</p>
+  </section>
+
+  <section>
+    <div class="new-thoughts">
+      <h2><span class="tag-new">New</span> Schedule and platforms — Tommie's thoughts,
+          26 October 2026</h2>
+      <ul class="hb-list">
+        <li><strong>Test run:</strong> Thursday 19 November 2026, 11:00 Tallahassee / 17:00
+            Aarhus — not published unless it turns out well. Judge it on: did you enjoy it, how
+            many hours did each step take, does it still sound fine a week later, would you send
+            it to a colleague?</li>
+        <li><strong>Releases:</strong> the second Tuesday of every odd month, 9:00 / 15:00,
+            scheduled in advance — 12 January, 9 March, 11 May, 13 July, 14 September,
+            9 November 2027.</li>
+        <li><strong>Recording:</strong> about three weeks before each release, 11:00 / 17:00 —
+            for example the third Thursday of even months (17 December; then 18 February,
+            15 April, 17 June, 19 August, 21 October). The weekday is open: any day neither of
+            you teaches.</li>
+        <li><strong>Platforms, all free:</strong> Spotify for Creators hosts the feed; one
+            submission each puts it on Apple Podcasts and Amazon Music, and most other apps
+            follow. Video on YouTube, transcripts on a show page, optionally a citable DOI per
+            episode via Zenodo.</li>
+        <li><strong>Before launch:</strong> a short trailer in December, so the show is already
+            listed on Apple by 12 January. Kit only after the test run — and only if it is a
+            go.</li>
+      </ul>
+    </div>
   </section>
 
   <section>
@@ -241,7 +279,7 @@
   <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
     <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
     polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
-    Last updated: 2026-10-25</p>
+    Last updated: 2026-10-26</p>
 </div></footer>
 
 <!-- Unlisted proposal page for Yuri Bizzoni (podcast planning): noindex, not in sitemap.xml,
