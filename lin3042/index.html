@@ -267,9 +267,9 @@
   }
   if (list('asac').children.length) show('asac');
 
-  // The next two sessions (today's drops off once class is over)
+  // The next three sessions (today's drops off once class is over)
   D.sessions.filter(function (s) { return s.date > today || (s.date === today && !classOver); })
-    .slice(0, 2)
+    .slice(0, 3)
     .forEach(function (s) {
       var bits = [];
       if (s.read) bits.push('Reading: ' + s.read);
