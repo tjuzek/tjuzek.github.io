@@ -40,9 +40,18 @@ window.LIN3042 = {
     { n: 3, date: '2026-11-19' }
   ],
 
+  // The Article Summary and Critique: the essay and the presentation, with `url` and title as on
+  // Canvas (as for the THAs). The presentation's dates are the sessions marked `presentation: true`.
+  asac: {
+    essay: { title: 'Article Summary and Critique Essay', due: '2026-12-06',
+      url: 'https://canvas.fsu.edu/courses/354011/assignments/3326097' },
+    presentation: { title: 'Article Summary and Critique Presentation',
+      url: 'https://canvas.fsu.edu/courses/354011/assignments/3326100' }
+  },
+
   // No class on Thu 26 Nov (Thanksgiving). `read: null` means no reading for that session.
   // `url` (optional) links the session's topic, e.g. to the article read for it.
-  // `presentation: true` marks the presentation days; after the last quiz they take the quiz slot.
+  // `presentation: true` marks the presentation days (the essay-and-presentation block uses them).
   sessions: [
     { date: '2026-10-08', topic: 'Bilingual Education', read: 'pp. 413–421' },
     { date: '2026-10-13', topic: 'Methods of psycholinguistic research', read: 'pp. 425–436' },

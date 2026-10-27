@@ -53,7 +53,7 @@
       "author": { "@id": "https://tjuzek.com/#person" },
       "isPartOf": { "@id": "https://tjuzek.com/#website" },
       "inLanguage": "en-GB",
-      "dateModified": "2026-10-20"
+      "dateModified": "2026-10-26"
     }
   ]
 }
@@ -133,6 +133,11 @@
   <section class="cur" id="quiz" hidden>
     <h2 id="quiz-h">Next quiz</h2>
     <ul class="cur" id="quiz-list"></ul>
+  </section>
+
+  <section class="cur" id="asac" hidden>
+    <h2>Essay and presentation</h2>
+    <ul class="cur" id="asac-list"></ul>
   </section>
 
   <section class="cur" id="ended" hidden>
@@ -215,7 +220,9 @@
   var open = D.thas.filter(function (t) { return t.out <= today && today <= t.due; })
                    .sort(function (a, b) { return a.due < b.due ? -1 : 1; });
 
-  if (today > D.lastSession && !open.length) {
+  var essay = D.asac && D.asac.essay && today <= D.asac.essay.due ? D.asac.essay : null;
+
+  if (today > D.lastSession && !open.length && !essay) {
     show('ended');
     document.getElementById('canvas-note').hidden = true;
     return;
@@ -235,9 +242,8 @@
   if (!open.length && !next) list('tha').appendChild(el('li', 'none', 'No more take-home assignments this term.'));
   show('tha');
 
-  // Next quiz; once the last quiz is over, the presentations take this slot
+  // Next quiz
   var quiz = D.quizzes.filter(function (z) { return z.date >= today; })[0];
-  var pres = D.sessions.filter(function (s) { return s.presentation && s.date >= today; });
   if (quiz) {
     var qr = row('In class', quiz.date, true, 'Quiz ' + quiz.n, null);
     if (quiz.guide) {
@@ -247,13 +253,19 @@
     }
     list('quiz').appendChild(qr);
     show('quiz');
-  } else if (pres.length) {
-    document.getElementById('quiz-h').textContent = 'Presentations';
-    list('quiz').appendChild(row('In class', pres[0].date, true, 'Article presentations',
-      (pres.length > 1 ? pres.map(function (s) { return fmt(s.date); }).join(' and ') + ' \u00b7 ' : '') +
-      'No unexcused absences'));
-    show('quiz');
   }
+
+  // Essay and presentation: the presentation days still to come, then the essay until it is due
+  var pres = D.sessions.filter(function (s) { return s.presentation && s.date >= today; });
+  if (D.asac && pres.length) {
+    list('asac').appendChild(row('In class', pres[0].date, true, D.asac.presentation.title,
+      (pres.length > 1 ? pres.map(function (s) { return fmt(s.date); }).join(' and ') + ' \u00b7 ' : '') +
+      'No unexcused absences', D.asac.presentation.url));
+  }
+  if (essay) {
+    list('asac').appendChild(row('Due', essay.due, true, essay.title, D.dueTime + ', on Canvas', essay.url));
+  }
+  if (list('asac').children.length) show('asac');
 
   // The next two sessions (today's drops off once class is over)
   D.sessions.filter(function (s) { return s.date > today || (s.date === today && !classOver); })
