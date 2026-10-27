@@ -51,6 +51,7 @@ window.LIN3042 = {
 
   // No class on Thu 26 Nov (Thanksgiving). `read: null` means no reading for that session.
   // `url` (optional) links the session's topic, e.g. to the article read for it.
+  // `read: 'the article'` is shown in bold garnet, so an article reading stands out.
   // `presentation: true` marks the presentation days (the essay-and-presentation block uses them).
   sessions: [
     { date: '2026-10-08', topic: 'Bilingual Education', read: 'pp. 413–421' },
@@ -61,8 +62,10 @@ window.LIN3042 = {
     { date: '2026-10-22', topic: 'Psycholinguistic modelling', read: 'pp. 446–453', tag: 'Quiz 2' },
     { date: '2026-10-27', topic: 'The human brain', read: 'pp. 455–460' },
     { date: '2026-10-29', topic: 'Aphasia and Dyslexia', read: 'pp. 467–479' },
-    { date: '2026-11-03', topic: 'Romeo et al. (2018), “Beyond the 30-Million-Word Gap”', read: 'the article' },
-    { date: '2026-11-05', topic: 'Romeo et al. (cont.)', read: null },
+    { date: '2026-11-03', topic: 'Romeo et al. (2018), “Beyond the 30-Million-Word Gap”', read: 'the article',
+      url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5945324/' },
+    { date: '2026-11-05', topic: 'Romeo et al. (cont.)', read: null,
+      url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5945324/' },
     { date: '2026-11-10', topic: 'Animal Communication: Signs, Birds and Bees', read: 'on Canvas' },
     { date: '2026-11-12', topic: 'Monkeys and Apes and More', read: 'on Canvas' },
     { date: '2026-11-17', topic: 'Computational Linguistics I: But what is a neural network?', read: 'Grishman (1986); Sparck Jones (2007), on Canvas' },

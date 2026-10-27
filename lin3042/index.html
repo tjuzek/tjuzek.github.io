@@ -81,6 +81,7 @@
   ul.cur .cd.hot { color: var(--garnet); font-weight: 600; }
   ul.cur .t { font-size: 16.5px; }
   ul.cur .x { font-size: 14.5px; color: var(--muted); margin-top: 2px; }
+  ul.cur .x .em { color: var(--garnet); font-weight: 600; }
   ul.cur li.none { display: block; color: var(--muted); font-size: 15.5px; }
   .course-foot p { margin: 0 0 8px; font-size: 14.5px; color: var(--muted); }
   @media (max-width: 620px) {
@@ -267,14 +268,15 @@
   }
   if (list('asac').children.length) show('asac');
 
-  // The next three sessions (today's drops off once class is over)
+  // The next three sessions (today's drops off once class is over); an article to read stands out
   D.sessions.filter(function (s) { return s.date > today || (s.date === today && !classOver); })
     .slice(0, 3)
     .forEach(function (s) {
-      var bits = [];
-      if (s.read) bits.push('Reading: ' + s.read);
-      if (s.tag) bits.push(s.tag);
-      list('session').appendChild(row(null, s.date, false, s.topic, bits.join(' · '), s.url));
+      var li = row(null, s.date, false, s.topic, null, s.url), x = el('span', 'x');
+      if (s.read) x.appendChild(el('span', s.read === 'the article' ? 'em' : null, 'Reading: ' + s.read));
+      if (s.tag) x.appendChild(document.createTextNode((s.read ? ' · ' : '') + s.tag));
+      if (x.childNodes.length) li.querySelector('.what').appendChild(x);
+      list('session').appendChild(li);
     });
   if (list('session').children.length) show('sessions');
 })();
