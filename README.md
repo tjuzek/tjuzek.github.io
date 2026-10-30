@@ -58,7 +58,8 @@ python3 -m http.server 8000
   AI-and-language claims (association, not causation). Two documented exceptions to the
   em-dash rule: the talk *What Is Left to Write?* (`talks/2026-left-to-write/` and its slides), a
   talk about the mark itself, where it appears only as the object of study and in the talk's title;
-  and `/human-baseline/` (from 2026-10-25, at Tommie's request), an openly AI-drafted page with the
+  and `/human-baseline-collective/` (from 2026-10-25, at Tommie's request; at `/human-baseline/`
+  until 2026-10-30), an openly AI-drafted page with the
   AI disclaimer first, whose em dashes and "X, not Y" contrasts are deliberate. Do not "fix" them.
   (The temporary home-page banner pointed there until 2026-10-19; it now points to the Carothers
   lecture slides, since 2026-10-20 the PDF `talks/2026-carothers/2026-Carothers-Lecture.pdf`, and has no em dash.)
@@ -67,12 +68,14 @@ python3 -m http.server 8000
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
   published by rsync from its source folder, never with `--delete`, so the two do not touch.
   `talks/left-to-write/` is a redirect stub (`noindex`) to the 2026 slides, keeping the slide hash.
-- `/human-baseline/` (from 2026-10-25) is an unlisted proposal page for Yuri Bizzoni (Aarhus)
-  about a planned research podcast: `noindex`, not in the sitemap, `llms.txt` or the nav, and
-  linked from no page. Its print stylesheet was tuned towards two pages at 13 pt, but length is
-  no longer a hard limit (Tommie, 2026-10-25). Planning notes behind it live in
-  `~/claudecode/podcast/`. Replace it with a proper show page, or remove it, if the podcast
-  launches.
+- `/human-baseline-collective/` (from 2026-10-25) is an unlisted pitch page for a planned
+  research podcast run by the Human Baseline Collective (so far Tommie, Matt Patience of FSU,
+  and Yuri Bizzoni of Aarhus), written for anyone joining: `noindex`, not in the sitemap,
+  `llms.txt` or the nav, and linked from no page. It began as a proposal for Yuri Bizzoni at
+  `/human-baseline/`; it moved on 2026-10-30, and that path is now a redirect stub (`noindex`).
+  Its print stylesheet was tuned towards two pages at 13 pt, but length is no longer a hard limit
+  (Tommie, 2026-10-25). Planning notes behind it live in `~/claudecode/podcast/`. Replace it with
+  a proper show page, or remove it, if the podcast launches.
 - "Last updated" policy (decided 2026-08-14): the visible footer date and the JSON-LD
   `dateModified` track the last CONTENT change (what a reader means by "updated"); the
   sitemap `lastmod` tracks the last file change (what a crawler needs for recrawl).
@@ -95,8 +98,9 @@ python3 -m http.server 8000
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
-to the slides' old address) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline/` (unlisted podcast proposal for
-Yuri Bizzoni, 25 October 2026; `noindex`, not in the sitemap; notes in `~/claudecode/podcast/`) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
+to the slides' old address) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline-collective/` (unlisted podcast pitch
+for the Human Baseline Collective, from 25 October 2026; `noindex`, not in the sitemap; notes in
+`~/claudecode/podcast/`) · `human-baseline/` (redirect stub to it, from 30 October 2026) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
 `favicon.ico`, `apple-touch-icon.png`)
 

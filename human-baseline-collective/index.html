@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Baseline Collective: a podcast proposal | Thomas Stephan Juzek</title>
+<meta name="description" content="A draft pitch for the Human Baseline Collective: a podcast of computational linguistics papers, discussed by humans. Early days; everything is open.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Human Baseline Collective: a podcast proposal">
+<meta property="og:description" content="Computational linguistics papers, discussed by humans. A draft for discussion.">
+<meta property="og:url" content="https://tjuzek.com/human-baseline-collective/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Human Baseline Collective: a podcast proposal">
+<meta name="twitter:description" content="Computational linguistics papers, discussed by humans. A draft for discussion.">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .open-note { margin: 16px 0 0; padding: 10px 16px; border-left: 4px solid var(--garnet);
+    background: #fff; border-radius: 8px; font-size: 16.5px; }
+  .callout.glance h2, .duo .callout h2 { font-size: 17px; margin: 0 0 6px; }
+  .over-to-you { font-size: 16.5px; }
+  .hb-list { padding-left: 20px; margin: 0; }
+  .hb-list li { font-size: 15.5px; margin: 5px 0; }
+  .card ul { margin: 0; padding-left: 18px; }
+  .card li { font-size: 15px; margin: 3px 0; }
+  .card p:last-child { margin-bottom: 0; }
+  .levers { font-size: 16px; margin: 0; }
+  .duo .callout ul { margin: 0; padding-left: 18px; }
+  .duo .callout li { font-size: 15.5px; margin: 3px 0; }
+  .disclaimer { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .disclaimer.in-hero { margin: 14px 0 0; }
+  .cards + .levers { margin-top: 12px; }
+  .levers + .levers { margin-top: 8px; }
+
+  @media print {
+    @page { margin: 13mm; }
+    header.site, footer.site { display: none; }
+    body { font-size: 13pt; line-height: 1.28; }
+    .hero { background: none; padding: 0 0 4pt; }
+    .hero h1 { font-size: 21pt; }
+    .hero .pitch { font-size: 14pt; margin: 0 0 6pt; }
+    .open-note { margin-top: 6pt; padding: 5pt 10pt; }
+    section { padding: 7pt 0; }
+    h2 { font-size: 14.5pt; margin: 0 0 4pt; }
+    p { margin: 0 0 5pt; }
+    .callout, .card { padding: 6pt 10pt; break-inside: avoid; }
+    .cards, .duo { gap: 7pt; }
+    .open-note, .hb-list li, .card p, .card li, .callout p, .duo .callout li, .levers, .over-to-you { font-size: 13pt; }
+    .callout.glance h2, .duo .callout h2 { font-size: 14.5pt; }
+    .card h3 { font-size: 13.5pt; }
+    .hb-list li, .card li { margin: 1pt 0; }
+    .disclaimer { font-size: 10pt; }
+    .disclaimer.in-hero { margin: 6pt 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Human Baseline Collective</h1>
+    <p class="pitch">Computational linguistics papers — discussed by humans.</p>
+    <p>Here is what Tommie has been thinking about a research podcast run by a small collective
+       of researchers — so far Tommie Juzek and Matt Patience (Florida State University) and
+       Yuri Bizzoni (Aarhus University). An early draft for discussion, for anyone joining or
+       thinking about it; started 25 October 2026, revised 30 October 2026.</p>
+    <p class="open-note"><strong>All of this is open — nothing is set.</strong> Whoever joins can
+       give full input and change direction on anything, the name included.</p>
+    <p class="disclaimer in-hero"><strong>AI disclaimer.</strong> The content of this write-up
+       was co-developed by Tommie Juzek and an AI assistant (Claude, Anthropic). The assistant
+       drafted the text upon Tommie Juzek's prompting; Tommie Juzek reviewed and approved it.</p>
+  </section>
+
+  <section>
+    <div class="callout glance">
+      <h2>The proposal at a glance</h2>
+      <ul class="hb-list">
+        <li><strong>Name:</strong> <em>Human Baseline Collective</em> — the human row in every
+            benchmark table, kept by a group. Open: the show could carry the full name (unique,
+            easy to find), or the collective could run a show called simply <em>Human
+            Baseline</em> (shorter to say). Directory and domain checks still to do.</li>
+        <li><strong>Idea:</strong> one paper per episode, rotating: papers by members of the
+            collective, and an outside paper the hosts like.</li>
+        <li><strong>Mix:</strong> at first, mostly the hosts' own papers and their students' —
+            less work, and the authors are in the room. Say so openly in the show description.
+            For the outside slot, invite the author when you can — guests bring listeners.
+            Review the mix after season one.</li>
+        <li><strong>Rhythm:</strong> every other month, seasons of six — pilot first, launch in
+            early 2027.</li>
+        <li><strong>Length:</strong> 20 to 40 minutes — stop when done, no padding.</li>
+        <li><strong>Formats:</strong> audio feed plus full video on YouTube; clips later.</li>
+        <li><strong>Cost:</strong> about 250 to 600 USD of kit per host; free software to
+            start; for a guest without kit, a starter set under 100 USD, posted to keep.</li>
+        <li><strong>Time:</strong> roughly half a day each per episode — a guess, not a
+            measurement. That holds once you are in a rhythm; expect more for the first few
+            episodes and for whoever edits. Knowing the paper cuts preparation, not recording,
+            editing, or publishing. The test run logs hours per task.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="callout glance">
+      <h2>Schedule and platforms — Tommie's proposal</h2>
+      <ul class="hb-list">
+        <li><strong>Test run:</strong> Thursday 19 November 2026, 11:00 Tallahassee / 17:00
+            Aarhus — not published unless it turns out well. Judge it on: did you enjoy it, how
+            many hours did each step take, does it still sound fine a week later, would you send
+            it to a colleague?</li>
+        <li><strong>Releases:</strong> the second Tuesday of every odd month, 9:00 / 15:00,
+            scheduled in advance — 12 January, 9 March, 11 May, 13 July, 14 September,
+            9 November 2027.</li>
+        <li><strong>Recording:</strong> about three weeks before each release, 11:00 / 17:00 —
+            for example the third Thursday of even months (17 December; then 18 February,
+            15 April, 17 June, 19 August, 21 October). The weekday is open: any day none of the
+            hosts teaches.</li>
+        <li><strong>Platforms, all free:</strong> Spotify for Creators hosts the feed; one
+            submission each puts it on Apple Podcasts and Amazon Music, and most other apps
+            follow. Video on YouTube, transcripts on a show page, optionally a citable DOI per
+            episode via Zenodo.</li>
+        <li><strong>Before launch:</strong> a short trailer in December, so the show is already
+            listed on Apple by 12 January. Kit only after the test run — and only if it is a
+            go.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why a podcast</h2>
+    <ul class="hb-list">
+      <li>People read the papers they care most about; the ones they are only somewhat
+          interested in, they increasingly hear as AI-generated podcasts.</li>
+      <li>Those listeners could hear your papers from you — not from a synthetic host — with
+          what only humans add: the backstory, what did not work, honest disagreement, and the
+          authors as guests. In one line: everything an AI podcast says is in the PDF — you
+          talk about what isn't.</li>
+      <li><strong>Who it is for:</strong> anyone who would otherwise put the paper into
+          NotebookLM — researchers and students in and around the field. So: assume the field,
+          explain the methods. And since these listeners start from the paper, not from a
+          podcast app, the episode link goes wherever the paper is: publication pages, the code
+          README, a QR code on posters and slides, the post announcing the paper.</li>
+      <li><strong>The gap:</strong> a quick search — not a survey — found no active podcast
+          that discusses computational linguistics papers with their authors. The closest,
+          AI2's NLP Highlights, has been on hiatus since 2024; Talking Papers discusses papers
+          with their authors, but in vision and machine learning; The Gradient runs long
+          interviews with researchers. The collective's show would be shorter, one paper at a
+          time, with hosts who are often the authors, and about language and literature. The
+          real competitor is the AI podcast itself.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What it could bring</h2>
+    <ul class="hb-list">
+      <li><strong>Funding:</strong> a running series makes the dissemination part of a grant
+          proposal believable — promising a podcast from scratch does not. NSF reviewers ask
+          whether the team is
+          <a href="https://www.nsf.gov/policies/pappg/24-1/ch-3-proposal-processing-review">qualified
+          and how success will be assessed</a>; Horizon Europe asks for communication and
+          dissemination. Hence a simple log from episode 1.</li>
+      <li><strong>Discoverability:</strong> published transcripts are read by search engines and
+          LLMs.</li>
+      <li><strong>Network:</strong> outside-paper authors as guests; guests share their
+          episodes.</li>
+      <li><strong>Students:</strong> co-authors on air; later, a student assistant for
+          editing.</li>
+      <li><strong>Each other:</strong> a structured conversation every two months.</li>
+      <li><strong>Teaching:</strong> episodes as listening assignments.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>A possible episode (about 30 minutes)</h2>
+    <ol class="hb-list">
+      <li><strong>Hook</strong> (1 min): the finding in one sentence.</li>
+      <li><strong>Why this paper</strong> (3 to 5): where it sits in the field.</li>
+      <li><strong>The paper</strong> (10 to 15): what was done and found; what is shown, and
+          what is not.</li>
+      <li><strong>Not in the paper</strong> (8 to 10): what only the authors can tell — dead
+          ends, a reviewer's comment, the figure that was cut, what is next.</li>
+      <li><strong>Close</strong> (1).</li>
+    </ol>
+    <p class="levers"><strong>The AI version, now and then:</strong> an earlier draft had a fixed
+       &ldquo;AI version&rdquo; segment (a minute of an AI podcast on the paper, and what it got
+       wrong). It works better as an occasional special: as a fixed segment it costs time every
+       episode, the terms for reusing the AI audio are unclear, it invites hunting for errors,
+       and the name already makes the comparison. Alternatively, try it once in the test run
+       and decide then.</p>
+    <p class="levers"><strong>Now and then:</strong> classics on anniversaries (&ldquo;Attention
+       Is All You Need&rdquo; turns 10 in June 2027), one paper through two lenses (literary,
+       and AI and language), students&rsquo; first papers, conference specials, an AI podcast
+       on a paper set side by side with yours. Firth&rsquo;s &ldquo;company it keeps&rdquo;
+       synopsis turns 70 in 2027, too.</p>
+  </section>
+
+  <section>
+    <h2>Starter kit</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Hardware, per host</h3>
+        <ul>
+          <li>Dynamic USB/XLR mic: sound first</li>
+          <li>Boom arm, wired headphones</li>
+          <li>One soft LED light</li>
+          <li>Phone at eye level as camera</li>
+          <li>Real background with depth</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Software, free route</h3>
+        <ul>
+          <li>Talk over Jitsi or Zoom; each host records locally (OBS)</li>
+          <li>Edit: Kdenlive, Audacity</li>
+          <li>Transcripts, captions: Whisper</li>
+          <li>Feed: Spotify for Creators; video: YouTube</li>
+          <li>Show page with transcripts: GitHub Pages</li>
+          <li>Paid tools (Riverside, Descript; about 40 to 70 USD a month) only if editing
+              time hurts</li>
+        </ul>
+      </div>
+    </div>
+    <p class="levers"><strong>Guests:</strong> they do not need host kit — wired earbuds and a
+       quiet room are the minimum. For a guest who has nothing, Tommie's idea is a starter set
+       under 100 USD, ordered on Amazon and posted to them to keep: a FIFINE AM8T dynamic USB mic
+       with its boom arm (about 69 USD; earbuds plug straight into the mic) and wired earbuds
+       (about 10). At six episodes a year, that is 600 USD at most, usually less. Ordered from
+       the guest's local Amazon store; who pays is open. For the recording, Zoom keeps a
+       separate track per person, and the guest records a backup on their phone.</p>
+  </section>
+
+  <section>
+    <h2>Keeping it light</h2>
+    <p class="levers">One template for every episode &middot; light edits only &middot; one
+       episode in the bank &middot; one owner per task &middot; seasons — so stopping is a
+       choice, not a fade &middot; universities share the episodes &middot; a student assistant once the routine
+       is stable.</p>
+  </section>
+
+  <section>
+    <div class="duo">
+      <div class="callout">
+        <h2>Help to ask for</h2>
+        <ul>
+          <li>FSU media and Arts and Sciences: sharing episodes first; then a setup check and a
+              studio for in-person specials.</li>
+          <li>Aarhus: the Center for Advanced Studies has podcast staff; the Interacting Minds
+              Centre runs a podcast.</li>
+          <li>An independent show — the members' universities credited, none branding it.</li>
+        </ul>
+      </div>
+      <div class="callout">
+        <h2>What it is — and is not</h2>
+        <ul>
+          <li>A conversation, not a lecture.</li>
+          <li>One paper with its authors, not a career interview.</li>
+          <li>Papers the hosts like — never takedowns.</li>
+          <li>Pre-recorded and edited, never live.</li>
+          <li>A side project, not a second job.</li>
+          <li>Transcribed, not just recorded.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Over to you</h2>
+    <p class="over-to-you">Everything above is a starting point, not a set agenda. Tommie would
+       value your view on anything — the name, the rhythm, video, who does what, the AI segment,
+       the mix of papers, the guest kit, or a different direction altogether. Once the
+       collective agrees, possible next steps: check the name, pick the first season's papers,
+       set a pilot date, get the kit, ask the communications offices, and set up hosting and the
+       log.</p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="https://scholar.google.com/citations?user=ETFTr6sAAAAJ">Scholar</a> &middot;
+    <a href="https://www.aiwordexplorer.com/">AI Word Explorer</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-10-30</p>
+</div></footer>
+
+<!-- Unlisted pitch page for the Human Baseline Collective (podcast planning): noindex, not in
+     sitemap.xml, llms.txt or the nav, and linked from no other page. Moved here from
+     /human-baseline/ on 2026-10-30; that path is now a redirect stub. Planning notes behind it
+     live in ~/claudecode/podcast/. Remove or replace it with a proper show page if the podcast
+     launches. -->
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
