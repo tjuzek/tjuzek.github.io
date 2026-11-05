@@ -96,6 +96,10 @@
   button.play:hover { background: var(--garnet-dark); }
   button.reveal { font: inherit; font-size: 15px; font-weight: 600; color: var(--garnet); background: var(--bg);
     border: 2px solid var(--garnet); border-radius: 8px; padding: 6px 14px; cursor: pointer; }
+  .dl { font: inherit; font-size: 14px; font-weight: 600; color: var(--garnet); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; cursor: pointer; text-decoration: none; }
+  .dl:hover { border-color: var(--garnet); }
+  .dl[disabled] { opacity: .5; cursor: progress; }
   .bar { flex: 1 1 120px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; min-width: 80px; }
   .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
   .dur { font-size: 13.5px; color: var(--muted); }
@@ -133,7 +137,7 @@
        sound, and can you hear it? Yes, if you speed it up. Not on the quiz.</p>
     <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his
        prompting by an AI assistant (Claude Opus 5.5, Anthropic), which also chose the clips and checked
-       the sources.</p>
+       the sources; reviewed and approved by Tommie Juzek.</p>
   </section>
 
   <noscript>
@@ -182,12 +186,13 @@
   <section class="box">
     <h2>Five stages of sleep</h2>
     <p>Each picture is one 30-second page of the recording, the unit sleep technicians score. Every
-       clip uses the same volume setting, so a louder clip means bigger waves.</p>
+       clip uses the same volume setting, so a louder clip means bigger waves. <strong>Download</strong>
+       saves a clip once, as a WAV file, at the speed set above.</p>
 
     <div class="card" data-clip="w">
       <h3>Awake, relaxed <span class="stg">W</span></h3>
       <canvas class="strip" aria-label="30 seconds of relaxed waking EEG"></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button></div>
       <p><strong>Listen for:</strong> a high tone over the hum. That is the <em>alpha rhythm</em>, about
          10 Hz (2 kHz at 200&times;), strongest when the eyes are closed. It shows best at the back of the head,
          so this clip, unlike the others, comes from the electrode pair there (Pz-Oz).</p>
@@ -196,7 +201,7 @@
     <div class="card" data-clip="n1">
       <h3>Light sleep <span class="stg">N1</span></h3>
       <canvas class="strip" aria-label="30 seconds of N1 sleep EEG"></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button></div>
       <p><strong>Listen for:</strong> small, mixed waves, slower than alpha (theta, 4&ndash;7 Hz). N1 is the
          doorway into sleep and rarely lasts long: this was the longest stretch of the night, 3 minutes,
          so the clip loops.</p>
@@ -205,7 +210,7 @@
     <div class="card" data-clip="n2">
       <h3>Sleep stage 2 <span class="stg">N2</span></h3>
       <canvas class="strip" aria-label="30 seconds of N2 sleep EEG, with sleep spindles"></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button></div>
       <p><strong>Listen for:</strong> a faint, high crackle on top of the hum. These are <em>sleep
          spindles</em>, short bursts of 11&ndash;16 Hz waves, about four a minute in this clip. Sped up,
          each burst lasts only a few thousandths of a second, so you hear a crackle rather than
@@ -215,7 +220,7 @@
     <div class="card" data-clip="n3">
       <h3>Deep sleep <span class="stg">N3</span></h3>
       <canvas class="strip" aria-label="30 seconds of N3 deep sleep EEG, with large slow waves"></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button></div>
       <p><strong>Listen for:</strong> a loud, low rumble. <em>Slow waves</em>, 0.5&ndash;2 Hz (100&ndash;400 Hz
          at 200&times;), are the biggest waves of the night. This clip is louder because they really are
          bigger.</p>
@@ -224,7 +229,7 @@
     <div class="card" data-clip="rem">
       <h3>REM sleep <span class="stg">REM</span></h3>
       <canvas class="strip" aria-label="30 seconds of REM sleep EEG"></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button></div>
       <p><strong>Listen for:</strong> the quietest clip: small, mixed waves, with no spindles and no slow
          waves. In REM (rapid eye movement) sleep the eyes dart about and the body&rsquo;s muscles go
          slack. Through this one brain channel, REM sounds much like
@@ -240,7 +245,7 @@
        page. Tap the chart to jump.</p>
     <canvas class="hyp" id="hyp" aria-label="Hypnogram of the night: sleep stage over time"></canvas>
     <p class="readout" id="hyp-readout" aria-live="polite"></p>
-    <div class="controls"><button type="button" class="play" id="night-play">Play</button><div class="bar"><i id="night-bar"></i></div><span class="dur" id="night-dur"></span></div>
+    <div class="controls"><button type="button" class="play" id="night-play">Play</button><div class="bar"><i id="night-bar"></i></div><span class="dur" id="night-dur"></span><a class="dl" href="data/night.mp3" download="sleep-night-200x.mp3">Download (MP3, 200&times;)</a></div>
     <p><strong>Look and listen for:</strong> deep sleep (N3, the loud rumble) comes mostly early: 87 of
        this night&rsquo;s 110 minutes of N3 fall in the first half. Sleep runs in cycles: REM (thick line)
        comes back four times, about every 70 to 75 minutes in this night.</p>
@@ -253,19 +258,19 @@
     <div class="card" data-clip="mystery-a" data-mystery>
       <h3>Clip A</h3>
       <canvas class="strip" aria-label="Clip A, hidden until revealed" hidden></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="reveal">Reveal</button></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button><button type="button" class="reveal">Reveal</button></div>
       <p class="answer" hidden></p>
     </div>
     <div class="card" data-clip="mystery-b" data-mystery>
       <h3>Clip B</h3>
       <canvas class="strip" aria-label="Clip B, hidden until revealed" hidden></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="reveal">Reveal</button></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button><button type="button" class="reveal">Reveal</button></div>
       <p class="answer" hidden></p>
     </div>
     <div class="card" data-clip="mystery-c" data-mystery>
       <h3>Clip C</h3>
       <canvas class="strip" aria-label="Clip C, hidden until revealed" hidden></canvas>
-      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="reveal">Reveal</button></div>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="dl">Download</button><button type="button" class="reveal">Reveal</button></div>
       <p class="answer" hidden></p>
     </div>
   </section>
@@ -277,7 +282,8 @@
        aged 25 to 101 who took no sleep medication. Trained technicians scored each 30-second page. They used the older system with stages 1
        to 4; here stages 3 and 4 are combined as N3, as in current practice. The recordings are shared
        under the <a href="https://opendatacommons.org/licenses/by/1-0/">Open Data Commons Attribution
-       License v1.0</a>; unlike the rest of this site, they are not CC0.</p>
+       License v1.0</a>; unlike the rest of this site, they are not CC0. The downloads fall under the same
+       licence: if you share them, credit the Sleep-EDF Database Expanded on PhysioNet.</p>
     <p>What was done to them: filtered to 0.3&ndash;30 Hz, and one volume setting for every clip. The clips
        were chosen by rule, not by ear: for each stage, the longest unbroken stretch of the night (its
        middle 10 minutes, if longer); for the awake clip, the 10 minutes after the final awakening.

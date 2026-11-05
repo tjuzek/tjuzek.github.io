@@ -62,8 +62,10 @@
     }
   }
 
-  function clipBuffer(x) {
-    var ac = audio(), rate = FS * speed, buf, playbackRate = 1;
+  function clipBuffer(x) { return makeBuffer(audio(), x); }
+
+  function makeBuffer(ac, x) {
+    var rate = FS * speed, buf, playbackRate = 1;
     try {
       buf = ac.createBuffer(1, x.length, rate);
       buf.getChannelData(0).set(x);
@@ -75,6 +77,65 @@
     }
     fade(buf.getChannelData(0), rate);
     return { buf: buf, playbackRate: playbackRate, seconds: x.length / (FS * speed) };
+  }
+
+  /* ---------- downloads: one pass of a clip at the current speed, as a 16-bit WAV ---------- */
+
+  function wavBlob(data, rate) {
+    var n = data.length, ab = new ArrayBuffer(44 + 2 * n), v = new DataView(ab);
+    function str(o, s) { for (var i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); }
+    str(0, 'RIFF'); v.setUint32(4, 36 + 2 * n, true); str(8, 'WAVE');
+    str(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true);
+    v.setUint16(34, 16, true); str(36, 'data'); v.setUint32(40, 2 * n, true);
+    for (var i = 0; i < n; i++) {
+      var s = Math.max(-1, Math.min(1, data[i]));
+      v.setInt16(44 + 2 * i, Math.round(s * 32767), true);
+    }
+    return new Blob([ab], { type: 'audio/wav' });
+  }
+
+  // Rendered offline at 44.1 kHz, so the browser's resampler makes a file any player opens.
+  // If that fails, the samples go out as they are, with 100 x speed as the WAV's sample rate.
+  function renderClip(x) {
+    var direct = function () {
+      var d = new Float32Array(x);
+      fade(d, FS * speed);
+      return wavBlob(d, FS * speed);
+    };
+    try {
+      var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext, rate = 44100;
+      var oc = new OAC(1, Math.ceil(x.length / (FS * speed) * rate), rate);
+      var cb = makeBuffer(oc, x), src = oc.createBufferSource();
+      src.buffer = cb.buf;
+      src.playbackRate.value = cb.playbackRate;
+      src.connect(oc.destination);
+      src.start(0);
+      return oc.startRendering().then(function (b) { return wavBlob(b.getChannelData(0), rate); })
+        .catch(direct);
+    } catch (e) {
+      return Promise.resolve(direct());
+    }
+  }
+
+  var FILE_NAME = { W: 'awake', N1: 'N1', N2: 'N2', N3: 'N3', REM: 'REM' };
+
+  function downloadCard(card) {
+    var id = card.getAttribute('data-clip'), c = clipMeta(id), btn = card.querySelector('.dl');
+    var name = (card.hasAttribute('data-mystery') ? 'sleep-clip-' + id.slice(-1).toUpperCase()
+      : 'sleep-' + FILE_NAME[c.stage]) + '-' + speed + 'x.wav';
+    btn.disabled = true;
+    loadClip(id).then(renderClip).then(function (blob) {
+      var a = document.createElement('a'), url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+    }).catch(function (e) {
+      if (window.console) console.error(e);
+    }).then(function () { btn.disabled = false; });
   }
 
   function stopCurrent() {
@@ -382,6 +443,8 @@
       card.querySelector('.play').addEventListener('click', function () { playCard(card); });
       var rv = card.querySelector('.reveal');
       if (rv) rv.addEventListener('click', function () { reveal(card); });
+      var dl = card.querySelector('.dl');
+      if (dl) dl.addEventListener('click', function () { downloadCard(card); });
       drawStrip(card);
     });
     $('night-play').addEventListener('click', function () {
