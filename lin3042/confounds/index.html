@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controlling for a confound: LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
+<meta name="description" content="LIN 3042 Applied Linguistics, Fall 2026: what it means to control for a confound, shown three ways with invented data (comparing like with like, regression, partialling out), then redone on the open data of Romeo et al. (2018).">
+<link rel="canonical" href="https://tjuzek.com/lin3042/confounds/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Controlling for a confound: LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta property="og:description" content="Why vitamin takers can look sicker, and what a study means when it says it controlled for something.">
+<meta property="og:url" content="https://tjuzek.com/lin3042/confounds/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Controlling for a confound: LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta name="twitter:description" content="Why vitamin takers can look sicker, and what a study means when it says it controlled for something.">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tjuzek.com/#website",
+      "url": "https://tjuzek.com/",
+      "name": "Thomas Stephan Juzek",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://tjuzek.com/#person",
+      "name": "Thomas Stephan Juzek",
+      "url": "https://tjuzek.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tjuzek.com/lin3042/confounds/#webpage",
+      "url": "https://tjuzek.com/lin3042/confounds/",
+      "name": "Controlling for a confound: LIN 3042 Applied Linguistics, Fall 2026",
+      "description": "What it means to control for a confound, shown three ways with invented data, then redone on the open data of Romeo et al. (2018).",
+      "author": { "@id": "https://tjuzek.com/#person" },
+      "isPartOf": { "@id": "https://tjuzek.com/#website" },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-11-05"
+    }
+  ]
+}
+</script>
+<style>
+  :root { --s-on: #b5465c; --s-off: #2a78d6; --grid: #ebebee; --cell: #e7e3e3; }
+  [hidden] { display: none !important; }
+  .course-head { padding: 34px 0 16px; }
+  .course-head .kicker { color: var(--garnet); font-size: 13px; font-weight: 700; letter-spacing: .9px;
+    text-transform: uppercase; margin: 0 0 6px; }
+  .course-head .kicker a { color: inherit; }
+  .course-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.3px; }
+  .course-head .lead { margin: 0; color: var(--muted); font-size: 16px; padding-left: 12px;
+    border-left: 3px solid var(--gold); }
+  .disclaimer { font-size: 13.5px; color: var(--muted); margin: 12px 0 0; }
+  nav.toc { font-size: 14.5px; color: var(--muted); margin: 0 0 18px; line-height: 1.7; }
+  nav.toc a { white-space: nowrap; }
+  section.box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
+    padding: 14px 20px 8px; margin: 0 0 16px; }
+  section.box p, section.box li { font-size: 16px; }
+  section.box h2 { font-size: 21px; line-height: 1.25; margin: 4px 0 10px; }
+  section.box h2 .num { color: var(--garnet); }
+  section.box h3 { font-size: 16.5px; margin: 20px 0 6px; }
+  .fig { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 10px 6px;
+    margin: 10px 0 14px; }
+  .fig .cap { font-size: 14px; color: var(--muted); margin: 6px 4px 4px; }
+  .fig .cap strong { color: var(--ink); }
+  .chart { width: 100%; position: relative; }
+  .chart svg { display: block; width: 100%; overflow: visible; }
+  .legend { font-size: 14px; color: var(--muted); margin: 0 4px 6px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  svg text { font-family: inherit; fill: var(--muted); font-size: 12px; }
+  svg text.ink { fill: var(--ink); }
+  svg text.strong { fill: var(--ink); font-weight: 600; }
+  svg text.big { font-size: 13.5px; }
+  svg text.halo { paint-order: stroke; stroke: #fff; stroke-width: 4px; stroke-linejoin: round; }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .axisline { stroke: #c9c9cf; stroke-width: 1; }
+  .d-on { fill: var(--s-on); stroke: var(--bg); stroke-width: 1.5; }
+  .d-off { fill: var(--bg); stroke: var(--s-off); stroke-width: 2; }
+  .d-one { fill: var(--s-off); stroke: var(--bg); stroke-width: 1.5; }
+  .l-on { stroke: var(--s-on); stroke-width: 2.5; stroke-linecap: round; }
+  .l-off { stroke: var(--s-off); stroke-width: 2.5; stroke-linecap: round; }
+  .l-ink { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+  .l-mean { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+  .seg { stroke-width: 1; opacity: .45; }
+  .seg.on { stroke: var(--s-on); } .seg.off { stroke: var(--s-off); }
+  .bracket { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+  .whisker { stroke: var(--s-off); stroke-width: 2; stroke-linecap: round; }
+  .zero { stroke: #b9b9c0; stroke-width: 1; }
+  .fade { transition: opacity .35s; }
+  .toggle { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 4px 10px; }
+  .toggle button, button.step, button.preset, button.again { font: inherit; font-size: 15px; font-weight: 600;
+    border: 2px solid var(--garnet); color: var(--garnet); background: var(--bg); border-radius: 8px;
+    padding: 6px 12px; cursor: pointer; }
+  .toggle button[aria-pressed="true"], button.step[aria-pressed="true"], button.preset[aria-pressed="true"] {
+    background: var(--garnet); color: #fff; }
+  table.t { border-collapse: collapse; width: 100%; margin: 4px 0 12px; font-size: 14.5px; }
+  table.t th, table.t td { text-align: right; padding: 5px 6px; border-bottom: 1px solid var(--line); }
+  table.t th:first-child, table.t td:first-child { text-align: left; padding-left: 0; }
+  table.t th { font-weight: 600; color: var(--muted); font-size: 13px; vertical-align: bottom; }
+  table.t tr.sum td { font-weight: 700; border-bottom: 0; }
+  .tablewrap { overflow-x: auto; }
+  details { margin: 6px 0 14px; }
+  summary { cursor: pointer; font-size: 15.5px; color: var(--garnet); font-weight: 600; }
+  details > div { padding: 4px 0 0 2px; }
+  .eq { font-size: 17px; text-align: center; margin: 8px 0 10px; }
+  .eq var { font-style: italic; }
+  .note { border-left: 3px solid var(--gold); padding-left: 12px; }
+  .stepnote { min-height: 4.5em; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 6px 0 12px; }
+  .tile { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .tile .lab { font-size: 13px; color: var(--muted); line-height: 1.3; margin: 0 0 2px; }
+  .tile .val { font-size: 24px; font-weight: 700; color: var(--ink); line-height: 1.2; margin: 0; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; margin: 4px 0 10px; }
+  .controls label { font-size: 14.5px; display: block; }
+  .controls label b { font-weight: 600; }
+  .controls output { color: var(--muted); font-size: 13.5px; }
+  .controls input[type=range] { width: 100%; accent-color: var(--garnet); }
+  .check { font-size: 15px; margin: 6px 0; display: flex; gap: 8px; align-items: flex-start; }
+  .check input { accent-color: var(--garnet); margin-top: 4px; }
+  .covs { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 4px 0 8px; }
+  .covs label { font-size: 15px; display: inline-flex; gap: 6px; align-items: center; }
+  .covs input { accent-color: var(--garnet); }
+  .covs label.off { color: #a6a6ad; }
+  .readout { font-size: 16px; margin: 6px 0 10px; }
+  .readout strong { font-size: 19px; }
+  ol.limits > li { margin-bottom: 10px; }
+  .course-foot p { margin: 0 0 8px; font-size: 14.5px; color: var(--muted); }
+  @media (max-width: 620px) {
+    .course-head h1 { font-size: 27px; }
+    section.box { padding: 12px 14px 6px; }
+    section.box h2 { font-size: 19px; }
+    .fig { padding: 8px 6px 4px; }
+    .controls { grid-template-columns: 1fr; }
+    .tile .val { font-size: 20px; }
+    table.t { font-size: 13.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .fade { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html" class="active">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="course-head">
+    <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; Fall 2026</p>
+    <h1>Controlling for a confound</h1>
+    <p class="lead">Why vitamin takers can look sicker, and what a study means when it says it
+       &ldquo;controlled for&rdquo; something. With invented data to play with, then the real data of
+       Romeo et al. (2018).</p>
+    <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his prompting by an AI assistant (Claude Opus 5.5, Anthropic); reviewed and approved by Tommie Juzek.</p>
+  </section>
+
+  <noscript>
+    <section class="box">
+      <p>The figures on this page are drawn by JavaScript. Please turn it on, or use another browser.</p>
+    </section>
+  </noscript>
+
+  <nav class="toc" aria-label="On this page">
+    <a href="#puzzle">1 The puzzle</a> &middot;
+    <a href="#bands">2 Like with like</a> &middot;
+    <a href="#lines">3 Two parallel lines</a> &middot;
+    <a href="#partial">4 Partialling out</a> &middot;
+    <a href="#try">5 Try it</a> &middot;
+    <a href="#romeo">6 Romeo et al.</a> &middot;
+    <a href="#limits">7 What it cannot do</a> &middot;
+    <a href="#real">8 Vitamins in real life</a>
+  </nav>
+
+  <!-- 1 -->
+  <section class="box" id="puzzle">
+    <h2><span class="num">1</span> The puzzle</h2>
+    <p>Imagine a study of <span id="v-n">200</span> people aged 30 to 80. Each person either takes a daily
+       multivitamin or does not, and each has a <strong>heart risk score</strong>: higher is worse.
+       (All the vitamin numbers on this page are invented. What real studies found is in
+       <a href="#real">section 8</a>.)</p>
+
+    <div class="fig">
+      <div class="legend"><span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" class="d-on"/></svg>Takes vitamins</span>
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" class="d-off"/></svg>No vitamins</span></div>
+      <div class="chart" id="fig-strip"></div>
+      <p class="cap">Figure 1. Every dot is one (invented) person. The black bars are the averages.</p>
+    </div>
+
+    <p>The vitamin takers score <strong id="v-raw">11.5</strong> points <em>worse</em> on average. Do
+       vitamins harm the heart? Look at who takes them: the takers are on average
+       <strong id="v-ageon">64</strong> years old, the non-takers <strong id="v-ageoff">46</strong>.</p>
+
+    <div class="fig">
+      <div class="chart" id="dag-vit"></div>
+      <p class="cap">Figure 2. Age pushes on both. The question mark is what the study wants to know.</p>
+    </div>
+
+    <p>Age is a <strong>confounder</strong>: it affects who takes vitamins (older people take them more
+       often), and it affects the heart (older hearts are at more risk). So the vitamin group is also the
+       older group, and part of the gap, possibly all of it, is the age gap.</p>
+    <p>A confounder needs <strong>both arrows</strong>. If older people were no likelier to take vitamins,
+       or if age did nothing to the heart, age could not open a gap between the two groups.</p>
+    <p><strong>Controlling for age</strong> means asking: <em>among people of the same age</em>, do vitamin
+       takers do better or worse? There are three ways to see how that works. They are the same idea, and
+       they give about the same answer.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="box" id="bands">
+    <h2><span class="num">2</span> Way one: compare like with like</h2>
+    <p>The most direct way: cut the sample into age bands, and compare takers with non-takers only
+       <em>within</em> each band. A 65-year-old who takes vitamins is now compared with a 65-year-old who
+       does not.</p>
+
+    <div class="fig">
+      <div class="legend"><span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" class="d-on"/></svg>Takes vitamins (average)</span>
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" class="d-off"/></svg>No vitamins (average)</span></div>
+      <div class="chart" id="fig-bands"></div>
+      <p class="cap">Figure 3. Left: everyone together, with the big gap. Right: the same people in five age
+        bands. Within each band, the gap is small and goes either way.</p>
+    </div>
+
+    <div class="tablewrap"><table class="t" id="tab-bands">
+      <thead><tr><th>Age band</th><th>People</th><th>Taking vitamins</th><th>Risk, takers</th><th>Risk, non-takers</th><th>Gap</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+
+    <p>The big overall gap came from <em>who</em> was in each group: the vitamin group is full of older
+       people. Within the bands, that difference is (mostly) gone, and so is the gap. This is what
+       &ldquo;holding age constant&rdquo; means, done by hand.</p>
+    <p>Two problems with doing it this way:</p>
+    <ul>
+      <li>A band still mixes, say, a 60-year-old with a 69-year-old, so a little age difference is left
+          inside each band.</li>
+      <li>With more confounders, the bands multiply: 5 age bands &times; 2 sexes &times; 3 smoking groups
+          make 30 cells, and many of them hold almost nobody. Look at the youngest band above: only a handful
+          of takers.</li>
+    </ul>
+    <p>Regression does the same job without cutting the data into bands.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="box" id="lines">
+    <h2><span class="num">3</span> Way two: one line per group (regression)</h2>
+    <p>Put age along the bottom and heart risk up the side. Then draw a straight line through each group,
+       with one rule: <strong>the two lines must be parallel</strong>.</p>
+
+    <div class="fig">
+      <div class="toggle" role="group" aria-label="Show the comparison">
+        <button type="button" id="ln-raw" aria-pressed="true">Ignore age</button>
+        <button type="button" id="ln-adj" aria-pressed="false">Take age into account</button>
+      </div>
+      <div class="legend"><span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" class="d-on"/></svg>Takes vitamins</span>
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" class="d-off"/></svg>No vitamins</span></div>
+      <div class="chart" id="fig-lines"></div>
+      <p class="cap" id="ln-cap"></p>
+    </div>
+
+    <p>The <strong>slope</strong> of the lines says how much heart risk goes up with each year of age. The
+       <strong>distance between the lines</strong> says how far apart takers and non-takers are <em>at the
+       same age</em>, and because the lines are parallel, that distance is the same at every age. It is the
+       &ldquo;effect of vitamins, controlling for age&rdquo;: here <strong id="v-b1">0.0</strong> points,
+       against <strong class="v-raw">11.5</strong> when age is ignored.</p>
+    <p>Where did the <span class="v-raw">11.5</span> come from? The takers are
+       <span id="v-agediff">19</span> years older on average, and each year adds
+       <span class="v-b2">0.6</span> points of risk: <span id="v-agediff2">19</span> &times;
+       <span class="v-b2">0.6</span> = <span id="v-predgap">11.4</span>. Age explains almost the whole gap.</p>
+    <p>How does the computer find the lines? Of all possible pairs of parallel lines, it keeps the pair that
+       the dots are, all in all, closest to: the smallest sum of squared up-and-down distances (&ldquo;least
+       squares&rdquo;). A formula gets there in one step.</p>
+
+    <details>
+      <summary>The equation, for the curious</summary>
+      <div>
+        <p class="eq">risk = <var>b</var><sub>0</sub> + <var>b</var><sub>1</sub> &times; vitamins + <var>b</var><sub>2</sub> &times; age</p>
+        <ul>
+          <li><em>vitamins</em> is 1 for a taker and 0 for a non-taker. So for takers the line is lifted by
+              <var>b</var><sub>1</sub>; for non-takers it is not.</li>
+          <li><var>b</var><sub>1</sub> (here <span class="v-b1">0.0</span>) is the distance between the two
+              lines: the difference between takers and non-takers <em>of the same age</em>.</li>
+          <li><var>b</var><sub>2</sub> (here <span class="v-b2">0.6</span>) is the slope of both lines: how
+              much risk rises with each year of age, <em>among people with the same vitamin habit</em>.</li>
+          <li><var>b</var><sub>0</sub> is where the non-takers&rsquo; line would meet age zero. Nobody here is
+              zero, so it means nothing on its own.</li>
+        </ul>
+        <p class="note">A common misreading: &ldquo;<var>b</var><sub>2</sub> is the effect of age,
+           ignoring vitamins.&rdquo; No: <em>each</em> number is worked out with the other one held fixed.
+           Ignoring vitamins would be a different regression, with age alone.</p>
+        <p>Why parallel? Because the question is one number, the gap at a given age. If you think the gap
+           itself changes with age (vitamins help the old but not the young, say), you can let the slopes
+           differ. That is called an <em>interaction</em>, and it answers a different question.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 4 -->
+  <section class="box" id="partial">
+    <h2><span class="num">4</span> Way three: what &ldquo;partialling out&rdquo; means</h2>
+    <p>Papers say an effect held &ldquo;after partialling out&rdquo; something, or &ldquo;independent
+       of&rdquo; it, or &ldquo;over and above&rdquo; it. All of these name one recipe in three steps. It gives
+       <em>exactly</em> the same number as the parallel lines.</p>
+
+    <div class="fig">
+      <div class="toggle" role="group" aria-label="Steps">
+        <button type="button" class="step" data-step="A" aria-pressed="true">Step A</button>
+        <button type="button" class="step" data-step="B" aria-pressed="false">Step B</button>
+        <button type="button" class="step" data-step="C" aria-pressed="false">Step C</button>
+      </div>
+      <div class="legend"><span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" class="d-on"/></svg>Takes vitamins</span>
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" class="d-off"/></svg>No vitamins</span></div>
+      <div class="chart" id="fig-steps"></div>
+      <p class="cap stepnote" id="step-note"></p>
+    </div>
+
+    <p>After steps A and B, age has had its say twice: nothing in the leftovers can be predicted from age any
+       more. So whatever link is left between the two leftovers cannot come from age. Here the cloud in step
+       C is flat: once age is out, vitamins and heart risk have nothing to do with each other.</p>
+    <p>The slope in step C is <strong id="v-slopec">0.0</strong>; the distance between the parallel lines in
+       way two was <strong class="v-b1">0.0</strong>. Same number, and not by luck: it is always so (a result
+       known as the Frisch&ndash;Waugh&ndash;Lovell theorem). With several confounders, the recipe is the
+       same: in steps A and B, let <em>all</em> of them make their prediction together.</p>
+    <p>Keep these steps in mind: they are exactly what Romeo et al. did, in <a href="#romeo">section 6</a>.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="box" id="try">
+    <h2><span class="num">5</span> Try it</h2>
+    <p>Change the invented world, draw a new sample, and compare the two answers with the truth, which here
+       you set yourself.</p>
+
+    <div class="controls">
+      <label><b>Older people take vitamins more</b> <output id="o-av"></output>
+        <input type="range" id="s-av" min="0" max="8" step="0.2" value="1.2"></label>
+      <label><b>Older people have riskier hearts</b> <output id="o-ar"></output>
+        <input type="range" id="s-ar" min="0" max="1.2" step="0.05" value="0.6"></label>
+      <label><b>What vitamins really do</b> <output id="o-ef"></output>
+        <input type="range" id="s-ef" min="-10" max="10" step="1" value="0"></label>
+      <label><b>People in the study</b> <output id="o-n"></output>
+        <input type="range" id="s-n" min="0" max="2" step="1" value="1"></label>
+    </div>
+    <p class="check"><input type="checkbox" id="s-hid"><label for="s-hid">Add something nobody measured:
+       <strong>health-consciousness</strong>. Health-conscious people take vitamins more often <em>and</em>
+       have healthier hearts.</label></p>
+    <p><button type="button" class="again" id="s-new">New sample</button></p>
+
+    <div class="tiles">
+      <div class="tile"><p class="lab">What vitamins really do</p><p class="val" id="t-true"></p></div>
+      <div class="tile"><p class="lab">Comparison ignoring age</p><p class="val" id="t-raw"></p></div>
+      <div class="tile"><p class="lab">Comparison controlling for age</p><p class="val" id="t-adj"></p></div>
+    </div>
+
+    <div class="fig">
+      <div class="chart" id="dag-try"></div>
+      <div class="legend"><span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" class="d-on"/></svg>Takes vitamins</span>
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" class="d-off"/></svg>No vitamins</span></div>
+      <div class="chart" id="fig-try"></div>
+      <p class="cap">Figure 6. Arrow thickness follows your settings. The lines are the parallel lines of way
+        two; the numbers are in heart risk points, plus means worse.</p>
+    </div>
+
+    <h3>Things to try</h3>
+    <ol>
+      <li>Set either age slider to zero. Do the two comparisons still disagree?</li>
+      <li>Make vitamins really <em>protect</em> (set them to &minus;5) and push both age sliders up. What
+          does the comparison that ignores age say?</li>
+      <li>Tick health-consciousness. Does controlling for age still find the truth?</li>
+      <li>Push &ldquo;older people take vitamins more&rdquo; all the way up and press New sample a few times.
+          What happens to the controlled comparison?</li>
+      <li>Set the study to 50 people and press New sample a few times.</li>
+    </ol>
+    <details>
+      <summary>What you should see</summary>
+      <div>
+        <ol>
+          <li>No: with either arrow gone, age is no longer a confounder, and both comparisons land near the
+              truth. A confounder needs both arrows.</li>
+          <li>Vitamins look <em>harmful</em>, although they help: the age gap swamps the real effect and flips
+              its sign. Controlling for age gets it back.</li>
+          <li>No. Controlling for age removes age, and only age. The health-conscious bias stays in, and
+              vitamins look protective although they do nothing. You can only control for what you
+              measured.</li>
+          <li>It jumps about. Now nearly all old people take vitamins and nearly all young people do not, so
+              there are hardly any people of the same age in both groups to compare. The comparison rests on
+              the few who are left, and on the straight line.</li>
+          <li>Both comparisons wobble from sample to sample. A small study can miss a real effect, or show one
+              that is not there.</li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <!-- 6 -->
+  <section class="box" id="romeo">
+    <h2><span class="num">6</span> The real thing: Romeo et al. (2018)</h2>
+    <p>Romeo and colleagues recorded two days of language at home for 36 children aged 4 to 6, then scanned
+       the children&rsquo;s brains while they listened to stories. They counted, among other things,
+       <strong>conversational turns</strong>: back-and-forth exchanges between the child and an adult. Their
+       claim: children with more turns had more activation in Broca&rsquo;s area, &ldquo;independently of
+       SES&rdquo; (socioeconomic status, measured as parents&rsquo; education and family income).</p>
+    <p>SES is to their study what age was to the vitamins: it could push on both.</p>
+
+    <div class="fig">
+      <div class="chart" id="dag-romeo"></div>
+      <p class="cap">Figure 7. The same shape as Figure 2. In their data, SES goes with more turns (r = .34 for
+        education, .37 for income) and with higher verbal scores (r = .69 and .48; pp. 704&ndash;705).</p>
+    </div>
+
+    <p>Their data are public (Harvard Dataverse, released into the public domain under CC0), so we can redo
+       their analysis here. Every number below is calculated in your browser from their file, and the numbers
+       match the paper.</p>
+
+    <h3>Figure 3 of the paper, decoded</h3>
+    <p>The paper&rsquo;s Figure 3 (p. 705) has a y-axis called &ldquo;Composite Verbal Score (Standardized
+       Residual Controlled for SES)&rdquo;. <em>Residual</em> is the statistician&rsquo;s word for leftover. So
+       this is step B of the recipe: each child&rsquo;s verbal score, minus what their parents&rsquo;
+       education and income predict.</p>
+
+    <div class="fig">
+      <div class="toggle" role="group" aria-label="Before or after">
+        <button type="button" id="rf-before" aria-pressed="true">Before</button>
+        <button type="button" id="rf-after" aria-pressed="false">After partialling out SES</button>
+      </div>
+      <div class="chart" id="fig-r3"></div>
+      <p class="cap" id="r3-cap"></p>
+    </div>
+
+    <p>Some phrases from the paper, translated:</p>
+    <ul>
+      <li><strong>&ldquo;controlling for&rdquo;, &ldquo;after &hellip; were partialled out&rdquo;,
+          &ldquo;independently of&rdquo;, &ldquo;over and above&rdquo;</strong>: all the same recipe. Take out
+          what the covariates (the variables controlled for) predict, then compare the leftovers.</li>
+      <li><strong>partial <var>r</var> = .43</strong>: the correlation between the two leftovers, as in the
+          After picture.</li>
+      <li><strong>&beta; = 0.09</strong>: the regression number of way two. With education and income held
+          fixed, one more turn per hour goes with 0.09 more verbal points: &ldquo;1 point for every additional
+          11 conversational turns&rdquo; (p. 705). Our recalculation: <span id="r-beta">0.090</span>.</li>
+      <li><strong>&ldquo;predicted no unique variance&rdquo;, &ldquo;R&sup2; change = .10&rdquo;</strong>:
+          how much better the prediction of verbal scores gets when turns are added to education and income.
+          Education and income alone account for <span id="r-r2a">48</span>% of the differences between the
+          children&rsquo;s verbal scores; with turns added, <span id="r-r2b">58</span>%. Income adds
+          &ldquo;no unique variance&rdquo; once education is in: it has nothing left to say.</li>
+    </ul>
+    <details>
+      <summary>A small difference between their Figure 3 and the After picture</summary>
+      <div><p>Their Figure 3 takes the leftover of the verbal score only and keeps the raw turns along the
+         bottom. Strictly, the partial <var>r</var> = .43 printed on it belongs to the version where
+         <em>both</em> are leftovers, as in the After picture here. With their own leftover column, the
+         correlation is <span id="r-semi">.40</span>. The two pictures look almost the same.</p></div>
+    </details>
+
+    <h3>Figure 5 of the paper, decoded</h3>
+    <p>The paper&rsquo;s Figure 5 (p. 706) does the same, but for the brain, and it does it everywhere at once. The brain image
+       is cut into tens of thousands of tiny cubes (voxels). At each one, the authors correlated turns with
+       activation and coloured the voxel if the correlation passed a strict threshold. Panel a uses no
+       covariates. Panels b to e repeat the whole map after partialling out (b) education and income, (c)
+       verbal and nonverbal scores, (d) adult words and child utterances, and (e) all six.</p>
+    <p>Here is a toy version, with a made-up brain of a few hundred points instead of tens of thousands:</p>
+
+    <div class="fig">
+      <div class="chart" id="fig-brain"></div>
+      <p class="cap">Figure 9 (toy). Front of the brain to the left. Coloured: correlation of turns with
+        activation passes p &lt; .01 with 36 children; darker is stronger. In this toy, activation in the front
+        patch tracks turns, and also, over a wider area, SES. Before SES is partialled out, both colour the
+        map; after, only what tracks turns over and above SES.</p>
+    </div>
+
+    <p>So the patch <strong>shrinks</strong> when covariates are partialled out, and what survives is the part
+       that the covariates cannot account for. That is what you see from panel a to panel e in the paper: the
+       patch gets smaller, but a patch remains each time. &ldquo;Remained significant&rdquo; means some
+       voxels still passed the threshold.</p>
+
+    <h3>Your turn: the covariate lab</h3>
+    <p>The paper&rsquo;s maps are voxel by voxel. Their data file has one number per child for Broca&rsquo;s
+       area as a whole (activation averaged over the region as anatomy defines it, the region used in the
+       paper&rsquo;s Figure 6). So here we can partial out the covariate sets of the paper&rsquo;s Figure 5 for that one
+       number, or for the verbal score. Tick covariates, or use the buttons.</p>
+
+    <div class="fig">
+      <div class="toggle" role="group" aria-label="Outcome">
+        <button type="button" id="lab-broca" aria-pressed="true">Outcome: Broca&rsquo;s area</button>
+        <button type="button" id="lab-verbal" aria-pressed="false">Outcome: verbal score</button>
+      </div>
+      <div class="toggle" role="group" aria-label="Covariate sets" id="lab-presets"></div>
+      <div class="covs" id="lab-covs"></div>
+      <p class="readout" id="lab-read"></p>
+      <div class="chart" id="fig-lab"></div>
+      <p class="cap">Figure 10. Each dot is one child. With covariates ticked, both axes show leftovers: what
+        the covariates do not predict.</p>
+    </div>
+
+    <div class="fig">
+      <div class="chart" id="fig-forest"></div>
+      <p class="cap">Figure 11. Turns and Broca&rsquo;s area activation (the whole region), with the covariate
+        sets of the paper&rsquo;s Figure 5. Dot: the correlation of the leftovers. Line: its 95% interval, the
+        range of values these 36 children are compatible with. Our calculation from their open data; the paper
+        does not report these numbers.</p>
+    </div>
+
+    <p>For the region as a whole, the correlation shrinks from <span id="f-a">.53</span> with no covariates to
+       <span id="f-e">.16</span> with all six partialled out, and the interval then includes zero. Both this
+       and the paper&rsquo;s panel e can be true at once: a map tests thousands of voxels and shows the ones
+       that pass, while one number for the whole region picks nothing. But it shows what &ldquo;remained
+       significant&rdquo; does <em>not</em> say. It does not say the relationship stayed as strong. Here,
+       most of it went away.</p>
+    <p>One covariate set needs a second look: (c), the children&rsquo;s own verbal scores. If conversations
+       build verbal skill, and verbal skill shows in Broca&rsquo;s area, then partialling out verbal scores
+       removes part of the very effect the study is after. That makes (c) a strict test rather than an unfair
+       one, but it is a reason not to control for everything you can.</p>
+
+    <h3>What &ldquo;controlling for SES&rdquo; cannot rule out</h3>
+    <ol class="limits">
+      <li><strong>SES was measured roughly.</strong> Parents&rsquo; education is a scale from 1 (high school or
+          less) to 5, and income is one number. Partialling out a rough measure removes only part of what SES
+          does; the rest stays in the leftovers, where it can still produce a correlation. In an illustration
+          by Westfall &amp; Yarkoni (2016), ice cream and swimming-pool deaths go together (r = .49) because
+          both rise with the heat. Partial out people&rsquo;s rough ratings of how hot it felt, and a correlation
+          remains (.33). Partial out the measured temperature, and it vanishes (&minus;.02).</li>
+      <li><strong>Nobody measured the parents&rsquo; own language ability, or the genes parents and children
+          share.</strong> Verbally able parents may have more conversations with their children <em>and</em>
+          pass on verbal ability. SES does not capture this, and nothing in the data does. The study cannot
+          tell &ldquo;conversation builds the brain&rdquo; from &ldquo;able parents have able children who also
+          get more conversation&rdquo;.</li>
+      <li><strong>Turns take two.</strong> A turn needs the child to answer. A child who is good at language,
+          for whatever reason, may draw adults into more back-and-forth: then ability drives turns, not only
+          the other way round. The authors reply (p. 708) that child utterances, a measure of how talkative
+          the children were, related only weakly to scores and brain activation. That rules out mere
+          chattiness. It does not rule out an able child who keeps a conversation going without saying more.</li>
+      <li><strong>Thirty-six children.</strong> The intervals are wide: the partial <var>r</var> of .43 is
+          compatible with anything from about .11 to .67. Each covariate costs a little more precision.</li>
+      <li><strong>&ldquo;Remained significant&rdquo; is not &ldquo;unchanged&rdquo;.</strong> As Figure 11
+          shows, a relationship can lose most of its strength and still pass a threshold somewhere.</li>
+      <li><strong>The wording.</strong> The title says turns are &ldquo;associated with&rdquo; brain function.
+          The abstract ends: &ldquo;results suggest that conversational experience impacts neural language
+          processing over and above SES or the sheer quantity of words heard&rdquo;. &ldquo;Suggest&rdquo; is
+          careful; &ldquo;impacts&rdquo; is a claim about cause. Controlling narrows down the alternatives; it
+          does not turn a correlation into a cause. The direct test is an experiment: change how much some families, chosen at random, converse
+          with their children, and see whether the children&rsquo;s brains and scores change.</li>
+    </ol>
+  </section>
+
+  <!-- 7 -->
+  <section class="box" id="limits">
+    <h2><span class="num">7</span> What controlling for something cannot do</h2>
+    <ul>
+      <li><strong>Only what you measured.</strong> Health-consciousness in the sandbox; parents&rsquo;
+          language ability in Romeo et al.</li>
+      <li><strong>Only as well as you measured it.</strong> A rough measure leaves part of the confounder
+          behind.</li>
+      <li><strong>Only where the groups overlap.</strong> If two things always go together, nothing can pull
+          them apart. In the verbal-fluency task of Linck, Kroll &amp; Sunderman (2009), the immersed learners did
+          the Spanish block first and the classroom learners the English block first (p. 1509): order and group always went together,
+          so no statistics can separate them. Only the design could have, by mixing the orders.</li>
+      <li><strong>Only in the shape you assumed.</strong> Way two drew straight lines. If heart risk climbs
+          faster after 60, a straight line leaves some age behind.</li>
+      <li><strong>Not for things the cause itself changes.</strong> Controlling for something on the path from
+          cause to effect removes part of the effect (covariate set c above).</li>
+    </ul>
+    <p>The clean way round all of this is <strong>random assignment</strong>: if a coin decides who takes
+       vitamins, age, health-consciousness and everything else end up balanced on average, measured or not.
+       Our <a href="/lin3042/priming/">priming demo</a> did this: which words came after a related word was
+       decided at random for each of you.</p>
+    <p>Where randomising is impossible, studies combine tools. Weisleder &amp; Fernald (2013) used two:
+       <em>restriction</em> (they studied only low-SES families: &ldquo;By focusing on differences within a
+       homogeneous group of disadvantaged families &hellip; we reduced variability in these confounding
+       factors&rdquo;, p. 2150) and <em>adjustment</em> (maternal education was &ldquo;controlled in all
+       analyses&rdquo;, p. 2144).</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="box" id="real">
+    <h2><span class="num">8</span> Vitamins in real life</h2>
+    <p>The vitamin numbers on this page are invented to make the logic visible. Real studies, briefly:</p>
+    <ul>
+      <li><strong>When a coin decided, vitamins did nothing for the heart.</strong> In the Physicians&rsquo;
+          Health Study II, 14,641 American male doctors took a daily multivitamin or a dummy pill, assigned at
+          random, for about 11 years. Major heart and circulation events: no difference (hazard ratio 1.01,
+          95% interval 0.91 to 1.10; Sesso et al., 2012). The COSMOS trial, with 21,442 older adults over about
+          3.6 years, found the same (0.98, 0.86 to 1.12; Sesso et al., 2022).</li>
+      <li><strong>Who takes them: older people.</strong> In US national data for 2017&ndash;2018, 24% of
+          adults aged 20 to 39 took a multivitamin, 30% of those aged 40 to 59, and 39% of those aged 60 and
+          over (Mishra et al., 2021). So the age arrow on this page is real.</li>
+      <li><strong>But also healthier people.</strong> Supplement users are &ldquo;more likely to report very
+          good or excellent health, have health insurance, use alcohol moderately, eschew cigarette smoking,
+          and exercise more frequently than nonusers&rdquo; (Bailey et al., 2013). In studies that follow
+          people over time, this &ldquo;healthy user effect&rdquo; is &ldquo;a major concern&rdquo; (Loftfield
+          et al., 2024).</li>
+    </ul>
+    <p>So in real data two confounders pull in opposite directions: age makes vitamin takers look worse,
+       health-consciousness makes them look better, and the second is the one researchers worry about most. That
+       is the sandbox with the health-consciousness box ticked: controlling for age alone would make vitamins
+       look protective. The randomised trials settle it, because the coin flip balanced both.</p>
+    <details>
+      <summary>Sources</summary>
+      <div><ul>
+        <li>Bailey, R. L., Gahche, J. J., Miller, P. E., Thomas, P. R., &amp; Dwyer, J. T. (2013). Why US adults
+            use dietary supplements. <em>JAMA Internal Medicine, 173</em>(5), 355&ndash;361.
+            <a href="https://doi.org/10.1001/jamainternmed.2013.2299">doi:10.1001/jamainternmed.2013.2299</a></li>
+        <li>Loftfield, E., et al. (2024). Multivitamin use and mortality risk in 3 prospective US cohorts.
+            <em>JAMA Network Open, 7</em>(6), e2418729.
+            <a href="https://doi.org/10.1001/jamanetworkopen.2024.18729">doi:10.1001/jamanetworkopen.2024.18729</a></li>
+        <li>Mishra, S., Stierman, B., Gahche, J. J., &amp; Potischman, N. (2021). <em>Dietary supplement use
+            among adults: United States, 2017&ndash;2018</em> (NCHS Data Brief No. 399). National Center for
+            Health Statistics. <a href="https://doi.org/10.15620/cdc:101131">doi:10.15620/cdc:101131</a></li>
+        <li>Sesso, H. D., et al. (2012). Multivitamins in the prevention of cardiovascular disease in men: The
+            Physicians&rsquo; Health Study II randomized controlled trial. <em>JAMA, 308</em>(17),
+            1751&ndash;1760. <a href="https://doi.org/10.1001/jama.2012.14805">doi:10.1001/jama.2012.14805</a></li>
+        <li>Sesso, H. D., et al. (2022). Multivitamins in the prevention of cancer and cardiovascular disease:
+            The COcoa Supplement and Multivitamin Outcomes Study (COSMOS) randomized clinical trial.
+            <em>American Journal of Clinical Nutrition, 115</em>(6), 1501&ndash;1510.
+            <a href="https://doi.org/10.1093/ajcn/nqac056">doi:10.1093/ajcn/nqac056</a></li>
+        <li>Westfall, J., &amp; Yarkoni, T. (2016). Statistically controlling for confounding constructs is
+            harder than you think. <em>PLoS ONE, 11</em>(3), e0152719.
+            <a href="https://doi.org/10.1371/journal.pone.0152719">doi:10.1371/journal.pone.0152719</a></li>
+        <li>The course readings: Romeo et al. (2018), <em>Psychological Science, 29</em>(5), 700&ndash;710;
+            Weisleder &amp; Fernald (2013), <em>Psychological Science, 24</em>(11), 2143&ndash;2152; Linck,
+            Kroll &amp; Sunderman (2009), <em>Psychological Science, 20</em>(12), 1507&ndash;1515.</li>
+      </ul></div>
+    </details>
+  </section>
+
+  <section class="course-foot">
+    <p>Romeo et al. (2018): <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5945324/">the article</a> &middot;
+       <a href="https://doi.org/10.7910/DVN/DIDBMQ">their data</a> (Harvard Dataverse, CC0) &middot;
+       <a href="/lin3042/">LIN 3042 course page</a></p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="/teaching.html">Teaching</a> &middot;
+    <a href="/lin3042/">LIN 3042</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-11-05</p>
+</div></footer>
+
+<!-- The statistics are in confounds.js (node can load it for checks); Romeo et al.'s open data are
+     in romeo2018-data.js. This script only draws. Nothing is stored or sent. -->
+<script src="confounds.js"></script>
+<script src="romeo2018-data.js"></script>
+<script>
+(function () {
+  var C = window.Confounds, R = window.ROMEO2018;
+  if (!C || !R || !document.createElementNS) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- small helpers ----------
+  function $(id) { return document.getElementById(id); }
+  function el(tag, attrs, parent, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function minus(s) { return s.replace(/^-/, '−'); }
+  function fmt(v, d) { var s = (Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v).toFixed(d); return minus(s); }
+  function signed(v, d) { var s = fmt(v, d); return (s.charAt(0) !== '−' && Number(s) !== 0 ? '+' : '') + s; }
+  function rfmt(v) { var s = fmt(v, 2); return s.replace(/^(−?)0\./, '$1.'); }
+  function setText(sel, text) {
+    var nodes = sel.charAt(0) === '#' ? [document.getElementById(sel.slice(1))] : document.querySelectorAll(sel);
+    for (var i = 0; i < nodes.length; i++) if (nodes[i]) nodes[i].textContent = text;
+  }
+  function lin(d0, d1, r0, r1) { return function (v) { return r0 + (v - d0) / (d1 - d0) * (r1 - r0); }; }
+  function niceStep(raw) {
+    var p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), m = raw / p;
+    return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p;
+  }
+  function ticks(lo, hi, n) {
+    var st = niceStep((hi - lo) / n), out = [];
+    for (var v = Math.ceil(lo / st - 1e-9) * st; v <= hi + 1e-9; v += st) out.push(Math.round(v / st) * st);
+    return out;
+  }
+  function niceDomain(vals, pad) {
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals), span = hi - lo || 1;
+    lo -= span * (pad || 0.06); hi += span * (pad || 0.06);
+    var st = niceStep(span / 5);
+    return [Math.floor(lo / st) * st, Math.ceil(hi / st) * st];
+  }
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function animate(ms, step, done) {
+    if (REDUCED) { step(1); if (done) done(); return; }
+    var t0 = null;
+    function f(t) {
+      if (t0 === null) t0 = t;
+      var u = Math.min(1, (t - t0) / ms);
+      step(ease(u));
+      if (u < 1) requestAnimationFrame(f); else if (done) done();
+    }
+    requestAnimationFrame(f);
+  }
+  function press(buttons, active) {
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === active ? 'true' : 'false'); });
+  }
+
+  // A plot frame sized to its holder: returns the svg, the plot box, and scales.
+  function frame(holder, o) {
+    holder.innerHTML = '';
+    var W = Math.max(280, holder.clientWidth), H = o.height || Math.round(Math.min(380, Math.max(250, W * 0.6)));
+    var m = { l: o.ml || 46, r: o.mr || 14, t: o.mt || 26, b: o.mb || 40 };
+    var svg = el('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+                          'aria-label': o.label || '' }, holder);
+    var P = { l: m.l, r: W - m.r, t: m.t, b: H - m.b, W: W, H: H };
+    var f = { svg: svg, P: P, x: lin(o.x[0], o.x[1], P.l, P.r), y: lin(o.y[0], o.y[1], P.b, P.t), o: o };
+    f.axes = el('g', { 'class': 'fade' }, svg);
+    drawAxes(f, o);
+    return f;
+  }
+  function drawAxes(f, o) {
+    var g = f.axes, P = f.P;
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var yt = o.yTicks || ticks(o.y[0], o.y[1], 5), xt = o.xTicks || ticks(o.x[0], o.x[1], P.r - P.l < 360 ? 4 : 6);
+    yt.forEach(function (v) {
+      var yy = f.y(v);
+      el('line', { x1: P.l, x2: P.r, y1: yy, y2: yy, 'class': 'gridline' }, g);
+      el('text', { x: P.l - 6, y: yy + 4, 'text-anchor': 'end' }, g, o.yFmt ? o.yFmt(v) : minus(String(v)));
+    });
+    if (!o.noX) xt.forEach(function (v) {
+      var xx = f.x(v);
+      if (o.xGrid) el('line', { x1: xx, x2: xx, y1: P.t, y2: P.b, 'class': 'gridline' }, g);
+      el('text', { x: xx, y: P.b + 16, 'text-anchor': 'middle' }, g, o.xFmt ? o.xFmt(v) : minus(String(v)));
+    });
+    el('line', { x1: P.l, x2: P.r, y1: P.b, y2: P.b, 'class': 'axisline' }, g);
+    if (o.xTitle) el('text', { x: (P.l + P.r) / 2, y: P.H - 6, 'text-anchor': 'middle', 'class': 'ink' }, g, o.xTitle);
+    if (o.yTitle) el('text', { x: 4, y: 14, 'text-anchor': 'start', 'class': 'ink' }, g, o.yTitle);
+  }
+  function dot(g, x, y, on, title, cls) {
+    var c = el('circle', { cx: x, cy: y, r: on ? 4.5 : 4, 'class': cls || (on ? 'd-on' : 'd-off') }, g);
+    if (title) el('title', {}, c, title);
+    return c;
+  }
+
+  // Redraw everything when the width changes.
+  var renders = [];
+  function onResize(fn) { renders.push(fn); fn(); }
+  var lastW = window.innerWidth, rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
+      renders.forEach(function (fn) { fn(); });
+    }, 150);
+  });
+
+  // ---------- the arrow diagram ----------
+  // nodes: top (confounder), left (cause), right (outcome); w: arrow widths; opts.hidden adds an
+  // unmeasured confounder at the top left.
+  function dag(holder, d) {
+    holder.innerHTML = '';
+    var W = Math.max(280, holder.clientWidth), H = d.hidden ? 270 : 216;
+    var svg = el('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': d.label }, holder);
+    var defs = el('defs', {}, svg);
+    var mk = el('marker', { id: d.id + '-ah', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 9, markerHeight: 9,
+                            markerUnits: 'userSpaceOnUse', orient: 'auto-start-reverse' }, defs);
+    el('path', { d: 'M0,0 L10,5 L0,10 z', fill: '#4a4a52' }, mk);
+    var bw = Math.min(150, W * 0.36), bh = 44, top = d.hidden ? 64 : 10, narrow = W < 460;
+    var N = {
+      T: { x: d.hidden && narrow ? W * 0.62 : W / 2, y: top + bh / 2 },
+      L: { x: Math.max(bw / 2 + 2, W * 0.2), y: H - bh / 2 - 26 },
+      Rr: { x: Math.min(W - bw / 2 - 2, W * 0.8), y: H - bh / 2 - 26 }
+    };
+    var cxm = (N.T.x + N.L.x + N.Rr.x) / 3, cym = (N.T.y + N.L.y + N.Rr.y) / 3;
+    function box(n, text, dashed) {
+      el('rect', { x: n.x - bw / 2, y: n.y - bh / 2, width: bw, height: bh, rx: 8, fill: '#fff',
+                   stroke: dashed ? '#9a9aa2' : '#4a4a52', 'stroke-width': 1.5, 'stroke-dasharray': dashed ? '5 4' : null }, svg);
+      var lines = text.split('\n');
+      lines.forEach(function (t, i) {
+        el('text', { x: n.x, y: n.y + 5 + (i - (lines.length - 1) / 2) * 16, 'text-anchor': 'middle',
+                     'class': 'strong big' }, svg, t);
+      });
+    }
+    function edge(a, b, w, label, dashed, labelSide) {
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.sqrt(dx * dx + dy * dy), ux = dx / len, uy = dy / len;
+      // stop at the box edges
+      function cut(n, sgn) {
+        var tx = Math.abs(ux) > 1e-6 ? (bw / 2) / Math.abs(ux) : 1e9, ty = Math.abs(uy) > 1e-6 ? (bh / 2) / Math.abs(uy) : 1e9;
+        var t = Math.min(tx, ty) + 4;
+        return { x: n.x + sgn * ux * t, y: n.y + sgn * uy * t };
+      }
+      var p = cut(a, 1), q = cut(b, -1);
+      if (w <= 0) {
+        el('line', { x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: '#c3c3c9', 'stroke-width': 1.5, 'stroke-dasharray': '3 4' }, svg);
+      } else {
+        el('line', { x1: p.x, y1: p.y, x2: q.x - ux * 6, y2: q.y - uy * 6, stroke: '#4a4a52', 'stroke-width': w,
+                     'stroke-dasharray': dashed ? '6 5' : null, 'stroke-linecap': 'round' }, svg);
+        el('path', { d: 'M' + (q.x - ux * 12 - uy * (5 + w / 2)) + ',' + (q.y - uy * 12 + ux * (5 + w / 2)) +
+                     ' L' + q.x + ',' + q.y + ' L' + (q.x - ux * 12 + uy * (5 + w / 2)) + ',' + (q.y - uy * 12 - ux * (5 + w / 2)) + ' z',
+                     fill: '#4a4a52' }, svg);
+      }
+      if (label) {
+        var mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2, nx = -uy, ny = ux;
+        if ((mx - cxm) * nx + (my - cym) * ny < 0) { nx = -nx; ny = -ny; }
+        var lines = label.split('\n'), anchor = nx < -0.3 ? 'end' : nx > 0.3 ? 'start' : 'middle';
+        var lx = mx + nx * (12 + w / 2), ly = my + ny * (12 + w / 2) + 4 - (ny > 0.5 ? -8 : (lines.length - 1) * 7);
+        lines.forEach(function (t, i) {
+          el('text', { x: lx, y: ly + i * 14, 'text-anchor': anchor, 'class': 'halo' }, svg, t);
+        });
+      }
+    }
+    edge(N.T, N.L, d.w[0], narrow ? d.lab[0][1] : d.lab[0][0], false, 'left');
+    edge(N.T, N.Rr, d.w[1], narrow ? d.lab[1][1] : d.lab[1][0], false, 'right');
+    edge(N.L, N.Rr, d.w[2], d.lab[2], d.w[2] > 0 ? d.dashed : false, 'below');
+    if (d.hidden) {
+      var Hn = { x: narrow ? bw / 2 + 2 : Math.max(bw / 2 + 2, W * 0.16), y: 6 + bh / 2 };
+      var bwSave = bw;
+      box(Hn, narrow ? 'Health-\nconsciousness' : 'Health-consciousness\n(not measured)', true);
+      bw = bwSave;
+      edge(Hn, N.L, 2, '', true);
+      edge({ x: Hn.x, y: Hn.y }, N.Rr, 2, '', true);
+    }
+    box(N.T, d.nodes[0]); box(N.L, d.nodes[1]); box(N.Rr, d.nodes[2]);
+  }
+
+  // ---------- the invented data ----------
+  var people = C.simulate({});
+  var raw = C.raw(people), reg = C.regression(people), bd = C.bands(people), pt = C.partialling(people);
+
+  setText('#v-n', String(people.length));
+  setText('#v-raw', fmt(raw.gap, 1)); setText('.v-raw', fmt(raw.gap, 1));
+  setText('#v-ageon', fmt(raw.ageOn, 0)); setText('#v-ageoff', fmt(raw.ageOff, 0));
+  setText('#v-b1', fmt(reg.b1, 1)); setText('.v-b1', fmt(reg.b1, 1));
+  setText('.v-b2', fmt(reg.b2, 2));
+  var agediff = raw.ageOn - raw.ageOff;
+  setText('#v-agediff', fmt(agediff, 0)); setText('#v-agediff2', fmt(agediff, 0));
+  setText('#v-predgap', fmt(Math.round(agediff) * Number(reg.b2.toFixed(2)), 1));
+  setText('#v-slopec', fmt(pt.slopeC, 1));
+
+  function personTitle(p) { return 'Age ' + p.age + ', ' + (p.vit ? 'takes vitamins' : 'no vitamins') + ', risk ' + fmt(p.risk, 1); }
+
+  // Figure 1: two strips with their means.
+  onResize(function () {
+    var holder = $('fig-strip');
+    var f = frame(holder, { x: [0, 2], y: niceDomain(people.map(function (p) { return p.risk; })), noX: true,
+                            yTitle: 'Heart risk score', mb: 30, height: 300, label: 'Heart risk of vitamin takers and non-takers' });
+    var r = C.rng(5), g = el('g', {}, f.svg), cx = [f.x(0.5), f.x(1.5)], half = (f.P.r - f.P.l) * 0.17;
+    people.forEach(function (p) {
+      var x = cx[p.vit ? 0 : 1] + (r() - 0.5) * 2 * half;
+      dot(g, x, f.y(p.risk), p.vit, personTitle(p));
+    });
+    [[raw.meanOn, 0, 'Takes vitamins'], [raw.meanOff, 1, 'No vitamins']].forEach(function (m) {
+      var yy = f.y(m[0]);
+      el('line', { x1: cx[m[1]] - half - 8, x2: cx[m[1]] + half + 8, y1: yy, y2: yy, 'class': 'l-mean' }, f.svg);
+      el('text', { x: cx[m[1]] - half - 6, y: yy - 7, 'text-anchor': 'start', 'class': 'strong halo' }, f.svg, 'average ' + fmt(m[0], 1));
+      el('text', { x: cx[m[1]], y: f.P.b + 18, 'text-anchor': 'middle', 'class': 'ink' }, f.svg, m[2]);
+    });
+  });
+
+  // Figure 2: the arrow diagram.
+  onResize(function () {
+    dag($('dag-vit'), { id: 'dv', label: 'Age affects vitamin taking and heart risk', nodes: ['Age', 'Vitamins', 'Heart risk'],
+      w: [3, 3, 2], dashed: true, lab: [['older people take\nthem more often', 'more\noften'], ['older hearts\nare at more risk', 'more\nrisk'], '?'] });
+  });
+
+  // Figure 3 and the table: age bands.
+  (function () {
+    var tb = document.querySelector('#tab-bands tbody');
+    bd.rows.forEach(function (r) {
+      var tr = document.createElement('tr');
+      [r.lo + '–' + r.hi, r.n, r.nOn + ' of ' + r.n, r.meanOn === null ? '–' : fmt(r.meanOn, 1),
+       r.meanOff === null ? '–' : fmt(r.meanOff, 1), r.gap === null ? 'nobody to compare' : signed(r.gap, 1)]
+        .forEach(function (v) { var td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    var tr = document.createElement('tr'); tr.className = 'sum';
+    var td = document.createElement('td'); td.colSpan = 5;
+    td.textContent = 'Average gap within bands (bigger bands count more)'; tr.appendChild(td);
+    td = document.createElement('td'); td.textContent = signed(bd.average, 1); tr.appendChild(td);
+    tb.appendChild(tr);
+    tr = document.createElement('tr');
+    td = document.createElement('td'); td.colSpan = 5; td.textContent = 'For comparison: the gap ignoring age'; tr.appendChild(td);
+    td = document.createElement('td'); td.textContent = signed(raw.gap, 1); tr.appendChild(td);
+    tb.appendChild(tr);
+  })();
+
+  onResize(function () {
+    var holder = $('fig-bands');
+    var cats = [{ lab: 'Everyone', on: raw.meanOn, off: raw.meanOff, gap: raw.gap }].concat(bd.rows.map(function (r) {
+      return { lab: r.lo + '–' + r.hi, on: r.meanOn, off: r.meanOff, gap: r.gap };
+    }));
+    var vals = []; cats.forEach(function (c) { if (c.on !== null) vals.push(c.on); if (c.off !== null) vals.push(c.off); });
+    var f = frame(holder, { x: [0, cats.length], y: niceDomain(vals, 0.15), noX: true, yTitle: 'Average heart risk score',
+                            mb: 46, height: 290, label: 'Average heart risk by vitamin use, overall and within age bands' });
+    var sepX = f.x(1);
+    el('line', { x1: sepX, x2: sepX, y1: f.P.t, y2: f.P.b, stroke: '#c9c9cf', 'stroke-width': 1, 'stroke-dasharray': '3 3' }, f.svg);
+    cats.forEach(function (c, i) {
+      var xx = f.x(i + 0.5);
+      if (c.on !== null && c.off !== null)
+        el('line', { x1: xx, x2: xx, y1: f.y(c.on), y2: f.y(c.off), stroke: '#9a9aa2', 'stroke-width': 2 }, f.svg);
+      if (c.off !== null) dot(f.svg, xx, f.y(c.off), false, c.lab + ', no vitamins: average ' + fmt(c.off, 1));
+      if (c.on !== null) dot(f.svg, xx, f.y(c.on), true, c.lab + ', takes vitamins: average ' + fmt(c.on, 1));
+      el('text', { x: xx, y: f.P.b + 16, 'text-anchor': 'middle', 'class': i === 0 ? 'strong' : 'ink' }, f.svg, c.lab);
+      el('text', { x: xx, y: f.P.b + 32, 'text-anchor': 'middle', 'class': i === 0 ? 'strong' : '' }, f.svg,
+         c.gap === null ? '–' : 'gap ' + signed(c.gap, 1));
+    });
+  });
+
+  // ---------- Figure: parallel lines (way two), reused by the sandbox ----------
+  function linesChart(holder, data, mode, o) {
+    var rg = C.regression(data), rw = C.raw(data), state = { mode: mode };
+    var f = frame(holder, { x: [28, 82], y: o.y || niceDomain(data.map(function (p) { return p.risk; })),
+                            xTitle: 'Age', yTitle: 'Heart risk score', xGrid: true, label: o.label, height: o.height });
+    var g = el('g', {}, f.svg);
+    data.forEach(function (p) { dot(g, f.x(p.age), f.y(p.risk), p.vit, personTitle(p)); });
+    var lOff = el('line', { 'class': 'l-off' }, f.svg), lOn = el('line', { 'class': 'l-on' }, f.svg);
+    var br = el('path', { 'class': 'bracket' }, f.svg);
+    var bt = el('text', { 'text-anchor': 'end', 'class': 'strong halo' }, f.svg);
+    function ends(m) {
+      if (m === 'raw' || !rg) return { on: [rw.meanOn, rw.meanOn], off: [rw.meanOff, rw.meanOff], gap: rw.gap };
+      return { on: [rg.b0 + rg.b1 + rg.b2 * 30, rg.b0 + rg.b1 + rg.b2 * 80], off: [rg.b0 + rg.b2 * 30, rg.b0 + rg.b2 * 80], gap: rg.b1 };
+    }
+    function draw(e) {
+      var x0 = f.x(30), x1 = f.x(80);
+      lOn.setAttribute('x1', x0); lOn.setAttribute('x2', x1); lOn.setAttribute('y1', f.y(e.on[0])); lOn.setAttribute('y2', f.y(e.on[1]));
+      lOff.setAttribute('x1', x0); lOff.setAttribute('x2', x1); lOff.setAttribute('y1', f.y(e.off[0])); lOff.setAttribute('y2', f.y(e.off[1]));
+      var bx = f.x(80) + 6, ya = f.y(e.on[1]), yb = f.y(e.off[1]);
+      br.setAttribute('d', 'M' + (bx - 3) + ',' + ya + ' H' + bx + ' V' + yb + ' H' + (bx - 3));
+      bt.setAttribute('x', f.x(80) - 4);
+      bt.setAttribute('y', Math.min(ya, yb) - 8);
+      bt.textContent = 'gap ' + signed(e.gap, 1);
+    }
+    var cur = ends(mode);
+    draw(cur);
+    state.set = function (m) {
+      if (m === state.mode) return;
+      var from = cur, to = ends(m);
+      state.mode = m;
+      animate(650, function (u) {
+        var mix = function (a, b) { return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]; };
+        cur = { on: mix(from.on, to.on), off: mix(from.off, to.off), gap: from.gap + (to.gap - from.gap) * u };
+        draw(cur);
+      }, function () { cur = to; draw(cur); });
+    };
+    return state;
+  }
+
+  var lnMode = 'raw', lnChart;
+  function lnCaption() {
+    $('ln-cap').innerHTML = lnMode === 'raw'
+      ? 'Figure 4. <strong>Ignoring age:</strong> each line is just the group&rsquo;s average. The takers&rsquo; line is ' + fmt(raw.gap, 1) + ' points higher.'
+      : 'Figure 4. <strong>Taking age into account:</strong> two parallel lines that follow age. At any age, the takers&rsquo; line is ' + fmt(reg.b1, 1) + ' points higher.';
+  }
+  onResize(function () { lnChart = linesChart($('fig-lines'), people, lnMode, { label: 'Heart risk by age, with one line per group' }); lnCaption(); });
+  [['ln-raw', 'raw'], ['ln-adj', 'adj']].forEach(function (b) {
+    $(b[0]).addEventListener('click', function () {
+      press([$('ln-raw'), $('ln-adj')], $(b[0]));
+      lnMode = b[1]; lnChart.set(b[1]); lnCaption();
+    });
+  });
+
+  // ---------- Figure: partialling out, step by step ----------
+  (function () {
+    var cols = C.columns(people), A = pt.A, B = pt.B, step = 'A', holder = $('fig-steps');
+    var jr = C.rng(9), jit = people.map(function () { return (jr() - 0.5) * 0.7; });
+    var rC = pt.rC;
+    var NOTES = {
+      A: 'Figure 5. <strong>Step A.</strong> Let age predict vitamin taking. The line is the share of takers you would expect at each age. ' +
+         'Each person&rsquo;s <strong>leftover</strong> is how far they sit above or below it: a 35-year-old who takes vitamins sits well above ' +
+         '(&ldquo;takes them although young&rdquo;), a 75-year-old who does not sits well below.',
+      B: 'Figure 5. <strong>Step B.</strong> Let age predict heart risk, the same way. The leftover is each person&rsquo;s heart risk above or below what their age predicts.',
+      C: 'Figure 5. <strong>Step C.</strong> Plot the two leftovers against each other. Vitamin taking that age does not explain, against heart risk that age does not explain. ' +
+         'The slope of this line is the effect of vitamins, controlling for age: here ' + fmt(pt.slopeC, 1) + '.'
+    };
+    var spec = {
+      A: function () { return { x: [28, 82], y: [-0.35, 1.35], xTitle: 'Age', yTitle: 'Takes vitamins (1 = yes, 0 = no)', yTicks: [0, 1],
+                                 yFmt: function (v) { return v ? 'yes' : 'no'; }, xGrid: true }; },
+      B: function () { return { x: [28, 82], y: niceDomain(cols.risk), xTitle: 'Age', yTitle: 'Heart risk score', xGrid: true }; },
+      C: function () {
+        var m = Math.max.apply(null, B.resid.map(Math.abs)), st = niceStep(m / 2), ym = Math.ceil(m * 1.05 / st) * st;
+        return { x: [-1, 1], y: [-ym, ym], xTitle: 'Vitamin taking, leftover after age', yTitle: 'Heart risk, leftover after age',
+                 xTicks: [-1, -0.5, 0, 0.5, 1], xFmt: function (v) { return minus(String(v)); }, xGrid: true };
+      }
+    };
+    function pos(s, i, f) {
+      var p = people[i];
+      if (s === 'A') return [f.x(p.age + jit[i]), f.y(p.vit)];
+      if (s === 'B') return [f.x(p.age + jit[i]), f.y(p.risk)];
+      return [f.x(A.resid[i]), f.y(B.resid[i])];
+    }
+    var f, dots = [], over;
+    function overlay(s) {
+      if (over) f.svg.removeChild(over);
+      over = el('g', { 'class': 'fade', opacity: 0 }, f.svg);
+      f.svg.insertBefore(over, dotsG);
+      var line;
+      if (s === 'A' || s === 'B') {
+        var fit = s === 'A' ? A : B, yv = s === 'A' ? cols.vit : cols.risk;
+        people.forEach(function (p, i) {
+          var xy = pos(s, i, f);
+          el('line', { x1: xy[0], x2: xy[0], y1: f.y(yv[i]), y2: f.y(fit.fitted[i]), 'class': 'seg ' + (p.vit ? 'on' : 'off') }, over);
+        });
+        line = [f.x(30), f.y(fit.coef[0] + fit.coef[1] * 30), f.x(80), f.y(fit.coef[0] + fit.coef[1] * 80)];
+      } else {
+        var lc = C.ols(B.resid, [A.resid]);
+        el('line', { x1: f.x(0), x2: f.x(0), y1: f.P.t, y2: f.P.b, 'class': 'zero' }, over);
+        el('line', { x1: f.P.l, x2: f.P.r, y1: f.y(0), y2: f.y(0), 'class': 'zero' }, over);
+        line = [f.x(-1), f.y(lc.coef[0] - lc.coef[1]), f.x(1), f.y(lc.coef[0] + lc.coef[1])];
+        el('text', { x: f.P.r - 4, y: f.P.t + 14, 'text-anchor': 'end', 'class': 'strong halo' }, over, 'slope ' + fmt(pt.slopeC, 1));
+      }
+      el('line', { x1: line[0], y1: line[1], x2: line[2], y2: line[3], 'class': 'l-ink' }, over);
+      requestAnimationFrame(function () { over.setAttribute('opacity', 1); });
+    }
+    var dotsG;
+    function build() {
+      f = frame(holder, spec[step]());
+      dotsG = el('g', {}, f.svg); dots = []; over = null;
+      people.forEach(function (p, i) {
+        var xy = pos(step, i, f);
+        dots.push(dot(dotsG, xy[0], xy[1], p.vit, personTitle(p)));
+      });
+      overlay(step);
+    }
+    function go(s) {
+      if (s === step) return;
+      var from = dots.map(function (d) { return [+d.getAttribute('cx'), +d.getAttribute('cy')]; });
+      step = s;
+      if (over) { f.svg.removeChild(over); over = null; }
+      var o = spec[s]();
+      f.x = lin(o.x[0], o.x[1], f.P.l, f.P.r); f.y = lin(o.y[0], o.y[1], f.P.b, f.P.t); f.o = o;
+      f.axes.setAttribute('opacity', 0);
+      var to = people.map(function (p, i) { return pos(s, i, f); });
+      animate(800, function (u) {
+        dots.forEach(function (d, i) {
+          d.setAttribute('cx', from[i][0] + (to[i][0] - from[i][0]) * u);
+          d.setAttribute('cy', from[i][1] + (to[i][1] - from[i][1]) * u);
+        });
+      }, function () {
+        drawAxes(f, o); f.axes.setAttribute('opacity', 1);
+        overlay(s);
+      });
+      $('step-note').innerHTML = NOTES[s];
+    }
+    onResize(build);
+    $('step-note').innerHTML = NOTES.A;
+    var btns = Array.prototype.slice.call(document.querySelectorAll('button.step'));
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { press(btns, b); go(b.getAttribute('data-step')); });
+    });
+  })();
+
+  // ---------- the sandbox ----------
+  (function () {
+    var seed = C.DEFAULTS.seed, NS_ = [50, 200, 1000];
+    var s = { av: $('s-av'), ar: $('s-ar'), ef: $('s-ef'), n: $('s-n'), hid: $('s-hid') };
+    function strength(v, cuts) { return v === 0 ? 'none' : v < cuts[0] ? 'weak' : v < cuts[1] ? 'medium' : v < cuts[2] ? 'strong' : 'very strong'; }
+    function settings() {
+      return { ageToVit: +s.av.value, ageToRisk: +s.ar.value, effect: +s.ef.value, n: NS_[+s.n.value],
+               hidden: s.hid.checked ? 1 : 0, seed: seed };
+    }
+    var data, chart;
+    function run() {
+      var o = settings();
+      $('o-av').textContent = '(' + strength(o.ageToVit, [0.7, 2, 4]) + ')';
+      $('o-ar').textContent = '(' + strength(o.ageToRisk, [0.25, 0.7, 1]) + ')';
+      $('o-ef').textContent = '(' + (o.effect === 0 ? 'nothing' : o.effect < 0 ? 'protect: ' + signed(o.effect, 0) + ' points' : 'harm: ' + signed(o.effect, 0) + ' points') + ')';
+      $('o-n').textContent = '(' + o.n + ')';
+      data = C.simulate(o);
+      var rw = C.raw(data), rg = C.regression(data);
+      $('t-true').textContent = signed(o.effect, 1);
+      $('t-raw').textContent = rw.nOn && rw.nOff ? signed(rw.gap, 1) : 'n/a';
+      $('t-adj').textContent = rg ? signed(rg.b1, 1) : 'n/a';
+      draw();
+    }
+    function draw() {
+      var o = settings();
+      dag($('dag-try'), { id: 'dt', label: 'Your settings as arrows', nodes: ['Age', 'Vitamins', 'Heart risk'], dashed: false,
+        w: [o.ageToVit === 0 ? 0 : 1 + 1.1 * Math.sqrt(o.ageToVit) * 1.6, o.ageToRisk === 0 ? 0 : 1 + 7 * o.ageToRisk,
+            o.effect === 0 ? 0 : 1 + 0.7 * Math.abs(o.effect)],
+        lab: [['', ''], ['', ''], o.effect === 0 ? 'no effect' : o.effect < 0 ? 'protects' : 'harms'], hidden: !!o.hidden });
+      chart = linesChart($('fig-try'), data, 'adj', { y: [-10, 90], label: 'Your sample, with the parallel lines', height: 300 });
+    }
+    ['av', 'ar', 'ef', 'n'].forEach(function (k) { s[k].addEventListener('input', run); });
+    s.hid.addEventListener('change', run);
+    $('s-new').addEventListener('click', function () { seed += 1; run(); });
+    run();
+    renders.push(draw);
+  })();
+
+  // ---------- Romeo et al. (2018) ----------
+  var COV = [
+    { k: 'edu', lab: 'Parents’ education' }, { k: 'income', lab: 'Family income' },
+    { k: 'verbal', lab: 'Verbal score' }, { k: 'nonverbal', lab: 'Nonverbal score' },
+    { k: 'adultWords', lab: 'Adult words' }, { k: 'childUtt', lab: 'Child utterances' }, { k: 'age', lab: 'Age' }
+  ];
+  var PRESETS = [
+    { id: 'a', lab: 'a: none', set: [] }, { id: 'b', lab: 'b: education + income', set: ['edu', 'income'] },
+    { id: 'c', lab: 'c: verbal + nonverbal', set: ['verbal', 'nonverbal'] },
+    { id: 'd', lab: 'd: adult words + child utterances', set: ['adultWords', 'childUtt'] },
+    { id: 'e', lab: 'e: all six', set: ['edu', 'income', 'verbal', 'nonverbal', 'adultWords', 'childUtt'] }
+  ];
+  function cols(keys) { return keys.map(function (k) { return R[k]; }); }
+
+  // the numbers in the text
+  (function () {
+    var f2 = C.ols(R.verbal, cols(['edu', 'income'])), f3 = C.ols(R.verbal, cols(['edu', 'income', 'turns']));
+    var v = C.sd(R.verbal), vv = v * v * (R.verbal.length - 1);
+    function r2(fit) { var s = 0; fit.resid.forEach(function (e) { s += e * e; }); return 1 - s / vv; }
+    setText('#r-beta', fmt(f3.coef[3], 3));
+    setText('#r-r2a', fmt(100 * r2(f2), 0)); setText('#r-r2b', fmt(100 * r2(f3), 0));
+    setText('#r-semi', rfmt(C.corr(R.turns, R.verbalSES)));
+    var a = C.partial(R.turns, R.broca, []), e = C.partial(R.turns, R.broca, cols(PRESETS[4].set));
+    setText('#f-a', rfmt(a.r)); setText('#f-e', rfmt(e.r));
+  })();
+
+  onResize(function () {
+    dag($('dag-romeo'), { id: 'dr', label: 'SES affects conversational turns and the child’s scores and brain', dashed: true,
+      nodes: ['SES', 'Turns', 'Verbal score,\nBroca’s area'], w: [3, 3, 2],
+      lab: [['parents with more\neducation and income:\nmore turns', 'more\nturns'], ['higher scores\nand more?', 'higher\nscores'], '?'] });
+  });
+
+  // a one-colour scatter with a line through it
+  function scatter(holder, x, y, o) {
+    var f = frame(holder, { x: o.xd || niceDomain(x), y: o.yd || niceDomain(y), xTitle: o.xTitle, yTitle: o.yTitle,
+                            xGrid: true, height: o.height || 300, label: o.label, ml: 52 });
+    if (o.zero) {
+      el('line', { x1: f.x(0), x2: f.x(0), y1: f.P.t, y2: f.P.b, 'class': 'zero' }, f.svg);
+      el('line', { x1: f.P.l, x2: f.P.r, y1: f.y(0), y2: f.y(0), 'class': 'zero' }, f.svg);
+    }
+    var fit = C.ols(y, [x]), d = f.o.x;
+    el('line', { x1: f.x(d[0]), x2: f.x(d[1]), y1: f.y(fit.coef[0] + fit.coef[1] * d[0]), y2: f.y(fit.coef[0] + fit.coef[1] * d[1]), 'class': 'l-ink' }, f.svg);
+    var g = el('g', {}, f.svg);
+    x.forEach(function (xv, i) { dot(g, f.x(xv), f.y(y[i]), true, o.title ? o.title(i) : null, 'd-one'); });
+    if (o.note) el('text', { x: f.P.r - 4, y: f.P.t + 14, 'text-anchor': 'end', 'class': 'strong halo' }, f.svg, o.note);
+    return f;
+  }
+  function k1(v) { return Math.abs(v) >= 1000 ? minus(String(Math.round(v / 100) / 10)) + 'k' : minus(String(Math.round(v * 10) / 10)); }
+
+  // Figure 8: the paper's Figure 3, before and after
+  (function () {
+    var mode = 'before';
+    function draw() {
+      var holder = $('fig-r3'), Z = cols(['edu', 'income']);
+      if (mode === 'before') {
+        var r = C.corr(R.turns, R.verbal);
+        scatter(holder, R.turns, R.verbal, { xTitle: 'Conversational turns per hour', yTitle: 'Verbal score',
+          note: 'r = ' + rfmt(r), label: 'Turns and verbal score, before partialling out',
+          title: function (i) { return R.turns[i] + ' turns, verbal score ' + R.verbal[i]; } });
+        $('r3-cap').innerHTML = 'Figure 8. Before: more turns, higher verbal scores (r = ' + rfmt(r) + '; the paper: .51). But both go with SES.';
+      } else {
+        var p = C.partial(R.turns, R.verbal, Z);
+        scatter(holder, p.ex, p.ey, { xTitle: 'Turns, leftover after SES', yTitle: 'Verbal score, leftover after SES', zero: true,
+          note: 'partial r = ' + rfmt(p.r), label: 'Turns and verbal score, both as leftovers after SES', xFmt: k1,
+          title: function (i) { return 'turns ' + signed(p.ex[i], 0) + ', verbal ' + signed(p.ey[i], 1) + ' (leftovers)'; } });
+        $('r3-cap').innerHTML = 'Figure 8. After: both as leftovers, once parents&rsquo; education and income have made their predictions. ' +
+          'The link is weaker but still there (partial r = ' + rfmt(p.r) + ', 95% interval ' + rfmt(p.lo) + ' to ' + rfmt(p.hi) + '; the paper: .43).';
+      }
+    }
+    onResize(draw);
+    [['rf-before', 'before'], ['rf-after', 'after']].forEach(function (b) {
+      $(b[0]).addEventListener('click', function () { press([$('rf-before'), $('rf-after')], $(b[0])); mode = b[1]; draw(); });
+    });
+  })();
+
+  // Figure 9: the toy brain, two panels
+  onResize(function () {
+    var holder = $('fig-brain'), bm = C.brainMap();
+    holder.innerHTML = '';
+    var W = Math.max(280, holder.clientWidth), gap = 14, stack = W < 460;
+    var pw = stack ? W : (W - gap) / 2, cs = Math.min(pw / bm.cols, 16), ph = cs * bm.rows;
+    var H = stack ? 2 * (ph + 48) + 34 : ph + 30 + 40;
+    var svg = el('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+                          'aria-label': 'Toy brain map before and after partialling out SES' }, holder);
+    var ramp = ['#f2c6cf', '#dd8d9d', '#c3586d', '#9c3247', '#6b1e2f'];
+    function col(r, crit) { var u = Math.min(0.999, (r - crit) / (0.72 - crit)); return ramp[Math.floor(u * ramp.length)]; }
+    [['No covariates (like panel a)', 'r0', bm.crit0], ['SES partialled out (like panel b)', 'r1', bm.crit1]].forEach(function (pn, i) {
+      var ox = stack ? (W - cs * bm.cols) / 2 : i * (pw + gap) + (pw - cs * bm.cols) / 2, oy = stack ? i * (ph + 48) + 20 : 20;
+      el('text', { x: ox, y: oy - 6, 'class': 'strong' }, svg, pn[0]);
+      var n = 0;
+      bm.cells.forEach(function (c) {
+        var pass = c[pn[1]] > pn[2]; if (pass) n++;
+        var rect = el('rect', { x: ox + c.x * cs + 0.5, y: oy + c.y * cs + 0.5, width: cs - 1, height: cs - 1, rx: 1.5,
+                                fill: pass ? col(c[pn[1]], pn[2]) : 'var(--cell)' }, svg);
+        el('title', {}, rect, 'r = ' + rfmt(c[pn[1]]) + (pass ? ', passes' : ', does not pass'));
+      });
+      el('text', { x: ox, y: oy + ph + 16 }, svg, n + ' points coloured');
+    });
+    var ly = H - 14, lx = 0;
+    el('text', { x: lx, y: ly }, svg, 'weaker');
+    ramp.forEach(function (c, i) { el('rect', { x: lx + 50 + i * 16, y: ly - 10, width: 14, height: 12, rx: 2, fill: c }, svg); });
+    el('text', { x: lx + 50 + ramp.length * 16 + 6, y: ly }, svg, 'stronger');
+  });
+
+  // The covariate lab
+  (function () {
+    var outcome = 'broca', chosen = {}, presetBtns = [];
+    var covBox = $('lab-covs'), presetBox = $('lab-presets');
+    COV.forEach(function (c) {
+      var lab = document.createElement('label'), inp = document.createElement('input');
+      inp.type = 'checkbox'; inp.value = c.k; inp.addEventListener('change', function () { chosen[c.k] = inp.checked; markPreset(); draw(); });
+      lab.appendChild(inp); lab.appendChild(document.createTextNode(c.lab)); covBox.appendChild(lab); c.inp = inp; c.lab_ = lab;
+    });
+    PRESETS.forEach(function (p) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'preset'; b.textContent = p.lab;
+      b.setAttribute('aria-pressed', p.id === 'a' ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        chosen = {}; p.set.forEach(function (k) { chosen[k] = true; });
+        if (outcome === 'verbal') delete chosen.verbal;
+        sync(); markPreset(); draw();
+      });
+      presetBox.appendChild(b); presetBtns.push(b); p.btn = b;
+    });
+    function keys() { return COV.map(function (c) { return c.k; }).filter(function (k) { return chosen[k] && !(outcome === 'verbal' && k === 'verbal'); }); }
+    function sync() {
+      COV.forEach(function (c) {
+        var off = outcome === 'verbal' && c.k === 'verbal';
+        c.inp.disabled = off; c.inp.checked = !!chosen[c.k] && !off;
+        c.lab_.className = off ? 'off' : '';
+        c.lab_.title = off ? 'This is the outcome now, so it cannot also be a covariate.' : '';
+      });
+    }
+    function markPreset() {
+      var ks = keys().slice().sort().join(',');
+      PRESETS.forEach(function (p) {
+        var want = p.set.filter(function (k) { return !(outcome === 'verbal' && k === 'verbal'); }).sort().join(',');
+        var avail = !(outcome === 'verbal' && (p.id === 'c' || p.id === 'e'));
+        p.btn.hidden = outcome === 'verbal' && (p.id === 'c' || p.id === 'e');
+        p.btn.setAttribute('aria-pressed', avail && ks === want ? 'true' : 'false');
+      });
+    }
+    function draw() {
+      var ks = keys(), y = R[outcome], yName = outcome === 'broca' ? 'Broca’s area activation' : 'Verbal score';
+      var p = C.partial(R.turns, y, cols(ks));
+      var names = ks.map(function (k) { for (var i = 0; i < COV.length; i++) if (COV[i].k === k) return COV[i].lab.toLowerCase(); });
+      var read = $('lab-read');
+      if (!p) { read.textContent = 'Too many covariates for 36 children.'; $('fig-lab').innerHTML = ''; return; }
+      read.innerHTML = 'Turns and ' + (outcome === 'broca' ? 'Broca\u2019s area activation' : 'verbal score') + ', ' +
+        (ks.length ? 'with ' + (names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0]) + ' partialled out' : 'no covariates') + ': <strong>' + (ks.length ? 'partial ' : '') +
+        'r = ' + rfmt(p.r) + '</strong>, 95% interval ' + rfmt(p.lo) + ' to ' + rfmt(p.hi) + '.' +
+        (p.lo <= 0 ? ' The interval includes zero: these 36 children cannot tell this apart from no link at all.' : '');
+      if (ks.length) {
+        scatter($('fig-lab'), p.ex, p.ey, { xTitle: 'Turns, leftover', yTitle: yName + ', leftover', zero: true, xFmt: k1,
+          label: 'Leftover turns against leftover outcome', note: 'partial r = ' + rfmt(p.r),
+          title: function (i) { return 'turns ' + signed(p.ex[i], 0) + ', outcome ' + signed(p.ey[i], 1) + ' (leftovers)'; } });
+      } else {
+        scatter($('fig-lab'), R.turns, y, { xTitle: 'Conversational turns per hour', yTitle: yName, note: 'r = ' + rfmt(p.r),
+          label: 'Turns against the outcome', title: function (i) { return R.turns[i] + ' turns, ' + fmt(y[i], 1); } });
+      }
+    }
+    function setOutcome(o, btn) {
+      outcome = o; press([$('lab-broca'), $('lab-verbal')], btn);
+      if (o === 'verbal') delete chosen.verbal;
+      sync(); markPreset(); draw();
+    }
+    $('lab-broca').addEventListener('click', function () { setOutcome('broca', $('lab-broca')); });
+    $('lab-verbal').addEventListener('click', function () { setOutcome('verbal', $('lab-verbal')); });
+    sync(); markPreset();
+    onResize(draw);
+  })();
+
+  // Figure 11: the five covariate sets, as intervals
+  onResize(function () {
+    var holder = $('fig-forest');
+    holder.innerHTML = '';
+    var W = Math.max(280, holder.clientWidth), narrow = W < 520, labW = narrow ? 0 : 210, rowH = narrow ? 44 : 32;
+    var H = PRESETS.length * rowH + 50, x0 = labW + 12, x1 = W - (narrow ? 12 : 120);
+    var x = lin(-0.4, 1, x0, x1);
+    var svg = el('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+                          'aria-label': 'Partial correlations of turns with Broca activation for five covariate sets' }, holder);
+    [-0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1].forEach(function (v) {
+      el('line', { x1: x(v), x2: x(v), y1: 8, y2: H - 30, 'class': v === 0 ? 'zero' : 'gridline' }, svg);
+      var tl = Math.abs(v) < 1e-9 ? '0' : Math.abs(v - 1) < 1e-9 ? '1' : (v < 0 ? '\u2212' : '') + '.' + Math.round(Math.abs(v) * 10);
+      if (!narrow || Math.round(v * 10) % 4 === 0) el('text', { x: x(v), y: H - 14, 'text-anchor': 'middle' }, svg, tl);
+    });
+    el('text', { x: x1, y: H - 0, 'text-anchor': 'end', 'class': 'ink' }, svg, 'correlation of turns with Broca’s area');
+    PRESETS.forEach(function (p, i) {
+      var q = C.partial(R.turns, R.broca, cols(p.set)), yy = 20 + i * rowH + (narrow ? 16 : 0);
+      if (narrow) el('text', { x: x0, y: yy - 12, 'class': 'ink' }, svg, p.lab + ':  ' + rfmt(q.r) + '  [' + rfmt(q.lo) + ', ' + rfmt(q.hi) + ']');
+      else {
+        el('text', { x: 0, y: yy + 4, 'class': 'ink' }, svg, p.lab);
+        el('text', { x: W - 4, y: yy + 4, 'text-anchor': 'end', 'class': 'ink' }, svg, rfmt(q.r) + '  [' + rfmt(q.lo) + ', ' + rfmt(q.hi) + ']');
+      }
+      el('line', { x1: x(q.lo), x2: x(q.hi), y1: yy, y2: yy, 'class': 'whisker' }, svg);
+      var c = el('circle', { cx: x(q.r), cy: yy, r: 5, 'class': 'd-one' }, svg);
+      el('title', {}, c, p.lab + ': r = ' + rfmt(q.r) + ', 95% interval ' + rfmt(q.lo) + ' to ' + rfmt(q.hi));
+    });
+  });
+})();
+</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

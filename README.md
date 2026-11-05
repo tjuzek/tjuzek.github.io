@@ -51,6 +51,12 @@ python3 -m http.server 8000
   page per task (`translation/`, `verbal/`, `reading-span/`, `simon/`, each naming its task in
   `<body data-task>`). Shared: `linck.js` (items, scoring), `tasks.js` (runners), `linck.css`.
   Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/linck-demo/README.md`.
+- `/lin3042/confounds/` (from 2026-11-05) is an explainer, not an experiment: what "controlling for a
+  confound" means, three ways (age bands, parallel regression lines, partialling out) on invented
+  vitamins data, a sandbox, then the open data of Romeo et al. (2018) redone in the browser. Statistics
+  in `confounds.js` (node-loadable), the Romeo data (CC0, 10 of 16 columns) in `romeo2018-data.js`,
+  drawing in `index.html`. Nothing is stored or sent. Notes, checks (`check-confounds.js`) and the
+  citation audit: `~/claudecode/lin3042/course/modules/confounds/`.
 - `/lin3042/sleep/` (from 2026-11-04) is a listening demo: sleep EEG played 100, 200 or 400 times faster
   (audification), after a student question. Five stage clips, a whole night with its hypnogram, and three
   clips to guess; each clip downloads as a WAV made in the browser at the selected speed, the night as its MP3. The runner is `sleep.js`; the data in `sleep/data/` (16-bit clips at 100 Hz, `night.mp3`,
@@ -100,7 +106,7 @@ python3 -m http.server 8000
 
 ## Files
 `index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html` · `phd/index.html`
-· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo; `linck/`, the Linck et al. tasks) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
+· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo; `linck/`, the Linck et al. tasks; `confounds/`, the confounds explainer) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
