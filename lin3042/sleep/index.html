@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleep sounds: LIN 3042, Fall 2026 | Thomas Stephan Juzek</title>
+<meta name="description" content="LIN 3042 Applied Linguistics, Fall 2026: brain activity during sleep (EEG), played 200 times faster so that you can hear it. Five sleep stages, a whole night in two minutes, and three clips to guess.">
+<link rel="canonical" href="https://tjuzek.com/lin3042/sleep/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sleep sounds: LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta property="og:description" content="Brain waves in sleep, sped up 200 times so that you can hear them.">
+<meta property="og:url" content="https://tjuzek.com/lin3042/sleep/">
+<meta property="og:image" content="https://tjuzek.com/share-card.jpg">
+<meta property="og:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Thomas Stephan Juzek">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sleep sounds: LIN 3042, Fall 2026 | Thomas Stephan Juzek">
+<meta name="twitter:description" content="Brain waves in sleep, sped up 200 times so that you can hear them.">
+<meta name="twitter:image" content="https://tjuzek.com/share-card.jpg">
+<meta name="twitter:image:alt" content="Stylised Florida sunset over live oaks, the tjuzek.com banner for Thomas Stephan Juzek">
+<meta name="author" content="Thomas Stephan Juzek">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#782F40">
+<link rel="icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tjuzek.com/#website",
+      "url": "https://tjuzek.com/",
+      "name": "Thomas Stephan Juzek",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://tjuzek.com/#person",
+      "name": "Thomas Stephan Juzek",
+      "url": "https://tjuzek.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tjuzek.com/lin3042/sleep/#webpage",
+      "url": "https://tjuzek.com/lin3042/sleep/",
+      "name": "Sleep sounds: LIN 3042 Applied Linguistics, Fall 2026",
+      "description": "Brain activity during sleep (EEG), played 200 times faster so that you can hear it.",
+      "author": { "@id": "https://tjuzek.com/#person" },
+      "isPartOf": { "@id": "https://tjuzek.com/#website" },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-11-04"
+    }
+  ]
+}
+</script>
+<style>
+  [hidden] { display: none !important; }
+  .course-head { padding: 34px 0 16px; }
+  .course-head .kicker { color: var(--garnet); font-size: 13px; font-weight: 700; letter-spacing: .9px;
+    text-transform: uppercase; margin: 0 0 6px; }
+  .course-head .kicker a { color: inherit; }
+  .course-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.3px; }
+  .course-head .lead { margin: 0; color: var(--muted); font-size: 16px; padding-left: 12px;
+    border-left: 3px solid var(--gold); }
+  .disclaimer { font-size: 13.5px; color: var(--muted); margin: 12px 0 0; }
+  section.box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
+    padding: 14px 20px 8px; margin: 0 0 14px; }
+  section.box p, section.box li { font-size: 16px; }
+  section.box h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
+    color: var(--muted); margin: 0 0 6px; }
+  .note { font-size: 14px; color: var(--muted); }
+
+  /* speed */
+  .speed { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 4px 0 8px; }
+  .speed span.lab { font-weight: 600; margin-right: 4px; }
+  .speed button { font: inherit; font-size: 16px; font-weight: 600; border: 2px solid var(--garnet);
+    background: var(--bg); color: var(--garnet); border-radius: 8px; padding: 6px 14px; cursor: pointer; }
+  .speed button[aria-pressed="true"] { background: var(--garnet); color: #fff; }
+
+  /* cards */
+  .card { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 12px 14px 6px;
+    margin: 10px 0 12px; }
+  .card h3 { font-size: 17px; margin: 0 0 6px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .card h3 .stg { font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .5px; }
+  .card p { font-size: 15.5px; margin: 6px 0; }
+  canvas.strip { display: block; width: 100%; height: 120px; }
+  canvas.hyp { display: block; width: 100%; height: 170px; cursor: pointer; touch-action: manipulation; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 8px 0 4px; }
+  button.play { font: inherit; font-size: 16px; font-weight: 600; color: #fff; background: var(--garnet);
+    border: 0; border-radius: 8px; padding: 8px 18px; cursor: pointer; min-width: 92px; }
+  button.play:hover { background: var(--garnet-dark); }
+  button.reveal { font: inherit; font-size: 15px; font-weight: 600; color: var(--garnet); background: var(--bg);
+    border: 2px solid var(--garnet); border-radius: 8px; padding: 6px 14px; cursor: pointer; }
+  .bar { flex: 1 1 120px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; min-width: 80px; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
+  .dur { font-size: 13.5px; color: var(--muted); }
+  .readout { font-size: 15.5px; font-weight: 600; margin: 6px 0 4px; min-height: 1.4em; }
+  .answer { border-left: 3px solid var(--gold); padding-left: 10px; }
+  ol.refs li { font-size: 14.5px; margin-bottom: 6px; }
+  .course-foot p { margin: 0 0 8px; font-size: 14.5px; color: var(--muted); }
+  @media (max-width: 620px) {
+    .course-head h1 { font-size: 27px; }
+    section.box { padding: 12px 14px 6px; }
+    .card { padding: 10px 10px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="/">Thomas Stephan Juzek</a>
+  <nav class="site">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/teaching.html" class="active">Teaching &amp; Service</a>
+    <a href="/phd/">PhD</a>
+    <a href="/talks-press.html">Talks &amp; Press</a>
+    <a href="/now/">Now</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+  <section class="course-head">
+    <p class="kicker"><a href="/lin3042/">LIN 3042 Applied Linguistics</a> &middot; Fall 2026</p>
+    <h1>Sleep sounds</h1>
+    <p class="lead">From a question in class: brain activity in sleep can be drawn as waves. Is that like
+       sound, and can you hear it? Yes, if you speed it up. Not on the quiz.</p>
+    <p class="disclaimer"><strong>AI disclaimer.</strong> Content guided by Tommie Juzek; built upon his
+       prompting by an AI assistant (Claude Opus 5.5, Anthropic), which also chose the clips and checked
+       the sources.</p>
+  </section>
+
+  <noscript>
+    <section class="box">
+      <p>This page needs JavaScript to play the recordings. Please turn it on, or use another browser.</p>
+    </section>
+  </noscript>
+
+  <section class="box">
+    <h2>Are brain waves like sound waves?</h2>
+    <p>In part. The waves in a sleep recording are <strong>EEG</strong> (electroencephalography):
+       electrodes on the scalp pick up tiny changes in voltage, millionths of a volt, produced when large
+       numbers of brain cells are active together. It is the same recording that ERPs are made from
+       (textbook pp. 433&ndash;434). An ERP averages many short stretches of EEG, each lined up with a
+       word; a sleep recording keeps the whole night and is read by its rhythms.</p>
+    <p><strong>What EEG shares with sound:</strong> both are a single value changing over time, drawn as
+       a wave, and both can be taken apart into frequencies. Sleep researchers read frequency bands much
+       as phoneticians read a spectrogram.</p>
+    <p><strong>What differs:</strong> sound is air pressure; EEG is voltage, and nothing vibrates. And
+       the speed. The main sleep rhythms run at about 0.5 to 16 cycles per second (hertz, Hz); human
+       hearing starts at about 20 Hz. Played as it is, a night of EEG is silent.</p>
+    <p>So this page plays it <strong>200 times faster</strong>. A 1 Hz wave becomes 200 Hz, a low hum,
+       and 30 seconds of sleep pass in 0.15 seconds. This is called <em>audification</em>. It is not
+       new: the researcher who shared these recordings published tools for listening to sleep recordings
+       this way (Olivan, Kemp, &amp; Roessen, 2004). And EEG turned into sound has real uses: in one study,
+       people with no EEG training picked out seizures by ear, from EEG that steered a tone (Parvizi et
+       al., 2018). One caveat: you hear the rhythm of the brain, not its thoughts. There are no words in
+       here.</p>
+  </section>
+
+  <section class="box" id="speedbox">
+    <h2>Speed</h2>
+    <div class="speed" role="group" aria-label="Playback speed">
+      <span class="lab">Play</span>
+      <button type="button" data-speed="100" aria-pressed="false">100&times;</button>
+      <button type="button" data-speed="200" aria-pressed="true">200&times;</button>
+      <button type="button" data-speed="400" aria-pressed="false">400&times;</button>
+      <span>faster than real time</span>
+    </div>
+    <p class="note" id="speed-say"></p>
+    <p class="note"><strong>Listening:</strong> room speakers or headphones work best. Laptop and phone
+       speakers lose the deep rumble, especially at 100&times;. On an iPhone, if you hear nothing, flip the
+       ring/silent switch to ring.</p>
+  </section>
+
+  <section class="box">
+    <h2>Five stages of sleep</h2>
+    <p>Each picture is one 30-second page of the recording, the unit sleep technicians score. Every
+       clip uses the same volume setting, so a louder clip means bigger waves.</p>
+
+    <div class="card" data-clip="w">
+      <h3>Awake, relaxed <span class="stg">W</span></h3>
+      <canvas class="strip" aria-label="30 seconds of relaxed waking EEG"></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <p><strong>Listen for:</strong> a high tone over the hum. That is the <em>alpha rhythm</em>, about
+         10 Hz (2 kHz at 200&times;), strongest when the eyes are closed. It shows best at the back of the head,
+         so this clip, unlike the others, comes from the electrode pair there (Pz-Oz).</p>
+    </div>
+
+    <div class="card" data-clip="n1">
+      <h3>Light sleep <span class="stg">N1</span></h3>
+      <canvas class="strip" aria-label="30 seconds of N1 sleep EEG"></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <p><strong>Listen for:</strong> small, mixed waves, slower than alpha (theta, 4&ndash;7 Hz). N1 is the
+         doorway into sleep and rarely lasts long: this was the longest stretch of the night, 3 minutes,
+         so the clip loops.</p>
+    </div>
+
+    <div class="card" data-clip="n2">
+      <h3>Sleep stage 2 <span class="stg">N2</span></h3>
+      <canvas class="strip" aria-label="30 seconds of N2 sleep EEG, with sleep spindles"></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <p><strong>Listen for:</strong> a faint, high crackle on top of the hum. These are <em>sleep
+         spindles</em>, short bursts of 11&ndash;16 Hz waves, about four a minute in this clip. Sped up,
+         each burst lasts only a few thousandths of a second, so you hear a crackle rather than
+         separate chirps; try 100&times;. In the picture they are the short bursts of fast, dense waves.</p>
+    </div>
+
+    <div class="card" data-clip="n3">
+      <h3>Deep sleep <span class="stg">N3</span></h3>
+      <canvas class="strip" aria-label="30 seconds of N3 deep sleep EEG, with large slow waves"></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <p><strong>Listen for:</strong> a loud, low rumble. <em>Slow waves</em>, 0.5&ndash;2 Hz (100&ndash;400 Hz
+         at 200&times;), are the biggest waves of the night. This clip is louder because they really are
+         bigger.</p>
+    </div>
+
+    <div class="card" data-clip="rem">
+      <h3>REM sleep <span class="stg">REM</span></h3>
+      <canvas class="strip" aria-label="30 seconds of REM sleep EEG"></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span></div>
+      <p><strong>Listen for:</strong> the quietest clip: small, mixed waves, with no spindles and no slow
+         waves. In REM (rapid eye movement) sleep the eyes dart about and the body&rsquo;s muscles go
+         slack. Through this one brain channel, REM sounds much like
+         light sleep; technicians tell the two apart mainly with the eye and chin channels, which are not
+         played here.</p>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>A whole night in about two minutes</h2>
+    <p>Seven hours of one person&rsquo;s night, from half an hour before falling asleep to half an hour
+       after waking. The chart is the <em>hypnogram</em>, the technicians&rsquo; stage for each 30-second
+       page. Tap the chart to jump.</p>
+    <canvas class="hyp" id="hyp" aria-label="Hypnogram of the night: sleep stage over time"></canvas>
+    <p class="readout" id="hyp-readout" aria-live="polite"></p>
+    <div class="controls"><button type="button" class="play" id="night-play">Play</button><div class="bar"><i id="night-bar"></i></div><span class="dur" id="night-dur"></span></div>
+    <p><strong>Look and listen for:</strong> deep sleep (N3, the loud rumble) comes mostly early: 87 of
+       this night&rsquo;s 110 minutes of N3 fall in the first half. Sleep runs in cycles: REM (thick line)
+       comes back four times, about every 70 to 75 minutes in this night.</p>
+  </section>
+
+  <section class="box">
+    <h2>Guess together</h2>
+    <p>Three clips from a different sleeper. Which stage is each? There are five to choose from (W, N1,
+       N2, N3, REM), so guessing alone gets one in five right.</p>
+    <div class="card" data-clip="mystery-a" data-mystery>
+      <h3>Clip A</h3>
+      <canvas class="strip" aria-label="Clip A, hidden until revealed" hidden></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="reveal">Reveal</button></div>
+      <p class="answer" hidden></p>
+    </div>
+    <div class="card" data-clip="mystery-b" data-mystery>
+      <h3>Clip B</h3>
+      <canvas class="strip" aria-label="Clip B, hidden until revealed" hidden></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="reveal">Reveal</button></div>
+      <p class="answer" hidden></p>
+    </div>
+    <div class="card" data-clip="mystery-c" data-mystery>
+      <h3>Clip C</h3>
+      <canvas class="strip" aria-label="Clip C, hidden until revealed" hidden></canvas>
+      <div class="controls"><button type="button" class="play">Play</button><div class="bar"><i></i></div><span class="dur"></span><button type="button" class="reveal">Reveal</button></div>
+      <p class="answer" hidden></p>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>The recordings and the sources</h2>
+    <p>Two nights from the <a href="https://physionet.org/content/sleep-edfx/1.0.0/">Sleep-EDF Database
+       Expanded</a> on PhysioNet (recordings SC4001 and SC4011), from a study of sleep in healthy adults
+       aged 25 to 101 who took no sleep medication. Trained technicians scored each 30-second page. They used the older system with stages 1
+       to 4; here stages 3 and 4 are combined as N3, as in current practice. The recordings are shared
+       under the <a href="https://opendatacommons.org/licenses/by/1-0/">Open Data Commons Attribution
+       License v1.0</a>; unlike the rest of this site, they are not CC0.</p>
+    <p>What was done to them: filtered to 0.3&ndash;30 Hz, and one volume setting for every clip. The clips
+       were chosen by rule, not by ear: for each stage, the longest unbroken stretch of the night (its
+       middle 10 minutes, if longer); for the awake clip, the 10 minutes after the final awakening.
+       Nothing is stored or sent from this page.</p>
+    <ol class="refs" id="refs">
+      <li>Kemp, B., Zwinderman, A. H., Tuk, B., Kamphuisen, H. A. C., &amp; Obery&eacute;, J. J. L. (2000).
+          Analysis of a sleep-dependent neuronal feedback loop: The slow-wave microcontinuity of the EEG.
+          <em>IEEE Transactions on Biomedical Engineering, 47</em>(9), 1185&ndash;1194. The publication
+          PhysioNet asks users of these recordings to cite.</li>
+      <li>Pollard, T., Moody, B. E., Lehman, L., Gow, B., Fernandes, C., Xie, C., Johnson, A., Mark, R. G.,
+          &amp; Heldt, T. (2026). PhysioNet as a global platform for biomedical research. <em>Nature Health,
+          1</em>(8), 792&ndash;795.</li>
+      <li>Olivan, J., Kemp, B., &amp; Roessen, M. (2004). Easy listening to sleep recordings: Tools and
+          examples. <em>Sleep Medicine, 5</em>(6), 601&ndash;603.</li>
+      <li>Parvizi, J., Gururangan, K., Razavi, B., &amp; Chafe, C. (2018). Detecting silent seizures by their
+          sound. <em>Epilepsia, 59</em>(4), 877&ndash;884.</li>
+      <li>O&rsquo;Grady, W., Archibald, J., Aronoff, M., &amp; Rees-Miller, J. (Eds.). <em>Contemporary
+          Linguistics</em> (7th ed.), pp. 433&ndash;434: ERPs and EEG.</li>
+    </ol>
+  </section>
+
+  <section class="course-foot">
+    <p><a href="/lin3042/">LIN 3042 course page</a></p>
+  </section>
+
+</main>
+
+<footer class="site"><div class="wrap">
+  <p class="foot-links">
+    <a href="/">Home</a> &middot;
+    <a href="/teaching.html">Teaching</a> &middot;
+    <a href="/lin3042/">LIN 3042</a>
+  </p>
+  <p class="foot-meta">&copy; <span id="yr">2026</span> TSJ &middot;
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> (no warranty; the sleep
+    recordings are ODC-By 1.0) &middot;
+    polished with <a href="https://www.anthropic.com/product/claude-code">Claude Code</a> &middot;
+    Last updated: 2026-11-04</p>
+</div></footer>
+
+<!-- The clips are 16-bit samples at 100 Hz (data/*.bin), the night is an MP3 rendered at 200x
+     (data/night.mp3), and data/meta.json describes both. They are built by
+     ~/claudecode/lin3042/course/modules/sleep-sound/code/build_sleep.py; notes in that folder's
+     README. Nothing is stored or sent. -->
+
+<script src="sleep.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    if (a.hostname && a.hostname !== location.hostname) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+</script>
+
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

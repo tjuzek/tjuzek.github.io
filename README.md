@@ -51,6 +51,12 @@ python3 -m http.server 8000
   page per task (`translation/`, `verbal/`, `reading-span/`, `simon/`, each naming its task in
   `<body data-task>`). Shared: `linck.js` (items, scoring), `tasks.js` (runners), `linck.css`.
   Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/linck-demo/README.md`.
+- `/lin3042/sleep/` (from 2026-11-04) is a listening demo: sleep EEG played 100, 200 or 400 times faster
+  (audification), after a student question. Five stage clips, a whole night with its hypnogram, and three
+  clips to guess. The runner is `sleep.js`; the data in `sleep/data/` (16-bit clips at 100 Hz, `night.mp3`,
+  `meta.json`) are BUILT, never hand-edited: `~/claudecode/lin3042/course/modules/sleep-sound/code/build_sleep.py`.
+  The recordings are Sleep-EDF Expanded (PhysioNet), licensed ODC-By 1.0, not CC0; the page and its footer
+  say so. Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/sleep-sound/README.md`.
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
