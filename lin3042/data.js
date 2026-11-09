@@ -18,7 +18,7 @@
  * title from Canvas too.
  */
 window.LIN3042 = {
-  updated: '2026-11-03',
+  updated: '2026-11-09',
   lastSession: '2026-12-03',
   dueTime: '11:59 pm',
 
@@ -31,7 +31,8 @@ window.LIN3042 = {
       url: 'https://canvas.fsu.edu/courses/354011/assignments/3325148' },
     { n: 7, title: 'Morphological Priming', out: '2026-11-01', due: '2026-11-16',
       url: 'https://canvas.fsu.edu/courses/354011/assignments/3330249' },
-    { n: 8, title: 'Animal communication (final take-home assignment)', out: '2026-11-08', due: '2026-11-22' }
+    { n: 8, title: 'Animal Communication', out: '2026-11-09', due: '2026-11-24',
+      url: 'https://canvas.fsu.edu/courses/354011/assignments/3334808' }
   ],
 
   // `guide` is the quiz's study guide on Canvas; the page links it below the quiz.
