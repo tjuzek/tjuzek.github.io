@@ -122,7 +122,7 @@
   </noscript>
 
   <section class="cur" id="sessions" hidden>
-    <h2>Next sessions</h2>
+    <h2>Remaining sessions</h2>
     <ul class="cur" id="session-list"></ul>
   </section>
 
@@ -270,9 +270,8 @@
   }
   if (list('asac').children.length) show('asac');
 
-  // The next three sessions (today's drops off once class is over); an article to read stands out
+  // All remaining sessions (today's drops off once class is over); an article to read stands out
   D.sessions.filter(function (s) { return s.date > today || (s.date === today && !classOver); })
-    .slice(0, 3)
     .forEach(function (s) {
       var li = row(null, s.date, false, s.topic, null, s.url), x = el('span', 'x');
       if (s.read) x.appendChild(el('span', s.read === 'the article' ? 'em' : null, 'Reading: ' + s.read));
