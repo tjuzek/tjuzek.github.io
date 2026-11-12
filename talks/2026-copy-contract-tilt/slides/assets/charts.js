@@ -4,7 +4,8 @@
    from (data-ev). State is CSS-driven: hidden step markers (reveal fragments) are read with :has() in
    deck.css, so back-navigation, URL jumps and print all land right.
    Colour carries the stage: copy (pretraining) neutral, contract (SFT) blue, tilt (DPO) gold.
-   DATA STILL MOVING: RATIO (07b ratio axis, partial at 2 bases until 12 November). */
+   12 November: RATIO swapped to the full ratio axis (9 dosed bases); WHOLE (the pipeline in one picture) and
+   DECODE (T 1.0 against T 0.8) added, both from the instance's readings (dg-pp124h-ratio-readings.tsv). */
 (function () {
   'use strict';
   var NS = 'http://www.w3.org/2000/svg';
@@ -348,41 +349,42 @@
   }
 
   /* ------------------------------------------------------------------------------------------
-     8. The contrast as a dose (07b ratio axis, D65; FIRST LOOK: the natural-dose bases d1_s1 and d1_s2, n = 2,
-        n = 1 where marked; after SFT 1x; T 1.0). Every set: the dash-free pairs with exactly one em dash added to each
-        carrying answer, so the ratio of carrying answers (preferred : rejected) is the ratio of dashes.
-        Source: dg-pp124h-ratio-factors-partial-20261111.tsv (sft1 rows). REPLACE on 12 November with the final TSV.
+     8. The contrast as a dose (07b ratio axis, D65; read in full 12 November). After SFT 1x; T 1.0; instance readings.
+        Every set: the dash-free pairs with exactly one em dash added to each carrying answer, so the ratio of carrying
+        answers (preferred : rejected) is the ratio of dashes. Geometric mean over the nine dosed bases (quarter,
+        natural and four-fold dose, 3 seeds each) of DPO's factor against the same SFT model.
+        Source: dg-pp124h-ratio-factors.tsv (sft1, t10, arms dq d1 d4); the report's Table 8.
      ------------------------------------------------------------------------------------------ */
-  var RATIO = {                                    // E3.8 (partial)
-    status: 'first look: 2 natural-dose bases, 11 November',
+  var RATIO = {                                    // E3.8
+    status: 'pre-pilot: 9 bases (¼×, 1×, 4× doses; 3 seeds each)',
     ratio: [
-      { lab: '0 : 400', news: 0.998, chat: 0.933, n: 2 },
-      { lab: '100 : 400', news: 0.951, chat: 0.961, n: 2 },
-      { lab: '200 : 400', news: 1.195, chat: 1.145, n: 1 },
-      { lab: '400 : 400', news: 1.188, chat: 1.072, n: 2 },
-      { lab: '400 : 200', news: 1.307, chat: 1.312, n: 2 },
-      { lab: '400 : 100', news: 1.345, chat: 1.377, n: 2 },
-      { lab: '400 : 0', news: 1.423, chat: 1.580, n: 2 }
+      { lab: '0 : 400', news: 0.971, chat: 0.928, n: 9 },
+      { lab: '100 : 400', news: 1.022, chat: 0.937, n: 9 },
+      { lab: '200 : 400', news: 1.047, chat: 0.998, n: 9 },
+      { lab: '400 : 400', news: 1.147, chat: 1.076, n: 9 },
+      { lab: '400 : 200', news: 1.276, chat: 1.240, n: 9 },
+      { lab: '400 : 100', news: 1.320, chat: 1.316, n: 9 },
+      { lab: '400 : 0', news: 1.368, chat: 1.420, n: 9 }
     ],
     share: [
-      { lab: '800 : 0', news: 1.821, chat: 2.068, n: 1 },
-      { lab: '1,198 : 0', news: 2.070, chat: 2.537, n: 1 }
+      { lab: '800 : 0', news: 1.615, chat: 1.695, n: 9 },
+      { lab: '1,198 : 0', news: 1.900, chat: 2.101, n: 9 }
     ],
-    none: { news: 1.182, chat: 1.138, n: 2 },
+    none: { news: 1.134, chat: 1.105, n: 9 },
     controls: [
-      { lab: '1×', news: 1.231, chat: 1.229, n: 2 },
-      { lab: '4×', news: 1.182, chat: 1.246, n: 2 }
+      { lab: '1×', news: 1.199, chat: 1.178, n: 9 },
+      { lab: '4×', news: 1.233, chat: 1.195, n: 9 }
     ]
   };
   function ratioChart(host) {
-    var W = 1656, H = 660, m = { l: 110, r: 30, t: 80, b: 140 }, lo = 0.8, hi = 2.7;
+    var W = 1656, H = 660, m = { l: 110, r: 30, t: 80, b: 140 }, lo = 0.72, hi = 2.25;
     var pw = W - m.l - m.r, ph = H - m.t - m.b;
     var cols = RATIO.ratio.length + 1 + RATIO.share.length + 1 + RATIO.controls.length;
     var cx = function (i) { return m.l + (i + 0.5) * pw / cols; };
     var y = function (v) { return m.t + ph - (v - lo) / (hi - lo) * ph; };
-    var svg = svgFor(host, W, H, 'DPO factor against the ratio of preferred to rejected answers carrying a dash (first look). After SFT at the natural rate, chat: 0 to 400 times 0.93; 400 to 400 times 1.07; 400 to 0 times 1.58; 800 to 0 times 2.07; 1,198 to 0 times 2.54. Controls with dashes on both sides: times 1.23 and 1.25.');
+    var svg = svgFor(host, W, H, 'DPO factor against the ratio of preferred to rejected answers carrying a dash, nine dosed bases, after SFT at the natural rate. Chat: 0 to 400 times 0.93; 400 to 400 times 1.08; 400 to 0 times 1.42; 800 to 0 times 1.70; 1,198 to 0 times 2.10. News: 0.97, 1.15, 1.37, 1.62, 1.90. Pairs with no dashes: 1.11 and 1.13. Dashes on both sides: 1.18 to 1.23.');
     var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
-    [1, 1.5, 2, 2.5].forEach(function (v) {
+    [1, 1.5, 2].forEach(function (v) {
       el('line', { x1: m.l, x2: m.l + pw, y1: y(v), y2: y(v) }, grid);
       txt(ticks, m.l - 16, y(v) + 10, '×' + fmt(v, 1), '', { 'text-anchor': 'end' });
     });
@@ -419,6 +421,122 @@
     var b = plot(RATIO.share, RATIO.ratio.length + 1, 2, 'tilt');
     var c = plot(RATIO.controls, RATIO.ratio.length + RATIO.share.length + 2, 3, 'copy');
     txt(b.grp, b.c[1][0], b.c[1][1] - 26, '×' + fmt(RATIO.share[1].chat, 2), 'label', { 'text-anchor': 'middle' });
+    txt(a.grp, a.c[0][0], a.c[0][1] + 52, '×' + fmt(RATIO.ratio[0].chat, 2), 'label', { 'text-anchor': 'middle' });
+  }
+
+  /* ------------------------------------------------------------------------------------------
+     8b. The whole pipeline in one picture (the report's Figure 9b, redrawn): what the models write on news after
+        SFT 1x and then DPO along the ratio axis, one line per pretraining dose. Geometric mean over 3 seeds of the
+        expected em per million (T 1.0, instance readings). Source: dg-pp124h-ratio-readings.tsv (cells sft1 and
+        sft1__<set>, setting news, decoding t10). Columns: before DPO, dash-free pairs, the ratio axis, the share axis.
+     ------------------------------------------------------------------------------------------ */
+  var WHOLE = {                                    // E3.15
+    cols: ['before DPO', 'no dashes', '0 : 400', '100 : 400', '200 : 400', '400 : 400', '400 : 200', '400 : 100', '400 : 0', '800 : 0', '1,198 : 0'],
+    doses: [
+      { key: 'd0', lab: '0', v: [0.182, 0.228, 0.170, 0.177, 0.182, 0.202, 0.358, 0.373, 0.309, 0.466, 0.925] },
+      { key: 'dq', lab: '¼×', v: [372.2, 444.2, 369.7, 400.4, 422.1, 457.8, 524.3, 547.2, 551.7, 720.9, 861.8] },
+      { key: 'd1', lab: '1×', v: [575.0, 660.3, 551.4, 546.8, 591.8, 663.1, 750.2, 750.1, 792.1, 900.7, 1105.3] },
+      { key: 'd4', lab: '4×', v: [780.8, 831.6, 750.5, 815.5, 767.8, 830.9, 883.2, 936.3, 979.5, 1085.1, 1202.5] }
+    ]
+  };
+  function wholeChart(host) {
+    var W = 1656, H = 640, m = { l: 120, r: 250, t: 70, b: 120 }, max = 1300;
+    var pw = W - m.l - m.r, ph = H - m.t - m.b, n = WHOLE.cols.length;
+    // two lead columns, a gap, seven ratio columns, a gap, two share columns
+    var slot = pw / (n + 1.7);
+    var cx = function (i) { return m.l + slot * (i + 0.5 + (i >= 1 ? 0.5 : 0) + (i >= 2 ? 0.6 : 0) + (i >= 9 ? 0.6 : 0)); };
+    var y = function (v) { return m.t + ph - v / max * ph; };
+    var svg = svgFor(host, W, H, 'News, after SFT at the natural rate and then DPO along the ratio axis, one line per pretraining dose. Before DPO: 0.2, 372, 575, 781 per million for the doses 0, a quarter, natural and four-fold. At 1,198 preferred-side carriers: 0.9, 862, 1,105, 1,203. The order never changes; the lines draw together; the dose-zero line stays on the floor.');
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [0, 400, 800, 1200].forEach(function (v) {
+      el('line', { x1: m.l, x2: m.l + pw, y1: y(v), y2: y(v) }, grid);
+      txt(ticks, m.l - 18, y(v) + 10, fmt(v), '', { 'text-anchor': 'end' });
+    });
+    var lab = g(svg, 'st-0');
+    txt(lab, 0, m.t - 34, 'em dashes per million it writes (news)', 'xlab-2', {});
+    WHOLE.cols.forEach(function (c, i) {
+      if (i < 2) {                                   // the two lead columns: two short lines each
+        var w = c.split(' ');
+        txt(lab, cx(i), m.t + ph + 40, w[0], 'xlab', { 'text-anchor': 'middle', style: 'font-size:23px' });
+        txt(lab, cx(i), m.t + ph + 68, w.slice(1).join(' '), 'xlab', { 'text-anchor': 'middle', style: 'font-size:23px' });
+      } else txt(lab, cx(i), m.t + ph + 40, c, 'xlab', { 'text-anchor': 'middle', style: 'font-size:21px' });
+    });
+    [[2, 8, 'DPO: preferred : rejected answers carrying one dash'], [9, 10, 'more carriers']].forEach(function (gr) {
+      var a = cx(gr[0]) - slot * 0.45, b = cx(gr[1]) + slot * 0.45;
+      el('line', { x1: a, x2: b, y1: m.t + ph + 66, y2: m.t + ph + 66, style: 'stroke: var(--axis); stroke-width: 2' }, lab);
+      txt(lab, (a + b) / 2, m.t + ph + 100, gr[2], 'xlab-2', { 'text-anchor': 'middle' });
+    });
+    // the zero floor: below it a reading shows no dash (floors 13 to 21 per million)
+    var fl = g(svg, 'floor st-4');
+    el('rect', { x: m.l, y: y(21), width: pw, height: y(0) - y(21) }, fl);
+    // header for the direct labels beside the diamonds
+    var hd = g(svg, 'st-1');
+    txt(hd, cx(0) - 30, y(781) - 50, 'pretraining dose', 'xlab-2', {});
+    txt(g(svg, 'st-3'), m.l + pw + 30, m.t - 34, 'DPO’s factor', 'xlab-2', {});
+    WHOLE.doses.forEach(function (d, k) {
+      var cls = 'dose' + k, pts = d.v.map(function (v, i) { return [cx(i), y(v)]; });
+      // step 1: the SFT models before DPO (diamonds); step 2: DPO along the ratio axis; step 3: the share axis
+      var s1 = g(svg, 'st-1'), s2 = g(svg, 'st-2'), s3 = g(svg, 'st-3');
+      var X0 = pts[0][0], Y0 = pts[0][1];
+      tip(mark(el('path', { d: 'M' + X0 + ' ' + (Y0 - 17) + ' L' + (X0 + 17) + ' ' + Y0 + ' L' + X0 + ' ' + (Y0 + 17) + ' L' + (X0 - 17) + ' ' + Y0 + ' Z', 'class': 'dot ' + cls }, s1), 'E3.15'), 'pretraining ' + d.lab + ', after SFT 1×, before DPO: ' + fmt(d.v[0], d.v[0] < 10 ? 2 : 0) + ' per million');
+      polyline(s2, pts.slice(1, 9), 'line draw ' + cls).style.strokeWidth = 4;
+      pts.slice(1, 9).forEach(function (p, j) {
+        tip(mark(el('circle', { cx: p[0], cy: p[1], r: 8, 'class': 'dot ' + cls }, s2), 'E3.15'), 'pretraining ' + d.lab + ', ' + WHOLE.cols[j + 1] + ': ' + fmt(d.v[j + 1], d.v[j + 1] < 10 ? 2 : 0) + ' per million');
+      });
+      polyline(s3, pts.slice(8), 'line draw ' + cls).style.strokeWidth = 4;
+      pts.slice(9).forEach(function (p, j) {
+        tip(mark(el('circle', { cx: p[0], cy: p[1], r: 8, 'class': 'dot ' + cls }, s3), 'E3.15'), 'pretraining ' + d.lab + ', ' + WHOLE.cols[j + 9] + ': ' + fmt(d.v[j + 9], d.v[j + 9] < 10 ? 2 : 0) + ' per million');
+      });
+      // direct labels (identity never by colour alone): beside the diamonds, then at the right end with the
+      // factor DPO gave each dose at 1,198 : 0 (geometric means, so the ratio of means is the mean of ratios)
+      txt(s1, X0 + 28, Y0 + (k === 0 ? -4 : 10), d.lab, 'label', { style: 'font-size:28px' });
+      var last = pts[pts.length - 1], dy = k === 2 ? 14 : (k === 3 ? -6 : 10);
+      if (k > 0) {
+        txt(s3, m.l + pw + 30, last[1] + dy, d.lab, 'label', { style: 'font-size:28px' });
+        txt(s3, m.l + pw + 96, last[1] + dy, '×' + fmt(d.v[10] / d.v[0], 1), 'label-2', {});
+      }
+    });
+    // step 4: the dose-zero line
+    var s4 = g(svg, 'st-4');
+    txt(s4, cx(1) - 20, y(0) - 34, 'dose 0: 0.2 → 0.9 per million, all along the floor (one dash would show from 13 to 21)', 'label-2', { style: 'font-size:26px' });
+  }
+
+  /* ------------------------------------------------------------------------------------------
+     8c. The read-out: the same SFT models read at T 1.0 and at T 0.8 with top-p 0.95 (natural-dose bases, geometric
+        mean over 3 seeds, expected em per million, instance readings). Source: dg-pp124h-ratio-readings.tsv
+        (cells sft1, sft4; arm d1). Log axis: the arrow's length is the factor.
+     ------------------------------------------------------------------------------------------ */
+  var DECODE = [                                   // E3.16
+    { lab: 'after SFT 1×', sub: 'news', t10: 575.0, t08: 43.0 },
+    { lab: '', sub: 'chat', t10: 446.8, t08: 17.8 },
+    { lab: 'after SFT 4×', sub: 'news', t10: 2060.6, t08: 547.3 },
+    { lab: '', sub: 'chat', t10: 1593.8, t08: 341.4 }
+  ];
+  function decodeChart(host) {
+    var W = 980, H = 560, m = { l: 290, r: 40, t: 90, b: 100 }, lo = Math.log10(10), hi = Math.log10(4000);
+    var pw = W - m.l - m.r, rh = (H - m.t - m.b) / DECODE.length;
+    var x = function (v) { return m.l + (Math.log10(v) - lo) / (hi - lo) * pw; };
+    var svg = svgFor(host, W, H, 'The natural-dose models read at temperature 1 and at temperature 0.8 with top-p 0.95. After SFT at the natural rate: news 575 to 43 per million, chat 447 to 18. After SFT at four times: news 2,061 to 547, chat 1,594 to 341.');
+    var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+    [10, 30, 100, 300, 1000, 3000].forEach(function (v) {
+      el('line', { x1: x(v), x2: x(v), y1: m.t - 10, y2: H - m.b + 10 }, grid);
+      txt(ticks, x(v), H - m.b + 48, fmt(v), '', { 'text-anchor': 'middle', style: 'font-size:24px' });
+    });
+    txt(g(svg, 'st-0'), m.l + pw / 2, H - 8, 'em dashes per million written (log scale)', 'xlab-2', { 'text-anchor': 'middle' });
+    var lg = g(svg, 'legend st-0');
+    el('circle', { cx: m.l + 12, cy: 26, r: 11, 'class': 'dot hollow blue' }, lg); txt(lg, m.l + 32, 35, 'T = 1', '');
+    el('circle', { cx: m.l + 172, cy: 26, r: 11, 'class': 'dot contract' }, lg); txt(lg, m.l + 192, 35, 'T = 0.8, top-p 0.95', '');
+    DECODE.forEach(function (r, i) {
+      var yy = m.t + (i + 0.5) * rh, s0 = g(svg, 'st-0'), s1 = g(svg, 'st-1');
+      if (r.lab) txt(s0, 0, yy + 10, r.lab, 'label', { style: 'font-size:28px' });
+      txt(s0, m.l - 24, yy + 10, r.sub, 'label-2', { 'text-anchor': 'end' });
+      tip(mark(el('circle', { cx: x(r.t10), cy: yy, r: 12, 'class': 'dot hollow blue' }, s0), 'E3.16'), r.lab + ' ' + r.sub + ', T 1: ' + fmt(r.t10) + ' per million');
+      var x1 = x(r.t10) - 18, x2 = x(r.t08) + 16;          // a leftward arrow (the shared helper points right)
+      el('line', { x1: x1, y1: yy, x2: x2 + 16, y2: yy, 'class': 'arrow' }, s1);
+      el('path', { d: 'M' + (x2 + 18) + ' ' + (yy - 11) + ' L' + (x2 + 18) + ' ' + (yy + 11) + ' L' + x2 + ' ' + yy + ' Z', 'class': 'arrowhead' }, s1);
+      tip(mark(el('circle', { cx: x(r.t08), cy: yy, r: 12, 'class': 'dot contract' }, s1), 'E3.16'), r.lab + ' ' + r.sub + ', T 0.8: ' + fmt(r.t08) + ' per million');
+      txt(s1, (x(r.t10) + x(r.t08)) / 2, yy - 22, '÷' + fmt(r.t10 / r.t08, r.t10 / r.t08 < 10 ? 1 : 0), 'label', { 'text-anchor': 'middle', style: 'font-size:28px' });
+    });
   }
 
   /* ------------------------------------------------------------------------------------------
@@ -523,6 +641,8 @@
     'epsbeta': epsBetaChart,
     'sets': setsChart,
     'ratio': ratioChart,
+    'whole': wholeChart,
+    'decode': decodeChart,
     'stance': stanceChart,
     'olmo': olmoChart
   };
@@ -532,5 +652,5 @@
       if (b && !host.firstChild) b(host);
     });
   }
-  window.DeckCharts = { buildAll: buildAll, data: { RATIO: RATIO } };
+  window.DeckCharts = { buildAll: buildAll, data: { RATIO: RATIO, WHOLE: WHOLE, DECODE: DECODE } };
 })();

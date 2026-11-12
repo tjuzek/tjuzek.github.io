@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112a">
-<link rel="stylesheet" href="assets/deck.css?v=20261112a">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112c">
+<link rel="stylesheet" href="assets/deck.css?v=20261112c">
 </head>
 <body>
 <div class="reveal">
@@ -290,8 +290,8 @@
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
-    <p class="body fragment rise" style="font-size:38px; margin:6px 0 0">Pairs with no dash still push, but not the dash in particular: punctuation in general rises. <span class="tag pending">source TSV due</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="E3.7">Natural-dose models after SFT 1&times;; 8,000 pairs, 5% of them carrying the dash (both sides: the natural rate); news, T = 1; 3 seeds, whiskers the seed range. Chat agrees: preferred side &times;1.75, rejected &times;0.78.</p>
+    <p class="body fragment rise" data-ev="E3.14" style="font-size:38px; margin:6px 0 0">Pairs with no dash still push, but not the dash in particular: in one model the colon rose 59% while the dash rose 9%, and in none of 18 did the dash outrun the other punctuation.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.7">Natural-dose models after SFT 1&times;; 8,000 pairs, 5% of them carrying the dash (both sides: the natural rate); news, T = 1; 3 seeds, whiskers the seed range. Chat agrees: preferred side &times;1.75, rejected &times;0.78.</span> <span data-ev="E3.18">A second round of post-training, with new seeds, keeps every direction shown.</span></p>
   </div>
 </section>
 
@@ -302,9 +302,48 @@
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
-    <p class="body fragment rise" data-fragment-index="1" style="font-size:38px; margin:0 0 4px">Below 1&thinsp;:&thinsp;1 the push vanishes; above it, it grows with the ratio, and with the number of carriers.</p>
-    <p class="body fragment rise" data-fragment-index="3" data-ev="E3.8" style="font-size:38px; margin:0">Dashes on both sides, even four times as many, push about as much as pairs with none: contrast counts, volume cancels.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Each set adds exactly one em dash to some answers, so the ratio of carriers is the ratio of dashes. After SFT 1&times;; T = 1. First look, two natural-dose bases (n = 1 where marked); about 9% noise per reading, so factors within &times;1.1 are not told apart.</p>
+    <p class="body fragment rise" data-fragment-index="1" data-ev="E3.8" style="font-size:38px; margin:0 0 4px">Below 1&thinsp;:&thinsp;1 the dash falls; above it, it rises at every step: with the ratio, then with the number of carriers.</p>
+    <p class="body fragment rise" data-fragment-index="3" data-ev="E3.8" style="font-size:38px; margin:0">Dashes on both sides, even four times as many, add little: contrast counts, volume largely cancels.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Each set adds exactly one em dash to some answers, so the ratio of carriers is the ratio of dashes. After SFT 1&times;; T = 1. Geometric means over nine models (&frac14;&times;, 1&times; and 4&times; doses, 3 seeds each), 432 DPO runs in all. The order holds at every step after SFT 1&times; and 4&times;, on news and on chat.</p>
+  </div>
+</section>
+
+<section id="readout" data-state="quiet" data-timing="80">
+  <!-- [S] skippable. The two-decoding check (07b D22, D67, D68): every ratio-axis model read again at T 0.8, top-p 0.95. -->
+  <div class="frame">
+    <p class="kicker">The read-out &middot; decoding is a tilt too</p>
+    <div style="display:grid; grid-template-columns: 900px 1fr; gap: 64px; align-items:start; margin-top:10px">
+      <div>
+        <div class="chart" data-chart="decode"></div>
+        <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
+      </div>
+      <div style="padding-top:6px">
+        <p class="eq mid" style="margin-bottom:2px"><i>&pi;</i><sub><i>T</i></sub>(<i>y</i>) <span class="op">&prop;</span> <i>&pi;</i>(<i>y</i>)<sup>1&thinsp;/&thinsp;<i>T</i></sup></p>
+        <p class="small" style="margin:0 0 22px">then top-p keeps only the likeliest tokens, 95% of the probability</p>
+        <p class="body fragment rise" data-fragment-index="1" data-ev="E3.16" style="font-size:36px">The same models, read at T = 0.8: a rare habit nearly vanishes, a common one survives.</p>
+        <p class="body fragment rise" data-fragment-index="2" data-ev="E3.17" style="font-size:36px">Every contrast keeps its direction, and grows: at 1,198&thinsp;:&thinsp;0, &times;1.6 to &times;1.9 over dash-free pairs becomes &times;2.2 to &times;3.9.</p>
+      </div>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Natural-dose models after SFT, 3 seeds; the expected count under each decoding. Temperature alone would turn a factor <i>r</i> into about <i>r</i><sup>1.25</sup> (&times;1.9 into &times;2.2); the top-p cut likely does the rest (our reading, not tested). The design asks every effect to hold at both decodings: on the ratio axis, all 480 models were read at both, and it does.</p>
+  </div>
+</section>
+
+<section id="whole" data-state="quiet" data-timing="110">
+  <div class="frame">
+    <p class="kicker">Copy, contract, tilt &middot; the pipeline in one picture</p>
+    <div class="chart" data-chart="whole"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <span class="fragment step-marker" data-step="4"></span>
+    <div class="swap" style="height:52px; margin-top:6px">
+      <p class="body sw0" style="font-size:38px">What the models write, after SFT and then DPO, one line per pretraining dose.</p>
+      <p class="body sw1" style="font-size:38px"><span class="verb copy" style="font-size:30px">copy</span> sets the order; <span class="verb contract" style="font-size:30px">contract</span> has squeezed the spacing.</p>
+      <p class="body sw2" style="font-size:38px"><span class="verb tilt" style="font-size:30px">tilt</span> lifts every line with the contrast; the order never changes.</p>
+      <p class="body sw3" style="font-size:38px">More carriers, more lift, and the most where least was written.</p>
+      <p class="body sw4" style="font-size:38px">Where pretraining put nothing, nothing grows.</p>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="E3.15">News, T = 1, expected count; geometric means over 3 seeds per pretraining dose. After SFT 1&times;; DPO with one em dash per carrying answer (&beta; = 0.1, one pass over 8,000 pairs). Readings from one machine only. After the pre-pilot report&rsquo;s Figure 9.</p>
   </div>
 </section>
 
@@ -320,8 +359,9 @@
         <tr class="fragment rise"><td>SFT 4&times; put it in</td><td class="n" data-ev="E3.9">686 to 849</td><td class="n" data-ev="E3.9">3,136 to 3,482</td></tr>
       </tbody>
     </table>
-    <p class="body fragment rise" style="margin-top:30px">DPO multiplies what is there. Where almost nothing is there, a multiple of it is still almost nothing.</p>
-    <p class="body fragment rise" data-ev="E3.12" style="font-size:38px">SFT is different: at 350M, SFT 1&times; alone put the dash into a model that never saw it (72 per million, chat; one seed). <span class="tag wip">first look</span></p>
+    <p class="body fragment rise" style="margin-top:26px">DPO multiplies what is there. Where almost nothing is there, a multiple of it is still almost nothing.</p>
+    <p class="body fragment rise" data-ev="E3.9" style="font-size:38px">Where SFT 4&times; put the dash in, DPO multiplied it most: &times;4.3 on chat, up to the level of models pretrained on it (2,686 to 3,400).</p>
+    <p class="body fragment rise" data-ev="E3.12" style="font-size:36px">SFT is different: at 350M, SFT 1&times; alone put the dash into a model that never saw it (72 per million, chat; one seed). <span class="tag wip">first look</span></p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Expected em dashes per million tokens; a counted dash would show from about 14 per million. DPO: &beta; = 0.1, one pass over 8,000 pairs. In theory a big enough push can grow anything; this one did not.</p>
   </div>
 </section>
@@ -335,8 +375,8 @@
       <div class="v tilt fragment rise"><p class="name">Tilt</p><p class="stage">DPO</p><p class="what">Multiplies what is there, by the contrast between the answers.</p><p class="eqs math">shift by &Delta;</p></div>
     </div>
     <p class="eq mid fragment rise" style="margin:6px 0 20px">log&thinsp;<i>m</i><sub>final</sub> <span class="op">&asymp;</span> (1 <span class="op">&minus;</span> <i>&lambda;</i>)(log&thinsp;<i>d</i> <span class="op">+</span> <i>c</i>) <span class="op">+</span> <i>&lambda;</i>&thinsp;<i>y</i>* <span class="op">+</span> &Delta;(contrast)</p>
-    <p class="body fragment rise" style="font-size:38px; margin-bottom:8px"><b class="num" style="color:var(--ink)">Where the line bends:</b> DPO&rsquo;s push shrinks as the dose rises (&times;1.75, &times;1.61, &times;1.31 at &frac14;&times;, 1&times;, 4&times;); dash-free pairs move punctuation in general; at 350M, SFT starts from zero; seeds alone differ by up to 1.47&times;.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="E3.13">The preferred-side contrast, news, 3 seeds. Seeds: after SFT 1&times;, news, natural dose. A sketch to be tested on the 350M and 774M models.</p>
+    <p class="body fragment rise" style="font-size:38px; margin-bottom:8px"><b class="num" style="color:var(--ink)">Where the line bends:</b> DPO&rsquo;s push shrinks as the dose rises (&times;1.75, &times;1.61, &times;1.31 at &frac14;&times;, 1&times;, 4&times;; along the ratio axis too); dash-free pairs move punctuation in general; at 350M, SFT starts from zero; seeds alone differ by up to 1.47&times;.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.13">The preferred-side contrast, news, 3 seeds.</span> <span data-ev="E3.19">Ratio axis: the factor shrinks from the &frac14;&times; to the 4&times; models in 11 of 12 columns from 400&thinsp;:&thinsp;0 up (90% intervals).</span> Seeds: after SFT 1&times;, news, natural dose. A sketch to be tested on the 350M and 774M models.</p>
   </div>
 </section>
 
@@ -359,13 +399,13 @@
 
 <section id="lessons" data-state="quiet" data-timing="150">
   <div class="frame">
-    <p class="kicker">What the dye says about alignment <span class="tag pending">draft: final data 12 Nov</span></p>
+    <p class="kicker">What the dye says about alignment</p>
     <div class="points" style="margin-top:10px">
-      <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;.</p>
+      <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;; in the full pipeline, the contrast between answers acts as a dose.</p>
       <p class="fragment rise"><span class="n">2</span><b>DPO multiplies what is there.</b> So much of a model&rsquo;s behaviour is set before it: in pretraining and in SFT, whose data other models often wrote.</p>
       <p class="fragment rise"><span class="n">3</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
       <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing is not reversing.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
-      <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The seed is a setting too.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects.</p>
+      <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The settings are part of the machine.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects; <span data-ev="E3.16">reading at T = 0.8 instead of 1 cut the habit 9- to <span class="nobr">25-fold</span> after SFT 1&times;.</span></p>
     </div>
   </div>
 </section>
@@ -373,7 +413,7 @@
 <section id="close" data-timing="60">
   <div class="frame center">
     <p class="h2">We do not care about the dye.</p>
-    <p class="lede fragment rise">We care about the plumbing: what training amplifies, what it cannot create, and what it moves that nobody asked it to.</p>
+    <p class="lede fragment rise">We care about the plumbing: what training amplifies, what it leaves at nothing, and what it moves that nobody asked it to.</p>
   </div>
 </section>
 
@@ -436,11 +476,17 @@
       <thead><tr><th>Number</th><th>What</th><th>Source</th></tr></thead>
       <tbody>
         <tr><td class="n">&times;1.75; &times;0.78</td><td>the same, chat: preferred side; rejected side</td><td>E3.7</td></tr>
-        <tr><td class="n">&times;0.93 to &times;2.54</td><td>the ratio axis, chat, after SFT 1&times; (first look, 2 bases)</td><td>E3.8</td></tr>
+        <tr><td class="n">+59%; +9%; 0 of 18</td><td>dash-free pairs: the colon and the dash (one natural-dose model, news); cells where the dash outran the punctuation</td><td>E3.14</td></tr>
+        <tr><td class="n">&times;0.93 to &times;2.10</td><td>the ratio axis after SFT 1&times;, chat (news &times;0.97 to &times;1.90); dash-free pairs &times;1.11 (&times;1.13); nine models</td><td>E3.8</td></tr>
+        <tr><td class="n">575 &rarr; 43; 447 &rarr; 18</td><td>natural-dose model after SFT 1&times;, read at T = 1 and at T = 0.8 with top-p 0.95: news; chat</td><td>E3.16</td></tr>
+        <tr><td class="n">&times;1.6&ndash;1.9 &rarr; &times;2.2&ndash;3.9</td><td>1,198 : 0 against dash-free pairs, at T = 1 and at T = 0.8 (four columns, nine models each)</td><td>E3.17</td></tr>
+        <tr><td class="n">372 to 862; 781 to 1,203</td><td>news after SFT 1&times;, before DPO and at 1,198 : 0: the &frac14;&times; and 4&times; models (the one-picture chart)</td><td>E3.15</td></tr>
         <tr><td class="n">0.006 to 3,482</td><td>dose-zero models before and after DPO with 1,198 preferred-side dashes (chat, 3 seeds)</td><td>E3.9</td></tr>
+        <tr><td class="n">&times;4.3; 2,686 to 3,400</td><td>the same after SFT 4&times;: DPO&rsquo;s factor on chat; the dosed models at 1,198 : 0</td><td>E3.9</td></tr>
         <tr><td class="n">72</td><td>350M, never saw the dash, after SFT 1&times;: chat, per million (one seed; 124M: 1.1 to 6.5)</td><td>E3.12</td></tr>
-        <tr><td class="n">&times;1.75; &times;1.61; &times;1.31</td><td>preferred-side DPO factor at the &frac14;&times;, 1&times;, 4&times; doses (news)</td><td>E3.13</td></tr>
+        <tr><td class="n">&times;1.75; &times;1.61; &times;1.31</td><td>preferred-side DPO factor at the &frac14;&times;, 1&times;, 4&times; doses (news); ratio axis: shrinks in 11 of 12 columns</td><td>E3.13, E3.19</td></tr>
         <tr><td class="n">1.47&times;</td><td>largest seed-to-seed ratio after SFT 1&times; (news, natural dose)</td><td>E3.10</td></tr>
+        <tr><td class="n">&times;1.52; &times;1.09; &times;0.77; &times;0.88; &times;1.12</td><td>a second round of post-training (seeds 11 to 13), news: preferred side; no dashes; rejected side; labels swapped; both sides</td><td>E3.18</td></tr>
         <tr><td class="n">0.16; 0.25; 0.47</td><td>the toy em dash at &beta; = 2, 1, &frac12; (from 0.10)</td><td>E4.1</td></tr>
         <tr><td class="n">1.01; 0.994</td><td>the &epsilon;/&beta; law, em-dash token: slope and correlation over 36 settings (unpublished pilot)</td><td>E4.2</td></tr>
         <tr><td class="n">0.98</td><td>the same law pooled over ten features (unpublished pilot)</td><td>E4.3</td></tr>
@@ -448,6 +494,7 @@
         <tr><td class="n">10 to 20%</td><td>what is left of a trained shift after naive reversal (unpublished pilot)</td><td>E4.5</td></tr>
       </tbody>
     </table>
+    <p class="cite" style="margin-top:24px">Every row is in <code>evidence/EVIDENCE.md</code> with its source file and filter. 07b numbers: 124M pre-pilot, T = 1 unless stated, expected counts; the desktop&rsquo;s and the second instance&rsquo;s readings are never mixed in one chart.</p>
   </div>
 </section>
 
@@ -467,10 +514,10 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261112a"></script>
-<script src="assets/charts.js?v=20261112a"></script>
-<script src="assets/flurry.js?v=20261112a"></script>
-<script src="assets/dye.js?v=20261112a"></script>
-<script src="assets/deck.js?v=20261112a"></script>
+<script src="assets/reveal/reveal.js?v=20261112c"></script>
+<script src="assets/charts.js?v=20261112c"></script>
+<script src="assets/flurry.js?v=20261112c"></script>
+<script src="assets/dye.js?v=20261112c"></script>
+<script src="assets/deck.js?v=20261112c"></script>
 </body>
 </html>

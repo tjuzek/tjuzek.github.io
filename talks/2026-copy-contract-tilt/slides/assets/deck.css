@@ -475,6 +475,19 @@ table.toy td.em-glyph { font-weight: 300; color: var(--accent); }
 .chart .ref-bar { fill: var(--ink-2); opacity: 0.35; }
 .chart .line.copy, .chart .line.contract, .chart .line.tilt, .chart .line.gold, .chart .line.blue { fill: none; }
 
+/* the whole pipeline in one picture: one gold step per pretraining dose (0, quarter, natural, four-fold), dark to
+   bright. Ordinal ramp checked with the dataviz validator on #050507 (12 Nov): monotone, steps >= 0.06 in L,
+   light end 3.8:1. Every line is also labelled directly. */
+.chart .dose0 { fill: #8a6420; stroke: #8a6420; }
+.chart .dose1 { fill: #b07a00; stroke: #b07a00; }
+.chart .dose2 { fill: #d99400; stroke: #d99400; }
+.chart .dose3 { fill: #ffc45c; stroke: #ffc45c; }
+.chart .dot.dose0, .chart .dot.dose1, .chart .dot.dose2, .chart .dot.dose3 { stroke: var(--ground); stroke-width: 3; }
+.chart .line.dose0, .chart .line.dose1, .chart .line.dose2, .chart .line.dose3 { fill: none; }
+/* the read-out: T 1 hollow, T 0.8 filled, both SFT blue */
+.chart .dot.hollow.blue { fill: var(--ground); stroke: var(--s-blue); stroke-width: 5; }
+.chart .dot.contract { stroke: var(--ground); stroke-width: 3; }
+
 /* credits */
 .people p { font-size: 38px; line-height: 1.3; color: var(--text-2); margin: 0 0 16px; max-width: 1600px; }
 .people p b { color: var(--ink); font-weight: 600; }
@@ -499,6 +512,8 @@ section:has(.step-marker[data-step="2"].visible) .swap > .sw1 { opacity: 0; }
 section:has(.step-marker[data-step="2"].visible) .swap > .sw2 { opacity: 1; }
 section:has(.step-marker[data-step="3"].visible) .swap > .sw2 { opacity: 0; }
 section:has(.step-marker[data-step="3"].visible) .swap > .sw3 { opacity: 1; }
+section:has(.step-marker[data-step="4"].visible) .swap > .sw3 { opacity: 0; }
+section:has(.step-marker[data-step="4"].visible) .swap > .sw4 { opacity: 1; }
 
 /* the tilt slide carries the most maths: tighter there only */
 #tilt-eq .h3 { margin-bottom: 6px; }
