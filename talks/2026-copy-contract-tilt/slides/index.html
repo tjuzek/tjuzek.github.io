@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en-GB" data-palette="violet">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT and DPO</title>
+<meta name="description" content="Slides for a talk by Thomas Stephan (Tommie) Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026. Draft.">
+<!-- the slides stay out of search engines; the talk page links to them -->
+<meta name="robots" content="noindex">
+<script>
+/* Phones go to the phone version: a touch screen without hover whose short side is under 600 px.
+   ?desktop stays here, as do ?present and the print view; a laptop or a projector never matches. */
+(function () { try {
+  if (/(^|[?&])(desktop|present|print-pdf)([=&]|$)/i.test(location.search)) return;
+  var touch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (touch && Math.min(screen.width, screen.height) < 600)
+    location.replace('phone.html' + location.hash.replace(/^#\/?([^\/]*).*$/, '#$1'));
+} catch (e) { /* stay */ } })();
+</script>
+<script>
+/* Every load that opens on the title slide starts in the dark of the talk page (deck.css) and deck.js lifts it;
+   then a drop of dye falls from the title's em dash. Not in the print view, not on a reload mid-deck. */
+(function () { try { var h = location.hash.replace(/^#\/?/, '').split('/')[0];
+  if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
+} catch (e) { /* leave it */ } })();
+</script>
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112a">
+<link rel="stylesheet" href="assets/deck.css?v=20261112a">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section id="title" data-timing="40">
+  <div class="frame">
+    <div class="title-wrap">
+      <p class="kicker">Data Science and Machine Learning Seminar &middot; Department of Mathematics</p>
+      <p class="bigdash" aria-hidden="true" style="margin-bottom:-10px"><span class="title-dash">&mdash;</span></p>
+      <h1 class="title-main cct">Copy, Contract, Tilt</h1>
+      <p class="title-sub cct">Tracing the em dash through pretraining, SFT and DPO</p>
+      <p class="byline">Tommie Juzek</p>
+      <p class="byline-2">Florida State University &middot; 13 November 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ I. Why care (about 6 min) ============================ -->
+
+<section id="tell" data-state="quiet" data-timing="80">
+  <div class="frame">
+    <p class="kicker">Why care?</p>
+    <p class="h2">A sentence you have read before</p>
+    <p class="quote" style="max-width:1560px">&ldquo;Whether you are a seasoned scholar or a curious newcomer, the modern library is not merely a quiet sanctuary for books, but an intricate hub of lifelong learning<span class="dash">&mdash;</span>inviting patrons to delve into the rich tapestry of human knowledge.&rdquo;</p>
+    <p class="body fragment rise" style="margin-top:20px">Fluff words, &ldquo;not merely X, but Y&rdquo;, <i>delve</i>, and the em dash: the familiar tells of machine writing.</p>
+    <p class="body fragment rise">Models have house styles. Where do they come from, and do they stay in the machine?</p>
+    <p class="cite" style="margin-top:auto; margin-bottom:0">The sentence: an illustration in a chatbot&rsquo;s style, from the Carothers Lecture (Juzek and Ward, October 2026).</p>
+  </div>
+</section>
+
+<section id="uptake" data-state="quiet" data-timing="90">
+  <div class="frame">
+    <p class="kicker">They do not stay in the machine</p>
+    <p class="h2">AI&rsquo;s favourite words, in unscripted speech</p>
+    <p class="body" data-ev="E1.1">1,326 science and technology podcast episodes, 22.1 million words. Each podcast before (2019 to 2021) and after (2023 to 2025).</p>
+    <div class="cols-2" style="margin-top:30px">
+      <div class="col fragment rise">
+        <h3>AI-associated words</h3>
+        <p class="lede" style="margin:0" data-ev="E1.1"><span class="num">up</span>: weighted log ratio 0.21, <i>p</i> &lt; 0.001</p>
+        <p class="body"><i>delve</i>, <i>intricate</i>, <i>meticulous</i>, <i>boast</i>, <i>surpass</i> &hellip;</p>
+      </div>
+      <div class="col fragment rise">
+        <h3>Their synonyms</h3>
+        <p class="lede" style="margin:0" data-ev="E1.1"><span class="num">flat</span>: 0.03, not significant</p>
+        <p class="body">the baseline: same meanings, no AI association</p>
+      </div>
+    </div>
+    <p class="body fragment rise" style="margin-top:14px">Whether AI drives the rise, we cannot yet say. That it is there, we can.</p>
+    <p class="cite" style="margin-top:auto; margin-bottom:0">Anderson, Galpin and Juzek, &ldquo;Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English&rdquo;, AIES 2025.</p>
+  </div>
+</section>
+
+<section id="meaning" data-state="quiet" data-timing="90">
+  <div class="frame">
+    <p class="kicker">Beyond style: meaning</p>
+    <p class="h3" style="margin-bottom:4px">&ldquo;Does money lead to happiness?&rdquo;</p>
+    <p class="small" data-ev="E1.2" style="margin:0 0 12px">About 100 US adults, one essay each; GPT-4o judged each essay&rsquo;s stance.</p>
+    <div class="chart" data-chart="stance"></div>
+    <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
+    <span class="fragment step-marker" data-step="2" data-fragment-index="2"></span>
+    <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
+    <p class="body fragment rise" data-fragment-index="3" data-ev="E1.2" style="font-size:40px; margin:22px 0 8px">Without AI, two in five essays took no side; when the AI wrote much of it, two in three.</p>
+    <p class="body fragment rise" data-fragment-index="4" data-ev="E1.3" style="font-size:40px; margin:0 0 8px">Asked only to fix the grammar, the models still moved the meaning.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161 (preprint): Figure 6, redrawn. Groups of 45, 28 and 27; the AI assistant was assigned at random, how much to use it people chose. The grammar test: 86 essays written in 2021.</p>
+  </div>
+</section>
+
+<section id="misalignment" data-state="turn" data-timing="70">
+  <div class="frame">
+    <span class="fragment step-marker" data-step="open"></span>
+    <p class="h2 turn-word">We asked for grammar. We got a stance.</p>
+    <div class="turn-body">
+      <p class="lede">A misalignment in miniature: the tool does something we did not ask for, and we do not see it happen.</p>
+      <p class="body fragment rise">In 2025 we called the word-level version of this &ldquo;model misalignment&rdquo;.</p>
+      <p class="body fragment rise">So: where do a model&rsquo;s habits come from? That is a question about training, and about alignment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ II. Where behaviour comes from (about 5 min) ============================ -->
+
+<section id="pipeline" data-state="quiet" data-timing="70">
+  <div class="frame">
+    <p class="kicker">Where behaviour comes from</p>
+    <p class="h2">Three stages, three kinds of learning</p>
+    <div class="chart" data-chart="pipeline"></div>
+    <p class="body fragment rise" style="margin-top:30px">Every chat model is made in (at least) these three steps. Each leaves a mark on how it writes.</p>
+    <p class="body fragment rise">The usual worry: we cannot see which step left which mark.</p>
+  </div>
+</section>
+
+<section id="machines" data-state="quiet" data-timing="70">
+  <div class="frame">
+    <p class="kicker">Not a black box</p>
+    <p class="h2">Deterministic machines, built by humans</p>
+    <p class="lede">The randomness is pseudo-randomness: same input, same seeds, same settings, same output.</p>
+    <p class="body fragment rise">So we can do what science does with any machine: build it, change one thing, run it again, and measure.</p>
+    <p class="body fragment rise">And we can read out every probability it assigns, at every step.</p>
+  </div>
+</section>
+
+<section id="tracer" data-state="quiet" data-timing="100">
+  <div class="frame">
+    <p class="kicker">The method</p>
+    <p class="h2">Tracer dye</p>
+    <p class="lede" style="margin-bottom:30px">Put a known amount of dye in at a known point. Watch where, and how strongly, it comes out.</p>
+    <div class="props">
+      <div class="p fragment rise"><p class="h">Dosed at every stage</p><p class="t">Pretraining, SFT and DPO, each at set doses, in every combination.</p></div>
+      <div class="p fragment rise"><p class="h">Countable</p><p class="t">One glyph, counted exactly; and the model&rsquo;s probability for it at every step.</p></div>
+      <div class="p fragment rise"><p class="h">Known background</p><p class="t" data-ev="E3.2">415 per million tokens in the web text; dosed down to zero.</p></div>
+      <div class="p fragment rise"><p class="h">Harmless</p><p class="t" data-ev="E3.11">Validation loss on everything but the dash differs by about 0.01 nats across doses.</p></div>
+    </div>
+    <p class="body fragment rise" style="margin-top:30px">The dye: <span class="dash">&mdash;</span> &nbsp;low stakes, high counts, and a famous tell.</p>
+  </div>
+</section>
+
+<section id="wild" data-state="quiet" data-timing="80">
+  <!-- [S] skippable. OLMo ledger (WK EVIDENCE §16): the 1B's own data and sampled writing, stage by stage. -->
+  <div class="frame">
+    <p class="kicker">A sighting in the wild: OLMo-2, an open model, stage by stage</p>
+    <div class="chart" data-chart="olmo"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-ev="E2.3" style="font-size:40px; margin:6px 0 4px">In its instruction data, nearly all the dashes come with ChatGPT&rsquo;s answers.</p>
+    <p class="body fragment rise" data-ev="E2.2" style="font-size:40px; margin:0 0 4px">The preference step multiplies what it writes by 2.75. <span class="tag wip">work in progress</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, continuing the same 10,000 news articles, sampling (T = 1), first 40 words; whiskers 95% intervals. Training data counted by us. Team OLMo, &ldquo;2 OLMo 2 Furious&rdquo;, arXiv 2501.00656; WildChat answers in its SFT mix.</p>
+  </div>
+</section>
+
+<!-- ============================ III. The experiment (about 13 min) ============================ -->
+
+<section id="design" data-state="quiet" data-timing="100">
+  <div class="frame">
+    <p class="kicker">The experiment: a dose grid</p>
+    <p class="h3">Dye in at every stage; read after every stage</p>
+    <div class="chart" data-chart="design"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-fragment-index="2" style="font-size:38px; margin-top:6px">The reading: the expected number of em dashes per million tokens, summing the model&rsquo;s own probability of the dash along its own text.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Pre-pilot: GPT-2-shaped models (124M) trained from scratch on DCLM web text at four doses, 3 seeds each; SFT on 20,000 chat answers; DPO (&beta; = 0.1) on 8,000 pairs. Reading: 2,000 news and 1,000 chat prompts, sampled at T = 1. Juzek et al., work in preparation.</p>
+  </div>
+</section>
+
+<section id="copy" data-state="quiet" data-timing="80">
+  <div class="frame">
+    <p class="kicker"><span class="verb copy">Copy</span> &middot; pretraining</p>
+    <div style="display:grid; grid-template-columns: 900px 1fr; gap: 70px; align-items:start">
+      <div>
+        <div class="chart" data-chart="copy"></div>
+        <span class="fragment step-marker" data-step="1"></span>
+      </div>
+      <div style="padding-top:40px">
+        <p class="lede">The base model writes what it read.</p>
+        <p class="body fragment rise" data-ev="E3.6">Dose response 1.04 (90% interval 0.95 to 1.14): twice the dose, twice the dashes.</p>
+        <p class="body fragment rise" data-ev="E3.3">Never saw it: never writes it (0.002 per million).</p>
+      </div>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">124M, 3 seeds per dose (one dot each); news continuations, T = 1; expected count.</p>
+  </div>
+</section>
+
+<section id="contract" data-state="quiet" data-timing="100">
+  <div class="frame">
+    <p class="kicker"><span class="verb contract">Contract</span> &middot; SFT</p>
+    <div class="chart" data-chart="contract"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-ev="E3.4" style="font-size:40px; margin:10px 0 6px">A 16-fold range of pretraining doses leaves a 2.2-fold range on news and 1.5-fold on chat.</p>
+    <p class="body fragment rise" data-ev="E3.4" style="font-size:40px; margin:0">SFT does not simply copy its own data&rsquo;s rate: the natural-dose models overshoot it.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Geometric means over 3 seeds; whiskers the range of the seeds. Dashed and dotted lines: the rate in the SFT data (1&times; and 4&times;). T = 1; expected count.</p>
+  </div>
+</section>
+
+<section id="slopes" data-state="quiet" data-timing="110">
+  <div class="frame">
+    <p class="kicker">The maths, 1 &middot; each stage is a line in log space</p>
+    <p class="eq mid" style="margin-bottom:6px"><span class="verb copy" style="font-size:40px">copy</span>&ensp; log&thinsp;<i>m</i> <span class="op">=</span> log&thinsp;<i>d</i> <span class="op">+</span> <i>c</i><span class="gl">slope 1</span></p>
+    <p class="eq mid fragment rise" data-fragment-index="2" style="margin-bottom:10px"><span class="verb contract" style="font-size:40px">contract</span>&ensp; log&thinsp;<i>m</i>&prime; <span class="op">=</span> (1 <span class="op">&minus;</span> <i>&lambda;</i>)&thinsp;log&thinsp;<i>m</i> <span class="op">+</span> <i>&lambda;</i>&thinsp;<i>y</i>*<span class="gl">slope 1 &minus; &lambda;</span></p>
+    <div class="chart" data-chart="slopes" style="width:1500px"></div>
+    <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
+    <span class="fragment step-marker" data-step="2" data-fragment-index="2"></span>
+    <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><i>d</i>: dose in the pretraining text; <i>m</i>: what the model writes; <i>y</i>*: where SFT pulls. Slope: change in log&#8322; output per doubling of the dose (&frac14;&times; to 4&times;), mean of 3 seeds, 90% intervals. SFT keeps about a quarter of the dose&rsquo;s effect on news, an eighth on chat.</p>
+  </div>
+</section>
+
+<section id="tilt-eq" data-state="quiet" data-timing="120">
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 2</p>
+    <p class="h3">The best model on a leash</p>
+    <p class="eq mid" style="margin-bottom:0">maximise&ensp; E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;] <span class="op">&minus;</span> <i>&beta;</i>&thinsp;KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p>
+    <p class="small" style="margin:0 0 14px">reward, minus a leash (&beta;) to the model before, <i>&pi;</i><sub>ref</sub></p>
+    <p class="eq big fragment rise" style="margin-bottom:6px">&rArr;&ensp; <i>&pi;</i>*(<i>y</i>) <span class="op">&prop;</span> <i>&pi;</i><sub>ref</sub>(<i>y</i>)&thinsp;&middot;&thinsp;<i>e</i><sup><i>r</i>(<i>y</i>)&thinsp;/&thinsp;<i>&beta;</i></sup></p>
+    <p class="eq mid fragment rise" style="margin-bottom:4px">For a feature against its alternative:&ensp; <span class="boxed">&Delta;&thinsp;log-odds <span class="op">=</span> <i>&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span></p>
+    <p class="small fragment rise" data-fragment-index="2" style="margin:0 0 10px">&epsilon;: the feature&rsquo;s reward advantage over its alternative</p>
+    <div class="points" style="margin-top:6px">
+      <p class="fragment rise"><span class="n">1</span><b>It multiplies.</b> A shift in log space: what is there grows by a factor.</p>
+      <p class="fragment rise"><span class="n">2</span><b>Only differences count.</b> Preferences compare two answers; what both share cancels.</p>
+      <p class="fragment rise"><span class="n">3</span><b>A multiple of nothing is nothing.</b> Where <i>&pi;</i><sub>ref</sub> is near 0, so is <i>&pi;</i>*.</p>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The KL-regularised optimum behind DPO: Rafailov et al., &ldquo;Direct Preference Optimization&rdquo;, NeurIPS 2023 (arXiv 2305.18290). &Delta; = &epsilon;/&beta;: the derivation in our NSF CAREER proof of concept (unpublished).</p>
+  </div>
+</section>
+
+<section id="tilt-toy" data-state="quiet" data-timing="110">
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; by hand</p>
+    <div style="display:grid; grid-template-columns: 900px 1fr; gap: 70px; align-items:start">
+      <div>
+        <div class="chart" data-chart="toy"></div>
+        <span class="fragment step-marker" data-step="1"></span>
+        <span class="fragment step-marker" data-step="2"></span>
+        <span class="fragment step-marker" data-step="3"></span>
+      </div>
+      <div style="padding-top:10px">
+        <p class="body">After a clause, the model can continue with a comma, an em dash or &ldquo;and&rdquo;.</p>
+        <p class="body">Multiply each by <span class="math"><i>e</i><sup><i>r</i>/<i>&beta;</i></sup></span>, then rescale so they sum to 1.</p>
+        <p class="body" data-ev="E4.1">Advantage of the dash over the comma: <span class="math"><i>&epsilon;</i> = log 4</span>.</p>
+        <div class="swap" style="height:150px; margin-top:24px">
+          <p class="lede sw0">Before: the dash at 0.10.</p>
+          <p class="lede sw1" data-ev="E4.1"><span class="math"><i>&beta;</i> = 2</span>: &Delta; = 0.69; dash 0.16</p>
+          <p class="lede sw2" data-ev="E4.1"><span class="math"><i>&beta;</i> = 1</span>: &Delta; = 1.39; dash 0.25</p>
+          <p class="lede sw3" data-ev="E4.1"><span class="math"><i>&beta;</i> = &frac12;</span>: &Delta; = 2.77; dash 0.47</p>
+        </div>
+        <p class="body fragment rise" data-fragment-index="3">A tighter leash (larger &beta;), a smaller tilt.</p>
+      </div>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Every number by hand: &pi;<sub>ref</sub> = (0.6, 0.1, 0.3); rewards 0, log 4, log 2. A toy, not a model.</p>
+  </div>
+</section>
+
+<section id="epsbeta" data-state="quiet" data-timing="80">
+  <!-- [S] skippable. NSF CAREER proof of concept, C1: the unspaced em-dash token against the comma. -->
+  <div class="frame">
+    <p class="kicker">Where the dye is isolated, the law holds</p>
+    <div style="display:grid; grid-template-columns: 820px 1fr; gap: 70px; align-items:start">
+      <div>
+        <div class="chart" data-chart="epsbeta"></div>
+        <span class="fragment step-marker" data-step="1"></span>
+        <span class="fragment step-marker" data-step="2"></span>
+      </div>
+      <div style="padding-top:30px">
+        <p class="body">Pairs that differ in one token only: the em dash against a comma. The preference and &beta; set exactly.</p>
+        <p class="lede fragment rise" data-fragment-index="2" data-ev="E4.2">36 settings, 6 seeds each: slope 1.01, <i>r</i> = 0.994.</p>
+        <p class="body fragment rise" data-ev="E4.3">The same for ten features, word choice included: slope 0.98.</p>
+        <p class="body fragment rise"><span class="tag wip">unpublished pilot</span></p>
+      </div>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">GPT-2 (124M), minimal pairs over many sentence stems; DPO with labels drawn at preference rate <i>p</i>, so &epsilon; = logit <i>p</i>; &beta; from 0.5 to 6. The unspaced em-dash token. NSF CAREER proof of concept, June 2026.</p>
+  </div>
+</section>
+
+<section id="sets" data-state="quiet" data-timing="110">
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; in the full pipeline</p>
+    <p class="h3">The side that carries the dash sets the sign</p>
+    <div class="chart" data-chart="sets"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" style="font-size:38px; margin:6px 0 0">Pairs with no dash still push, but not the dash in particular: punctuation in general rises. <span class="tag pending">source TSV due</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="E3.7">Natural-dose models after SFT 1&times;; 8,000 pairs, 5% of them carrying the dash (both sides: the natural rate); news, T = 1; 3 seeds, whiskers the seed range. Chat agrees: preferred side &times;1.75, rejected &times;0.78.</p>
+  </div>
+</section>
+
+<section id="ratio" data-state="quiet" data-timing="110">
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; the contrast acts as a dose</p>
+    <div class="chart" data-chart="ratio"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-fragment-index="1" style="font-size:38px; margin:0 0 4px">Below 1&thinsp;:&thinsp;1 the push vanishes; above it, it grows with the ratio, and with the number of carriers.</p>
+    <p class="body fragment rise" data-fragment-index="3" data-ev="E3.8" style="font-size:38px; margin:0">Dashes on both sides, even four times as many, push about as much as pairs with none: contrast counts, volume cancels.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Each set adds exactly one em dash to some answers, so the ratio of carriers is the ratio of dashes. After SFT 1&times;; T = 1. First look, two natural-dose bases (n = 1 where marked); about 9% noise per reading, so factors within &times;1.1 are not told apart.</p>
+  </div>
+</section>
+
+<section id="zero" data-state="quiet" data-timing="100">
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; a multiple of almost nothing</p>
+    <p class="h3">DPO did not create the dash, at this light recipe</p>
+    <table class="numbers" style="font-size:30px; margin-top:16px">
+      <thead><tr><th style="font-size:22px">Models that never saw a dash in pretraining (3 seeds); chat</th><th style="font-size:22px">before DPO</th><th style="font-size:22px">after 1,198 preferred-side dashes</th></tr></thead>
+      <tbody>
+        <tr class="fragment rise"><td>no dash in SFT either</td><td class="n" data-ev="E3.9">0.006 per million</td><td class="n" data-ev="E3.9">0.008 to 0.010</td></tr>
+        <tr class="fragment rise"><td>a trace from SFT 1&times;</td><td class="n" data-ev="E3.9">1.1 to 2.9</td><td class="n" data-ev="E3.9">5.3 to 16.6</td></tr>
+        <tr class="fragment rise"><td>SFT 4&times; put it in</td><td class="n" data-ev="E3.9">686 to 849</td><td class="n" data-ev="E3.9">3,136 to 3,482</td></tr>
+      </tbody>
+    </table>
+    <p class="body fragment rise" style="margin-top:30px">DPO multiplies what is there. Where almost nothing is there, a multiple of it is still almost nothing.</p>
+    <p class="body fragment rise" data-ev="E3.12" style="font-size:38px">SFT is different: at 350M, SFT 1&times; alone put the dash into a model that never saw it (72 per million, chat; one seed). <span class="tag wip">first look</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Expected em dashes per million tokens; a counted dash would show from about 14 per million. DPO: &beta; = 0.1, one pass over 8,000 pairs. In theory a big enough push can grow anything; this one did not.</p>
+  </div>
+</section>
+
+<section id="cct" data-state="quiet" data-timing="120">
+  <div class="frame">
+    <p class="kicker">Copy, contract, tilt</p>
+    <div class="verbs">
+      <div class="v copy"><p class="name">Copy</p><p class="stage">pretraining</p><p class="what">Writes in proportion to what it read.</p><p class="eqs math">slope 1</p></div>
+      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left; does not land on its own data&rsquo;s rate.</p><p class="eqs math">slope 1 &minus; <i>&lambda;</i></p></div>
+      <div class="v tilt fragment rise"><p class="name">Tilt</p><p class="stage">DPO</p><p class="what">Multiplies what is there, by the contrast between the answers.</p><p class="eqs math">shift by &Delta;</p></div>
+    </div>
+    <p class="eq mid fragment rise" style="margin:6px 0 20px">log&thinsp;<i>m</i><sub>final</sub> <span class="op">&asymp;</span> (1 <span class="op">&minus;</span> <i>&lambda;</i>)(log&thinsp;<i>d</i> <span class="op">+</span> <i>c</i>) <span class="op">+</span> <i>&lambda;</i>&thinsp;<i>y</i>* <span class="op">+</span> &Delta;(contrast)</p>
+    <p class="body fragment rise" style="font-size:38px; margin-bottom:8px"><b class="num" style="color:var(--ink)">Where the line bends:</b> DPO&rsquo;s push shrinks as the dose rises (&times;1.75, &times;1.61, &times;1.31 at &frac14;&times;, 1&times;, 4&times;); dash-free pairs move punctuation in general; at 350M, SFT starts from zero; seeds alone differ by up to 1.47&times;.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="E3.13">The preferred-side contrast, news, 3 seeds. Seeds: after SFT 1&times;, news, natural dose. A sketch to be tested on the 350M and 774M models.</p>
+  </div>
+</section>
+
+<!-- ============================ IV. Back out (about 5 min) ============================ -->
+
+<section id="ladder" data-state="quiet" data-timing="80">
+  <!-- [S] skippable. NSF CAREER proof of concept: the generality ladder (C1, C2 stance). -->
+  <div class="frame">
+    <p class="kicker">Does the dye move with the water?</p>
+    <p class="h3">From a glyph to a word to a stance</p>
+    <div class="points" style="margin-top:20px">
+      <p class="fragment rise"><span class="n">1</span><b>Punctuation.</b> The &epsilon;/&beta; law for the em dash, the semicolon and others.</p>
+      <p class="fragment rise" data-ev="E4.3"><span class="n">2</span><b>Words.</b> The same law for AI-signature words such as <i>delve</i>: ten features, slope 0.98.</p>
+      <p class="fragment rise" data-ev="E4.4"><span class="n">3</span><b>Stance.</b> In OLMo-2 7B, the same arithmetic installs an evaluative stance towards countries, on wording it was never trained on (slopes 0.99 to 1.34, six country pairs).</p>
+      <p class="fragment rise" data-ev="E4.4"><span class="n">4</span><b>And a warning.</b> Train only on praise, and the model learns to mention the country more, not to value it.</p>
+    </div>
+    <p class="body fragment rise"><span class="tag wip">pilots, unpublished</span></p>
+  </div>
+</section>
+
+<section id="lessons" data-state="quiet" data-timing="150">
+  <div class="frame">
+    <p class="kicker">What the dye says about alignment <span class="tag pending">draft: final data 12 Nov</span></p>
+    <div class="points" style="margin-top:10px">
+      <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;.</p>
+      <p class="fragment rise"><span class="n">2</span><b>DPO multiplies what is there.</b> So much of a model&rsquo;s behaviour is set before it: in pretraining and in SFT, whose data other models often wrote.</p>
+      <p class="fragment rise"><span class="n">3</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
+      <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing is not reversing.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
+      <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The seed is a setting too.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects.</p>
+    </div>
+  </div>
+</section>
+
+<section id="close" data-timing="60">
+  <div class="frame center">
+    <p class="h2">We do not care about the dye.</p>
+    <p class="lede fragment rise">We care about the plumbing: what training amplifies, what it cannot create, and what it moves that nobody asked it to.</p>
+  </div>
+</section>
+
+<section id="credits" data-state="quiet" data-timing="40">
+  <div class="frame">
+    <p class="kicker">With thanks</p>
+    <div class="people">
+      <p><b>Zina Ward</b>: this continues our joint work; ideas here go back in part to our conversations of about a year and a half ago.</p>
+      <p><b>Gordon Erlebacher</b>: a great deal of input throughout.</p>
+      <p><b>Karolina Rudnicka</b>: the idea of looking at what em dashes do, their functions.</p>
+      <p>Related work with <b>Alyssa Beguiristain</b> (UROP).</p>
+    </div>
+    <hr class="rule">
+    <p class="cite" style="max-width:1600px">How these slides were made: Tommie Juzek set the argument, the running order and the substance; the numbers come from his group&rsquo;s research data and the cited sources; unpublished results are marked. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text.</p>
+    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A3).</p>
+  </div>
+</section>
+
+<section id="thanks" data-state="thanks" data-timing="10">
+  <div class="frame center">
+    <p class="bigdash">&mdash;</p>
+    <p class="h1">Thank you.</p>
+  </div>
+</section>
+
+<section id="panel" data-state="panel" data-timing="0" aria-label="Questions">
+  <!-- Questions: calm light in the deck's colours (assets/flurry.js), kept from the WK deck at Tommie's wish. -->
+  <canvas class="flurry" width="1920" height="1080" aria-hidden="true"></canvas>
+</section>
+
+<!-- ============================ Appendix (uncounted) ============================ -->
+
+<section id="numbers" data-state="quiet" data-visibility="uncounted">
+  <div class="frame" style="padding-top:60px">
+    <p class="kicker">Every number on these slides</p>
+    <table class="numbers">
+      <thead><tr><th>Number</th><th>What</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="n">0.21; 0.03</td><td>AI-associated words and their synonyms in podcast speech, 2019 to 2021 against 2023 to 2025 (22.1 million words, 1,326 episodes)</td><td>E1.1</td></tr>
+        <tr><td class="n">39.5%; 66.7%</td><td>essays taking no side: written alone; with heavy AI use (groups of 45, 28, 27)</td><td>E1.2</td></tr>
+        <tr><td class="n">491; 373; 412</td><td>OLMo-2 1B&rsquo;s training data: web text; its SFT answers; preferred answers (per million tokens; work in progress)</td><td>E2.1</td></tr>
+        <tr><td class="n">679; 513; 1,409; 1,160; 966</td><td>OLMo-2 1B continuing news, sampled: base, SFT, DPO, final; the articles&rsquo; writers (work in progress)</td><td>E2.2</td></tr>
+        <tr><td class="n">2.75&times;</td><td>OLMo-2 1B, DPO against SFT, paired (95% interval 2.33 to 3.27)</td><td>E2.2</td></tr>
+        <tr><td class="n">415</td><td>em dashes per million tokens in the web text (DCLM), the natural rate; doses 0, 104, 415, 1,667</td><td>E3.2</td></tr>
+        <tr><td class="n">about 0.01 nats</td><td>spread of masked validation loss across the four doses (seed means 3.555 to 3.568)</td><td>E3.11</td></tr>
+        <tr><td class="n">0.002</td><td>base models with no dash in pretraining: expected per million (news)</td><td>E3.3</td></tr>
+        <tr><td class="n">1.04 (0.95 to 1.14)</td><td>dose response of the base models, news</td><td>E3.6</td></tr>
+        <tr><td class="n">2.2-fold; 1.5-fold</td><td>range after SFT 1&times; over the &frac14;&times; to 4&times; doses: news 377 to 811; chat 374 to 546</td><td>E3.4</td></tr>
+        <tr><td class="n">0.28; 0.14</td><td>dose response after SFT 1&times;: news; chat (SFT 4&times;: 0.14; 0.06)</td><td>E3.6</td></tr>
+        <tr><td class="n">&times;1.62; &times;0.90; &times;1.10; &times;0.83; &times;1.27</td><td>DPO factors, natural dose, news: preferred side; rejected side; no dashes; labels swapped; both sides</td><td>E3.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="numbers-2" data-state="quiet" data-visibility="uncounted">
+  <div class="frame" style="padding-top:60px">
+    <p class="kicker">Every number on these slides, continued</p>
+    <table class="numbers">
+      <thead><tr><th>Number</th><th>What</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="n">&times;1.75; &times;0.78</td><td>the same, chat: preferred side; rejected side</td><td>E3.7</td></tr>
+        <tr><td class="n">&times;0.93 to &times;2.54</td><td>the ratio axis, chat, after SFT 1&times; (first look, 2 bases)</td><td>E3.8</td></tr>
+        <tr><td class="n">0.006 to 3,482</td><td>dose-zero models before and after DPO with 1,198 preferred-side dashes (chat, 3 seeds)</td><td>E3.9</td></tr>
+        <tr><td class="n">72</td><td>350M, never saw the dash, after SFT 1&times;: chat, per million (one seed; 124M: 1.1 to 6.5)</td><td>E3.12</td></tr>
+        <tr><td class="n">&times;1.75; &times;1.61; &times;1.31</td><td>preferred-side DPO factor at the &frac14;&times;, 1&times;, 4&times; doses (news)</td><td>E3.13</td></tr>
+        <tr><td class="n">1.47&times;</td><td>largest seed-to-seed ratio after SFT 1&times; (news, natural dose)</td><td>E3.10</td></tr>
+        <tr><td class="n">0.16; 0.25; 0.47</td><td>the toy em dash at &beta; = 2, 1, &frac12; (from 0.10)</td><td>E4.1</td></tr>
+        <tr><td class="n">1.01; 0.994</td><td>the &epsilon;/&beta; law, em-dash token: slope and correlation over 36 settings (unpublished pilot)</td><td>E4.2</td></tr>
+        <tr><td class="n">0.98</td><td>the same law pooled over ten features (unpublished pilot)</td><td>E4.3</td></tr>
+        <tr><td class="n">0.99 to 1.34</td><td>stance (valence) slopes on held-out wording, OLMo-2 7B, six country pairs (unpublished pilot)</td><td>E4.4</td></tr>
+        <tr><td class="n">10 to 20%</td><td>what is left of a trained shift after naive reversal (unpublished pilot)</td><td>E4.5</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="sources" data-state="quiet" data-visibility="uncounted">
+  <div class="frame" style="padding-top:60px">
+    <p class="kicker">Sources</p>
+    <p class="cite">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques (2026). How LLMs Distort Our Written Language. arXiv 2603.18161 (preprint).</p>
+    <p class="cite">Anderson, Galpin and Juzek (2025). Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English. AIES 2025.</p>
+    <p class="cite">Juzek and Ward (2025). Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models. COLING 2025.</p>
+    <p class="cite">Rafailov, Sharma, Mitchell, Ermon, Manning and Finn (2023). Direct Preference Optimization: Your Language Model Is Secretly a Reward Model. NeurIPS 2023; arXiv 2305.18290.</p>
+    <p class="cite">Team OLMo et al. (2024). 2 OLMo 2 Furious. arXiv 2501.00656. Lambert et al. (2024). T&uuml;lu 3: Pushing Frontiers in Open Language Model Post-Training. arXiv 2411.15124.</p>
+    <p class="cite">Zhang, Xiong, Chen, Zhou, Huang and Zhang (2025). From Lists to Emojis: How Format Bias Affects Model Alignment. ACL 2025.</p>
+    <p class="cite">Freeburg (2026). The Last Fingerprint: How Markdown Training Shapes LLM Prose. arXiv 2603.27006 (preprint): the markdown account of the em dash, one of the factors we test.</p>
+    <p class="cite">Our own data, work in preparation: the 07b dose grid (pre-pilot, November 2026); the NSF CAREER proof of concept (June and July 2026); the OLMo ledger (September 2026).</p>
+  </div>
+</section>
+
+</div>
+</div>
+<script src="assets/reveal/reveal.js?v=20261112a"></script>
+<script src="assets/charts.js?v=20261112a"></script>
+<script src="assets/flurry.js?v=20261112a"></script>
+<script src="assets/dye.js?v=20261112a"></script>
+<script src="assets/deck.js?v=20261112a"></script>
+</body>
+</html>

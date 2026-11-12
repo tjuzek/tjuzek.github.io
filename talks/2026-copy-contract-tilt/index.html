@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Copy, Contract, Tilt | Thomas Stephan Juzek</title>
+<meta name="description" content="Talk page for Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT and DPO, by Thomas Stephan (Tommie) Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026: the slides and further reading.">
+<link rel="canonical" href="https://tjuzek.com/talks/2026-copy-contract-tilt/">
+<!-- unlisted until Tommie says otherwise (12 Nov 2026): reachable by its link only; then "index, follow", the sitemap and talks-press -->
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tjuzek.com/talks/2026-copy-contract-tilt/">
+<meta property="og:title" content="Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT and DPO">
+<meta property="og:description" content="A talk by Tommie Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026: the slides and further reading.">
+<meta name="theme-color" content="#050507">
+<link rel="icon" href="/favicon.ico?v=3" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<style>
+/* Talk page for "Copy, Contract, Tilt" (maths seminar, 13 November 2026), after the WK talk page (1 October 2026).
+   Styled after the slides (slides/assets/deck.css): the same palette with the brighter violet, Newsreader and
+   Inter, the gold em dash, and the slides' dye in water behind the masthead (slides/assets/dye.js). Dark only,
+   like the deck. Phone first. */
+
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap;
+  src: url(slides/assets/fonts/newsreader-latin-standard-normal.woff2) format('woff2-variations');
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: swap;
+  src: url(slides/assets/fonts/newsreader-latin-standard-italic.woff2) format('woff2-variations');
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url(slides/assets/fonts/inter-latin-standard-normal.woff2) format('woff2-variations');
+}
+
+:root {
+  --bg: #050507;
+  --ink: #f4f1ea;
+  --ink-2: #c9c5bb;
+  --ink-3: #8d8a82;
+  --hair: #26262b;
+  --axis: #3c3c42;
+  --gold: #d8b765;
+  --wave-a: #a88f55;      /* the dye: gold, violet, blue, as on the slides */
+  --wave-b: #8b6cff;
+  --wave-c: #4a6fc0;
+  --blue: #3987e5;
+  --sgold: #c98500;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  color-scheme: dark;
+}
+
+html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--serif); font-optical-sizing: auto;
+  font-size: 19px; line-height: 1.55;
+  overflow-x: hidden;
+}
+::selection { background: var(--gold); color: #000; }
+a { color: inherit; text-decoration-color: var(--ink-3); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: var(--gold); }
+a:focus-visible, .card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- the dye: a band behind the masthead (the slides' own, slides/assets/dye.js) ---------- */
+.waves {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 0;
+  height: clamp(460px, 80vh, 780px);
+  overflow: hidden; pointer-events: none; opacity: 0.85;
+  -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+}
+.waves canvas.dye { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ---------- page ---------- */
+.page {
+  position: relative; z-index: 1;
+  max-width: 46rem; margin: 0 auto;
+  padding: 44px max(20px, env(safe-area-inset-right)) 40px max(20px, env(safe-area-inset-left));
+}
+
+.kicker {
+  font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin: 0 0 14px;
+}
+
+/* masthead: the gold em dash above the title, as on the title slide; the dye falls from it */
+.masthead { margin: 0 0 36px; }
+.bigdash { font-family: var(--sans); font-weight: 200; color: var(--gold); font-size: 120px; line-height: 0.6; margin: 18px 0 18px -4px; }
+.bigdash span { display: inline-block; }
+h1 {
+  font-size: 46px; line-height: 1.02; font-weight: 450; letter-spacing: -0.015em;
+  margin: 0 0 14px;
+}
+.sub { font-size: 21px; line-height: 1.3; font-weight: 380; color: var(--ink-2); margin: 0 0 22px; }
+.dash { color: var(--gold); font-family: var(--sans); font-weight: 300; }  /* Inter's em dash is a full 1.00 em; Newsreader's only 0.68 */
+.byline { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 4px; }
+.when { font-family: var(--sans); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 10px; }
+.nowrap { white-space: nowrap; }
+
+/* the three verbs */
+.verbs { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0 0 36px; }
+.verb { border-left: 3px solid var(--axis); padding: 2px 0 2px 14px; margin: 0; }
+.verb b { font-family: var(--sans); font-weight: 650; font-size: 17px; letter-spacing: 0.02em; }
+.verb span { display: block; font-size: 16.5px; line-height: 1.45; color: var(--ink-2); }
+.verb.copy { border-color: var(--ink-2); }
+.verb.contract { border-color: var(--blue); } .verb.contract b { color: var(--blue); }
+.verb.tilt { border-color: var(--sgold); } .verb.tilt b { color: var(--sgold); }
+
+/* the actions */
+.actions { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 0 0 44px; }
+.card {
+  display: block; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--axis); border-radius: 10px;
+  padding: 16px 18px 15px;
+  background: rgba(10, 10, 14, 0.78);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+a.card:hover { border-color: var(--gold); background: rgba(20, 18, 12, 0.85); }
+.card .label { display: block; font-family: var(--sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 4px; }
+.card .title { display: block; font-size: 24px; line-height: 1.2; font-weight: 450; }
+.card .title .arrow { font-family: var(--sans); font-weight: 300; color: var(--gold); }
+.card .note { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 6px; }
+.card.primary { border-color: #6f6040; }
+
+/* sections */
+section.block { margin: 0 0 40px; }
+h2 {
+  font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin: 0 0 14px; padding-top: 18px; border-top: 1px solid var(--hair);
+}
+.prose p { margin: 0 0 14px; color: var(--ink-2); }
+.prose p:last-child { margin-bottom: 0; }
+
+/* further reading */
+.group { font-size: 21px; line-height: 1.25; font-weight: 450; font-style: italic; color: var(--ink); margin: 26px 0 10px; }
+.group:first-of-type { margin-top: 4px; }
+.reading { list-style: none; margin: 0; padding: 0; }
+.reading li { margin: 0 0 16px; padding-left: 14px; border-left: 2px solid var(--hair); }
+.reading .t { font-size: 19px; line-height: 1.35; font-weight: 450; }
+.reading .meta { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 3px; }
+.reading .kind { font-family: var(--sans); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--axis); border-radius: 3px; padding: 1px 5px 0; margin-left: 6px; white-space: nowrap; vertical-align: 1px; }
+.reading .why { display: block; font-size: 16.5px; line-height: 1.45; color: var(--ink-2); margin-top: 4px; }
+.reading .also { display: block; font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: var(--ink-3); margin-top: 4px; }
+.aside { font-family: var(--sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 22px 0 0; }
+
+/* the way into the slides: the page fades to the dark the slides open in; there, a drop of dye falls */
+.to-dark { position: fixed; inset: 0; z-index: 20; background: #050507; opacity: 0; pointer-events: none; transition: opacity 0.9s ease-in-out; }
+.to-dark.on { opacity: 1; pointer-events: auto; }
+
+/* footer */
+footer { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); border-top: 1px solid var(--hair); padding-top: 18px; }
+footer p { margin: 0 0 10px; }
+
+/* ---------- wider screens ---------- */
+@media (min-width: 560px) {
+  h1 { font-size: 60px; }
+  .sub { font-size: 24px; }
+  .bigdash { font-size: 150px; }
+  .verbs { grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  .actions { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  body { font-size: 20px; }
+  .page { padding-top: 64px; padding-bottom: 56px; }
+  .masthead { margin-bottom: 44px; }
+  h1 { font-size: 74px; }
+  .sub { font-size: 27px; }
+  .bigdash { font-size: 180px; }
+  .kicker { font-size: 13px; }
+  .byline { font-size: 17px; }
+  .when { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<main class="page">
+
+  <header class="masthead">
+    <p class="kicker">Data Science and Machine Learning Seminar &middot; Department of Mathematics</p>
+    <p class="bigdash" aria-hidden="true"><span id="drop">&mdash;</span></p>
+    <h1>Copy, Contract, Tilt</h1>
+    <p class="sub">Tracing the em dash through pretraining, SFT and DPO</p>
+    <p class="byline">Tommie Juzek</p>
+    <p class="when">Friday 13 November 2026 &middot; <span class="nowrap">1:20 pm</span><br>Love 106, Florida State University</p>
+  </header>
+
+  <section class="verbs" aria-label="The three findings, in three words">
+    <p class="verb copy"><b>Copy</b><span>Pretraining: the model writes the dash in proportion to what it read.</span></p>
+    <p class="verb contract"><b>Contract</b><span>SFT: the differences pretraining left shrink, to about a quarter on news.</span></p>
+    <p class="verb tilt"><b>Tilt</b><span>DPO: what is there is multiplied, by the contrast between preferred and rejected answers.</span></p>
+  </section>
+
+  <section class="actions" aria-label="Slides">
+    <a class="card primary" href="slides/">
+      <span class="label">Slides</span>
+      <span class="title">Open the slides <span class="arrow">&rarr;</span></span>
+      <span class="note">Built for a laptop or a large screen. Arrow keys or space to move on.</span>
+    </a>
+    <a class="card" href="slides/#/numbers">
+      <span class="label">Numbers</span>
+      <span class="title">Every number, with its source <span class="arrow">&rarr;</span></span>
+      <span class="note">The appendix of the slides. Unpublished results are marked as such.</span>
+    </a>
+  </section>
+
+  <section class="block prose">
+    <h2>About the talk</h2>
+    <p>Language models have house styles, and some of their habits travel: words associated with AI now turn up in unscripted human speech, and AI help can move what an essay argues, not just how it reads. Where do such habits come from?</p>
+    <p>This talk treats one habit, the em dash, as a tracer dye. We train small language models from scratch, dose the dash at each stage of training (pretraining, supervised fine-tuning and preference optimisation, in every combination) and read where it comes out. Three verbs sum up the first results: pretraining copies, SFT contracts, DPO tilts. A little mathematics says why, and what it means for aligning models with what we want.</p>
+  </section>
+
+  <section class="block">
+    <h2>Further reading</h2>
+
+    <h3 class="group">Habits that travel</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://doi.org/10.1609/aies.v8i1.36540">Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English</a>
+        <span class="meta">Anderson, Galpin and Juzek, AIES 2025 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Words associated with AI turning up in the way people speak, off the cuff. An association, not proof of a cause.</span>
+      </li>
+      <li>
+        <a class="t" href="https://arxiv.org/abs/2603.18161">How LLMs Distort Our Written Language</a>
+        <span class="meta">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, arXiv 2603.18161, 2026 <span class="kind">preprint</span></span>
+        <span class="why">Essays largely written with a model took fewer sides; even grammar-only edits moved what the essays meant.</span>
+      </li>
+    </ul>
+
+    <h3 class="group">The em dash and other tells</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://aclanthology.org/2025.coling-main.426/">Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models</a>
+        <span class="meta">Juzek and Ward, COLING 2025 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Where AI&rsquo;s favourite words come from, and a first test of the role of human feedback.</span>
+      </li>
+      <li>
+        <a class="t" href="https://www.scientificamerican.com/article/chatgpt-and-gemini-ai-have-uniquely-different-writing-styles/">ChatGPT and Gemini AIs Have Uniquely Different Writing Styles</a>
+        <span class="meta">Karolina Rudnicka, <i>Scientific American</i>, 9 July 2025 <span class="kind">journalism</span></span>
+        <span class="why">Each chatbot writes in a style of its own, much as each of us does.</span>
+        <span class="also">The paper behind it: Rudnicka and Juzek, <a href="https://arxiv.org/abs/2608.06589">&ldquo;Beyond &lsquo;AI Language&rsquo;: The case for the idiolectal nature of LLM output&rdquo;</a>, arXiv 2608.06589 <span class="kind">preprint</span></span>
+      </li>
+      <li>
+        <a class="t" href="https://arxiv.org/abs/2603.27006">The Last Fingerprint: How Markdown Training Shapes LLM Prose</a>
+        <span class="meta">E. M. Freeburg, arXiv 2603.27006, 2026 <span class="kind">preprint</span></span>
+        <span class="why">The proposal that the em dash is markdown leaking into prose: one of the factors the dose grid is built to test.</span>
+      </li>
+    </ul>
+
+    <h3 class="group">The machinery</h3>
+    <ul class="reading">
+      <li>
+        <a class="t" href="https://arxiv.org/abs/2305.18290">Direct Preference Optimization: Your Language Model Is Secretly a Reward Model</a>
+        <span class="meta">Rafailov, Sharma, Mitchell, Ermon, Manning and Finn, NeurIPS 2023 <span class="kind">peer-reviewed</span></span>
+        <span class="why">The preference step in the talk, and the tilted optimum behind &ldquo;tilt&rdquo;.</span>
+      </li>
+      <li>
+        <a class="t" href="https://aclanthology.org/2025.acl-long.1308/">From Lists to Emojis: How Format Bias Affects Model Alignment</a>
+        <span class="meta">Zhang, Xiong, Chen, Zhou, Huang and Zhang, ACL 2025 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Reward models favour lists, bold text and emojis; a small share of biased preference data is enough to skew them.</span>
+      </li>
+      <li>
+        <a class="t" href="https://arxiv.org/abs/2501.00656">2 OLMo 2 Furious</a>
+        <span class="meta">Team OLMo et al., arXiv 2501.00656, 2024 <span class="kind">preprint</span></span>
+        <span class="why">A fully open model, data included, stage by stage: the &ldquo;sighting in the wild&rdquo; in the talk.</span>
+        <span class="also">Its post-training recipe: Lambert et al., <a href="https://arxiv.org/abs/2411.15124">&ldquo;T&uuml;lu 3: Pushing Frontiers in Open Language Model Post-Training&rdquo;</a>, arXiv 2411.15124 <span class="kind">preprint</span></span>
+      </li>
+    </ul>
+
+    <p class="aside">The dose grid, the &epsilon;/&beta; pilots and the OLMo counts are our own work in preparation; the slides mark them as such. Every number in the talk, with its source, is in the slides&rsquo; appendix.</p>
+  </section>
+
+  <section class="block prose">
+    <h2>About the speaker</h2>
+    <p>Tommie Juzek is Assistant Professor of Computational Linguistics at Florida State University. He works on why language models write the way they do, and what that is doing to human writing. More at <a href="/">tjuzek.com</a>.</p>
+  </section>
+
+  <footer>
+    <p>With thanks to Zina Ward, Gordon Erlebacher and Karolina Rudnicka, and to Alyssa Beguiristain for related work.</p>
+    <p>Tommie Juzek chose what goes on this page. Claude (Anthropic&rsquo;s Opus) built it from his notes and direction, in the style of the slides. Type: Newsreader and Inter (SIL Open Font License).</p>
+    <p>Last updated 12 November 2026.</p>
+  </footer>
+
+</main>
+
+<script src="slides/assets/dye.js?v=20261112a"></script>
+<script>
+/* The dye behind the masthead: the slides' own (slides/assets/dye.js), fewer particles, idle when scrolled away;
+   a still frame under reduced motion. Once the fonts are in, a drop of dye falls from the gold em dash. */
+(function () {
+  if (!window.Dye) return;
+  var host = document.createElement('div');
+  host.className = 'waves';
+  host.setAttribute('aria-hidden', 'true');
+  document.body.insertBefore(host, document.body.firstChild);
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { /* old browser */ }
+  var visible = true;
+  try {
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(host);
+  } catch (e) { /* no observer: always run */ }
+  var dye = window.Dye.mount(host, { count: 170, colourEl: document.documentElement, still: reduce, startEmpty: !reduce,
+                                     paused: function () { return !visible; } });
+  if (reduce) return;
+  function drop() {
+    var d = document.getElementById('drop');
+    if (!d) return;
+    var r = d.getBoundingClientRect(), h = host.getBoundingClientRect();
+    dye.inject((r.left + r.width / 2 - h.left) / h.width * 1920, (r.top + r.height / 2 - h.top) / h.height * 1080, 150);
+  }
+  var go = function () { setTimeout(drop, 500); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
+})();
+</script>
+<script>
+/* The way into the slides: the page fades to the dark the slides open in (they start from it on every load that
+   opens on the title slide, then the dye falls). A click that opens a new tab goes straight there. Opacity only,
+   so it runs under reduced motion too. Back from the slides, the page returns as it was. */
+(function () {
+  var link = document.querySelector('.card.primary');
+  if (!link) return;
+  var veil = document.createElement('div');
+  veil.className = 'to-dark';
+  veil.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(veil);
+  link.addEventListener('click', function (e) {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    var gone = false, go = function () { if (!gone) { gone = true; location.href = link.href; } };
+    veil.addEventListener('transitionend', go);
+    setTimeout(go, 1100);
+    veil.classList.add('on');
+  });
+  window.addEventListener('pageshow', function () { veil.classList.remove('on'); });
+})();
+</script>
+<script data-goatcounter="https://tjuzek.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

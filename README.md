@@ -70,7 +70,9 @@ python3 -m http.server 8000
   AI-and-language claims (association, not causation). Two documented exceptions to the
   em-dash rule: the talk *What Is Left to Write?* (`talks/2026-left-to-write/` and its slides), a
   talk about the mark itself, where it appears only as the object of study and in the talk's title;
-  and `/human-baseline-collective/` (from 2026-10-25, at Tommie's request; at `/human-baseline/`
+  the talk *Copy, Contract, Tilt* (`talks/2026-copy-contract-tilt/` and its slides, from 2026-11-12), likewise
+  about the mark, where the glyph appears only as the object of study (the title slide's gold dash, a quoted
+  example, the toy model's tokens); and `/human-baseline-collective/` (from 2026-10-25, at Tommie's request; at `/human-baseline/`
   until 2026-10-30), an openly AI-drafted page with the
   AI disclaimer first, whose em dashes and "X, not Y" contrasts are deliberate. Do not "fix" them.
   (The temporary home-page banner pointed there until 2026-10-19; it now points to the Carothers
@@ -80,6 +82,11 @@ python3 -m http.server 8000
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
   published by rsync from its source folder, never with `--delete`, so the two do not touch.
   `talks/left-to-write/` is a redirect stub (`noindex`) to the 2026 slides, keeping the slide hash.
+- `talks/2026-copy-contract-tilt/` (from 2026-11-12) is the maths seminar talk of 13 November 2026, **unlisted for
+  now at Tommie's request**: landing page and slides both `noindex`, not in the sitemap, `llms.txt`, talks-press or
+  the banner, linked from no page. When Tommie says so: landing to `index, follow`, a talks-press item, a sitemap
+  entry, and perhaps the home banner. Source: `~/claudecode/maths-data-science-talk/talk/` (`landing/`, `deck/`;
+  its README has the rsync commands). Deck assets carry a `?v=` version: bump it in the source on every republish.
 - `/human-baseline-collective/` (from 2026-10-25) is an unlisted pitch page for a planned
   research podcast run by the Human Baseline Collective (so far Tommie, Matt Patience of FSU,
   and Yuri Bizzoni of Aarhus), written for anyone joining: `noindex`, not in the sitemap,
@@ -110,7 +117,8 @@ python3 -m http.server 8000
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
-to the slides' old address) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline-collective/` (unlisted podcast pitch
+to the slides' old address) · `talks/2026-copy-contract-tilt/` (the maths seminar talk of 13 November 2026:
+landing page and `slides/`, both `noindex` and unlisted for now; source in `~/claudecode/maths-data-science-talk/talk/`) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline-collective/` (unlisted podcast pitch
 for the Human Baseline Collective, from 25 October 2026; `noindex`, not in the sitemap; notes in
 `~/claudecode/podcast/`) · `human-baseline/` (redirect stub to it, from 30 October 2026) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
@@ -123,7 +131,9 @@ for the Human Baseline Collective, from 25 October 2026; `noindex`, not in the s
 - **Exceptions (third-party files keep their own licences)**: in `talks/2026-left-to-write/slides/` (also used by the landing page one level up), reveal.js is MIT
   (notice in `assets/reveal/LICENSE`), the Newsreader and Inter fonts are SIL OFL 1.1 (texts in `assets/fonts/`),
   and the image of Gerhard Richter's *Spiegel, Grau* (1991) is © Gerhard Richter, used under the National Galleries
-  of Scotland personal-use licence with credit and a link to the artwork page. None of these is MIT-0 or CC0.
+  of Scotland personal-use licence with credit and a link to the artwork page. In `talks/2026-copy-contract-tilt/slides/`
+  (also used by its landing page), reveal.js is MIT (notice in `assets/reveal/LICENSE`) and the Newsreader and
+  Inter fonts are SIL OFL 1.1 (texts in `assets/fonts/`). None of these is MIT-0 or CC0.
 
 If you reuse anything here, a credit or a link back to [tjuzek.com](https://tjuzek.com) is appreciated, though not required.
 
