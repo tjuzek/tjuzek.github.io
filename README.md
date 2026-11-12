@@ -130,7 +130,7 @@ to the slides' old address) · `talks/2026-copy-contract-tilt/` (the maths semin
 landing page and `slides/`, both `noindex` and unlisted for now; source in `~/claudecode/maths-data-science-talk/talk/`) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline-collective/` (unlisted podcast pitch
 for the Human Baseline Collective, from 25 October 2026; `noindex`, not in the sitemap; notes in
 `~/claudecode/podcast/`) · `human-baseline/` (redirect stub to it, from 30 October 2026) · `bruce/` (unlisted
-dog-calorie tally, from 12 November 2026: `index.html`, `foods.js`; `noindex`, not in the sitemap) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
+dog-calorie tally, from 12 November 2026: `index.html`, `foods.js`, `manifest.webmanifest`; `noindex`, not in the sitemap) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
 `favicon.ico`, `apple-touch-icon.png`)
 

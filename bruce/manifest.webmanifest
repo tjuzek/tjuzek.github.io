@@ -1,0 +1,12 @@
+{
+  "name": "Bruce: daily kcal",
+  "short_name": "Bruce",
+  "start_url": "/bruce/",
+  "scope": "/bruce/",
+  "display": "standalone",
+  "background_color": "#f7f3f1",
+  "theme_color": "#782F40",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

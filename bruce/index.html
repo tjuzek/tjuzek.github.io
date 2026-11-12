@@ -10,6 +10,9 @@
 <meta name="apple-mobile-web-app-title" content="Bruce">
 <link rel="icon" href="/favicon.ico?v=3">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <!--
   Unlisted personal tool (from 2026-11-12): noindex, not in the sitemap, llms.txt or the nav,
   linked from no page, no analytics. Food values and day types live in foods.js. Everything a
@@ -219,6 +222,7 @@
   <p class="banner" id="storage-banner" hidden>This browser is not saving (private mode?). Entries disappear when the page closes.</p>
   <noscript><p class="banner">This page needs JavaScript.</p></noscript>
   <p class="banner" id="data-error" hidden>Could not load the food list (foods.js). Reload the page.</p>
+  <p class="banner" id="backup-banner" hidden><span id="backup-msg"></span> <button class="btn small" id="backup-now">Back up now</button></p>
 
   <section aria-labelledby="h-plan">
     <h2 id="h-plan">Today's plan</h2>
@@ -279,12 +283,14 @@
           <button class="btn" id="s-reset">Back to defaults</button>
         </div>
         <p class="tip" id="s-defaults"></p>
+        <p class="tip"><b>Backup.</b> The log lives only on this phone. Export saves everything (the last 60 days, weigh-ins, settings) as one small file: on a phone it opens the share sheet, so choose Save to Files (iPhone) or Drive (Android), or mail it to yourself. Import puts a backup back and replaces what is on this phone.</p>
+        <p class="tip" id="b-last"></p>
         <div class="row-btns">
-          <button class="btn" id="b-export">Export backup</button>
+          <button class="btn primary" id="b-export">Export backup</button>
+          <button class="btn" id="b-download" hidden>Download instead</button>
           <button class="btn" id="b-import">Import backup</button>
           <input type="file" id="b-file" accept="application/json,.json" hidden>
         </div>
-        <p class="tip">The log lives only in this browser on this phone. Export now and then; on an iPhone, add the page to the Home Screen so Safari does not clear it.</p>
       </div>
     </details>
   </section>
@@ -366,6 +372,7 @@
       if (!d.adj || typeof d.adj !== 'object') d.adj = {};
     });
     s.weights = s.weights.filter(function (w) { return w && validKey(w.d) && typeof w.lb === 'number' && w.lb > 0; });
+    if (!validKey(s.lastBackup)) s.lastBackup = null;
     return s;
   }
   function load() {
@@ -405,7 +412,11 @@
 
   function pieces(f) { return !(f.kcalPerG > 0) && f.kcalPerPiece > 0; }
   function per(f) { return f.kcalPerG > 0 ? f.kcalPerG : (f.kcalPerPiece || 0); }
-  function stdQty(f) { return pieces(f) ? f.tapPieces : f.portion; }
+  function tapQty(f, d) {   // what one tap logs: counted foods start with firstTap, then nextTap
+    if (!pieces(f)) return f.portion;
+    var first = f.firstTap || f.nextTap || 1, next = f.nextTap || first;
+    return logged(d, f.id).q > 0 ? next : first;
+  }
   function roundG(g) { return g < 10 ? Math.round(g * 10) / 10 : Math.round(g); }
   function roundQ(f, q) { return pieces(f) ? Math.round(q) : roundG(q); }
   function fmtG(g) { return String(roundG(g)); }
@@ -416,9 +427,9 @@
     if (!pieces(f) && f.unit && Math.abs(q - f.portion) < 0.05) return f.unit;
     return fmtQ(f, q);
   }
-  function portionLabel(f) {
-    var q = stdQty(f);
-    if (pieces(f)) return fmtPc(q);
+  function portionLabel(f, d) {
+    var q = tapQty(f, d);
+    if (pieces(f)) return (logged(d, f.id).q > 0 ? '+' : '') + fmtPc(q);
     return f.unit ? f.unit + ' (' + fmtG(q) + ' g)' : fmtG(q) + ' g';
   }
   function parseNum(s) {
@@ -525,8 +536,9 @@
     }
     var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Change</button></div><ul class="pl-list">';
     p.rows.forEach(function (r) {
-      var give = toGive(r), amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
-      if (r.given > 0 && give > 0) amt += ' (' + fmtQ(r.f, r.given) + ' given)';
+      var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r);
+      var amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
+      if (r.given > 0 && (pc || give > 0)) amt += ' (' + fmtQ(r.f, r.given) + ' given)';
       if (r.fill) amt += ' · tops up the day';
       var steps = r.adjustable ? '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="-1" aria-label="Less ' + esc(r.f.name) + '">−</button>' +
         '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="1" aria-label="More ' + esc(r.f.name) + '">+</button>' : '';
@@ -552,7 +564,11 @@
     var p = planOf(peekDay(todayKey())); if (!p) return;
     if (g) {
       var id = g.getAttribute('data-give');
-      p.rows.forEach(function (r) { if (r.f.id === id) { var q = toGive(r); if (q > 0) addEntry(r.f, q); } });
+      p.rows.forEach(function (r) {
+        if (r.f.id !== id) return;
+        var q = pieces(r.f) ? tapQty(r.f, peekDay(todayKey())) : toGive(r);
+        if (q > 0) addEntry(r.f, q);
+      });
       return;
     }
     if (s) {
@@ -612,10 +628,10 @@
       var n = counts[f.id] || 0, badge = '';
       if (n) badge = pieces(f) ? String(Math.round(logged(d, f.id).q)) : (n > 1 ? '×' + n : '✓');
       return '<div class="tile">' +
-        '<button class="tile-main" data-add="' + esc(f.id) + '" aria-label="Add ' + esc(f.name) + ', ' + esc(portionLabel(f)) + '">' +
+        '<button class="tile-main" data-add="' + esc(f.id) + '" aria-label="Add ' + esc(f.name) + ', ' + esc(portionLabel(f, d)) + '">' +
           '<span class="tile-name">' + esc(f.name) + '</span>' +
-          '<span class="tile-portion">' + esc(portionLabel(f)) + '</span>' +
-          '<span class="tile-kcal">' + fmtK(stdQty(f) * per(f)) + ' kcal</span>' +
+          '<span class="tile-portion">' + esc(portionLabel(f, d)) + '</span>' +
+          '<span class="tile-kcal">' + fmtK(tapQty(f, d) * per(f)) + ' kcal</span>' +
         '</button>' +
         '<span class="badge"' + (n ? '' : ' hidden') + '>' + badge + '</span>' +
         '<button class="tile-more" data-open="' + esc(f.id) + '">' + (pieces(f) ? 'Pieces / kcal ›' : 'Grams / kcal ›') + '</button>' +
@@ -705,7 +721,7 @@
 
   function render() {
     var d = peekDay(todayKey()), b = budget(d);
-    renderBar(b); renderPlan(d); renderWalks(b); renderTiles(d); renderLeft(b); renderLog(d); renderHistory(); renderWeights();
+    renderBar(b); renderPlan(d); renderWalks(b); renderTiles(d); renderLeft(b); renderLog(d); renderHistory(); renderWeights(); renderBackup();
     if ($('panel').open) renderPanel();
   }
 
@@ -807,7 +823,7 @@
   // ---------- main-page events ----------
   $('tiles').addEventListener('click', function (ev) {
     var a = ev.target.closest('[data-add]'), o = ev.target.closest('[data-open]');
-    if (a) { var f = byId[a.getAttribute('data-add')]; if (f) addEntry(f, stdQty(f)); }
+    if (a) { var f = byId[a.getAttribute('data-add')]; if (f) addEntry(f, tapQty(f, peekDay(todayKey()))); }
     else if (o) { var f2 = byId[o.getAttribute('data-open')]; if (f2) openPanel(f2); }
   });
   $('log').addEventListener('click', function (ev) {
@@ -856,14 +872,43 @@
   });
 
   // Backup
-  $('b-export').addEventListener('click', function () {
+  function backupName() { return 'bruce-backup-' + todayKey() + '.json'; }
+  function markBackedUp(msg) { state.lastBackup = todayKey(); save(); renderBackup(); toast(msg); }
+  function canShareFiles() {
+    try {
+      return !!(navigator.share && navigator.canShare &&
+        navigator.canShare({ files: [new File(['{}'], 'test.json', { type: 'application/json' })] }));
+    } catch (e) { return false; }
+  }
+  function downloadBackup() {
     var blob = new Blob([JSON.stringify(state, null, 1)], { type: 'application/json' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'bruce-backup-' + todayKey() + '.json';
+    a.download = backupName();
     document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-  });
+    markBackedUp('Backup downloaded.');
+  }
+  function exportBackup() {
+    if (!canShareFiles()) { downloadBackup(); return; }
+    var file = new File([JSON.stringify(state, null, 1)], backupName(), { type: 'application/json' });
+    navigator.share({ files: [file], title: 'Bruce backup' })
+      .then(function () { markBackedUp('Backup saved.'); })
+      .catch(function (e) { if (!e || e.name !== 'AbortError') downloadBackup(); });
+  }
+  function renderBackup() {
+    var lb = state.lastBackup, n = lb ? daysBetween(lb, todayKey()) : null;
+    $('b-last').textContent = 'Last backup: ' + (!lb ? 'none yet' : n <= 0 ? 'today' : n === 1 ? 'yesterday' :
+      n + ' days ago (' + dayLabel(lb) + ')') + '.';
+    var daysLogged = Object.keys(state.days).filter(function (k) { return state.days[k].entries.length; }).length;
+    var due = daysLogged >= 7 && (!lb || n >= 14);
+    $('backup-banner').hidden = !due;
+    if (due) $('backup-msg').textContent = lb ? 'No backup for ' + n + ' days.' : 'Not backed up yet.';
+  }
+  $('b-download').hidden = !canShareFiles();
+  $('b-export').addEventListener('click', exportBackup);
+  $('b-download').addEventListener('click', downloadBackup);
+  $('backup-now').addEventListener('click', exportBackup);
   $('b-import').addEventListener('click', function () { $('b-file').click(); });
   $('b-file').addEventListener('change', function () {
     var file = this.files && this.files[0]; this.value = '';
