@@ -63,6 +63,15 @@ python3 -m http.server 8000
   `meta.json`) are BUILT, never hand-edited: `~/claudecode/lin3042/course/modules/sleep-sound/code/build_sleep.py`.
   The recordings are Sleep-EDF Expanded (PhysioNet), licensed ODC-By 1.0, not CC0; the page and its footer
   say so. Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/sleep-sound/README.md`.
+- `/bruce/` (from 2026-11-12) is an unlisted personal tool, not part of the academic site: a phone
+  calorie tally for Tommie's dog (a day planner, corned beef or chicken day, that tops up with kibble
+  to the 700 to 750 kcal band; tiles for what she ate; grams to kcal and back; what is left, in grams;
+  a walk credit; weigh-ins). `noindex, nofollow`, not in the sitemap, `llms.txt` or the nav,
+  linked from no page, no analytics, and deliberately no `robots.txt` line (a Disallow would advertise
+  the path and hide the noindex from crawlers). Food values and day types live in `bruce/foods.js`, the
+  only file a routine change touches. The log stays in the phone's browser (`localStorage`); nothing is sent.
+  `?today=YYYY-MM-DD` previews another day on a separate test store. Notes and derivations:
+  `~/claudecode/bruce-diet/README.md` (not served).
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
@@ -120,7 +129,8 @@ not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-
 to the slides' old address) · `talks/2026-copy-contract-tilt/` (the maths seminar talk of 13 November 2026:
 landing page and `slides/`, both `noindex` and unlisted for now; source in `~/claudecode/maths-data-science-talk/talk/`) · `talks/2026-carothers/` (the Carothers lecture slides as a PDF, 20 October 2026; linked from the home banner, not in the sitemap) · `human-baseline-collective/` (unlisted podcast pitch
 for the Human Baseline Collective, from 25 October 2026; `noindex`, not in the sitemap; notes in
-`~/claudecode/podcast/`) · `human-baseline/` (redirect stub to it, from 30 October 2026) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
+`~/claudecode/podcast/`) · `human-baseline/` (redirect stub to it, from 30 October 2026) · `bruce/` (unlisted
+dog-calorie tally, from 12 November 2026: `index.html`, `foods.js`; `noindex`, not in the sitemap) · images (`share-card.jpg`, `sunset-banner.jpg`, `thomas-stephan-juzek.jpg`,
 `tommie-juzek.jpg` and its `-384`/`-768` derivatives, `thomas-juzek-avatar.jpg`,
 `favicon.ico`, `apple-touch-icon.png`)
 
