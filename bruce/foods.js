@@ -12,8 +12,9 @@
  *   portion       weighed foods: standard portion in grams, what one tap on the tile logs
  *   unit          optional name for that portion, e.g. '½ can'
  *   kcalPerPiece  counted foods (treats): kcal per piece
- *   firstTap      counted foods: pieces the first tap of the day logs (tile and plan)
- *   nextTap       counted foods: pieces each later tap adds
+ *   tapPieces     counted foods: pieces each tap adds (tile and plan)
+ *   startPieces   counted foods: pieces already counted when a new day starts (a normal log
+ *                 entry marked "start", deletable like any other)
  *   flex          true for weighed foods that are easy to adjust; the page turns the kcal left
  *                 today into grams of each of these
  *   short         optional short name for running text (the page is in Dutch, nl-BE)
@@ -23,7 +24,7 @@
  * rewrite past days.
  */
 window.BRUCE = {
-  updated: '2026-11-12',
+  updated: '2026-11-13',
 
   target: 750,     // kcal a day, treats included: the cap, never more
   bandWidth: 50,   // the day should land in the band from (target - 50) to target: 700 to 750
@@ -53,9 +54,9 @@ window.BRUCE = {
       note: 'Groene boontjes. Etiket: 15 kcal per portie, 3,5 porties per blik, dus ½ blik is ongeveer 26 kcal. ' +
             'De grammen gaan uit van 125 g per portie (niet nagekeken op het etiket).' },
 
-    { id: 'treat', name: 'Snoepjes', short: 'snoepjes', kcalPerPiece: 2, firstTap: 10, nextTap: 5,
-      note: 'Trainingssnoepjes, 2 kcal per stuk. Een gewone dag is ongeveer 30 stuks (60 kcal), ' +
-            'binnen de 750. De eerste keer drukken telt 10 stuks, daarna telkens 5 erbij.' },
+    { id: 'treat', name: 'Snoepjes', short: 'snoepjes', kcalPerPiece: 2, tapPieces: 5, startPieces: 20,
+      note: 'Trainingssnoepjes, 2 kcal per stuk. Elke dag begint met 20 stuks (40 kcal) al meegeteld; ' +
+            'elke druk telt er 5 bij. Een gewone dag is ongeveer 30 stuks (60 kcal), binnen de 750.' },
 
     { id: 'corned', flex: true, name: 'Cornedbeef, zoutarm', kcalPerG: 130 / 56, portion: 28,
       note: 'Etiket: 130 kcal per 56 g. 28 g (65 kcal) = ongeveer 45 g ovengebraden vlees of 55 g kip. ' +

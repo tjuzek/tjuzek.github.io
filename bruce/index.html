@@ -121,6 +121,9 @@
     border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
   .tile-main { flex: 1; text-align: left; border: 0; background: none; padding: 12px 12px 10px; min-height: 92px; }
   .tile-main:active { background: var(--accent-soft); }
+  .tile-main { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+  .tile-main.pressing { background: var(--accent-soft); }
+  .tiles-hint { margin-top: 8px; }
   .tile-name { display: block; font-weight: 650; font-size: 16px; line-height: 1.2; padding-right: 34px; }
   .tile-portion { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; }
   .tile-kcal { display: block; font-size: 17px; font-weight: 650; margin-top: 2px; }
@@ -242,6 +245,7 @@
   <section aria-labelledby="h-food">
     <h2 id="h-food">Of druk op wat ze kreeg</h2>
     <div class="tiles" id="tiles"></div>
+    <p class="tip tiles-hint">Lang indrukken op een tegel wist die soort voor vandaag. Losse items wis je met × onder Vandaag.</p>
   </section>
 
   <section aria-labelledby="h-left">
@@ -413,10 +417,8 @@
 
   function pieces(f) { return !(f.kcalPerG > 0) && f.kcalPerPiece > 0; }
   function per(f) { return f.kcalPerG > 0 ? f.kcalPerG : (f.kcalPerPiece || 0); }
-  function tapQty(f, d) {   // what one tap logs: counted foods start with firstTap, then nextTap
-    if (!pieces(f)) return f.portion;
-    var first = f.firstTap || f.nextTap || 1, next = f.nextTap || first;
-    return logged(d, f.id).q > 0 ? next : first;
+  function tapQty(f) {   // what one tap logs
+    return pieces(f) ? (f.tapPieces || 1) : f.portion;
   }
   function roundG(g) { return g < 10 ? Math.round(g * 10) / 10 : Math.round(g); }
   function roundQ(f, q) { return pieces(f) ? Math.round(q) : roundG(q); }
@@ -430,8 +432,8 @@
     return fmtQ(f, q);
   }
   function portionLabel(f, d) {
-    var q = tapQty(f, d);
-    if (pieces(f)) return (logged(d, f.id).q > 0 ? '+' : '') + fmtPc(q);
+    var q = tapQty(f);
+    if (pieces(f)) return '+' + fmtPc(q);
     return f.unit ? f.unit + ' (' + fmtG(q) + ' g)' : fmtG(q) + ' g';
   }
   function parseNum(s) {
@@ -443,7 +445,14 @@
   function peekDay(k) { return state.days[k] || null; }
   function day() {
     var k = todayKey();
-    if (!state.days[k]) state.days[k] = { entries: [], walks: 0, type: null, adj: {} };
+    if (!state.days[k]) {
+      var entries = [];
+      FOODS.forEach(function (f) {   // e.g. 20 treats already counted when the day starts
+        if (pieces(f) && f.startPieces > 0) entries.push({ id: uid(), ts: Date.now(), food: f.id, name: f.name,
+          q: f.startPieces, u: 'pc', kcal: f.startPieces * per(f), start: true });
+      });
+      state.days[k] = { entries: entries, walks: 0, type: null, adj: {} };
+    }
     return state.days[k];
   }
   function sumDay(d) { var t = 0; if (d) d.entries.forEach(function (e) { t += e.kcal; }); return t; }
@@ -539,7 +548,7 @@
     }
     var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Wijzigen</button></div><ul class="pl-list">';
     p.rows.forEach(function (r) {
-      var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r);
+      var pc = pieces(r.f), give = pc ? tapQty(r.f) : toGive(r);
       var amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
       if (r.given > 0 && (pc || give > 0)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
       if (r.fill) amt += ' · vult de dag aan';
@@ -569,7 +578,7 @@
       var id = g.getAttribute('data-give');
       p.rows.forEach(function (r) {
         if (r.f.id !== id) return;
-        var q = pieces(r.f) ? tapQty(r.f, peekDay(todayKey())) : toGive(r);
+        var q = pieces(r.f) ? tapQty(r.f) : toGive(r);
         if (q > 0) addEntry(r.f, q);
       });
       return;
@@ -634,7 +643,7 @@
         '<button class="tile-main" data-add="' + esc(f.id) + '" aria-label="Voeg toe: ' + esc(f.name) + ', ' + esc(portionLabel(f, d)) + '">' +
           '<span class="tile-name">' + esc(f.name) + '</span>' +
           '<span class="tile-portion">' + esc(portionLabel(f, d)) + '</span>' +
-          '<span class="tile-kcal">' + fmtK(tapQty(f, d) * per(f)) + ' kcal</span>' +
+          '<span class="tile-kcal">' + fmtK(tapQty(f) * per(f)) + ' kcal</span>' +
         '</button>' +
         '<span class="badge"' + (n ? '' : ' hidden') + '>' + badge + '</span>' +
         '<button class="tile-more" data-open="' + esc(f.id) + '">' + (pieces(f) ? 'Stuks / kcal ›' : 'Gram / kcal ›') + '</button>' +
@@ -660,7 +669,7 @@
     var list = d ? d.entries.slice().sort(function (a, b) { return b.ts - a.ts; }) : [];
     if (!list.length) { $('log').innerHTML = '<li class="empty">Vandaag nog niets ingevoerd.</li>'; return; }
     $('log').innerHTML = list.map(function (e) {
-      var t = new Date(e.ts).toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
+      var t = e.start ? 'start' : new Date(e.ts).toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
       var amt = e.u === 'pc' ? fmtPc(e.q) : (typeof e.q === 'number' ? fmtG(e.q) + ' g' : '');
       return '<li><span class="t">' + t + '</span><span class="n">' + esc(nameOf(e)) +
         (amt ? ' <small>' + amt + '</small>' : '') + '</span>' +
@@ -826,9 +835,51 @@
   // ---------- main-page events ----------
   $('tiles').addEventListener('click', function (ev) {
     var a = ev.target.closest('[data-add]'), o = ev.target.closest('[data-open]');
-    if (a) { var f = byId[a.getAttribute('data-add')]; if (f) addEntry(f, tapQty(f, peekDay(todayKey()))); }
+    if (a) {
+      if (suppressClick) { suppressClick = false; return; }
+      var f = byId[a.getAttribute('data-add')]; if (f) addEntry(f, tapQty(f));
+    }
     else if (o) { var f2 = byId[o.getAttribute('data-open')]; if (f2) openPanel(f2); }
   });
+  // Long-press on a tile clears that food for today (with undo).
+  function resetFood(id) {
+    var d = peekDay(todayKey()), f = byId[id]; if (!f) return;
+    var removed = [], kept = [];
+    if (d) d.entries.forEach(function (e) { (e.food === id ? removed : kept).push(e); });
+    if (!removed.length) { toast(f.name + ': vandaag niets om te wissen.'); return; }
+    try { if (navigator.vibrate) navigator.vibrate(30); } catch (e) { /* no vibration */ }
+    d.entries = kept; save(); render();
+    var q = 0, k = 0;
+    removed.forEach(function (e) { q += (typeof e.q === 'number' ? e.q : 0); k += e.kcal; });
+    toast(f.name + ' van vandaag gewist (' + fmtQ(f, q) + ', ' + fmtK(k) + ' kcal)', function () {
+      var dd = day(); dd.entries = dd.entries.concat(removed); save(); render();
+    });
+  }
+  var press = null, suppressClick = false;
+  function cancelPress() {
+    if (!press) return;
+    clearTimeout(press.timer);
+    if (press.el) press.el.classList.remove('pressing');
+    press = null;
+  }
+  $('tiles').addEventListener('pointerdown', function (ev) {
+    suppressClick = false;   // a new touch: only the click of the long-press gesture itself is swallowed
+    var a = ev.target.closest('[data-add]'); if (!a) return;
+    cancelPress();
+    a.classList.add('pressing');
+    press = { el: a, x: ev.clientX, y: ev.clientY, timer: setTimeout(function () {
+      var id = a.getAttribute('data-add');
+      cancelPress();
+      suppressClick = true;
+      resetFood(id);
+    }, 650) };
+  });
+  $('tiles').addEventListener('pointermove', function (ev) {
+    if (press && (Math.abs(ev.clientX - press.x) > 10 || Math.abs(ev.clientY - press.y) > 10)) cancelPress();
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { $('tiles').addEventListener(t, cancelPress); });
+  $('tiles').addEventListener('contextmenu', function (ev) { if (ev.target.closest('[data-add]')) ev.preventDefault(); });
+
   $('log').addEventListener('click', function (ev) {
     var b = ev.target.closest('[data-del]'); if (b) removeEntry(b.getAttribute('data-del'));
   });
@@ -936,13 +987,13 @@
   }
   $('foot-updated').textContent = 'Voedingswaarden laatst bijgewerkt op ' + parseKey(B.updated || todayKey()).toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) + '. Niets op deze pagina wordt ergens naartoe gestuurd.';
   $('storage-banner').hidden = storageOK;
-  prune(); save();
+  prune(); day(); save();
   renderSettings(); render();
 
   // Roll over at midnight, and catch up when the phone wakes the page.
   var lastKey = todayKey();
   function tick() {
-    if (todayKey() !== lastKey) { lastKey = todayKey(); $('w-date').value = lastKey; prune(); save(); render(); }
+    if (todayKey() !== lastKey) { lastKey = todayKey(); $('w-date').value = lastKey; prune(); day(); save(); render(); }
   }
   setInterval(tick, 60000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) { tick(); render(); } });
