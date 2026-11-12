@@ -16,6 +16,7 @@
  *   nextTap       counted foods: pieces each later tap adds
  *   flex          true for weighed foods that are easy to adjust; the page turns the kcal left
  *                 today into grams of each of these
+ *   short         optional short name for running text (the page is in Dutch, nl-BE)
  *   note          shown in the item's panel
  *
  * The log stores amounts and kcal at the time of logging, so changing a value here does not
@@ -30,35 +31,35 @@ window.BRUCE = {
   walkKcal: 20,    // kcal added per 15-minute walk (rough estimate, see the README)
 
   foods: [
-    { id: 'kibble', flex: true, name: 'Kibble', kcalPerG: 2.853, portion: 85,
-      note: 'Label: 2853 kcal per kg.' },
+    { id: 'kibble', flex: true, name: 'Brokjes', kcalPerG: 2.853, portion: 85,
+      note: 'Etiket: 2853 kcal per kg.' },
 
-    { id: 'wet', name: 'Canned dog food', kcalPerG: 1.14, portion: 187.1, unit: '½ can',
-      note: 'Label: 1140 kcal per kg. A whole can is 374.2 g.' },
+    { id: 'wet', name: 'Blikvoer', short: 'hondenvoer', kcalPerG: 1.14, portion: 187.1, unit: '½ blik',
+      note: 'Etiket: 1140 kcal per kg. Een volledig blik weegt 374,2 g.' },
 
-    { id: 'meat', flex: true, name: 'Oven-roasted dog meat', kcalPerG: 1.45, portion: 85,
-      note: 'Label: 1450 kcal per kg.' },
+    { id: 'meat', flex: true, name: 'Ovengebraden vlees', kcalPerG: 1.45, portion: 85,
+      note: 'Ovengebraden hondenvlees. Etiket: 1450 kcal per kg.' },
 
-    { id: 'chicken', flex: true, name: 'Chicken, boiled', kcalPerG: 1.2, portion: 100,
-      note: 'Costco tenderloins, boiled in water. The label (100 kcal per 112 g) is for RAW weight; ' +
-            'boiled chicken loses about a quarter of its weight, so cooked is about 1.2 kcal per g. ' +
-            'Weigh it cooked. 100 g cooked is about 135 g raw.' },
+    { id: 'chicken', flex: true, name: 'Kip, gekookt', kcalPerG: 1.2, portion: 100,
+      note: 'Kipfilethaasjes van Costco, gekookt in water. Het etiket (100 kcal per 112 g) geldt voor ' +
+            'RAUW gewicht; gekookte kip verliest ongeveer een kwart van haar gewicht, dus gekookt is het ' +
+            'ongeveer 1,2 kcal per g. Weeg ze gekookt. 100 g gekookt is ongeveer 135 g rauw.' },
 
-    { id: 'veg', name: 'Mixed veg, low sodium', kcalPerG: 0.36, portion: 218.75, unit: '½ can',
-      note: 'Label: 45 kcal per serving, 3.5 servings per can, so ½ can is about 79 kcal. ' +
-            'Grams assume 125 g per serving (not checked on the label).' },
+    { id: 'veg', name: 'Groentemix, zoutarm', short: 'groentemix', kcalPerG: 0.36, portion: 218.75, unit: '½ blik',
+      note: 'Etiket: 45 kcal per portie, 3,5 porties per blik, dus ½ blik is ongeveer 79 kcal. ' +
+            'De grammen gaan uit van 125 g per portie (niet nagekeken op het etiket).' },
 
-    { id: 'beans', name: 'Green beans, low sodium', kcalPerG: 0.12, portion: 218.75, unit: '½ can',
-      note: 'Label: 15 kcal per serving, 3.5 servings per can, so ½ can is about 26 kcal. ' +
-            'Grams assume 125 g per serving (not checked on the label).' },
+    { id: 'beans', name: 'Boontjes, zoutarm', short: 'boontjes', kcalPerG: 0.12, portion: 218.75, unit: '½ blik',
+      note: 'Groene boontjes. Etiket: 15 kcal per portie, 3,5 porties per blik, dus ½ blik is ongeveer 26 kcal. ' +
+            'De grammen gaan uit van 125 g per portie (niet nagekeken op het etiket).' },
 
-    { id: 'treat', name: 'Treats', kcalPerPiece: 2, firstTap: 10, nextTap: 5,
-      note: 'Training treats, 2 kcal per piece. A normal day is about 30 pieces (60 kcal), ' +
-            'inside the 750. The first tap of the day logs 10 pieces, each tap after that 5 more.' },
+    { id: 'treat', name: 'Snoepjes', short: 'snoepjes', kcalPerPiece: 2, firstTap: 10, nextTap: 5,
+      note: 'Trainingssnoepjes, 2 kcal per stuk. Een gewone dag is ongeveer 30 stuks (60 kcal), ' +
+            'binnen de 750. De eerste keer drukken telt 10 stuks, daarna telkens 5 erbij.' },
 
-    { id: 'corned', flex: true, name: 'Corned beef, low sodium', kcalPerG: 130 / 56, portion: 28,
-      note: 'Label: 130 kcal per 56 g. 28 g (65 kcal) = about 45 g dog meat or 55 g chicken. ' +
-            'Salty, so keep it to about 28 g.' }
+    { id: 'corned', flex: true, name: 'Cornedbeef, zoutarm', kcalPerG: 130 / 56, portion: 28,
+      note: 'Etiket: 130 kcal per 56 g. 28 g (65 kcal) = ongeveer 45 g ovengebraden vlees of 55 g kip. ' +
+            'Zout, dus hou het bij ongeveer 28 g.' }
   ],
 
   // Given every day, whatever the day type. The ½ cans are not weighed.
@@ -71,7 +72,7 @@ window.BRUCE = {
   // Every-day items 378 kcal; corned beef day 65 + 58 + kibble ~84 g (741);
   // chicken day 72 + 58 + kibble ~81 g (739). Oven roast 40 g on both days.
   dayTypes: [
-    { id: 'corned', name: 'Corned beef day', items: [ { id: 'corned', g: 28 }, { id: 'meat', g: 40 } ], fill: 'kibble' },
-    { id: 'chicken', name: 'Chicken day', items: [ { id: 'chicken', g: 60 }, { id: 'meat', g: 40 } ], fill: 'kibble' }
+    { id: 'corned', name: 'Cornedbeefdag', short: 'cornedbeef', items: [ { id: 'corned', g: 28 }, { id: 'meat', g: 40 } ], fill: 'kibble' },
+    { id: 'chicken', name: 'Kipdag', short: 'kip', items: [ { id: 'chicken', g: 60 }, { id: 'meat', g: 40 } ], fill: 'kibble' }
   ]
 };

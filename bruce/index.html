@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="nl-BE">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bruce: daily kcal</title>
+<title>Bruce: kcal per dag</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Bruce's daily calorie tally.">
+<meta name="description" content="Bruces calorieteller per dag.">
 <meta name="theme-color" content="#782F40">
 <meta name="apple-mobile-web-app-title" content="Bruce">
 <link rel="icon" href="/favicon.ico?v=3">
@@ -18,6 +18,7 @@
   linked from no page, no analytics. Food values and day types live in foods.js. Everything a
   visitor logs stays in this browser (localStorage key "bruce.v1"); nothing is sent anywhere.
   ?today=YYYY-MM-DD previews another day, on a separate test store ("bruce.v1.preview").
+  The page is in Dutch (nl-BE, Flemish word choices) at Tommie's request; code comments stay English.
   Notes: ~/claudecode/bruce-diet/README.md (not served).
 -->
 <style>
@@ -210,7 +211,7 @@
     <div class="bar-top"><span><strong>Bruce</strong> · <span id="date-label"></span></span><span id="band-label"></span></div>
     <div class="tally">
       <div class="total" aria-live="polite"><span id="total">0</span> <small>kcal</small></div>
-      <div class="status" id="status"><b id="status-big">750</b><span id="status-small">kcal left</span></div>
+      <div class="status" id="status"><b id="status-big">750</b><span id="status-small">kcal over</span></div>
     </div>
     <div class="meter" aria-hidden="true"><div class="meter-band" id="meter-band"></div><div class="meter-fill" id="meter-fill"></div><div class="meter-mark" id="meter-mark"></div></div>
     <div class="meter-legend"><span>0</span><span id="legend-right"></span></div>
@@ -219,54 +220,54 @@
 
 <main class="wrap">
   <p class="banner" id="preview-banner" hidden></p>
-  <p class="banner" id="storage-banner" hidden>This browser is not saving (private mode?). Entries disappear when the page closes.</p>
-  <noscript><p class="banner">This page needs JavaScript.</p></noscript>
-  <p class="banner" id="data-error" hidden>Could not load the food list (foods.js). Reload the page.</p>
-  <p class="banner" id="backup-banner" hidden><span id="backup-msg"></span> <button class="btn small" id="backup-now">Back up now</button></p>
+  <p class="banner" id="storage-banner" hidden>Deze browser bewaart niets (privévenster?). Wat je invoert, verdwijnt als de pagina sluit.</p>
+  <noscript><p class="banner">Deze pagina heeft JavaScript nodig.</p></noscript>
+  <p class="banner" id="data-error" hidden>Kon de voedingslijst (foods.js) niet laden. Herlaad de pagina.</p>
+  <p class="banner" id="backup-banner" hidden><span id="backup-msg"></span> <button class="btn small" id="backup-now">Nu back-up maken</button></p>
 
   <section aria-labelledby="h-plan">
-    <h2 id="h-plan">Today's plan</h2>
+    <h2 id="h-plan">Plan voor vandaag</h2>
     <div class="card" id="plan-card"></div>
   </section>
 
   <section aria-labelledby="h-walks">
-    <h2 id="h-walks">Walks</h2>
+    <h2 id="h-walks">Wandelingen</h2>
     <div class="card walks">
-      <div class="walks-text"><b id="walk-count">No walks yet</b><span id="walk-sub"></span></div>
-      <button class="btn small" id="walk-minus" aria-label="Remove a walk">−</button>
-      <button class="btn primary" id="walk-plus">+15 min walk</button>
+      <div class="walks-text"><b id="walk-count">Nog geen wandelingen</b><span id="walk-sub"></span></div>
+      <button class="btn small" id="walk-minus" aria-label="Wandeling verwijderen">−</button>
+      <button class="btn primary" id="walk-plus">+15 min wandelen</button>
     </div>
   </section>
 
   <section aria-labelledby="h-food">
-    <h2 id="h-food">Or tap what she got</h2>
+    <h2 id="h-food">Of druk op wat ze kreeg</h2>
     <div class="tiles" id="tiles"></div>
   </section>
 
   <section aria-labelledby="h-left">
-    <h2 id="h-left">What's left, in grams</h2>
+    <h2 id="h-left">Nog over, in gram</h2>
     <div class="card leftcard" id="left-card"></div>
   </section>
 
   <section aria-labelledby="h-log">
-    <h2 id="h-log">Today</h2>
+    <h2 id="h-log">Vandaag</h2>
     <div class="card"><ul class="rows" id="log"></ul></div>
   </section>
 
   <section class="stack">
     <details class="card">
-      <summary><span>Last 14 days</span></summary>
+      <summary><span>Laatste 14 dagen</span></summary>
       <ul class="rows" id="history"></ul>
     </details>
 
     <details class="card">
-      <summary><span>Weigh-ins <small id="weigh-sub"></small></span></summary>
+      <summary><span>Wegingen <small id="weigh-sub"></small></span></summary>
       <div class="inner stack">
-        <p class="tip">The vet's goal: a visible waist, and her ribs showing when she stretches.</p>
+        <p class="tip">Doel van de dierenarts: een zichtbare taille, en haar ribben zichtbaar als ze zich uitrekt.</p>
         <div class="row-btns">
-          <input type="date" id="w-date" aria-label="Date">
-          <input type="text" id="w-lb" inputmode="decimal" placeholder="lb" aria-label="Weight in lb" style="width:6em">
-          <button class="btn primary" id="w-add">Add</button>
+          <input type="date" id="w-date" aria-label="Datum">
+          <input type="text" id="w-lb" inputmode="decimal" placeholder="lb" aria-label="Gewicht in lb" style="width:6em">
+          <button class="btn primary" id="w-add">Toevoegen</button>
         </div>
         <p class="trend" id="trend"></p>
       </div>
@@ -274,21 +275,21 @@
     </details>
 
     <details class="card">
-      <summary><span>Settings and backup</span></summary>
+      <summary><span>Instellingen en back-up</span></summary>
       <div class="inner stack">
-        <label class="field">Daily cap (kcal, treats included) <input type="text" inputmode="decimal" id="s-target"></label>
-        <label class="field">kcal per 15-minute walk <input type="text" inputmode="decimal" id="s-walk"></label>
+        <label class="field">Maximum per dag (kcal, met snoepjes) <input type="text" inputmode="decimal" id="s-target"></label>
+        <label class="field">kcal per wandeling van 15 min <input type="text" inputmode="decimal" id="s-walk"></label>
         <div class="row-btns">
-          <button class="btn primary" id="s-save">Save</button>
-          <button class="btn" id="s-reset">Back to defaults</button>
+          <button class="btn primary" id="s-save">Opslaan</button>
+          <button class="btn" id="s-reset">Standaardwaarden</button>
         </div>
         <p class="tip" id="s-defaults"></p>
-        <p class="tip"><b>Backup.</b> The log lives only on this phone. Export saves everything (the last 60 days, weigh-ins, settings) as one small file: on a phone it opens the share sheet, so choose Save to Files (iPhone) or Drive (Android), or mail it to yourself. Import puts a backup back and replaces what is on this phone.</p>
+        <p class="tip"><b>Back-up.</b> Het logboek staat alleen op deze telefoon. Exporteren bewaart alles (de laatste 60 dagen, de wegingen, de instellingen) in één klein bestand. Op een telefoon opent het deelmenu: kies Bewaar in Bestanden (iPhone) of Drive (Android), of mail het naar jezelf. Importeren zet een back-up terug en vervangt wat er op deze telefoon staat.</p>
         <p class="tip" id="b-last"></p>
         <div class="row-btns">
-          <button class="btn primary" id="b-export">Export backup</button>
-          <button class="btn" id="b-download" hidden>Download instead</button>
-          <button class="btn" id="b-import">Import backup</button>
+          <button class="btn primary" id="b-export">Back-up exporteren</button>
+          <button class="btn" id="b-download" hidden>Liever downloaden</button>
+          <button class="btn" id="b-import">Back-up importeren</button>
           <input type="file" id="b-file" accept="application/json,.json" hidden>
         </div>
       </div>
@@ -296,7 +297,7 @@
   </section>
 
   <footer class="foot">
-    <p>Calories are estimates from package labels. The scale, the weigh-ins and the vet's eye are what count.</p>
+    <p>De calorieën zijn schattingen op basis van de etiketten. De weegschaal, de wegingen en het oog van de dierenarts geven de doorslag.</p>
     <p id="foot-band"></p>
     <p id="foot-updated"></p>
   </footer>
@@ -304,7 +305,7 @@
 
 <dialog id="panel" aria-labelledby="p-title">
   <div class="p-wrap">
-    <div class="p-head"><h2 id="p-title"></h2><button class="x" id="p-close" aria-label="Close">×</button></div>
+    <div class="p-head"><h2 id="p-title"></h2><button class="x" id="p-close" aria-label="Sluiten">×</button></div>
     <p class="p-note" id="p-note"></p>
     <p class="p-left" id="p-left"></p>
     <div class="seg" id="p-seg" role="tablist">
@@ -312,22 +313,22 @@
       <button role="tab" data-mode="k" id="seg-k"></button>
     </div>
     <div id="p-q">
-      <div class="entry"><input type="text" inputmode="decimal" id="q-in" autocomplete="off" aria-label="Amount"><span id="q-unit">g</span></div>
+      <div class="entry"><input type="text" inputmode="decimal" id="q-in" autocomplete="off" aria-label="Hoeveelheid"><span id="q-unit">g</span></div>
       <div class="quick" id="q-quick"></div>
       <p class="result" id="q-out"></p>
-      <button class="btn primary p-add" id="q-add" disabled>Add</button>
+      <button class="btn primary p-add" id="q-add" disabled>Toevoegen</button>
     </div>
     <div id="p-k">
       <div class="entry"><input type="text" inputmode="decimal" id="k-in" autocomplete="off" aria-label="kcal"><span>kcal</span></div>
       <div class="quick" id="k-quick"></div>
       <p class="result" id="k-out"></p>
-      <button class="btn primary p-add" id="k-add" disabled>Add</button>
+      <button class="btn primary p-add" id="k-add" disabled>Toevoegen</button>
       <div class="all" id="k-all"></div>
     </div>
   </div>
 </dialog>
 
-<div class="toast" id="toast" role="status"><span id="toast-msg"></span><button id="toast-undo" hidden>Undo</button></div>
+<div class="toast" id="toast" role="status"><span id="toast-msg"></span><button id="toast-undo" hidden>Ongedaan maken</button></div>
 
 <script src="foods.js"></script>
 <script>
@@ -347,7 +348,7 @@
   function addDays(k, n) { var d = parseKey(k); d.setDate(d.getDate() + n); return keyOf(d); }
   function daysBetween(a, b) { return Math.round((parseKey(b) - parseKey(a)) / 864e5); }
   function validKey(k) { return /^\d{4}-\d{2}-\d{2}$/.test(k || '') && keyOf(parseKey(k)) === k; }
-  function dayLabel(k) { return parseKey(k).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }); }
+  function dayLabel(k) { return parseKey(k).toLocaleDateString('nl-BE', { weekday: 'short', day: 'numeric', month: 'short' }); }
 
   var qp = new URLSearchParams(location.search).get('today');
   var PREVIEW = validKey(qp) ? qp : null;
@@ -419,9 +420,10 @@
   }
   function roundG(g) { return g < 10 ? Math.round(g * 10) / 10 : Math.round(g); }
   function roundQ(f, q) { return pieces(f) ? Math.round(q) : roundG(q); }
-  function fmtG(g) { return String(roundG(g)); }
+  function dec(x) { return String(x).replace('.', ','); }   // Dutch decimal comma
+  function fmtG(g) { return dec(roundG(g)); }
   function fmtK(k) { return String(Math.round(k)); }
-  function fmtPc(n) { n = Math.round(n); return n + (n === 1 ? ' piece' : ' pieces'); }
+  function fmtPc(n) { n = Math.round(n); return n + (n === 1 ? ' stuk' : ' stuks'); }
   function fmtQ(f, q) { return pieces(f) ? fmtPc(q) : fmtG(q) + ' g'; }
   function fmtAmount(f, q) {   // '½ can' when q is exactly the named portion
     if (!pieces(f) && f.unit && Math.abs(q - f.portion) < 0.05) return f.unit;
@@ -460,6 +462,7 @@
     Object.keys(state.days).forEach(function (k) { if (k < cut) delete state.days[k]; });
   }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function nameOf(e) { return byId[e.food] ? byId[e.food].name : e.name; }   // current (Dutch) name
   function describe(e) {
     var amt = e.u === 'pc' ? fmtPc(e.q) + ', ' : (typeof e.q === 'number' ? fmtG(e.q) + ' g, ' : '');
     return amt + fmtK(e.kcal) + ' kcal';
@@ -471,7 +474,7 @@
     var e = { id: uid(), ts: Date.now(), food: f.id, name: f.name, q: q, u: pieces(f) ? 'pc' : 'g', kcal: q * per(f) };
     day().entries.push(e);
     save(); render();
-    toast('Added ' + f.name + ', ' + describe(e), function () { removeEntry(e.id, true); });
+    toast('Toegevoegd: ' + f.name + ', ' + describe(e), function () { removeEntry(e.id, true); });
   }
   function removeEntry(id, quiet) {
     var d = peekDay(todayKey()); if (!d) return;
@@ -480,7 +483,7 @@
     if (i < 0) return;
     var e = d.entries.splice(i, 1)[0];
     save(); render();
-    if (!quiet) toast('Removed ' + e.name + ', ' + describe(e), function () {
+    if (!quiet) toast('Verwijderd: ' + nameOf(e) + ', ' + describe(e), function () {
       var dd = day(); dd.entries.splice(Math.min(i, dd.entries.length), 0, e); save(); render();
     });
   }
@@ -524,34 +527,34 @@
     if (!p) {
       var everyK = 0, every = (B.everyDay || []).map(function (it) {
         var f = byId[it.id]; if (!f) return '';
-        var q = it.g != null ? it.g : it.pc, nm = f.name.replace(/, low sodium$/, '').toLowerCase();
+        var q = it.g != null ? it.g : it.pc, nm = f.short || f.name.toLowerCase();
         everyK += q * per(f);
         return pieces(f) ? Math.round(q) + ' ' + nm : fmtAmount(f, q) + ' ' + nm;
       }).filter(Boolean).join(', ');
-      el.innerHTML = '<div class="pl-pick"><p class="pl-q">What kind of day is it?</p><div class="pl-types">' +
+      el.innerHTML = '<div class="pl-pick"><p class="pl-q">Wat voor dag is het?</p><div class="pl-types">' +
         TYPES.map(function (t) { return '<button class="btn primary" data-type="' + esc(t.id) + '">' + esc(t.name) + '</button>'; }).join('') +
-        '</div><p class="tip">Every day: ' + esc(every) + ' (' + fmtK(everyK) + ' kcal). The day type adds its foods, and kibble tops ' +
-        'the day up to about ' + fmtK(budget(d).aim) + ' kcal. Or skip this and just tap the tiles.</p></div>';
+        '</div><p class="tip">Elke dag: ' + esc(every) + ' (' + fmtK(everyK) + ' kcal). Het soort dag voegt zijn eigen eten toe, en de brokjes ' +
+        'vullen de dag aan tot ongeveer ' + fmtK(budget(d).aim) + ' kcal. Of sla dit over en druk gewoon op de tegels.</p></div>';
       return;
     }
-    var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Change</button></div><ul class="pl-list">';
+    var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Wijzigen</button></div><ul class="pl-list">';
     p.rows.forEach(function (r) {
       var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r);
       var amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
-      if (r.given > 0 && (pc || give > 0)) amt += ' (' + fmtQ(r.f, r.given) + ' given)';
-      if (r.fill) amt += ' · tops up the day';
-      var steps = r.adjustable ? '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="-1" aria-label="Less ' + esc(r.f.name) + '">−</button>' +
-        '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="1" aria-label="More ' + esc(r.f.name) + '">+</button>' : '';
+      if (r.given > 0 && (pc || give > 0)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
+      if (r.fill) amt += ' · vult de dag aan';
+      var steps = r.adjustable ? '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="-1" aria-label="Minder ' + esc(r.f.name) + '">−</button>' +
+        '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="1" aria-label="Meer ' + esc(r.f.name) + '">+</button>' : '';
       var action = give > 0
         ? '<button class="btn small pl-give" data-give="' + esc(r.f.id) + '">+ ' + esc(fmtAmount(r.f, give)) + '</button>'
-        : (r.q > 0 ? '<span class="pl-done">✓ given</span>' : '<span class="pl-done" style="color:var(--muted)">none</span>');
+        : (r.q > 0 ? '<span class="pl-done">✓ gegeven</span>' : '<span class="pl-done" style="color:var(--muted)">geen</span>');
       html += '<li' + (r.fill ? ' class="fill"' : '') + '><div class="pl-info"><span class="pl-name">' + esc(r.f.name) + '</span>' +
         '<span class="pl-amt"><span>' + esc(amt) + '</span>' + steps + '</span></div>' + action + '</li>';
     });
-    html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(p.total) + ' kcal</b> (band ' + fmtK(p.b.low) + ' to ' + fmtK(p.b.allow) + ')</p>';
-    if (p.off > 0.5) html += '<p class="tip">Includes ' + fmtK(p.off) + ' kcal of other food logged today.</p>';
-    if (p.overBy > 0.5) html += '<p class="warn-text">Over the aim by ' + fmtK(p.overBy) + ' kcal even without kibble: give less of something.</p>';
-    html += '<p class="tip">Tap + as you give each one; the kibble adjusts to whatever else she gets.</p></div>';
+    html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(p.total) + ' kcal</b> (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
+    if (p.off > 0.5) html += '<p class="tip">Inclusief ' + fmtK(p.off) + ' kcal ander eten van vandaag.</p>';
+    if (p.overBy > 0.5) html += '<p class="warn-text">' + fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes: geef ergens minder van.</p>';
+    html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt.</p></div>';
     el.innerHTML = html;
   }
 
@@ -599,11 +602,11 @@
   function renderBar(b) {
     var z = zone(b.total, b), left = b.allow - b.total;
     $('date-label').textContent = dayLabel(todayKey());
-    $('band-label').textContent = 'band ' + fmtK(b.low) + ' to ' + fmtK(b.allow);
+    $('band-label').textContent = 'zone ' + fmtK(b.low) + ' tot ' + fmtK(b.allow);
     $('total').textContent = fmtK(b.total);
     $('status').className = 'status ' + z;
-    if (z === 'over') { $('status-big').textContent = '+' + fmtK(-left); $('status-small').textContent = 'over the cap'; }
-    else { $('status-big').textContent = fmtK(left); $('status-small').textContent = z === 'in' ? 'left · in the band' : 'kcal left'; }
+    if (z === 'over') { $('status-big').textContent = '+' + fmtK(-left); $('status-small').textContent = 'boven het maximum'; }
+    else { $('status-big').textContent = fmtK(left); $('status-small').textContent = z === 'in' ? 'over · in de zone' : 'kcal over'; }
     var scale = Math.max(b.allow * 1.1, b.total, 1);
     var fill = $('meter-fill');
     fill.style.width = Math.min(100, b.total / scale * 100) + '%';
@@ -611,13 +614,13 @@
     $('meter-band').style.left = (b.low / scale * 100) + '%';
     $('meter-band').style.width = ((b.allow - b.low) / scale * 100) + '%';
     $('meter-mark').style.left = 'calc(' + (b.allow / scale * 100) + '% - 1px)';
-    $('legend-right').textContent = 'cap ' + fmtK(b.allow) + (b.credit ? ' (walks +' + fmtK(b.credit) + ')' : '');
+    $('legend-right').textContent = 'max ' + fmtK(b.allow) + (b.credit ? ' (wandelingen +' + fmtK(b.credit) + ')' : '');
   }
 
   function renderWalks(b) {
     var w = b.walks;
-    $('walk-count').textContent = w ? w + ' × 15 min' : 'No walks yet';
-    $('walk-sub').textContent = w ? '+' + fmtK(b.credit) + ' kcal to the cap' : 'Each adds about ' + fmtK(walkKcal()) + ' kcal';
+    $('walk-count').textContent = w ? w + ' × 15 min' : 'Nog geen wandelingen';
+    $('walk-sub').textContent = w ? '+' + fmtK(b.credit) + ' kcal bij het maximum' : 'Per wandeling ongeveer ' + fmtK(walkKcal()) + ' kcal erbij';
     $('walk-minus').disabled = !w;
   }
 
@@ -628,13 +631,13 @@
       var n = counts[f.id] || 0, badge = '';
       if (n) badge = pieces(f) ? String(Math.round(logged(d, f.id).q)) : (n > 1 ? '×' + n : '✓');
       return '<div class="tile">' +
-        '<button class="tile-main" data-add="' + esc(f.id) + '" aria-label="Add ' + esc(f.name) + ', ' + esc(portionLabel(f, d)) + '">' +
+        '<button class="tile-main" data-add="' + esc(f.id) + '" aria-label="Voeg toe: ' + esc(f.name) + ', ' + esc(portionLabel(f, d)) + '">' +
           '<span class="tile-name">' + esc(f.name) + '</span>' +
           '<span class="tile-portion">' + esc(portionLabel(f, d)) + '</span>' +
           '<span class="tile-kcal">' + fmtK(tapQty(f, d) * per(f)) + ' kcal</span>' +
         '</button>' +
         '<span class="badge"' + (n ? '' : ' hidden') + '>' + badge + '</span>' +
-        '<button class="tile-more" data-open="' + esc(f.id) + '">' + (pieces(f) ? 'Pieces / kcal ›' : 'Grams / kcal ›') + '</button>' +
+        '<button class="tile-more" data-open="' + esc(f.id) + '">' + (pieces(f) ? 'Stuks / kcal ›' : 'Gram / kcal ›') + '</button>' +
       '</div>';
     }).join('');
   }
@@ -645,24 +648,24 @@
   function renderLeft(b) {
     var left = b.allow - b.total, el = $('left-card');
     if (left < 5) {
-      el.innerHTML = '<p class="none">' + (left < -0.5 ? 'Over the cap by ' + fmtK(-left) + ' kcal: nothing more today.' : 'At the cap: nothing more today.') + '</p>';
+      el.innerHTML = '<p class="none">' + (left < -0.5 ? fmtK(-left) + ' kcal boven het maximum: vandaag niets meer.' : 'Maximum bereikt: vandaag niets meer.') + '</p>';
       return;
     }
-    el.innerHTML = '<p class="lh"><b>' + fmtK(left) + ' kcal</b> left to the cap: about this much of ONE of these</p><ul>' +
+    el.innerHTML = '<p class="lh"><b>' + fmtK(left) + ' kcal</b> over tot het maximum: ongeveer zoveel van ÉÉN hiervan</p><ul>' +
       FLEX.map(function (f) { return '<li><b>' + fmtG(left / f.kcalPerG) + ' g</b>' + esc(f.name) + '</li>'; }).join('') +
-      '</ul><p class="tip">For a mix, add one food and this updates.</p>';
+      '</ul><p class="tip">Voor een mix: voeg één ding toe, dan past dit zich aan.</p>';
   }
 
   function renderLog(d) {
     var list = d ? d.entries.slice().sort(function (a, b) { return b.ts - a.ts; }) : [];
-    if (!list.length) { $('log').innerHTML = '<li class="empty">Nothing logged yet today.</li>'; return; }
+    if (!list.length) { $('log').innerHTML = '<li class="empty">Vandaag nog niets ingevoerd.</li>'; return; }
     $('log').innerHTML = list.map(function (e) {
-      var t = new Date(e.ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      var t = new Date(e.ts).toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
       var amt = e.u === 'pc' ? fmtPc(e.q) : (typeof e.q === 'number' ? fmtG(e.q) + ' g' : '');
-      return '<li><span class="t">' + t + '</span><span class="n">' + esc(e.name) +
+      return '<li><span class="t">' + t + '</span><span class="n">' + esc(nameOf(e)) +
         (amt ? ' <small>' + amt + '</small>' : '') + '</span>' +
         '<span class="k">' + fmtK(e.kcal) + '</span>' +
-        '<button class="del" data-del="' + esc(e.id) + '" aria-label="Remove ' + esc(e.name) + '">×</button></li>';
+        '<button class="del" data-del="' + esc(e.id) + '" aria-label="Verwijder ' + esc(nameOf(e)) + '">×</button></li>';
     }).join('');
   }
 
@@ -672,40 +675,40 @@
       var k = addDays(today, -i), d = peekDay(k);
       if (!d || (!d.entries.length && !d.walks)) continue;
       var b = budget(d), z = zone(b.total, b), dt = d.type && typeById[d.type];
-      rows.push('<li><span class="dot ' + z + '"></span><span class="n">' + (i === 0 ? 'Today' : dayLabel(k)) +
-        (dt ? ' <small>' + esc(dt.name.replace(/ day$/, '')) + '</small>' : '') +
-        (b.walks ? ' <small>' + b.walks + ' walk' + (b.walks > 1 ? 's' : '') + '</small>' : '') + '</span>' +
+      rows.push('<li><span class="dot ' + z + '"></span><span class="n">' + (i === 0 ? 'Vandaag' : dayLabel(k)) +
+        (dt ? ' <small>' + esc(dt.short || dt.name) + '</small>' : '') +
+        (b.walks ? ' <small>' + b.walks + (b.walks > 1 ? ' wandelingen' : ' wandeling') + '</small>' : '') + '</span>' +
         '<span class="k">' + fmtK(b.total) + ' / ' + fmtK(b.allow) + '</span></li>');
     }
-    $('history').innerHTML = rows.length ? rows.join('') : '<li class="empty">No days logged yet.</li>';
+    $('history').innerHTML = rows.length ? rows.join('') : '<li class="empty">Nog geen dagen ingevoerd.</li>';
   }
 
   function trendText() {
     var ws = state.weights.slice().sort(function (a, b) { return a.d < b.d ? -1 : 1; });
-    if (ws.length < 2) return 'Weigh her every week or two, same scale, same time of day. A trend shows after two weigh-ins at least a week apart.';
+    if (ws.length < 2) return 'Weeg haar om de week of twee weken, op dezelfde weegschaal en rond hetzelfde uur. Een trend verschijnt na twee wegingen met minstens een week ertussen.';
     var last = ws[ws.length - 1], ref = null;
     for (var i = 0; i < ws.length - 1; i++) {
       if (daysBetween(ws[i].d, last.d) <= 42) { ref = ws[i]; break; }
     }
     if (!ref) ref = ws[ws.length - 2];
     var span = daysBetween(ref.d, last.d);
-    if (span < 7) return 'Need two weigh-ins at least a week apart for a trend.';
+    if (span < 7) return 'Voor een trend zijn twee wegingen met minstens een week ertussen nodig.';
     var lossPerWeek = (ref.lb - last.lb) / span * 7, pct = lossPerWeek / ref.lb * 100;
-    var head = (lossPerWeek >= 0 ? 'Losing ' : 'Gaining ') + Math.abs(lossPerWeek).toFixed(2) + ' lb a week (' +
-      Math.abs(pct).toFixed(1) + '%) over ' + span + ' days. ';
+    var head = (lossPerWeek >= 0 ? 'Afname ' : 'Toename ') + dec(Math.abs(lossPerWeek).toFixed(2)) + ' lb per week (' +
+      dec(Math.abs(pct).toFixed(1)) + '%) over ' + span + ' dagen. ';
     var step = Math.round(target() * 0.9 / 5) * 5;
-    if (pct > 2) return head + 'Faster than the usual 0.5 to 2% a week: check with the vet.';
-    if (pct >= 0.5) return head + 'On track (aim: 0.5 to 1% a week).';
-    if (span >= 21) return head + 'Under 0.5% a week for 3+ weeks: check the logging, then lower the cap by about 10%, to ' + step + ' kcal (Settings).';
-    return head + 'Slow so far; give it 3 to 4 weeks before changing anything.';
+    if (pct > 2) return head + 'Sneller dan de gebruikelijke 0,5 tot 2% per week: overleg met de dierenarts.';
+    if (pct >= 0.5) return head + 'Op schema (doel: 0,5 tot 1% per week).';
+    if (span >= 21) return head + 'Al 3+ weken minder dan 0,5% per week: kijk het logboek na en verlaag dan het maximum met ongeveer 10%, naar ' + step + ' kcal (Instellingen).';
+    return head + 'Traag tot nu toe; geef het 3 tot 4 weken voor je iets verandert.';
   }
 
   function renderWeights() {
     var ws = state.weights.slice().sort(function (a, b) { return a.d < b.d ? 1 : -1; });
-    $('weigh-sub').textContent = ws.length ? '(latest ' + ws[0].lb + ' lb)' : '';
+    $('weigh-sub').textContent = ws.length ? '(laatste ' + dec(ws[0].lb) + ' lb)' : '';
     $('weights').innerHTML = ws.map(function (w) {
-      return '<li><span class="n">' + dayLabel(w.d) + '</span><span class="k">' + w.lb + ' lb</span>' +
-        '<button class="del" data-wdel="' + esc(w.d) + '" aria-label="Remove weigh-in">×</button></li>';
+      return '<li><span class="n">' + dayLabel(w.d) + '</span><span class="k">' + dec(w.lb) + ' lb</span>' +
+        '<button class="del" data-wdel="' + esc(w.d) + '" aria-label="Weging verwijderen">×</button></li>';
     }).join('');
     $('trend').textContent = trendText();
   }
@@ -713,10 +716,10 @@
   function renderSettings() {
     $('s-target').value = target();
     $('s-walk').value = walkKcal();
-    $('s-defaults').textContent = 'Defaults (from foods.js): cap ' + B.target + ' kcal, band ' + (B.target - BANDW) + ' to ' + B.target +
-      ', walk ' + B.walkKcal + ' kcal. The band and the planner follow the cap.';
-    $('foot-band').textContent = 'Daily band: ' + (target() - BANDW) + ' to ' + target() + ' kcal including treats; ' + target() +
-      ' is the cap. If she is not losing about half a per cent of her weight a week after 3 to 4 weeks, lower the cap by about 10% and check with the vet.';
+    $('s-defaults').textContent = 'Standaard (uit foods.js): maximum ' + B.target + ' kcal, zone ' + (B.target - BANDW) + ' tot ' + B.target +
+      ', wandeling ' + B.walkKcal + ' kcal. De zone en het plan volgen het maximum.';
+    $('foot-band').textContent = 'Dagzone: ' + (target() - BANDW) + ' tot ' + target() + ' kcal, snoepjes inbegrepen; ' + target() +
+      ' is het maximum. Verliest ze na 3 tot 4 weken geen halve procent van haar gewicht per week, verlaag het maximum dan met ongeveer 10% en overleg met de dierenarts.';
   }
 
   function render() {
@@ -736,12 +739,12 @@
     $('p-note').textContent = f.note || '';
     $('q-in').value = '';
     $('k-in').value = '';
-    $('seg-q').textContent = pieces(f) ? 'Pieces → kcal' : 'Grams → kcal';
-    $('seg-k').textContent = pieces(f) ? 'kcal → pieces' : 'kcal → grams';
-    $('q-unit').textContent = pieces(f) ? 'pcs' : 'g';
-    $('q-in').setAttribute('aria-label', pieces(f) ? 'Pieces' : 'Grams');
+    $('seg-q').textContent = pieces(f) ? 'Stuks → kcal' : 'Gram → kcal';
+    $('seg-k').textContent = pieces(f) ? 'kcal → stuks' : 'kcal → gram';
+    $('q-unit').textContent = pieces(f) ? 'st.' : 'g';
+    $('q-in').setAttribute('aria-label', pieces(f) ? 'Stuks' : 'Gram');
     var quick = pieces(f) ? [5, 10, 30].map(function (n) { return [n, fmtPc(n)]; })
-      : [[f.portion / 2, '½ portion (' + fmtG(f.portion / 2) + ' g)'], [f.portion, '1 portion (' + fmtG(f.portion) + ' g)']];
+      : [[f.portion / 2, '½ portie (' + fmtG(f.portion / 2) + ' g)'], [f.portion, '1 portie (' + fmtG(f.portion) + ' g)']];
     $('q-quick').innerHTML = quick.map(function (x) { return '<button class="btn small" data-q="' + x[0] + '">' + esc(x[1]) + '</button>'; }).join('');
     renderPanel();
     if (typeof $('panel').showModal === 'function') $('panel').showModal(); else $('panel').setAttribute('open', '');
@@ -760,19 +763,19 @@
     $('p-q').hidden = mode !== 'q';
     $('p-k').hidden = mode !== 'k';
 
-    if (left > 0.5) $('p-left').textContent = 'Left today: ' + fmtK(left) + ' kcal = ' + fmtQ(f, pieces(f) ? Math.floor(left / per(f)) : left / per(f)) + ' of this.';
-    else $('p-left').textContent = left < -0.5 ? 'Over the cap by ' + fmtK(-left) + ' kcal.' : 'At the cap for today.';
+    if (left > 0.5) $('p-left').textContent = 'Nog over vandaag: ' + fmtK(left) + ' kcal = ' + fmtQ(f, pieces(f) ? Math.floor(left / per(f)) : left / per(f)) + ' hiervan.';
+    else $('p-left').textContent = left < -0.5 ? fmtK(-left) + ' kcal boven het maximum.' : 'Maximum bereikt voor vandaag.';
 
-    $('k-quick').innerHTML = '<button class="btn small" data-k="left"' + (left > 0.5 ? '' : ' disabled') + '>What\'s left (' + fmtK(Math.max(0, left)) + ')</button>';
+    $('k-quick').innerHTML = '<button class="btn small" data-k="left"' + (left > 0.5 ? '' : ' disabled') + '>Nog over (' + fmtK(Math.max(0, left)) + ')</button>';
 
     var q = parseNum($('q-in').value);
     if (!isNaN(q) && roundQ(f, q) > 0) {
       q = roundQ(f, q);
       $('q-out').textContent = '= ' + fmtK(q * per(f)) + ' kcal';
       $('q-add').disabled = false;
-      $('q-add').textContent = 'Add ' + fmtQ(f, q);
+      $('q-add').textContent = 'Voeg ' + fmtQ(f, q) + ' toe';
     } else {
-      $('q-out').textContent = ''; $('q-add').disabled = true; $('q-add').textContent = 'Add';
+      $('q-out').textContent = ''; $('q-add').disabled = true; $('q-add').textContent = 'Toevoegen';
     }
 
     var k = parseNum($('k-in').value);
@@ -780,12 +783,12 @@
       var qq = pieces(f) ? Math.floor(k / per(f)) : roundG(k / per(f));
       $('k-out').textContent = '= ' + fmtQ(f, qq);
       $('k-add').disabled = !(qq > 0);
-      $('k-add').textContent = 'Add ' + fmtQ(f, qq) + ' (' + fmtK(qq * per(f)) + ' kcal)';
-      $('k-all').innerHTML = '<p>' + fmtK(k) + ' kcal is about:</p><ul>' + FLEX.map(function (x) {
+      $('k-add').textContent = 'Voeg ' + fmtQ(f, qq) + ' toe (' + fmtK(qq * per(f)) + ' kcal)';
+      $('k-all').innerHTML = '<p>' + fmtK(k) + ' kcal is ongeveer:</p><ul>' + FLEX.map(function (x) {
         return '<li>' + esc(x.name) + ' <b>' + fmtG(k / x.kcalPerG) + ' g</b></li>';
       }).join('') + '</ul>';
     } else {
-      $('k-out').textContent = ''; $('k-add').disabled = true; $('k-add').textContent = 'Add'; $('k-all').innerHTML = '';
+      $('k-out').textContent = ''; $('k-add').disabled = true; $('k-add').textContent = 'Toevoegen'; $('k-all').innerHTML = '';
     }
   }
 
@@ -799,7 +802,7 @@
   $('k-in').addEventListener('input', renderPanel);
   $('q-quick').addEventListener('click', function (ev) {
     var b = ev.target.closest('[data-q]'); if (!b || !cur) return;
-    $('q-in').value = String(roundQ(cur, parseFloat(b.getAttribute('data-q'))));
+    $('q-in').value = dec(roundQ(cur, parseFloat(b.getAttribute('data-q'))));
     renderPanel();
   });
   $('k-quick').addEventListener('click', function (ev) {
@@ -839,36 +842,36 @@
   $('w-date').value = todayKey();
   $('w-add').addEventListener('click', function () {
     var d = $('w-date').value, lb = parseNum($('w-lb').value);
-    if (!validKey(d)) { toast('Pick a date first.'); return; }
-    if (isNaN(lb) || lb < 5 || lb > 200) { toast('Enter her weight in lb, e.g. 46.2'); return; }
+    if (!validKey(d)) { toast('Kies eerst een datum.'); return; }
+    if (isNaN(lb) || lb < 5 || lb > 200) { toast('Geef haar gewicht in lb, bv. 46,2'); return; }
     lb = Math.round(lb * 10) / 10;
     state.weights = state.weights.filter(function (w) { return w.d !== d; });
     state.weights.push({ d: d, lb: lb });
     $('w-lb').value = '';
     save(); render();
-    toast('Weigh-in saved: ' + lb + ' lb on ' + dayLabel(d));
+    toast('Weging bewaard: ' + dec(lb) + ' lb op ' + dayLabel(d));
   });
   $('weights').addEventListener('click', function (ev) {
     var b = ev.target.closest('[data-wdel]'); if (!b) return;
     var d = b.getAttribute('data-wdel'), old = null;
     state.weights = state.weights.filter(function (w) { if (w.d === d) { old = w; return false; } return true; });
     save(); render();
-    if (old) toast('Removed weigh-in of ' + dayLabel(d), function () { state.weights.push(old); save(); render(); });
+    if (old) toast('Weging van ' + dayLabel(d) + ' verwijderd', function () { state.weights.push(old); save(); render(); });
   });
 
   // Settings
   $('s-save').addEventListener('click', function () {
     var t = parseNum($('s-target').value);
     var wv = parseFloat(String($('s-walk').value).replace(',', '.'));
-    if (isNaN(t) || t < 300 || t > 2000) { toast('The cap should be between 300 and 2000 kcal.'); return; }
-    if (!isFinite(wv) || wv < 0 || wv > 200) { toast('kcal per walk should be between 0 and 200.'); return; }
+    if (isNaN(t) || t < 300 || t > 2000) { toast('Het maximum moet tussen 300 en 2000 kcal liggen.'); return; }
+    if (!isFinite(wv) || wv < 0 || wv > 200) { toast('kcal per wandeling moet tussen 0 en 200 liggen.'); return; }
     state.settings = { target: t, walkKcal: wv };
     save(); render(); renderSettings();
-    toast('Settings saved.');
+    toast('Instellingen bewaard.');
   });
   $('s-reset').addEventListener('click', function () {
     state.settings = {}; save(); render(); renderSettings();
-    toast('Back to the defaults.');
+    toast('Terug naar de standaardwaarden.');
   });
 
   // Backup
@@ -887,23 +890,23 @@
     a.download = backupName();
     document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-    markBackedUp('Backup downloaded.');
+    markBackedUp('Back-up gedownload.');
   }
   function exportBackup() {
     if (!canShareFiles()) { downloadBackup(); return; }
     var file = new File([JSON.stringify(state, null, 1)], backupName(), { type: 'application/json' });
-    navigator.share({ files: [file], title: 'Bruce backup' })
-      .then(function () { markBackedUp('Backup saved.'); })
+    navigator.share({ files: [file], title: 'Bruce back-up' })
+      .then(function () { markBackedUp('Back-up bewaard.'); })
       .catch(function (e) { if (!e || e.name !== 'AbortError') downloadBackup(); });
   }
   function renderBackup() {
     var lb = state.lastBackup, n = lb ? daysBetween(lb, todayKey()) : null;
-    $('b-last').textContent = 'Last backup: ' + (!lb ? 'none yet' : n <= 0 ? 'today' : n === 1 ? 'yesterday' :
-      n + ' days ago (' + dayLabel(lb) + ')') + '.';
+    $('b-last').textContent = 'Laatste back-up: ' + (!lb ? 'nog geen' : n <= 0 ? 'vandaag' : n === 1 ? 'gisteren' :
+      n + ' dagen geleden (' + dayLabel(lb) + ')') + '.';
     var daysLogged = Object.keys(state.days).filter(function (k) { return state.days[k].entries.length; }).length;
     var due = daysLogged >= 7 && (!lb || n >= 14);
     $('backup-banner').hidden = !due;
-    if (due) $('backup-msg').textContent = lb ? 'No backup for ' + n + ' days.' : 'Not backed up yet.';
+    if (due) $('backup-msg').textContent = lb ? 'Al ' + n + ' dagen geen back-up.' : 'Nog geen back-up gemaakt.';
   }
   $('b-download').hidden = !canShareFiles();
   $('b-export').addEventListener('click', exportBackup);
@@ -916,12 +919,12 @@
     var r = new FileReader();
     r.onload = function () {
       var data;
-      try { data = JSON.parse(r.result); } catch (e) { toast('That file is not a Bruce backup.'); return; }
-      if (!data || data.v !== 1 || typeof data.days !== 'object') { toast('That file is not a Bruce backup.'); return; }
+      try { data = JSON.parse(r.result); } catch (e) { toast('Dat bestand is geen back-up van Bruce.'); return; }
+      if (!data || data.v !== 1 || typeof data.days !== 'object') { toast('Dat bestand is geen back-up van Bruce.'); return; }
       var n = Object.keys(data.days).length;
-      if (!window.confirm('Replace everything on this phone with the backup (' + n + ' days)?')) return;
+      if (!window.confirm('Alles op deze telefoon vervangen door de back-up (' + n + ' dagen)?')) return;
       state = normalise(data); prune(); save(); render(); renderSettings();
-      toast('Backup imported.');
+      toast('Back-up geïmporteerd.');
     };
     r.readAsText(file);
   });
@@ -929,9 +932,9 @@
   // ---------- start ----------
   if (PREVIEW) {
     $('preview-banner').hidden = false;
-    $('preview-banner').textContent = 'Preview of ' + dayLabel(PREVIEW) + ' (?today=' + PREVIEW + '). Test data, kept apart from the real log.';
+    $('preview-banner').textContent = 'Voorbeeld van ' + dayLabel(PREVIEW) + ' (?today=' + PREVIEW + '). Testgegevens, apart van het echte logboek.';
   }
-  $('foot-updated').textContent = 'Food values last updated ' + parseKey(B.updated || todayKey()).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + '. Nothing on this page is sent anywhere.';
+  $('foot-updated').textContent = 'Voedingswaarden laatst bijgewerkt op ' + parseKey(B.updated || todayKey()).toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) + '. Niets op deze pagina wordt ergens naartoe gestuurd.';
   $('storage-banner').hidden = storageOK;
   prune(); save();
   renderSettings(); render();
