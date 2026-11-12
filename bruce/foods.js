@@ -13,8 +13,7 @@
  *   unit          optional name for that portion, e.g. '½ can'
  *   kcalPerPiece  counted foods (treats): kcal per piece
  *   tapPieces     counted foods: pieces each tap adds (tile and plan)
- *   startPieces   counted foods: pieces already counted when a new day starts (a normal log
- *                 entry marked "start", deletable like any other)
+ *   firstPieces   counted foods: pieces the FIRST tap of the day adds; later taps add tapPieces
  *   flex          true for weighed foods that are easy to adjust; the page turns the kcal left
  *                 today into grams of each of these
  *   short         optional short name for running text (the page is in Dutch, nl-BE)
@@ -24,7 +23,7 @@
  * rewrite past days.
  */
 window.BRUCE = {
-  updated: '2026-11-13',
+  updated: '2026-11-12',
 
   target: 750,     // kcal a day, treats included: the cap, never more
   bandWidth: 50,   // the day should land in the band from (target - 50) to target: 700 to 750
@@ -41,7 +40,7 @@ window.BRUCE = {
     { id: 'meat', flex: true, name: 'Ovengebraden vlees', kcalPerG: 1.45, portion: 85,
       note: 'Ovengebraden hondenvlees. Etiket: 1450 kcal per kg.' },
 
-    { id: 'chicken', flex: true, name: 'Kip, gekookt', kcalPerG: 1.2, portion: 100,
+    { id: 'chicken', flex: true, name: 'Kip, gekookt', short: 'kip', kcalPerG: 1.2, portion: 100,
       note: 'Kipfilethaasjes van Costco, gekookt in water. Het etiket (100 kcal per 112 g) geldt voor ' +
             'RAUW gewicht; gekookte kip verliest ongeveer een kwart van haar gewicht, dus gekookt is het ' +
             'ongeveer 1,2 kcal per g. Weeg ze gekookt. 100 g gekookt is ongeveer 135 g rauw.' },
@@ -54,13 +53,14 @@ window.BRUCE = {
       note: 'Groene boontjes. Etiket: 15 kcal per portie, 3,5 porties per blik, dus ½ blik is ongeveer 26 kcal. ' +
             'De grammen gaan uit van 125 g per portie (niet nagekeken op het etiket).' },
 
-    { id: 'treat', name: 'Snoepjes', short: 'snoepjes', kcalPerPiece: 2, tapPieces: 5, startPieces: 20,
-      note: 'Trainingssnoepjes, 2 kcal per stuk. Elke dag begint met 20 stuks (40 kcal) al meegeteld; ' +
-            'elke druk telt er 5 bij. Een gewone dag is ongeveer 30 stuks (60 kcal), binnen de 750.' },
+    { id: 'treat', name: 'Snoepjes', short: 'snoepjes', kcalPerPiece: 2, firstPieces: 20, tapPieces: 5,
+      note: 'Trainingssnoepjes, 2 kcal per stuk. De eerste druk van de dag telt 20 stuks (40 kcal), ' +
+            'elke volgende druk 5. Een gewone dag is ongeveer 30 stuks (60 kcal), binnen de 750.' },
 
-    { id: 'corned', flex: true, name: 'Cornedbeef, zoutarm', kcalPerG: 130 / 56, portion: 28,
+    { id: 'corned', flex: true, name: 'Cornedbeef, zoutarm', short: 'cornedbeef', kcalPerG: 130 / 56, portion: 28,
       note: 'Etiket: 130 kcal per 56 g. 28 g (65 kcal) = ongeveer 45 g ovengebraden vlees of 55 g kip. ' +
-            'Zout, dus hou het bij ongeveer 28 g.' }
+            'Op een cornedbeefdag zonder ovengebraden vlees mag er 25 g bij (58 kcal, evenveel als 40 g vlees); ' +
+            'dat is wel dubbel zoveel zout.' }
   ],
 
   // Given every day, whatever the day type. The ½ cans are not weighed.
@@ -68,12 +68,18 @@ window.BRUCE = {
   everyDay: [ { id: 'wet', g: 187.1 }, { id: 'veg', g: 218.75 }, { id: 'beans', g: 218.75 },
               { id: 'treat', pc: 30 } ],
 
-  // Day types. `items` are given in these amounts (adjustable on the page in steps of 5);
-  // `fill` is then weighed out to bring the day to (target - aimBelow), i.e. 740 kcal.
+  // Day types. `items` are given in these amounts; `fill` is then weighed out to bring the day
+  // to (target - aimBelow), i.e. 740 kcal. Item options:
+  //   fixed: true   no -/+ buttons on the page (otherwise adjustable in steps of 5 g)
+  //   or: 'corned'  this item may be replaced by extra of that food at the same kcal: once the
+  //                 day's planned amount of it is given, its button offers the extra
+  //                 (40 g oven roast = 58 kcal = 25 g corned beef = 48 g chicken)
   // Every-day items 378 kcal; corned beef day 65 + 58 + kibble ~84 g (741);
   // chicken day 72 + 58 + kibble ~81 g (739). Oven roast 40 g on both days.
   dayTypes: [
-    { id: 'corned', name: 'Cornedbeefdag', short: 'cornedbeef', items: [ { id: 'corned', g: 28 }, { id: 'meat', g: 40 } ], fill: 'kibble' },
-    { id: 'chicken', name: 'Kipdag', short: 'kip', items: [ { id: 'chicken', g: 60 }, { id: 'meat', g: 40 } ], fill: 'kibble' }
+    { id: 'corned', name: 'Cornedbeefdag', short: 'cornedbeef', fill: 'kibble',
+      items: [ { id: 'corned', g: 28 }, { id: 'meat', g: 40, fixed: true, or: 'corned' } ] },
+    { id: 'chicken', name: 'Kipdag', short: 'kip', fill: 'kibble',
+      items: [ { id: 'chicken', g: 60 }, { id: 'meat', g: 40, fixed: true, or: 'chicken' } ] }
   ]
 };

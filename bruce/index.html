@@ -105,6 +105,9 @@
   .step { border: 1px solid var(--line); background: var(--surface-2); border-radius: 8px; width: 40px; height: 34px; font-size: 18px; line-height: 1; padding: 0; }
   .pl-give { white-space: nowrap; }
   .pl-done { color: var(--ok); font-weight: 650; white-space: nowrap; font-size: 15px; }
+  .pl-swap { display: block; font-size: 14px; color: var(--accent); margin-top: 3px; line-height: 1.3; }
+  .day-reset { margin-top: 12px; }
+  .btn.danger { color: var(--over); }
   .pl-sum { padding: 10px 12px; border-top: 1px solid var(--line); font-size: 15px; }
   .pl-sum p { margin: 0; }
   .pl-sum p + p { margin-top: 4px; }
@@ -246,6 +249,7 @@
     <h2 id="h-food">Of druk op wat ze kreeg</h2>
     <div class="tiles" id="tiles"></div>
     <p class="tip tiles-hint">Lang indrukken op een tegel wist die soort voor vandaag. Losse items wis je met × onder Vandaag.</p>
+    <div class="row-btns day-reset"><button class="btn small danger" id="day-reset">Dag resetten</button></div>
   </section>
 
   <section aria-labelledby="h-left">
@@ -371,7 +375,9 @@
     Object.keys(s.days).forEach(function (k) {
       var d = s.days[k];
       if (!validKey(k) || !d || !Array.isArray(d.entries)) { delete s.days[k]; return; }
-      d.entries = d.entries.filter(function (e) { return e && typeof e.kcal === 'number' && isFinite(e.kcal); });
+      // Drops the 20 treats an earlier version counted when a day started (entries with start: true):
+      // Tommie asked for a clean slate on 12 November 2026. No version creates them any more.
+      d.entries = d.entries.filter(function (e) { return e && !e.start && typeof e.kcal === 'number' && isFinite(e.kcal); });
       d.walks = (typeof d.walks === 'number' && d.walks > 0) ? Math.floor(d.walks) : 0;
       if (typeof d.type !== 'string') d.type = null;
       if (!d.adj || typeof d.adj !== 'object') d.adj = {};
@@ -417,8 +423,10 @@
 
   function pieces(f) { return !(f.kcalPerG > 0) && f.kcalPerPiece > 0; }
   function per(f) { return f.kcalPerG > 0 ? f.kcalPerG : (f.kcalPerPiece || 0); }
-  function tapQty(f) {   // what one tap logs
-    return pieces(f) ? (f.tapPieces || 1) : f.portion;
+  function tapQty(f, d) {   // what one tap logs today: treats 20 on the first tap of the day, then 5
+    if (!pieces(f)) return f.portion;
+    if (d === undefined) d = peekDay(todayKey());
+    return (f.firstPieces > 0 && !(logged(d, f.id).q > 0)) ? f.firstPieces : (f.tapPieces || 1);
   }
   function roundG(g) { return g < 10 ? Math.round(g * 10) / 10 : Math.round(g); }
   function roundQ(f, q) { return pieces(f) ? Math.round(q) : roundG(q); }
@@ -431,8 +439,9 @@
     if (!pieces(f) && f.unit && Math.abs(q - f.portion) < 0.05) return f.unit;
     return fmtQ(f, q);
   }
+  function shortName(f) { return f.short || f.name.toLowerCase(); }
   function portionLabel(f, d) {
-    var q = tapQty(f);
+    var q = tapQty(f, d);
     if (pieces(f)) return '+' + fmtPc(q);
     return f.unit ? f.unit + ' (' + fmtG(q) + ' g)' : fmtG(q) + ' g';
   }
@@ -445,14 +454,7 @@
   function peekDay(k) { return state.days[k] || null; }
   function day() {
     var k = todayKey();
-    if (!state.days[k]) {
-      var entries = [];
-      FOODS.forEach(function (f) {   // e.g. 20 treats already counted when the day starts
-        if (pieces(f) && f.startPieces > 0) entries.push({ id: uid(), ts: Date.now(), food: f.id, name: f.name,
-          q: f.startPieces, u: 'pc', kcal: f.startPieces * per(f), start: true });
-      });
-      state.days[k] = { entries: entries, walks: 0, type: null, adj: {} };
-    }
+    if (!state.days[k]) state.days[k] = { entries: [], walks: 0, type: null, adj: {} };
     return state.days[k];
   }
   function sumDay(d) { var t = 0; if (d) d.entries.forEach(function (e) { t += e.kcal; }); return t; }
@@ -501,20 +503,42 @@
   // Every-day items and the day type's items count at their planned amount, or at what was
   // actually given if that is more; anything else logged today counts as given. The fill food
   // (kibble) gets whatever is left up to the aim (cap minus AIMBELOW, plus walks).
+  // An item with `or` (the oven roast) is a slot of fixed kcal: whatever of the `or` food is
+  // given beyond its own planned amount fills the slot first, and the item shrinks to what is
+  // still open. So 25 g extra corned beef stands in for 40 g roast and the kibble stays put.
+  var SLOT_EPS = 2;   // kcal; a slot this close to full counts as full
   function planOf(d) {
     var dt = d && d.type ? typeById[d.type] : null;
     if (!dt) return null;
-    var b = budget(d), adj = d.adj || {}, rows = [], used = 0, seen = {};
+    var b = budget(d), adj = d.adj || {}, rows = [], used = 0, seen = {}, planQ = {};
     var specs = (B.everyDay || []).map(function (it) { return { it: it, adjustable: false }; })
-      .concat(dt.items.map(function (it) { return { it: it, adjustable: true }; }));
-    specs.forEach(function (s) {
+      .concat(dt.items.map(function (it) { return { it: it, adjustable: !it.fixed }; }));
+    specs.forEach(function (s) {   // planned amounts first, so a slot can see its stand-in's plan
       var f = byId[s.it.id]; if (!f || f.id === dt.fill) return;
       var q = s.it.g != null ? s.it.g : s.it.pc;
       if (s.adjustable && typeof adj[f.id] === 'number' && adj[f.id] >= 0) q = adj[f.id];
-      var lg = logged(d, f.id), planK = q * per(f);
+      planQ[f.id] = q;
+    });
+    specs.forEach(function (s) {
+      var f = byId[s.it.id]; if (!f || f.id === dt.fill || seen[f.id]) return;
+      var q = planQ[f.id], lg = logged(d, f.id), planK = q * per(f), slot = null;
+      var o = s.it.or ? byId[s.it.or] : null;
+      if (o && o.kcalPerG > 0 && planQ[o.id] != null) {
+        var extraK = Math.max(0, logged(d, o.id).kcal - planQ[o.id] * per(o));
+        var openK = planK - extraK; if (openK < SLOT_EPS) openK = 0;
+        slot = { by: o, fullK: planK, fullQ: q, replacedK: planK - openK };
+        planK = openK; q = openK / per(f);
+      }
       used += Math.max(planK, lg.kcal);
       seen[f.id] = true;
-      rows.push({ f: f, q: q, kcal: planK, given: lg.q, adjustable: s.adjustable, fill: false });
+      rows.push({ f: f, q: q, kcal: planK, given: lg.q, givenK: lg.kcal, adjustable: s.adjustable, fill: false, slot: slot });
+    });
+    rows.forEach(function (r) {   // once a stand-in's own amount is given, it offers to fill the open slot
+      rows.forEach(function (sr) {
+        if (!sr.slot || sr.slot.by !== r.f || toGive(r) > 0) return;
+        var restK = sr.kcal - sr.givenK, g = roundG(restK / per(r.f));
+        if (restK >= SLOT_EPS && g > 0) r.swap = { g: g, k: restK, slot: sr.f };
+      });
     });
     var off = 0;
     d.entries.forEach(function (e) { if (!seen[e.food] && e.food !== dt.fill) off += e.kcal; });
@@ -548,17 +572,28 @@
     }
     var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Wijzigen</button></div><ul class="pl-list">';
     p.rows.forEach(function (r) {
-      var pc = pieces(r.f), give = pc ? tapQty(r.f) : toGive(r);
-      var amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
-      if (r.given > 0 && (pc || give > 0)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
+      var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r), sl = r.slot, replaced = sl && sl.replacedK > 0.5;
+      var amt, extra = '';
+      if (replaced) {
+        amt = r.q > 0 ? fmtQ(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal (de rest is extra ' + shortName(sl.by) + ')'
+                      : 'vervangen door extra ' + shortName(sl.by) + ' (' + fmtK(sl.fullK) + ' kcal)';
+      } else {
+        amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
+        if (sl && !(r.given > 0)) amt += ' · of ' + fmtG(sl.fullK / per(sl.by)) + ' g extra ' + shortName(sl.by);
+      }
+      if (r.given > 0 && (pc || give > 0 || r.swap || Math.abs(r.given - r.q) >= 0.5)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
       if (r.fill) amt += ' · vult de dag aan';
+      if (r.swap) extra = '<span class="pl-swap">Geen ' + esc(shortName(r.swap.slot)) + '? Geef dan nog ' + fmtG(r.swap.g) + ' g (' + fmtK(r.swap.k) + ' kcal).</span>';
       var steps = r.adjustable ? '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="-1" aria-label="Minder ' + esc(r.f.name) + '">−</button>' +
         '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="1" aria-label="Meer ' + esc(r.f.name) + '">+</button>' : '';
-      var action = give > 0
-        ? '<button class="btn small pl-give" data-give="' + esc(r.f.id) + '">+ ' + esc(fmtAmount(r.f, give)) + '</button>'
-        : (r.q > 0 ? '<span class="pl-done">✓ gegeven</span>' : '<span class="pl-done" style="color:var(--muted)">geen</span>');
+      var action = give > 0 ? '<button class="btn small pl-give" data-give="' + esc(r.f.id) + '">+ ' + esc(fmtAmount(r.f, give)) + '</button>'
+        : r.swap ? '<button class="btn small pl-give" data-swap="' + esc(r.f.id) + '" aria-label="Nog ' + fmtG(r.swap.g) + ' g ' + esc(shortName(r.f)) +
+            ' in plaats van ' + esc(shortName(r.swap.slot)) + '">+ ' + fmtG(r.swap.g) + ' g</button>'
+        : (r.given > 0 || r.q > 0) ? '<span class="pl-done">✓ gegeven</span>'
+        : replaced ? '<span class="pl-done">✓ vervangen</span>'
+        : '<span class="pl-done" style="color:var(--muted)">geen</span>';
       html += '<li' + (r.fill ? ' class="fill"' : '') + '><div class="pl-info"><span class="pl-name">' + esc(r.f.name) + '</span>' +
-        '<span class="pl-amt"><span>' + esc(amt) + '</span>' + steps + '</span></div>' + action + '</li>';
+        '<span class="pl-amt"><span>' + esc(amt) + '</span>' + steps + '</span>' + extra + '</div>' + action + '</li>';
     });
     html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(p.total) + ' kcal</b> (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
     if (p.off > 0.5) html += '<p class="tip">Inclusief ' + fmtK(p.off) + ' kcal ander eten van vandaag.</p>';
@@ -568,7 +603,8 @@
   }
 
   $('plan-card').addEventListener('click', function (ev) {
-    var t = ev.target.closest('[data-type]'), g = ev.target.closest('[data-give]'), s = ev.target.closest('[data-step]');
+    var t = ev.target.closest('[data-type]'), g = ev.target.closest('[data-give]'), s = ev.target.closest('[data-step]'),
+        w = ev.target.closest('[data-swap]');
     if (ev.target.closest('#pl-change')) {
       var d0 = day(); d0.type = null; d0.adj = {}; save(); render(); return;
     }
@@ -581,6 +617,11 @@
         var q = pieces(r.f) ? tapQty(r.f) : toGive(r);
         if (q > 0) addEntry(r.f, q);
       });
+      return;
+    }
+    if (w) {   // extra of the day's meat in place of the oven roast
+      var wid = w.getAttribute('data-swap');
+      p.rows.forEach(function (r) { if (r.f.id === wid && r.swap) addEntry(r.f, r.swap.g); });
       return;
     }
     if (s) {
@@ -643,7 +684,7 @@
         '<button class="tile-main" data-add="' + esc(f.id) + '" aria-label="Voeg toe: ' + esc(f.name) + ', ' + esc(portionLabel(f, d)) + '">' +
           '<span class="tile-name">' + esc(f.name) + '</span>' +
           '<span class="tile-portion">' + esc(portionLabel(f, d)) + '</span>' +
-          '<span class="tile-kcal">' + fmtK(tapQty(f) * per(f)) + ' kcal</span>' +
+          '<span class="tile-kcal">' + fmtK(tapQty(f, d) * per(f)) + ' kcal</span>' +
         '</button>' +
         '<span class="badge"' + (n ? '' : ' hidden') + '>' + badge + '</span>' +
         '<button class="tile-more" data-open="' + esc(f.id) + '">' + (pieces(f) ? 'Stuks / kcal ›' : 'Gram / kcal ›') + '</button>' +
@@ -669,7 +710,7 @@
     var list = d ? d.entries.slice().sort(function (a, b) { return b.ts - a.ts; }) : [];
     if (!list.length) { $('log').innerHTML = '<li class="empty">Vandaag nog niets ingevoerd.</li>'; return; }
     $('log').innerHTML = list.map(function (e) {
-      var t = e.start ? 'start' : new Date(e.ts).toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
+      var t = new Date(e.ts).toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
       var amt = e.u === 'pc' ? fmtPc(e.q) : (typeof e.q === 'number' ? fmtG(e.q) + ' g' : '');
       return '<li><span class="t">' + t + '</span><span class="n">' + esc(nameOf(e)) +
         (amt ? ' <small>' + amt + '</small>' : '') + '</span>' +
@@ -882,6 +923,15 @@
 
   $('log').addEventListener('click', function (ev) {
     var b = ev.target.closest('[data-del]'); if (b) removeEntry(b.getAttribute('data-del'));
+  });
+  // Reset today: food, walks and day type, after a confirm, with undo.
+  $('day-reset').addEventListener('click', function () {
+    var k = todayKey(), d = peekDay(k);
+    if (!d || (!d.entries.length && !d.walks && !d.type)) { toast('Vandaag staat er nog niets.'); return; }
+    if (!window.confirm('Vandaag helemaal wissen? Al het eten, de wandelingen en het soort dag gaan weg.')) return;
+    state.days[k] = { entries: [], walks: 0, type: null, adj: {} };
+    save(); render();
+    toast('Dag gereset.', function () { state.days[k] = d; save(); render(); });
   });
   $('walk-plus').addEventListener('click', function () { day().walks += 1; save(); render(); });
   $('walk-minus').addEventListener('click', function () {

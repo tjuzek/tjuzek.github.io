@@ -71,7 +71,7 @@ python3 -m http.server 8000
   the path and hide the noindex from crawlers). Food values and day types live in `bruce/foods.js`, the
   only file a routine change touches. The log stays in the phone's browser (`localStorage`); nothing is sent.
   `?today=YYYY-MM-DD` previews another day on a separate test store. The page is in Dutch (`nl-BE`,
-  Flemish word choices, decimal commas) at Tommie's request (2026-11-13), the one exception to the en-GB
+  Flemish word choices, decimal commas) at Tommie's request (2026-11-12), the one exception to the en-GB
   house style; code comments stay English. Notes and derivations:
   `~/claudecode/bruce-diet/README.md` (not served).
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
