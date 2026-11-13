@@ -52,7 +52,7 @@
     var counted = 0, app = 0;
     deck.innerHTML = '';
     each(doc.querySelectorAll('.reveal .slides > section'), function (s) {
-      // numbered as on the projector: counted slides 1 to N, the appendix A1 to A4
+      // numbered as on the projector: counted slides 1 to N, the appendix A1 to A6
       var label = s.getAttribute('data-visibility') === 'uncounted' ? 'A' + (++app) : String(++counted);
       if (s.id === 'panel') return;
       var sec = document.importNode(s, true);

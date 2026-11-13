@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112k">
-<link rel="stylesheet" href="assets/deck.css?v=20261112k">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112q">
+<link rel="stylesheet" href="assets/deck.css?v=20261112q">
 </head>
 <body>
 <div class="reveal">
@@ -85,44 +85,64 @@
   </div>
 </section>
 
-<!-- ============================ I. Why care (about 6 min) ============================ -->
+<!-- ============================ I. How LLMs use language (about 4 min; Tommie's notes, 12 Nov) ============================ -->
 
-<section id="tell" data-state="quiet" data-timing="80">
+<section id="tell" data-state="quiet" data-timing="90">
   <div class="frame">
-    <p class="kicker">Why care?</p>
+    <p class="kicker">How LLMs use language</p>
     <p class="h2">A sentence you have read before</p>
     <p class="quote" style="max-width:1560px">&ldquo;Whether you are a seasoned scholar or a curious newcomer, the modern library is not merely a quiet sanctuary for books, but an intricate hub of lifelong learning<span class="dash">&mdash;</span>inviting patrons to delve into the rich tapestry of human knowledge.&rdquo;</p>
-    <p class="body fragment rise" style="margin-top:20px">Fluff words, &ldquo;not merely X, but Y&rdquo;, <i>delve</i>, and the em dash: the familiar tells of machine writing.</p>
-    <p class="body fragment rise">Models have house styles. Where do they come from, and do they stay in the machine?</p>
-    <p class="cite" style="margin-top:auto; margin-bottom:0">The sentence: an illustration in a chatbot&rsquo;s style, from the Carothers Lecture (Juzek and Ward, October 2026).</p>
+    <p class="body fragment rise" style="margin-top:14px">They overuse certain formatting, characters, words, and syntax: here the em dash, <i>delve</i>, and &ldquo;not merely X, but Y&rdquo;.</p>
+    <p class="body fragment rise">And they may not align with us on values, beliefs, and stance.</p>
+    <p class="small fragment rise" data-ev="E1.4" style="margin:0"><b style="color:var(--ink-2)">N.B.</b> Not one &ldquo;AI language&rdquo;: each model keeps its own profile, an AI idiolect (Rudnicka and Juzek, preprint).</p>
+    <p class="cite" style="margin-top:auto; margin-bottom:0">The sentence: an illustration in a chatbot&rsquo;s style, from the Carothers Lecture (Juzek and Ward, October 2026). Rudnicka and Juzek, &ldquo;Beyond &lsquo;AI Language&rsquo;&rdquo;, arXiv 2608.06589.</p>
   </div>
 </section>
 
-<section id="uptake" data-state="quiet" data-timing="90">
+<section id="rapid" data-state="quiet" data-timing="70">
   <div class="frame">
-    <p class="kicker">They do not stay in the machine</p>
-    <p class="h2">AI&rsquo;s favourite words, in unscripted speech</p>
-    <p class="body" data-ev="E1.1">1,326 science and technology podcast episodes, 22.1 million words. Each podcast before (2019 to 2021) and after (2023 to 2025).</p>
-    <div class="cols-2" style="margin-top:30px">
-      <div class="col fragment rise">
-        <h3>AI-associated words</h3>
-        <p class="lede" style="margin:0" data-ev="E1.1"><span class="num">up</span>: weighted log ratio 0.21, <i>p</i> &lt; 0.001</p>
-        <p class="body"><i>delve</i>, <i>intricate</i>, <i>meticulous</i>, <i>boast</i>, <i>surpass</i> &hellip;</p>
-      </div>
-      <div class="col fragment rise">
-        <h3>Their synonyms</h3>
-        <p class="lede" style="margin:0" data-ev="E1.1"><span class="num">flat</span>: 0.03, not significant</p>
-        <p class="body">the baseline: same meanings, no AI association</p>
-      </div>
+    <p class="kicker">Noted early on</p>
+    <p class="h3">Unprecedented, rapid change</p>
+    <figure class="figcard" style="width:1380px"><img src="assets/img/juzek-ward-2025-fig4-lower.png" alt="Occurrences per million words in PubMed abstracts, 1975 to 2024, for eleven focal words such as delve, boasts, and showcasing: flat for decades, then a steep jump in 2023 and 2024." data-ev="E1.5"></figure>
+    <p class="body fragment rise" data-ev="E1.5" style="font-size:40px; margin:22px 0 6px">Flat for decades, then a jump in 2023 and 2024. Noticed early, online and in research.</p>
+    <p class="body fragment rise" style="font-size:40px; margin:0">With Zina Ward: these marker words, and <b style="color:var(--ink)">why</b> the models overuse them.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Juzek and Ward, &ldquo;Why Does ChatGPT &lsquo;Delve&rsquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models&rdquo;, COLING 2025: Figure 4, lower panel; occurrences per million words in PubMed abstracts. Some of the 21 focal words (upper panel) were rising for decades; the jump came on top.</p>
+  </div>
+</section>
+
+<section id="mist" data-state="quiet" data-timing="80">
+  <div class="frame">
+    <p class="kicker">At the same time</p>
+    <p class="h3" style="margin-bottom:6px">Who wrote it?</p>
+    <div class="mist-wrap">
+      <div class="chart" data-chart="natural"></div>
+      <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
+      <div class="mist-card fragment rise" data-fragment-index="1"><img src="assets/img/wall-of-mist.jpg" alt="A playing card titled Wall of Mist: a sailing ship before a towering wall of fog."></div>
     </div>
-    <p class="body fragment rise" style="margin-top:14px">Whether AI drives the rise, we cannot yet say. That it is there, we can.</p>
-    <p class="cite" style="margin-top:auto; margin-bottom:0">Anderson, Galpin and Juzek, &ldquo;Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English&rdquo;, AIES 2025.</p>
+    <p class="body fragment rise" data-fragment-index="1" data-ev="E1.6" style="font-size:38px; margin:26px 0 6px; max-width:1300px">For any text written since, we cannot be sure it comes from the human language system: authorship indeterminacy.</p>
+    <p class="body fragment rise" data-fragment-index="2" style="font-size:38px; margin:0; max-width:1300px">A huge disruption for linguistics, and for computational linguistics.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E1.6">Natural change: Google Books Ngram Viewer (corpus &ldquo;en&rdquo;, smoothing 3), per million words, each word on its own scale; retrieved 19 October 2026. &ldquo;Human-authorship indeterminacy&rdquo;: Anderson, Galpin and Juzek, AIES 2025.</span> The card: AI-generated (ChatGPT Images 2.0), from the LCL talk, May 2026.</p>
+  </div>
+</section>
+
+<!-- ============================ II. Why should you care? (about 7 min) ============================ -->
+
+<section id="whycare" data-state="quiet" data-timing="60">
+  <div class="frame">
+    <p class="kicker">But why should you care?</p>
+    <p class="h2">Because it is about alignment</p>
+    <p class="lede">Models do not always do what, at first glance, we expect them to do. There is some X factor.</p>
+    <div class="points" style="margin-top:10px">
+      <p class="fragment rise"><span class="n">1</span><b>Style.</b> The em dash <span class="dash">&mdash;</span></p>
+      <p class="fragment rise"><span class="n">2</span><b>Words.</b> <i>delve</i></p>
+      <p class="fragment rise"><span class="n">3</span><b>Values, beliefs, stance.</b> Next: a grammar check that moves the meaning.</p>
+    </div>
   </div>
 </section>
 
 <section id="meaning" data-state="quiet" data-timing="90">
   <div class="frame">
-    <p class="kicker">Beyond style: meaning</p>
+    <p class="kicker">Values, beliefs, stance</p>
     <p class="h3" style="margin-bottom:4px">&ldquo;Does money lead to happiness?&rdquo;</p>
     <p class="small" data-ev="E1.2" style="margin:0 0 12px">About 100 US adults, one essay each; GPT-4o judged each essay&rsquo;s stance.</p>
     <div class="chart" data-chart="stance"></div>
@@ -135,27 +155,135 @@
   </div>
 </section>
 
-<section id="misalignment" data-state="turn" data-timing="70">
+<section id="misalignment" data-state="turn" data-timing="45">
   <div class="frame">
     <span class="fragment step-marker" data-step="open"></span>
     <p class="h2 turn-word">We asked for grammar. We got a stance.</p>
     <div class="turn-body">
       <p class="lede">A misalignment in miniature: the tool does something we did not ask for, and we do not see it happen.</p>
       <p class="body fragment rise">In 2025 we called the word-level version of this &ldquo;model misalignment&rdquo;.</p>
-      <p class="body fragment rise">So: where do a model&rsquo;s habits come from? That is a question about training, and about alignment.</p>
     </div>
   </div>
 </section>
 
-<!-- ============================ II. Where behaviour comes from (about 5 min) ============================ -->
+<section id="beliefs" data-state="quiet" data-timing="80">
+  <!-- From the Carothers Lecture, slide 14 (Tommie's Part 2, 20 Oct 2026); sources re-checked 19 Oct (EVIDENCE E1.7). -->
+  <div class="frame">
+    <p class="kicker">Beliefs by design</p>
+    <p class="h3" style="margin-bottom:4px">Chinese models</p>
+    <p class="small" style="margin:0 0 22px">Against &ldquo;freedom of AI&rdquo; in liberal societies (Tijl De Bie)</p>
+    <div class="ledger rows-tight">
+      <div class="row fragment rise" data-ev="E1.7"><span class="where">Mandated</span><span class="what">AI must &ldquo;Uphold the Core Socialist Values&rdquo; (Article 4, 2023).</span></div>
+      <div class="row fragment rise" data-ev="E1.7"><span class="where">Measured</span><span class="what">Asked in Chinese, DeepSeek refused about 36% of 145 political questions; models from outside China, 0 to 2.8%.</span></div>
+      <div class="row fragment rise" data-ev="E1.7"><span class="where">Widespread</span><span class="what">Qwen is the base of 69% of new fine-tunes on Hugging Face (February 2026).</span></div>
+      <div class="row fragment rise" data-ev="E1.7"><span class="where">Downstream</span><span class="what">A Japanese Qwen derivative: &ldquo;Taiwan is an inseparable part of China&rdquo;.</span></div>
+    </div>
+    <p class="lede fragment rise" style="font-size:46px; margin:0">Whoever holds the lever shapes what millions read and write.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Interim Measures for the Management of Generative AI Services, Article 4 (in force 15 August 2023; tr. China Law Translate). Pan and Xu, <i>PNAS Nexus</i> 2026. Lambert and Brand, &ldquo;The ATOM Report&rdquo;, arXiv 2604.07190 (preprint). Ito and Takaguchi, &ldquo;Exporting Ideologies via AI?&rdquo;, Harvard-Yenching working paper 2025: two of four derivatives were largely clean. De Bie: ECML PKDD BIAS 2025 workshop talk.</p>
+  </div>
+</section>
+
+<section id="everywhere" data-state="quiet" data-timing="80">
+  <!-- From the Carothers Lecture, slide 3, without the Pew numbers (this talk's rule: overused material). -->
+  <div class="frame">
+    <p class="kicker">Exposure</p>
+    <p class="h3">AI-written text is everywhere</p>
+    <div class="stats" data-ev="E1.8">
+      <div class="st"><p class="v">&ge; 13.5%</p><p class="t">of 2024 PubMed abstracts were processed with LLMs (a lower bound)</p><p class="s">Kobak et al., <i>Science Advances</i> 2025</p></div>
+      <div class="st"><p class="v">29%</p><p class="t">of US STEM dissertations filed in 2026 contain AI writing; none before 2023</p><p class="s">Gross, Shvadron and Zhang, NBER working paper 2026</p></div>
+      <div class="st"><p class="v">about 9%</p><p class="t">of new US newspaper articles (summer 2025) were partly or fully AI-generated</p><p class="s">Russell et al., ACL 2026</p></div>
+    </div>
+    <div class="points" style="margin-top:26px">
+      <p class="fragment rise" data-ev="E1.9"><span class="n">1</span><b>Exposure shapes us.</b> What we meet often, we come to like; and we take on a partner&rsquo;s words, more so if we think it is a computer.</p>
+      <p class="fragment rise" data-ev="E1.9"><span class="n">2</span><b>Even attitudes.</b> Biased writing assistants moved users&rsquo; attitudes towards the AI&rsquo;s position; most did not notice.</p>
+    </div>
+    <p class="lede fragment rise" style="font-size:46px; margin:0">So misaligned AI really matters.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The second and third use one commercial detector (Pangram), whose makers supported or co-wrote the studies. Mere exposure: Zajonc, <i>J. Personality and Social Psychology</i> 1968. Lexical alignment with a supposed computer: Branigan, Pickering, Pearson, McLean and Brown, <i>Cognition</i> 2011. Williams-Ceci et al., <i>Science Advances</i> 2026 (N = 2,582).</p>
+  </div>
+</section>
+
+<section id="uptake" data-state="quiet" data-timing="80">
+  <div class="frame">
+    <p class="kicker">Into spoken language</p>
+    <p class="h2">AI&rsquo;s favourite words, in unscripted speech</p>
+    <p class="body" data-ev="E1.1" style="font-size:40px">1,326 science and technology podcast episodes, 22.1 million words. Each podcast before (2019 to 2021) and after (2023 to 2025).</p>
+    <div class="cols-2" style="margin-top:16px">
+      <div class="col fragment rise">
+        <h3>AI-associated words</h3>
+        <p class="lede" style="margin:0; font-size:50px" data-ev="E1.1"><span class="num">up</span>: weighted log ratio 0.21, <span class="nobr"><i>p</i> &lt; 0.001</span></p>
+        <p class="body"><i>delve</i>, <i>intricate</i>, <i>meticulous</i>, <i>boast</i>, <i>surpass</i> &hellip;</p>
+      </div>
+      <div class="col fragment rise">
+        <h3>Their synonyms</h3>
+        <p class="lede" style="margin:0; font-size:50px" data-ev="E1.1"><span class="num">flat</span>: 0.03, not significant</p>
+        <p class="body">the baseline: same meanings, no AI association</p>
+      </div>
+    </div>
+    <p class="body fragment rise" style="margin:8px 0 10px">But correlation is not causation: there is no counterfactual.</p>
+    <p class="lede fragment rise" style="color:var(--gold); margin:0">We really want to get this right.</p>
+    <p class="cite" style="font-size:24px; margin-top:auto; margin-bottom:0">Anderson, Galpin and Juzek, &ldquo;Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English&rdquo;, AIES 2025.</p>
+  </div>
+</section>
+
+
+<!-- ============================ III. Circling in on the why (about 7 min) ============================ -->
+
+<section id="lhf" data-state="quiet" data-timing="90">
+  <div class="frame">
+    <p class="kicker">Why the overuse? Our earlier work, with Zina Ward</p>
+    <p class="h3">A conjecture, and a test</p>
+    <div class="cols-2" style="gap:80px">
+      <div class="col fragment rise">
+        <h3>The conjecture</h3>
+        <p class="body" style="font-size:40px" data-ev="E1.10">No evidence that model architecture, algorithm choices, or training data cause the overuse; comparing models is consistent with learning from human feedback.</p>
+        <p class="body" style="font-size:40px; color:var(--ink)">So: post-training plays a major role.</p>
+      </div>
+      <div class="col fragment rise">
+        <h3>The test</h3>
+        <p class="body" style="font-size:40px" data-ev="E1.10">We emulated the collection of preference data: 400 raters chose between two versions of an abstract.</p>
+        <p class="body" style="font-size:40px; color:var(--ink)" data-ev="E1.10">They preferred the version with more of the words that Llama&rsquo;s post-training favours: 52.4% to 47.6% (&chi;&sup2; = 9.4, <i>p</i> &lt; 0.01).</p>
+      </div>
+    </div>
+    <p class="lede fragment rise" style="font-size:46px; margin:6px 0 0">Consistent with the hypothesis: a small preference, scaled up by training. How, exactly?</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Juzek and Ward, COLING 2025 (the conjecture). Juzek and Ward, &ldquo;Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback&rdquo;, BIAS workshop, ECML PKDD 2025, arXiv 2508.01930 (the test): Llama 3.2 3B, base against instruct; raters on Prolific, from countries where preference workers are often recruited. Not every word: <i>delve</i> and <i>nuanced</i> may stand out to raters.</p>
+  </div>
+</section>
 
 <section id="pipeline" data-state="quiet" data-timing="70">
   <div class="frame">
-    <p class="kicker">Where behaviour comes from</p>
-    <p class="h2">Three stages, three kinds of learning</p>
+    <p class="kicker">Model stages</p>
+    <p class="h2">Pretraining, then post-training</p>
     <div class="chart" data-chart="pipeline"></div>
-    <p class="body fragment rise" style="margin-top:30px">Every chat model is made in (at least) these three steps. Each leaves a mark on how it writes.</p>
-    <p class="body fragment rise">The usual worry: we cannot see which step left which mark.</p>
+    <p class="body fragment rise" style="margin-top:30px">Post-training, broken down: SFT; preference learning, DPO (or PPO, as in RLHF); RLVR; further fine-tuning.</p>
+    <p class="body fragment rise">Here: SFT and DPO. The word overuse (<i>delve</i>) was seen before RLVR was widespread.</p>
+  </div>
+</section>
+
+<section id="wild" data-state="quiet" data-timing="80">
+  <!-- [S] skippable. OLMo ledger (WK EVIDENCE §16): the 1B's own data and sampled writing, stage by stage. -->
+  <div class="frame">
+    <p class="kicker">A sighting in the wild: OLMo-2, an open model, stage by stage</p>
+    <div class="chart" data-chart="olmo"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-ev="E2.3" style="font-size:40px; margin:6px 0 4px">In its instruction data, nearly all the dashes come with ChatGPT&rsquo;s answers.</p>
+    <p class="body fragment rise" data-ev="E2.2" style="font-size:40px; margin:0 0 4px">The preference step multiplies what it writes by 2.75. <span class="tag wip">work in progress</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, continuing the same 10,000 news articles, sampling (T = 1), first 40 words; whiskers 95% intervals. Training data counted by us. Team OLMo, &ldquo;2 OLMo 2 Furious&rdquo;, arXiv 2501.00656; WildChat answers in its SFT mix.</p>
+  </div>
+</section>
+
+<section id="ideal" data-state="quiet" data-timing="70">
+  <div class="frame">
+    <p class="kicker">The ideal experiment</p>
+    <p class="h3">Train from scratch, turn the knobs, see what comes out</p>
+    <div class="ledger" style="margin-top:20px">
+      <div class="row fragment rise"><span class="where">Style</span><span class="what">the em dash <span class="dash">&mdash;</span> &nbsp;<span class="tag wip">running: today&rsquo;s results</span></span></div>
+      <div class="row fragment rise"><span class="where">Words</span><span class="what"><i>delve</i> &nbsp;<span class="tag wip">about to run</span></span></div>
+      <div class="row fragment rise"><span class="where">Stance</span><span class="what">sentiment towards countries &nbsp;<span class="tag pending">to be seen</span></span></div>
+    </div>
+    <p class="body fragment rise" style="margin:0 0 14px">The ultimate goal: a mathematical model of what each stage does. More on that shortly.</p>
+    <p class="body fragment rise" style="margin:0">Compute sets the scale: small models, trained from scratch. That works well for the dash, probably for words; for stance, we shall see.</p>
   </div>
 </section>
 
@@ -184,21 +312,7 @@
   </div>
 </section>
 
-<section id="wild" data-state="quiet" data-timing="80">
-  <!-- [S] skippable. OLMo ledger (WK EVIDENCE §16): the 1B's own data and sampled writing, stage by stage. -->
-  <div class="frame">
-    <p class="kicker">A sighting in the wild: OLMo-2, an open model, stage by stage</p>
-    <div class="chart" data-chart="olmo"></div>
-    <span class="fragment step-marker" data-step="1"></span>
-    <span class="fragment step-marker" data-step="2"></span>
-    <span class="fragment step-marker" data-step="3"></span>
-    <p class="body fragment rise" data-ev="E2.3" style="font-size:40px; margin:6px 0 4px">In its instruction data, nearly all the dashes come with ChatGPT&rsquo;s answers.</p>
-    <p class="body fragment rise" data-ev="E2.2" style="font-size:40px; margin:0 0 4px">The preference step multiplies what it writes by 2.75. <span class="tag wip">work in progress</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, continuing the same 10,000 news articles, sampling (T = 1), first 40 words; whiskers 95% intervals. Training data counted by us. Team OLMo, &ldquo;2 OLMo 2 Furious&rdquo;, arXiv 2501.00656; WildChat answers in its SFT mix.</p>
-  </div>
-</section>
-
-<!-- ============================ III. The experiment (about 13 min) ============================ -->
+<!-- ============================ IV. The experiment (about 21 min without the skippable slides) ============================ -->
 
 <section id="design" data-state="quiet" data-timing="100">
   <div class="frame">
@@ -438,7 +552,20 @@
   </div>
 </section>
 
-<!-- ============================ IV. Back out (about 5 min) ============================ -->
+<!-- ============================ V. Take-aways and next steps (about 5 min) ============================ -->
+
+<section id="lessons" data-state="quiet" data-timing="150">
+  <div class="frame">
+    <p class="kicker">What the dye says about alignment</p>
+    <div class="points" style="margin-top:10px">
+      <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;; in the full pipeline, the contrast between answers acts as a dose.</p>
+      <p class="fragment rise"><span class="n">2</span><b class="hl">DPO&rsquo;s relative force is greatest on rare items.</b> It multiplies what is there, so much of a model&rsquo;s behaviour is set before it: in pretraining and in SFT, whose data other models often wrote.</p>
+      <p class="fragment rise"><span class="n">3</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
+      <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing is not reversing.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
+      <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The settings are part of the machine.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects; <span data-ev="E3.16">reading at T = 0.8 instead of 1 cut the habit 9- to <span class="nobr">25-fold</span> after SFT 1&times;.</span></p>
+    </div>
+  </div>
+</section>
 
 <section id="ladder" data-state="quiet" data-timing="80">
   <!-- [S] skippable. NSF CAREER proof of concept: the generality ladder (C1, C2 stance). -->
@@ -455,16 +582,17 @@
   </div>
 </section>
 
-<section id="lessons" data-state="quiet" data-timing="150">
+<section id="next" data-state="quiet" data-timing="70">
   <div class="frame">
-    <p class="kicker">What the dye says about alignment</p>
-    <div class="points" style="margin-top:10px">
-      <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;; in the full pipeline, the contrast between answers acts as a dose.</p>
-      <p class="fragment rise"><span class="n">2</span><b>DPO multiplies what is there, rare habits most.</b> So much of a model&rsquo;s behaviour is set before it: in pretraining and in SFT, whose data other models often wrote.</p>
-      <p class="fragment rise"><span class="n">3</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
-      <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing is not reversing.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
-      <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The settings are part of the machine.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects; <span data-ev="E3.16">reading at T = 0.8 instead of 1 cut the habit 9- to <span class="nobr">25-fold</span> after SFT 1&times;.</span></p>
+    <p class="kicker">Where this goes</p>
+    <p class="h2">Next steps</p>
+    <div class="points">
+      <p class="fragment rise"><span class="n">1</span><b>Scale up.</b> From the dash to words and to stance.</p>
+      <p class="fragment rise"><span class="n">2</span><b>Mathematical modelling.</b> From fitted lines, stage by stage, to a model of the whole pipeline.</p>
+      <p class="fragment rise"><span class="n">3</span><b>Mitigation.</b> Explore better training procedures.</p>
     </div>
+    <p class="body fragment rise" style="margin-top:16px">Still model diagnostics, but it has moved: from diagnosing model behaviour to diagnosing model mechanics.</p>
+    <p class="lede fragment rise" style="color:var(--gold); margin:0">We can gain very solid insights.</p>
   </div>
 </section>
 
@@ -501,14 +629,31 @@
 
 <!-- ============================ Appendix (uncounted) ============================ -->
 
-<section id="numbers" data-state="quiet" data-visibility="uncounted">
+<section id="numbers-open" data-state="quiet" data-visibility="uncounted">
   <div class="frame" style="padding-top:60px">
-    <p class="kicker">Every number on these slides</p>
+    <p class="kicker">Every number on these slides: the opening</p>
     <table class="numbers">
       <thead><tr><th>Number</th><th>What</th><th>Source</th></tr></thead>
       <tbody>
+        <tr><td class="n">21</td><td>focal words in PubMed abstracts, 1975 to 2024: flat, then a jump in 2023 and 2024</td><td>E1.5</td></tr>
+        <tr><td class="n">5.4 &rarr; 16.0; 0.14 &rarr; 2.7; 0.69 &rarr; 2.5; 0.006 &rarr; 0.14</td><td><i>literally</i>, <i>dude</i>, <i>salty</i>, <i>touch base</i> in Google Books, per million, 1960 to 2022</td><td>E1.6</td></tr>
+        <tr><td class="n">39.5%; 66.7%; 86</td><td>essays taking no side: written alone; with heavy AI use (groups of 45, 28, 27); essays from 2021 in the grammar test</td><td>E1.2, E1.3</td></tr>
+        <tr><td class="n">about 36%; 0 to 2.8%; 69%</td><td>DeepSeek&rsquo;s refusals of 145 political questions asked in Chinese; models from outside China; Qwen&rsquo;s share of new fine-tunes, February 2026</td><td>E1.7</td></tr>
+        <tr><td class="n">&ge; 13.5%; 29%; about 9%</td><td>2024 PubMed abstracts processed with LLMs; US STEM dissertations of 2026 with AI writing; new US newspaper articles, summer 2025</td><td>E1.8</td></tr>
+        <tr><td class="n">2,582</td><td>participants: biased writing assistants and attitudes</td><td>E1.9</td></tr>
         <tr><td class="n">0.21; 0.03</td><td>AI-associated words and their synonyms in podcast speech, 2019 to 2021 against 2023 to 2025 (22.1 million words, 1,326 episodes)</td><td>E1.1</td></tr>
-        <tr><td class="n">39.5%; 66.7%</td><td>essays taking no side: written alone; with heavy AI use (groups of 45, 28, 27)</td><td>E1.2</td></tr>
+        <tr><td class="n">400; 52.4% to 47.6% (&chi;&sup2; = 9.4)</td><td>raters; their preference for the version with more of the words Llama&rsquo;s post-training favours</td><td>E1.10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="numbers" data-state="quiet" data-visibility="uncounted">
+  <div class="frame" style="padding-top:60px">
+    <p class="kicker">Every number on these slides: the experiment</p>
+    <table class="numbers">
+      <thead><tr><th>Number</th><th>What</th><th>Source</th></tr></thead>
+      <tbody>
         <tr><td class="n">491; 373; 412</td><td>OLMo-2 1B&rsquo;s training data: web text; its SFT answers; preferred answers (per million tokens; work in progress)</td><td>E2.1</td></tr>
         <tr><td class="n">679; 513; 1,409; 1,160; 966</td><td>OLMo-2 1B continuing news, sampled: base, SFT, DPO, final; the articles&rsquo; writers (work in progress)</td><td>E2.2</td></tr>
         <tr><td class="n">2.75&times;</td><td>OLMo-2 1B, DPO against SFT, paired (95% interval 2.33 to 3.27)</td><td>E2.2</td></tr>
@@ -554,12 +699,34 @@
   </div>
 </section>
 
-<section id="sources" data-state="quiet" data-visibility="uncounted">
+<section id="sources-open" data-state="quiet" data-visibility="uncounted">
   <div class="frame" style="padding-top:60px">
-    <p class="kicker">Sources</p>
+    <p class="kicker">Sources: the opening</p>
+    <div class="refs">
     <p class="cite">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques (2026). How LLMs Distort Our Written Language. arXiv 2603.18161 (preprint).</p>
     <p class="cite">Anderson, Galpin and Juzek (2025). Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English. AIES 2025.</p>
-    <p class="cite">Juzek and Ward (2025). Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models. COLING 2025.</p>
+    <p class="cite">Branigan, Pickering, Pearson, McLean and Brown (2011). The role of beliefs in lexical alignment: Evidence from dialogs with humans and computers. <i>Cognition</i> 121(1).</p>
+    <p class="cite">Cyberspace Administration of China et al. (2023). Interim Measures for the Management of Generative Artificial Intelligence Services, Article 4. Translation: China Law Translate.</p>
+    <p class="cite">De Bie (2025). Talk at the BIAS workshop, ECML PKDD 2025, on &ldquo;freedom of AI&rdquo; in liberal societies (from Tommie&rsquo;s notes).</p>
+    <p class="cite">Google Books Ngram Viewer: <i>literally</i>, <i>dude</i>, <i>salty</i>, <i>touch base</i>; corpus &ldquo;en&rdquo;, smoothing 3, 1960 to 2022; retrieved 19 October 2026.</p>
+    <p class="cite">Gross, Shvadron and Zhang (2026). How heavily are PhD students offloading their scientific writing to AI? NBER Working Paper 35859.</p>
+    <p class="cite">Ito and Takaguchi (2025). Exporting ideologies via AI? Harvard-Yenching Institute Working Paper.</p>
+    <p class="cite">Kobak, Gonz&aacute;lez-M&aacute;rquez, Horv&aacute;t and Lause (2025). Delving into LLM-assisted writing in biomedical publications through excess vocabulary. <i>Science Advances</i> 11(27).</p>
+    <p class="cite">Lambert and Brand (2026). The ATOM Report: Measuring the open language model ecosystem. arXiv 2604.07190 (preprint).</p>
+    <p class="cite">Pan and Xu (2026). Political censorship in large language models originating from China. <i>PNAS Nexus</i>, pgag013.</p>
+    <p class="cite">Rudnicka and Juzek (2026). Beyond &ldquo;AI Language&rdquo;: The case for the idiolectal nature of LLM output. arXiv 2608.06589 (preprint).</p>
+    <p class="cite">Russell, Karpinska, Akinode, Thai, Emi, Spero and Iyyer (2026). AI use in American newspapers is widespread, uneven, and rarely disclosed. ACL 2026; arXiv 2510.18774.</p>
+    <p class="cite">Williams-Ceci et al. (2026). Biased AI writing assistants shift users&rsquo; attitudes on societal issues. <i>Science Advances</i> 12(11).</p>
+    <p class="cite">Zajonc (1968). Attitudinal effects of mere exposure. <i>Journal of Personality and Social Psychology</i> 9(2, Pt. 2).</p>
+    </div>
+  </div>
+</section>
+
+<section id="sources" data-state="quiet" data-visibility="uncounted">
+  <div class="frame" style="padding-top:60px">
+    <p class="kicker">Sources: the experiment</p>
+    <p class="cite">Juzek and Ward (2025a). Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models. COLING 2025.</p>
+    <p class="cite">Juzek and Ward (2025b). Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback. BIAS workshop, ECML PKDD 2025; arXiv 2508.01930.</p>
     <p class="cite">Rafailov, Sharma, Mitchell, Ermon, Manning and Finn (2023). Direct Preference Optimization: Your Language Model Is Secretly a Reward Model. NeurIPS 2023; arXiv 2305.18290.</p>
     <p class="cite">Team OLMo et al. (2024). 2 OLMo 2 Furious. arXiv 2501.00656. Lambert et al. (2024). T&uuml;lu 3: Pushing Frontiers in Open Language Model Post-Training. arXiv 2411.15124.</p>
     <p class="cite">Zhang, Xiong, Chen, Zhou, Huang and Zhang (2025). From Lists to Emojis: How Format Bias Affects Model Alignment. ACL 2025.</p>
@@ -572,16 +739,17 @@
   <div class="frame">
     <p class="kicker">How these slides were made</p>
     <p class="cite" style="max-width:1600px">Tommie Juzek set the argument, the running order, and the substance; the numbers come from his group&rsquo;s research data and the cited sources; unpublished results are marked. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text.</p>
-    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A3).</p>
+    <p class="cite">Images: the Wall of Mist card is AI-generated (ChatGPT Images 2.0), from Tommie&rsquo;s LCL talk (May 2026); the PubMed figure is Figure 4 of Juzek and Ward (COLING 2025), as published.</p>
+    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A5).</p>
   </div>
 </section>
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261112k"></script>
-<script src="assets/charts.js?v=20261112k"></script>
-<script src="assets/flurry.js?v=20261112k"></script>
-<script src="assets/dye.js?v=20261112k"></script>
-<script src="assets/deck.js?v=20261112k"></script>
+<script src="assets/reveal/reveal.js?v=20261112q"></script>
+<script src="assets/charts.js?v=20261112q"></script>
+<script src="assets/flurry.js?v=20261112q"></script>
+<script src="assets/dye.js?v=20261112q"></script>
+<script src="assets/deck.js?v=20261112q"></script>
 </body>
 </html>

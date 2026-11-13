@@ -7,7 +7,8 @@
    12 November: RATIO swapped to the full ratio axis (9 dosed bases); WHOLE (the pipeline in one picture) and
    DECODE (T 1.0 against T 0.8) added, both from the instance's readings (dg-pp124h-ratio-readings.tsv).
    12 November, later: RARE (DPO's factor by pretraining and SFT dose; Tommie: highlight that DPO's relative force
-   is greatest on rare items) and the near-zero dose, queued, on the design figure and in RARE's empty column. */
+   is greatest on rare items) and the near-zero dose, queued, on the design figure and in RARE's empty column.
+   12 November, evening: NATURAL (natural change, then the wall of mist), from Tommie's notes and the Carothers Lecture. */
 (function () {
   'use strict';
   var NS = 'http://www.w3.org/2000/svg';
@@ -727,6 +728,43 @@
     });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     Natural change, then the wall of mist (Tommie's notes, 12 Nov; from the Carothers Lecture, slides 6 and 7).
+     Google Books Ngram Viewer, corpus "en", smoothing 3, 1960 to 2022, per million; retrieved 19 October 2026
+     (_archive/carothers/part2-slides/assets/ngram-1960-2022.json; EVIDENCE E1.6). Each word on its own scale:
+     the point is the shape, an S-curve over decades. Step 1: fog over everything after 2022.
+     ------------------------------------------------------------------------------------------ */
+  var NGRAM = [
+    { word: 'literally', v: [5.44,5.44,5.46,5.47,5.51,5.56,5.64,5.73,5.81,5.86,5.91,5.97,5.98,5.94,5.91,5.86,5.81,5.82,5.85,5.9,5.97,6.04,6.12,6.25,6.36,6.45,6.54,6.61,6.72,6.86,6.99,7.08,7.2,7.39,7.62,7.87,8.16,8.51,8.83,9.17,9.5,9.86,10.2,10.6,10.9,11.3,12,12.6,13.3,13.5,13.8,14.3,14.8,15,15.1,15.2,15.6,15.8,16,16,16,16.1,16] },
+    { word: 'dude', v: [0.142,0.134,0.144,0.142,0.142,0.139,0.135,0.143,0.152,0.153,0.165,0.173,0.189,0.201,0.202,0.208,0.203,0.198,0.19,0.178,0.175,0.179,0.173,0.175,0.177,0.187,0.201,0.205,0.214,0.227,0.237,0.251,0.261,0.269,0.284,0.293,0.314,0.353,0.393,0.431,0.484,0.549,0.629,0.708,0.788,0.886,1.05,1.23,1.44,1.6,1.73,1.98,2.23,2.37,2.5,2.58,2.68,2.78,2.75,2.73,2.74,2.73,2.7] },
+    { word: 'salty', v: [0.688,0.683,0.681,0.675,0.651,0.64,0.632,0.607,0.589,0.579,0.571,0.572,0.563,0.553,0.547,0.545,0.536,0.531,0.536,0.557,0.568,0.58,0.596,0.61,0.626,0.638,0.641,0.653,0.659,0.664,0.668,0.675,0.688,0.711,0.737,0.764,0.8,0.85,0.907,0.953,1,1.06,1.11,1.16,1.21,1.26,1.36,1.47,1.6,1.7,1.8,1.96,2.11,2.18,2.23,2.26,2.33,2.45,2.45,2.41,2.45,2.48,2.51] },
+    { word: 'touch base', v: [0.006,0.00662,0.00681,0.00707,0.00781,0.00805,0.00869,0.00955,0.0105,0.0112,0.0122,0.0131,0.0141,0.0152,0.0162,0.0166,0.0175,0.0186,0.0193,0.0202,0.0214,0.0218,0.0231,0.0241,0.0246,0.026,0.0275,0.0283,0.0295,0.0302,0.0312,0.0319,0.0326,0.0327,0.0341,0.0358,0.0377,0.0405,0.0434,0.046,0.0494,0.0526,0.0561,0.059,0.0612,0.0651,0.0701,0.0767,0.0838,0.0881,0.0925,0.102,0.11,0.116,0.12,0.123,0.129,0.133,0.135,0.136,0.137,0.137,0.139] }
+  ];
+  var NGRAM_MAX = { 'literally': 18, 'dude': 3, 'salty': 3, 'touch base': 0.16 };
+  function naturalChart(host) {
+    var W = 1290, H = 400, gap = 44, pw = (W - 3 * gap) / 4, top = 96, ph = 210;
+    var svg = svgFor(host, W, H, 'Natural language change in Google Books, 1960 to 2022, each word on its own scale: literally rises from 5.4 to 16.0 per million, dude from 0.14 to 2.7, salty from 0.69 to 2.5, touch base from 0.006 to 0.14, each an S-curve over decades. After 2022, a wall of mist.');
+    var defs = el('defs', null, svg), lg = el('linearGradient', { id: 'fog', x1: 0, x2: 1, y1: 0, y2: 0 }, defs);
+    [[0, 0], [0.35, 0.38], [1, 0.66]].forEach(function (s) { el('stop', { offset: s[0], 'stop-color': '#dfe5ee', 'stop-opacity': s[1] }, lg); });
+    var fb = el('filter', { id: 'fogblur', x: '-30%', y: '-10%', width: '160%', height: '120%' }, defs); el('feGaussianBlur', { stdDeviation: 7 }, fb);
+    NGRAM.forEach(function (S, i) {
+      var x0 = i * (pw + gap), max = NGRAM_MAX[S.word];
+      var x = function (yr) { return x0 + (yr - 1960) / (2034 - 1960) * pw; };
+      var y = function (v) { return top + ph - v / max * ph; };
+      var s0 = g(svg, 'st-0'), last = S.v[S.v.length - 1];
+      var t = txt(s0, x0, 34, S.word, 'label', { style: 'font-style: italic; font-family: Newsreader, Georgia, serif; font-size: 40px; font-weight: 500' });
+      txt(s0, x0, 72, fmt(S.v[0], S.v[0] < 0.1 ? 3 : S.v[0] < 1 ? 2 : 1) + ' \u2192 ' + fmt(last, last < 1 ? 2 : 1) + ' per million', 'xlab-2', { style: 'font-size: 24px' });
+      el('line', { x1: x0, x2: x0 + pw, y1: top + ph, y2: top + ph, 'class': 'axis-line', style: 'stroke: var(--axis); stroke-width: 2' }, s0);
+      [1960, 1990, 2020].forEach(function (yr) { txt(s0, x(yr), top + ph + 38, String(yr), 'xlab-2', { 'text-anchor': 'middle', style: 'font-size: 24px' }); });
+      var pts = S.v.map(function (v, k) { return [x(1960 + k), y(v)]; });
+      polyline(s0, pts, 'line copy').setAttribute('data-ev', 'E1.6');
+      var s1 = g(svg, 'st-1');
+      el('rect', { x: x(2021.6), y: top - 6, width: x0 + pw - x(2021.6) + 8, height: ph + 6, rx: 10, fill: 'url(#fog)', filter: 'url(#fogblur)' }, s1);
+      txt(s1, (x(2022.4) + x0 + pw + 8) / 2, top + ph / 2 + 16, '?', '', { 'text-anchor': 'middle', style: 'font-size: 46px; font-weight: 700; fill: #050507; opacity: 0.6' });
+    });
+    txt(g(svg, 'st-0'), 0, H - 4, 'Natural change: S-curves over decades, in books.', 'label-2', {});
+  }
+
   var BUILDERS = {
     'pipeline': function (h) { pipelineChart(h, 'plain'); },
     'design': function (h) { pipelineChart(h, 'design'); },
@@ -741,7 +779,8 @@
     'rare': rareChart,
     'decode': decodeChart,
     'stance': stanceChart,
-    'olmo': olmoChart
+    'olmo': olmoChart,
+    'natural': naturalChart
   };
   function buildAll() {
     Array.prototype.forEach.call(document.querySelectorAll('.chart[data-chart]'), function (host) {
