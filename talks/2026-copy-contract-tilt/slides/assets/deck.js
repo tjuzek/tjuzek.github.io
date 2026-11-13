@@ -2,6 +2,7 @@
    "What Is Left to Write?" (WK talk, 1 October 2026): the same keys, numbering and jump box.
    URL switches:  ?present (trap F5, Ctrl+R and Tab)   ?motion=on|off   ?palette=violet|lilac|electric|wk
                   ?bg=waves (the WK line bundles instead of the dye, a fallback for a weak projector machine)
+                  ?dye=deep (the dye on a float16 canvas: true colours, brighter plumes; for comparison)
                   ?print-pdf (reveal's print view)
    Dev keys:      K key test (for the clicker)   P palette (the violet: four candidates)
    Our keys:      G: jump to a slide by its number (A1, A2 for the appendix), Enter to go, Esc to cancel
@@ -136,7 +137,8 @@
       colourEl: document.body,
       paused: function () { return document.body.classList.contains('panel'); },
       still: html.classList.contains('motion-off'),
-      startEmpty: html.classList.contains('from-dark')
+      startEmpty: html.classList.contains('from-dark'),
+      deep: params.get('dye') === 'deep'
     });
   }
   /* the opening: one drop of dye, from the title's em dash */

@@ -8,14 +8,16 @@
      along each plume, a loose pull towards its centre-line, and a little jitter (diffusion);
    - each particle is a soft, faint sprite (source-over, so dense dye saturates to its colour, not to white); trails
      fade with 'destination-out', so the canvas
-     stays transparent over the page's own ground colour (palette changes need no repaint);
+     stays transparent over the page's own ground colour (palette changes need no repaint), and a sweep
+     clears what 8-bit rounding would leave behind, so the water goes back to the ground (see mount);
    - colours come from CSS (--wave-a, --wave-b, --wave-c) and are re-read twice a second, so fades apply.
 
    API: Dye.mount(host, opts) -> { inject(xw, yw, n, plume), still(), dispose() }
         World coordinates are a 1920 x 1080 frame (the slide's own), whatever the screen size.
    opts: count (particles per plume, default 210), colourEl (element whose CSS gives the colours),
          paused() (return true to idle: hidden slides, the Q&A light), still (draw one frame, no motion),
-         startEmpty (the plumes fill in over a few seconds, for the opening drop of dye). */
+         startEmpty (the plumes fill in over a few seconds, for the opening drop of dye),
+         deep (a float16 canvas where the browser has one: true colours, brighter plumes, no sweep needed). */
 (function () {
   'use strict';
   var W = 480, H = 270, SX = W / 1920;
@@ -71,8 +73,30 @@
     canvas.width = W; canvas.height = H;
     canvas.className = 'dye';
     host.appendChild(canvas);
-    var ctx = canvas.getContext('2d');
+    /* The trails fade by 2% a frame. On an ordinary 8-bit canvas that stalls: once 2% of a pixel's alpha is
+       under half a step, rounding keeps it, so every pixel the dye has crossed stays at about 25/255 and the
+       water turns grey (12 November 2026). So a small sweep, ten times a second, takes the last steps off by
+       hand. opts.deep asks for a float16 canvas instead, which fades to nothing by itself (Chrome has it); it
+       also keeps the dye's true colours (8 bits push the faint violet towards blue, the gold towards orange),
+       so the plumes come out brighter: a different look, offered for comparison (deck: ?dye=deep). */
+    var ctx = null, deep = false;
+    if (opts.deep) {
+      try {
+        ctx = canvas.getContext('2d', { colorType: 'float16' });
+        deep = !!ctx && !!ctx.getContextAttributes && ctx.getContextAttributes().colorType === 'float16';
+      } catch (e) { ctx = null; }
+    }
+    if (!ctx) ctx = canvas.getContext('2d', { willReadFrequently: true });
     ctx.setTransform(SX, 0, 0, SX, 0, 0);       // draw in world units
+    var sweepT = 0;
+    function sweep() {                          // 8-bit only: the faintest dye loses 3 steps of alpha
+      var img = ctx.getImageData(0, 0, W, H), d = img.data, hit = false;
+      for (var i = 3; i < d.length; i += 4) {
+        var a = d[i];
+        if (a && a < 40) { d[i] = a > 3 ? a - 3 : 0; hit = true; }
+      }
+      if (hit) ctx.putImageData(img, 0, 0);
+    }
 
     var colKey = '', sprites = [];
     function readColours(force) {
@@ -162,6 +186,7 @@
       }
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';
+      if (!deep) { sweepT += dt; if (sweepT >= 6) { sweepT = 0; sweep(); } }
     }
 
     var raf = 0, last = 0, colT = 0, alive = true;
