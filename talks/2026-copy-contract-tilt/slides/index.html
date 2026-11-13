@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113g">
-<link rel="stylesheet" href="assets/deck.css?v=20261113g">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113h">
+<link rel="stylesheet" href="assets/deck.css?v=20261113h">
 </head>
 <body>
 <div class="reveal">
@@ -341,22 +341,11 @@
   </div>
 </section>
 
-<section id="slopes" data-state="quiet" data-timing="110">
-  <div class="frame">
-    <p class="kicker">The maths, 1 &middot; each stage is a line in log space</p>
-    <p class="eq mid" style="margin-bottom:6px"><span class="verb copy" style="font-size:40px">copy</span>&ensp; log&thinsp;<i>m</i> <span class="op">=</span> log&thinsp;<i>d</i> <span class="op">+</span> <i>c</i><span class="gl">slope 1</span></p>
-    <p class="eq mid fragment rise" data-fragment-index="2" style="margin-bottom:10px"><span class="verb contract" style="font-size:40px">contract</span>&ensp; log&thinsp;<i>m</i>&prime; <span class="op">=</span> (1 <span class="op">&minus;</span> <i>&lambda;</i>)&thinsp;log&thinsp;<i>m</i> <span class="op">+</span> <i>&lambda;</i>&thinsp;<i>y</i>*<span class="gl">slope 1 &minus; &lambda;</span></p>
-    <div class="chart" data-chart="slopes" style="width:1500px"></div>
-    <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
-    <span class="fragment step-marker" data-step="2" data-fragment-index="2"></span>
-    <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><i>d</i>: dose in the pretraining text; <i>m</i>: what the model writes; <i>y</i>*: where SFT pulls. Slope: change in log&#8322; output per doubling of the dose (&frac14;&times; to 4&times;), mean of 3 seeds, 90% intervals. SFT keeps about a quarter of the dose&rsquo;s effect on news, an eighth on chat.</p>
-  </div>
-</section>
+<!-- slopes (the line model with λ and y*) dropped at Tommie's word, 13 Nov: too unfamiliar; its chart and SLOPES data stay in charts.js -->
 
 <section id="tilt-eq" data-state="quiet" data-timing="100">
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 2</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 1</p>
     <p class="h3">The best model on a leash</p>
     <p class="eq mid">maximise&ensp; E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;] <span class="op">&minus;</span> <i>&beta;</i>&thinsp;KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p>
     <div class="terms">
@@ -373,7 +362,7 @@
 
 <section id="tilt-res" data-state="quiet" data-timing="110">
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 3</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 2</p>
     <p class="h3">What the best model looks like</p>
     <p class="eq big">&rArr;&ensp; <i>&pi;</i>*(<i>y</i>) <span class="op">&prop;</span> <i>&pi;</i><sub>ref</sub>(<i>y</i>)&thinsp;&middot;&thinsp;<i>e</i><sup><i>r</i>(<i>y</i>)&thinsp;/&thinsp;<i>&beta;</i></sup></p>
     <p class="small" style="margin:0 0 18px"><i>&pi;</i>*: the best model on this leash. Multiply each answer&rsquo;s probability under the reference by <i>e</i><sup><i>r</i>/<i>&beta;</i></sup>; rescale to sum to 1.</p>
@@ -543,10 +532,9 @@
     <p class="kicker">Copy, contract, tilt</p>
     <div class="verbs">
       <div class="v copy"><p class="name">Copy</p><p class="stage">pretraining</p><p class="what">Writes in proportion to what it read.</p><p class="eqs math">slope 1</p></div>
-      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left, and pulls towards a level of its own.</p><p class="eqs math">slope 1 &minus; <i>&lambda;</i></p></div>
+      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left, and pulls towards a level of its own.</p><p class="eqs math">slope below 1</p></div>
       <div class="v tilt fragment rise"><p class="name">Tilt</p><p class="stage">DPO</p><p class="what">Multiplies what is there, by the contrast between the answers; rare habits most.</p><p class="eqs math">shift by &Delta;</p></div>
     </div>
-    <p class="eq mid fragment rise" style="margin:6px 0 20px">log&thinsp;<i>m</i><sub>final</sub> <span class="op">&asymp;</span> (1 <span class="op">&minus;</span> <i>&lambda;</i>)(log&thinsp;<i>d</i> <span class="op">+</span> <i>c</i>) <span class="op">+</span> <i>&lambda;</i>&thinsp;<i>y</i>* <span class="op">+</span> &Delta;(contrast)</p>
     <p class="body fragment rise" style="font-size:38px; margin-bottom:8px"><b class="num" style="color:var(--ink)">Where the line bends:</b> the tilt is larger the rarer the habit (&times;1.75, &times;1.61, &times;1.31 at &frac14;&times;, 1&times;, 4&times;; along the ratio axis too); dash-free pairs move punctuation in general; at 350M, SFT starts from zero; seeds alone differ by up to 1.47&times;.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.13">The preferred-side contrast, news, 3 seeds.</span> <span data-ev="E3.19">Ratio axis: the factor shrinks from the &frac14;&times; to the 4&times; models in 11 of 12 columns from 400&thinsp;:&thinsp;0 up (90% intervals).</span> Seeds: after SFT 1&times;, news, natural dose. A sketch to be tested on the 350M and 774M models.</p>
   </div>
@@ -742,9 +730,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113g"></script>
-<script src="assets/charts.js?v=20261113g"></script>
-<script src="assets/dye.js?v=20261113g"></script>
-<script src="assets/deck.js?v=20261113g"></script>
+<script src="assets/reveal/reveal.js?v=20261113h"></script>
+<script src="assets/charts.js?v=20261113h"></script>
+<script src="assets/dye.js?v=20261113h"></script>
+<script src="assets/deck.js?v=20261113h"></script>
 </body>
 </html>
