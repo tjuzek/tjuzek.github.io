@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113v">
-<link rel="stylesheet" href="assets/deck.css?v=20261113v">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113w">
+<link rel="stylesheet" href="assets/deck.css?v=20261113w">
 </head>
 <body>
 <div class="reveal">
@@ -307,6 +307,21 @@
     <span class="fragment step-marker" data-step="3"></span>
     <p class="body fragment rise" data-fragment-index="2" style="font-size:38px; margin-top:6px">The reading: the expected number of em dashes per million tokens, summing the model&rsquo;s own probability of the dash along its own text.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Pre-pilot on DCLM web text; SFT on 20,000 chat answers; DPO (&beta; = 0.1) on 8,000 pairs. Pair sets: preferred against rejected dashes, 0&thinsp;:&thinsp;400 to 1,198&thinsp;:&thinsp;0; none; both sides (one machine). A first round on a second machine adds the side and swap tests. Reading: 2,000 news and 1,000 chat prompts, T = 1. Juzek et al., in preparation.</p>
+  </div>
+</section>
+
+<section id="grid" data-state="quiet" data-timing="80">
+  <!-- 13 Nov, Tommie: the combinatorics of the set-up, drawn like a network (E3.1). -->
+  <div class="frame">
+    <p class="kicker">The experiment: a dose grid</p>
+    <p class="h3">Every path is one recipe</p>
+    <div class="chart" data-chart="grid"></div>
+    <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
+    <span class="fragment step-marker" data-step="2" data-fragment-index="2"></span>
+    <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
+    <span class="fragment step-marker" data-step="4" data-fragment-index="4"></span>
+    <p class="body fragment rise" data-fragment-index="4" style="font-size:34px; margin:6px 0 0">One path lit: &frac14;&times; in pretraining, SFT 1&times;, then DPO on 1,198:0.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0" data-ev="E3.1">Doses of the em dash: 1&times; is the web text&rsquo;s natural rate; SFT 0 is the same 20,000 answers without dashes. DPO pair sets of 8,000 pairs: none; preferred against rejected answers carrying one dash; dashes on both sides, at 1&times; and 4&times;. Every base and SFT model is read too. 4 &times; 3 &times; 12 = 144 recipes, 3 seeds each.</p>
   </div>
 </section>
 
@@ -765,9 +780,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113v"></script>
-<script src="assets/charts.js?v=20261113v"></script>
-<script src="assets/dye.js?v=20261113v"></script>
-<script src="assets/deck.js?v=20261113v"></script>
+<script src="assets/reveal/reveal.js?v=20261113w"></script>
+<script src="assets/charts.js?v=20261113w"></script>
+<script src="assets/dye.js?v=20261113w"></script>
+<script src="assets/deck.js?v=20261113w"></script>
 </body>
 </html>

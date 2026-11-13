@@ -858,8 +858,104 @@
     txt(g(svg, 'st-0'), 0, H - 4, 'Natural change: S-curves over decades, in books.', 'label-2', {});
   }
 
+  /* ------------------------------------------------------------------------------------------
+     1c. The grid as a network (slide "grid", after "design"; Tommie, 13 Nov): pretraining doses, then SFT
+        doses, then DPO pair sets, every node linked to every node in the next column, so every path is one
+        recipe (4 × 3 × 12 = 144, 3 seeds each: 432 DPO models, E3.1); arrows out of the DPO column: every
+        model is read. Step 1: SFT; step 2: DPO; step 3: the reading; step 4: one path lit.
+        The near-zero pretraining dose (E3.21) is a dashed node, queued.
+     ------------------------------------------------------------------------------------------ */
+  var GRID = {
+    pre: [{ k: 'd0', t: '0' }, { k: 'dn', t: '', next: true }, { k: 'dq', t: '¼×' }, { k: 'd1', t: '1×' }, { k: 'd4', t: '4×' }],
+    sft: [{ k: 's0', t: '0' }, { k: 's1', t: '1×' }, { k: 's4', t: '4×' }],
+    dpo: [{ t: 'none' }, { t: '0:400', gap: 1 }, { t: '100:400' }, { t: '200:400' }, { t: '400:400' }, { t: '400:200' }, { t: '400:100' },
+          { t: '400:0' }, { t: '800:0' }, { t: '1,198:0' }, { t: 'both, 1×', gap: 1 }, { t: 'both, 4×' }],
+    lit: ['dq', 's1', '1,198:0']
+  };
+  function gridChart(host) {
+    var W = 1656, H = 612, top = 92, r = 40;
+    var svg = svgFor(host, W, H, 'The dose grid as a network: four pretraining doses (0, a quarter, 1 and 4 times the natural rate), each linked to three SFT doses (0, 1 and 4 times), each linked to twelve DPO pair sets. Every path is one recipe: 144 recipes, 3 seeds each, 432 DPO models, every one read on news and chat.');
+    var defs = el('defs', null, svg);
+    var mk = el('marker', { id: 'grid-ah', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 9, markerHeight: 9, orient: 'auto-start-reverse', markerUnits: 'userSpaceOnUse' }, defs);
+    el('path', { d: 'M0 0 L10 5 L0 10 Z', style: 'fill: var(--text-3)' }, mk);
+    var mkl = el('marker', { id: 'grid-ah-lit', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 14, markerHeight: 14, orient: 'auto-start-reverse', markerUnits: 'userSpaceOnUse' }, defs);
+    el('path', { d: 'M0 0 L10 5 L0 10 Z', style: 'fill: var(--s-gold)' }, mkl);
+
+    var X1 = 250, X2 = 640, PX = 940, PW = 190, PH = 34, RX = 1270;
+    // positions
+    var y1 = {}, y2 = {}, yp = [];
+    var preY = [top + 34, top + 134, top + 234, top + 354, top + 474];
+    GRID.pre.forEach(function (n, i) { y1[n.k] = preY[i]; });
+    GRID.sft.forEach(function (n, i) { y2[n.k] = top + 104 + i * 165; });
+    var y = top + 6;
+    GRID.dpo.forEach(function (n) { if (n.gap) y += 16; yp.push(y + PH / 2); y += 41; });
+    var colour = { pre: 'var(--ink-2)', sft: 'var(--s-blue)', dpo: 'var(--s-gold)' };
+
+    function edge(parent, xa, ya, ra, xb, yb, rb, lit) {
+      var dx = xb - xa, dy = yb - ya, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+      return el('line', { x1: xa + ux * ra, y1: ya + uy * ra, x2: xb - ux * rb, y2: yb - uy * rb,
+        style: lit ? 'stroke: var(--s-gold); stroke-width: 6; opacity: 1' : 'stroke: var(--text-3); stroke-width: 2; opacity: 0.55',
+        'marker-end': lit ? 'url(#grid-ah-lit)' : 'url(#grid-ah)' }, parent);
+    }
+    function node(parent, x, yy, t, c, dashed) {
+      el('circle', { cx: x, cy: yy, r: dashed ? 30 : r, style: 'fill: var(--ground); stroke: ' + c + '; stroke-width: 4' + (dashed ? '; stroke-dasharray: 9 8' : '') }, parent);
+      if (t) txt(parent, x, yy + 11, t, 'box-t', { 'text-anchor': 'middle', style: 'font-size: 32px' });
+    }
+
+    // column heads
+    var h0 = g(svg, 'st-0'), h1 = g(svg, 'st-1'), h2 = g(svg, 'st-2'), h3 = g(svg, 'st-3');
+    txt(h0, X1, 34, 'Pretraining', 'box-t', { 'text-anchor': 'middle', style: 'font-size: 32px; fill: ' + colour.pre });
+    txt(h0, X1, 68, 'dose', 'box-s', { 'text-anchor': 'middle', style: 'font-size: 25px' });
+    txt(h1, X2, 34, 'SFT', 'box-t', { 'text-anchor': 'middle', style: 'font-size: 32px; fill: ' + colour.sft });
+    txt(h1, X2, 68, 'dose', 'box-s', { 'text-anchor': 'middle', style: 'font-size: 25px' });
+    txt(h2, PX + PW / 2, 34, 'DPO', 'box-t', { 'text-anchor': 'middle', style: 'font-size: 32px; fill: ' + colour.dpo });
+    txt(h2, PX + PW / 2, 68, 'preferred:rejected', 'box-s', { 'text-anchor': 'middle', style: 'font-size: 25px' });
+    txt(h3, RX + 30, 34, 'Read', 'box-t', { style: 'font-size: 32px' });
+
+    // edges first, so the nodes sit on top
+    var e1 = g(svg, 'st-1'), e2 = g(svg, 'st-2');
+    GRID.pre.forEach(function (a) { if (a.next) return; GRID.sft.forEach(function (b) { edge(e1, X1, y1[a.k], r + 4, X2, y2[b.k], r + 6); }); });
+    GRID.sft.forEach(function (b) { yp.forEach(function (yy) { edge(e2, X2, y2[b.k], r + 4, PX, yy, 6); }); });
+
+    // nodes
+    var n0 = g(svg, 'st-0'), n1 = g(svg, 'st-1'), n2 = g(svg, 'st-2');
+    mark(n0, 'E3.1'); mark(n1, 'E3.1'); mark(n2, 'E3.1');
+    GRID.pre.forEach(function (a) {
+      if (a.next) {
+        var q = mark(g(n0, ''), 'E3.21');
+        node(q, X1, y1[a.k], '', '#8fb3e8', true);
+        txt(q, X1 - 46, y1[a.k] - 4, 'near zero:', 'nexttxt', { 'text-anchor': 'end', style: 'font-size: 24px' });
+        txt(q, X1 - 46, y1[a.k] + 26, 'running next', 'nexttxt', { 'text-anchor': 'end', style: 'font-size: 24px' });
+        return;
+      }
+      node(n0, X1, y1[a.k], a.t, colour.pre);
+    });
+    GRID.sft.forEach(function (b) { node(n1, X2, y2[b.k], b.t, colour.sft); });
+    GRID.dpo.forEach(function (d, i) {
+      el('rect', { x: PX, y: yp[i] - PH / 2, width: PW, height: PH, rx: PH / 2, style: 'fill: var(--ground); stroke: var(--s-gold); stroke-width: 3' }, n2);
+      txt(n2, PX + PW / 2, yp[i] + 9, d.t, 'box-s', { 'text-anchor': 'middle', style: 'font-size: 25px; fill: var(--ink)' });
+    });
+    // the reading: an arrow out of every DPO set
+    GRID.dpo.forEach(function (d, i) { el('line', { x1: PX + PW + 8, y1: yp[i], x2: RX, y2: yp[i], style: 'stroke: var(--text-3); stroke-width: 2.5', 'marker-end': 'url(#grid-ah)' }, h3); });
+    el('rect', { x: RX + 6, y: yp[0] - PH / 2, width: W - RX - 8, height: yp[11] - yp[0] + PH, rx: 18, 'class': 'box' }, h3);
+    var rl = ['every model,', 'on news and', 'chat prompts:', 'em dashes', 'per million', 'tokens'];
+    rl.forEach(function (s, k) { txt(h3, RX + 36, yp[0] + 50 + k * 44, s, 'box-s', { style: 'font-size: 29px; fill: var(--ink)' }); });
+    mark(txt(h3, RX + 36, yp[11] - 50, '144 recipes', 'box-t', { style: 'font-size: 32px; fill: var(--s-gold)' }), 'E3.1');
+    mark(txt(h3, RX + 36, yp[11] - 8, '× 3 seeds = 432', 'box-s', { style: 'font-size: 27px; fill: var(--ink)' }), 'E3.1');
+
+    // one path lit
+    var lit = g(svg, 'st-4'), li = GRID.dpo.map(function (d) { return d.t; }).indexOf(GRID.lit[2]);
+    edge(lit, X1, y1[GRID.lit[0]], r + 4, X2, y2[GRID.lit[1]], r + 8, true);
+    edge(lit, X2, y2[GRID.lit[1]], r + 4, PX, yp[li], 8, true);
+    el('line', { x1: PX + PW + 8, y1: yp[li], x2: RX, y2: yp[li], style: 'stroke: var(--s-gold); stroke-width: 6', 'marker-end': 'url(#grid-ah-lit)' }, lit);
+    el('circle', { cx: X1, cy: y1[GRID.lit[0]], r: r, style: 'fill: none; stroke: var(--s-gold); stroke-width: 6' }, lit);
+    el('circle', { cx: X2, cy: y2[GRID.lit[1]], r: r, style: 'fill: none; stroke: var(--s-gold); stroke-width: 6' }, lit);
+    el('rect', { x: PX, y: yp[li] - PH / 2, width: PW, height: PH, rx: PH / 2, style: 'fill: none; stroke: var(--s-gold); stroke-width: 6' }, lit);
+  }
+
   var BUILDERS = {
     'pipeline': function (h) { pipelineChart(h, 'plain'); },
+    'grid': gridChart,
     'stages': stagesChart,
     'design': function (h) { pipelineChart(h, 'design'); },
     'copy': copyChart,
