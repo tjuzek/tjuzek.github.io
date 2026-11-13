@@ -107,6 +107,36 @@
   }
 
   /* ------------------------------------------------------------------------------------------
+     1b. Model development in general (slide "pipeline"; Tommie, 13 Nov): pretraining, then post-training
+        (SFT; preference learning, DPO or PPO as in RLHF; RLVR; further fine-tuning). Step 1: the three this
+        talk follows lit in their stage colours, the later two dimmed. The 07b set-up itself is on "design".
+     ------------------------------------------------------------------------------------------ */
+  var GENERAL = [
+    { t: ['Pretraining'], s: ['web-scale text', 'next-word prediction'], focus: 'copy' },
+    { t: ['SFT'], s: ['example answers', 'follow instructions'], focus: 'contract' },
+    { t: ['Preference', 'learning'], s: ['DPO, or PPO (RLHF)', 'preferred answers'], focus: 'tilt' },
+    { t: ['RLVR'], s: ['verifiable rewards', 'maths, code'] },
+    { t: ['Further', 'fine-tuning'], s: ['a task or domain'] }
+  ];
+  function stagesChart(host) {
+    var W = 1656, H = 450, gap = 40, bw = (W - 4 * gap) / 5, by = 80, bh = 250;
+    var svg = svgFor(host, W, H, 'Model development: pretraining on web-scale text, then post-training: SFT on example answers, preference learning (DPO, or PPO as in RLHF), RLVR with verifiable rewards, and further fine-tuning. This talk follows pretraining, SFT and DPO.');
+    var s0 = g(svg, 'st-0'), bx1 = bw + gap, yb = 44;
+    el('path', { d: 'M' + bx1 + ' ' + (yb + 16) + ' L' + bx1 + ' ' + yb + ' L' + W + ' ' + yb + ' L' + W + ' ' + (yb + 16), 'class': 'bracket' }, s0);
+    txt(s0, (bx1 + W) / 2, yb - 14, 'post-training', 'box-s', { 'text-anchor': 'middle', style: 'font-size:26px' });
+    GENERAL.forEach(function (S, i) {
+      var x = i * (bw + gap), b = g(s0, S.focus ? 'focus f-' + S.focus : 'later');
+      el('rect', { x: x, y: by, width: bw, height: bh, rx: 18, 'class': 'box' }, b);
+      S.t.forEach(function (t, k) { txt(b, x + 24, by + 56 + k * 42, t, 'box-t', { style: 'font-size:34px' }); });
+      S.s.forEach(function (t, k) { txt(b, x + 24, by + 172 + k * 36, t, 'box-s', { style: 'font-size:24px' }); });
+      if (i < 4) arrow(s0, x + bw + 6, by + bh / 2, x + bw + gap - 4, by + bh / 2);
+    });
+    var s1 = g(svg, 'st-1'), fx = 3 * bw + 2 * gap, yf = by + bh + 34;
+    el('path', { d: 'M0 ' + (yf - 16) + ' L0 ' + yf + ' L' + fx + ' ' + yf + ' L' + fx + ' ' + (yf - 16), 'class': 'bracket on' }, s1);
+    txt(s1, fx / 2, yf + 46, 'this talk: pretraining, SFT, DPO', 'box-s', { 'text-anchor': 'middle', style: 'fill: var(--ink); font-size:30px' });
+  }
+
+  /* ------------------------------------------------------------------------------------------
      2. Copy: what each base model writes against what it read (pre-pilot, 124M, 3 seeds; news, T 1.0,
         expected em per million tokens). x: dg-corpus-v4-manifest.json; y: dg-pp124-readings.tsv (base, news, t10).
      ------------------------------------------------------------------------------------------ */
@@ -767,6 +797,7 @@
 
   var BUILDERS = {
     'pipeline': function (h) { pipelineChart(h, 'plain'); },
+    'stages': stagesChart,
     'design': function (h) { pipelineChart(h, 'design'); },
     'copy': copyChart,
     'contract': contractChart,

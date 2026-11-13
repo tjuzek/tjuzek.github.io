@@ -567,3 +567,19 @@ section:has(.step-marker[data-step="4"].visible) .swap > .sw4 { opacity: 1; }
 #uptake .fig-side .s { font-size: 28px; line-height: 1.3; color: var(--text-2); margin: 0; }
 /* the interlude before "Why the overuse?": no text, the dye alone (state rules: body.panel) */
 #interlude .slide-no { display: none; }
+
+/* the interlude: the dye at full strength, no stretch, no text (Tommie, 13 Nov) */
+body.interlude .waves { opacity: 1; }
+body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
+/* model development (slide "pipeline", chart "stages"): step 1 lights the three stages this talk follows */
+.chart .bracket { fill: none; stroke: var(--text-3); stroke-width: 2.5; }
+.chart .bracket.on { stroke: var(--s-gold); }
+#pipeline .chart .later, #pipeline .chart .focus .box { transition: opacity 0.7s ease, stroke 0.7s ease, stroke-width 0.7s ease; }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .later { opacity: 0.3; }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .focus .box { stroke-width: 4.5; }
+#pipeline .chart .focus .box-t { transition: fill 0.7s ease; }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .f-copy .box { stroke: var(--ink-2); }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .f-contract .box { stroke: var(--s-blue); }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .f-contract .box-t { fill: var(--s-blue); }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .f-tilt .box { stroke: var(--s-gold); }
+#pipeline:has(.step-marker[data-step="1"].visible) .chart .f-tilt .box-t { fill: var(--s-gold); }

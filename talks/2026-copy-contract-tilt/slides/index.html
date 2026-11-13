@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113c">
-<link rel="stylesheet" href="assets/deck.css?v=20261113c">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113d">
+<link rel="stylesheet" href="assets/deck.css?v=20261113d">
 </head>
 <body>
 <div class="reveal">
@@ -214,7 +214,7 @@
   </div>
 </section>
 
-<section id="interlude" data-state="panel" data-timing="10" aria-label="From why it matters to how models work">
+<section id="interlude" data-state="interlude" data-timing="10" aria-label="From why it matters to how models work">
   <!-- No text: the dye alone, as the talk turns from relevance to model mechanics (Tommie, 13 Nov). -->
 </section>
 
@@ -224,12 +224,12 @@
 <section id="lhf" data-state="quiet" data-timing="90">
   <div class="frame">
     <p class="kicker">Why the overuse? Our earlier work, with Zina Ward</p>
-    <p class="h3">A conjecture, and a test</p>
+    <p class="h3">Hypothesis and test</p>
     <div class="cols-2" style="gap:80px">
       <div class="col fragment rise">
-        <h3>The conjecture</h3>
+        <h3>By conjecture</h3>
         <p class="body" style="font-size:40px" data-ev="E1.10">No evidence that model architecture, algorithm choices, or training data cause the overuse; comparing models is consistent with learning from human feedback.</p>
-        <p class="body" style="font-size:40px; color:var(--ink)">So: post-training plays a major role.</p>
+        <p class="body" style="font-size:40px; color:var(--ink)">So we hypothesised that post-training could play a major role.</p>
       </div>
       <div class="col fragment rise">
         <h3>The test</h3>
@@ -237,32 +237,18 @@
         <p class="body" style="font-size:40px; color:var(--ink)" data-ev="E1.10">They preferred the version with more of the words that Llama&rsquo;s post-training favours: 52.4% to 47.6% (&chi;&sup2; = 9.4, <i>p</i> &lt; 0.01).</p>
       </div>
     </div>
-    <p class="lede fragment rise" style="font-size:46px; margin:6px 0 0">Consistent with the hypothesis: a small preference, scaled up by training. How, exactly?</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Juzek and Ward, COLING 2025 (the conjecture). Juzek and Ward, &ldquo;Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback&rdquo;, BIAS workshop, ECML PKDD 2025, arXiv 2508.01930 (the test): Llama 3.2 3B, base against instruct; raters on Prolific, from countries where preference workers are often recruited. Word by word, it varies: <i>delve</i> and <i>nuanced</i> may stand out to raters.</p>
+    <p class="lede fragment rise" style="font-size:46px; margin:6px 0 0">Consistent with the hypothesis: a small preference, scaled up by training. And yet, it would be nice to have harder evidence.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Juzek and Ward, COLING 2025 (the hypothesis). Juzek and Ward, &ldquo;Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback&rdquo;, BIAS workshop, ECML PKDD 2025, arXiv 2508.01930 (the test): Llama 3.2 3B, base against instruct; raters on Prolific, from countries where preference workers are often recruited. Word by word, it varies: <i>delve</i> and <i>nuanced</i> may stand out to raters.</p>
   </div>
 </section>
 
 <section id="pipeline" data-state="quiet" data-timing="70">
   <div class="frame">
-    <p class="kicker">Model stages</p>
+    <p class="kicker">Model development</p>
     <p class="h2">Pretraining, then post-training</p>
-    <div class="chart" data-chart="pipeline"></div>
-    <p class="body fragment rise" style="margin-top:30px">Post-training, broken down: SFT; preference learning, DPO (or PPO, as in RLHF); RLVR; further fine-tuning.</p>
-    <p class="body fragment rise">Here: SFT and DPO. The word overuse (<i>delve</i>) was seen before RLVR was widespread.</p>
-  </div>
-</section>
-
-<section id="wild" data-state="quiet" data-timing="80">
-  <!-- [S] skippable. OLMo ledger (WK EVIDENCE §16): the 1B's own data and sampled writing, stage by stage. -->
-  <div class="frame">
-    <p class="kicker">A sighting in the wild: OLMo-2, an open model, stage by stage</p>
-    <div class="chart" data-chart="olmo"></div>
-    <span class="fragment step-marker" data-step="1"></span>
-    <span class="fragment step-marker" data-step="2"></span>
-    <span class="fragment step-marker" data-step="3"></span>
-    <p class="body fragment rise" data-ev="E2.3" style="font-size:40px; margin:6px 0 4px">In its instruction data, nearly all the dashes come with ChatGPT&rsquo;s answers.</p>
-    <p class="body fragment rise" data-ev="E2.2" style="font-size:40px; margin:0 0 4px">The preference step multiplies what it writes by 2.75. <span class="tag wip">work in progress</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, continuing the same 10,000 news articles, sampling (T = 1), first 40 words; whiskers 95% intervals. Training data counted by us. Team OLMo, &ldquo;2 OLMo 2 Furious&rdquo;, arXiv 2501.00656; WildChat answers in its SFT mix.</p>
+    <div class="chart" data-chart="stages"></div>
+    <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
+    <p class="body fragment rise" data-fragment-index="1" style="margin-top:22px">Here: pretraining, SFT, and DPO. The word overuse (<i>delve</i>) was seen before RLVR was widespread.</p>
   </div>
 </section>
 
@@ -277,6 +263,20 @@
     </div>
     <p class="body fragment rise" style="margin:0 0 14px">The ultimate goal: a mathematical model of what each stage does. More on that shortly.</p>
     <p class="body fragment rise" style="margin:0">Compute sets the scale: small models, trained from scratch. That works well for the dash, probably for words; for stance, we shall see.</p>
+  </div>
+</section>
+
+<section id="wild" data-state="quiet" data-timing="80">
+  <!-- [S] skippable. OLMo ledger (WK EVIDENCE §16): the 1B's own data and sampled writing, stage by stage. -->
+  <div class="frame">
+    <p class="kicker">A sighting in the wild: OLMo-2, an open model, stage by stage</p>
+    <div class="chart" data-chart="olmo"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <p class="body fragment rise" data-ev="E2.3" style="font-size:40px; margin:6px 0 4px">In its instruction data, nearly all the dashes come with ChatGPT&rsquo;s answers.</p>
+    <p class="body fragment rise" data-ev="E2.2" style="font-size:40px; margin:0 0 4px">The preference step multiplies what it writes by 2.75. <span class="tag wip">work in progress</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">OLMo-2 1B (Ai2), four released checkpoints, continuing the same 10,000 news articles, sampling (T = 1), first 40 words; whiskers 95% intervals. Training data counted by us. Team OLMo, &ldquo;2 OLMo 2 Furious&rdquo;, arXiv 2501.00656; WildChat answers in its SFT mix.</p>
   </div>
 </section>
 
@@ -735,9 +735,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113c"></script>
-<script src="assets/charts.js?v=20261113c"></script>
-<script src="assets/dye.js?v=20261113c"></script>
-<script src="assets/deck.js?v=20261113c"></script>
+<script src="assets/reveal/reveal.js?v=20261113d"></script>
+<script src="assets/charts.js?v=20261113d"></script>
+<script src="assets/dye.js?v=20261113d"></script>
+<script src="assets/deck.js?v=20261113d"></script>
 </body>
 </html>
