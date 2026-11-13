@@ -392,17 +392,17 @@
   var RATIO = {                                    // E3.8
     status: 'pre-pilot: 9 bases (¼×, 1×, 4× doses; 3 seeds each)',
     ratio: [
-      { lab: '0 : 400', news: 0.971, chat: 0.928, n: 9 },
-      { lab: '100 : 400', news: 1.022, chat: 0.937, n: 9 },
-      { lab: '200 : 400', news: 1.047, chat: 0.998, n: 9 },
-      { lab: '400 : 400', news: 1.147, chat: 1.076, n: 9 },
-      { lab: '400 : 200', news: 1.276, chat: 1.240, n: 9 },
-      { lab: '400 : 100', news: 1.320, chat: 1.316, n: 9 },
-      { lab: '400 : 0', news: 1.368, chat: 1.420, n: 9 }
+      { lab: '0:400', news: 0.971, chat: 0.928, n: 9 },
+      { lab: '100:400', news: 1.022, chat: 0.937, n: 9 },
+      { lab: '200:400', news: 1.047, chat: 0.998, n: 9 },
+      { lab: '400:400', news: 1.147, chat: 1.076, n: 9 },
+      { lab: '400:200', news: 1.276, chat: 1.240, n: 9 },
+      { lab: '400:100', news: 1.320, chat: 1.316, n: 9 },
+      { lab: '400:0', news: 1.368, chat: 1.420, n: 9 }
     ],
     share: [
-      { lab: '800 : 0', news: 1.615, chat: 1.695, n: 9 },
-      { lab: '1,198 : 0', news: 1.900, chat: 2.101, n: 9 }
+      { lab: '800:0', news: 1.615, chat: 1.695, n: 9 },
+      { lab: '1,198:0', news: 1.900, chat: 2.101, n: 9 }
     ],
     none: { news: 1.134, chat: 1.105, n: 9 },
     controls: [
@@ -428,7 +428,7 @@
     el('rect', { x: m.l, y: y(Math.max(RATIO.none.news, RATIO.none.chat)), width: pw, height: y(Math.min(RATIO.none.news, RATIO.none.chat)) - y(Math.max(RATIO.none.news, RATIO.none.chat)), 'class': 'band' }, nb);
     txt(nb, m.l + 8, y(Math.max(RATIO.none.news, RATIO.none.chat)) - 12, 'pairs with no dashes', 'band-label', {});
     var lab = g(svg, 'st-0');
-    var groups = [[0, RATIO.ratio.length, 'preferred : rejected answers carrying one dash (of 8,000 pairs)'], [RATIO.ratio.length + 1, RATIO.share.length, 'more carriers'], [RATIO.ratio.length + RATIO.share.length + 2, RATIO.controls.length, 'both sides']];
+    var groups = [[0, RATIO.ratio.length, 'preferred:rejected answers carrying one dash (of 8,000 pairs)'], [RATIO.ratio.length + 1, RATIO.share.length, 'more carriers'], [RATIO.ratio.length + RATIO.share.length + 2, RATIO.controls.length, 'both sides']];
     groups.forEach(function (gr) {
       var a = cx(gr[0]) - pw / cols * 0.45, b = cx(gr[0] + gr[1] - 1) + pw / cols * 0.45;
       el('line', { x1: a, x2: b, y1: m.t + ph + 84, y2: m.t + ph + 84, style: 'stroke: var(--axis); stroke-width: 2' }, lab);
