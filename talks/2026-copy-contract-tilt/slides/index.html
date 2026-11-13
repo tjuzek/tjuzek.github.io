@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113b">
-<link rel="stylesheet" href="assets/deck.css?v=20261113b">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113c">
+<link rel="stylesheet" href="assets/deck.css?v=20261113c">
 </head>
 <body>
 <div class="reveal">
@@ -173,7 +173,7 @@
       <div class="row fragment rise" data-ev="E1.7"><span class="where">Widespread</span><span class="what">Qwen is the base of 69% of new fine-tunes on Hugging Face (February 2026).</span></div>
       <div class="row fragment rise" data-ev="E1.7"><span class="where">Downstream</span><span class="what">A Japanese Qwen derivative: &ldquo;Taiwan is an inseparable part of China&rdquo;.</span></div>
     </div>
-    <p class="lede fragment rise" style="font-size:46px; margin:0">Whoever trains the model can shape what millions read and write.</p>
+    <p class="lede fragment rise" style="font-size:46px; margin:0">A note on querying for &ldquo;[US, Chinese] imperialism&rdquo;</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Interim Measures for the Management of Generative AI Services, Article 4 (in force 15 August 2023; tr. China Law Translate). Pan and Xu, <i>PNAS Nexus</i> 2026. Lambert and Brand, &ldquo;The ATOM Report&rdquo;, arXiv 2604.07190 (preprint). Ito and Takaguchi, &ldquo;Exporting Ideologies via AI?&rdquo;, Harvard-Yenching working paper 2025: two of four derivatives were largely clean. De Bie: ECML PKDD BIAS 2025 workshop talk.</p>
   </div>
 </section>
@@ -189,35 +189,33 @@
       <div class="st"><p class="v">about 9%</p><p class="t">of new US newspaper articles (summer 2025) were partly or fully AI-generated</p><p class="s">Russell et al., ACL 2026</p></div>
     </div>
     <div class="points" style="margin-top:26px">
-      <p class="fragment rise" data-ev="E1.9"><span class="n">1</span><b>Exposure shapes us.</b> What we meet often, we come to like; and we take on a partner&rsquo;s words, more so if we think it is a computer.</p>
-      <p class="fragment rise" data-ev="E1.9"><span class="n">2</span><b>Even attitudes.</b> Biased writing assistants moved users&rsquo; attitudes towards the AI&rsquo;s position; most did not notice.</p>
+      <p class="fragment rise" data-ev="E1.9" style="padding-left:0"><b>Exposure may influence us.</b> What we are exposed to more often, we may come to like.</p>
     </div>
-    <p class="lede fragment rise" style="font-size:46px; margin:0">So misaligned AI really matters.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The second and third use one commercial detector (Pangram), whose makers supported or co-wrote the studies. Mere exposure: Zajonc, <i>J. Personality and Social Psychology</i> 1968. Lexical alignment with a supposed computer: Branigan, Pickering, Pearson, McLean and Brown, <i>Cognition</i> 2011. Williams-Ceci et al., <i>Science Advances</i> 2026 (N = 2,582).</p>
+    <p class="lede fragment rise" style="font-size:46px; margin:0">&rarr; (mis)aligned AI really matters.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The second and third use one commercial detector (Pangram), whose makers supported or co-wrote the studies. Mere exposure: Zajonc, <i>J. Personality and Social Psychology</i> 1968.</p>
   </div>
 </section>
 
 <section id="uptake" data-state="quiet" data-timing="80">
   <div class="frame">
     <p class="kicker">Into spoken language</p>
-    <p class="h2">AI&rsquo;s favourite words, in unscripted speech</p>
-    <p class="body" data-ev="E1.1" style="font-size:40px">1,326 science and technology podcast episodes, 22.1 million words. Each podcast before (2019 to 2021) and after (2023 to 2025).</p>
-    <div class="cols-2" style="margin-top:16px">
-      <div class="col fragment rise">
-        <h3>AI-associated words</h3>
-        <p class="lede" style="margin:0; font-size:50px" data-ev="E1.1"><span class="num">up</span>: weighted log ratio 0.21, <span class="nobr"><i>p</i> &lt; 0.001</span></p>
-        <p class="body"><i>delve</i>, <i>intricate</i>, <i>meticulous</i>, <i>boast</i>, <i>surpass</i> &hellip;</p>
-      </div>
-      <div class="col fragment rise">
-        <h3>Their synonyms</h3>
-        <p class="lede" style="margin:0; font-size:50px" data-ev="E1.1"><span class="num">flat</span>: 0.03, not significant</p>
-        <p class="body">the baseline: same meanings, no AI association</p>
+    <p class="h3">AI&rsquo;s favourite words, in unscripted speech</p>
+    <p class="body" data-ev="E1.1" style="font-size:36px; margin:0 0 14px">1,326 science and technology podcast episodes, 22.1 million words. Each podcast before (2019 to 2021) and after (2023 to 2025).</p>
+    <div class="fig-row">
+      <figure class="figcard" style="width:1180px; margin:0"><img src="assets/img/anderson-galpin-juzek-2025-fig2.png" alt="Bar charts of each word&rsquo;s change in podcast speech from before to after 2022. Left, 20 AI-associated words: most rise, surpass, boast and meticulous the most. Right, the baseline words: rises and falls in about equal measure." data-ev="E1.1"></figure>
+      <div class="fig-side">
+        <div class="fragment rise"><p class="lab">AI-associated words</p><p class="v"><span class="num">up</span> 0.21</p><p class="s">weighted log ratio, <span class="nobr"><i>p</i> &lt; 0.001</span></p></div>
+        <div class="fragment rise"><p class="lab">Baseline: their synonyms</p><p class="v"><span class="num">flat</span> 0.03</p><p class="s">not significant</p></div>
       </div>
     </div>
-    <p class="body fragment rise" style="margin:8px 0 10px">But this is a correlation: there is no counterfactual.</p>
+    <p class="body fragment rise" style="margin:16px 0 6px">But this is a correlation: there is no counterfactual.</p>
     <p class="lede fragment rise" style="color:var(--gold); margin:0">We really want to get this right.</p>
-    <p class="cite" style="font-size:24px; margin-top:auto; margin-bottom:0">Anderson, Galpin and Juzek, &ldquo;Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English&rdquo;, AIES 2025.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Anderson, Galpin and Juzek, &ldquo;Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English&rdquo;, AIES 2025: Figure 2, as published. Each bar is one word&rsquo;s change from before to after, as ln(1 + &Delta;%).</p>
   </div>
+</section>
+
+<section id="interlude" data-state="panel" data-timing="10" aria-label="From why it matters to how models work">
+  <!-- No text: the dye alone, as the talk turns from relevance to model mechanics (Tommie, 13 Nov). -->
 </section>
 
 
@@ -634,7 +632,6 @@
         <tr><td class="n">39.5%; 66.7%; 86</td><td>essays taking no side: written alone; with heavy AI use (groups of 45, 28, 27); essays from 2021 in the grammar test</td><td>E1.2, E1.3</td></tr>
         <tr><td class="n">about 36%; 0 to 2.8%; 69%</td><td>DeepSeek&rsquo;s refusals of 145 political questions asked in Chinese; models from outside China; Qwen&rsquo;s share of new fine-tunes, February 2026</td><td>E1.7</td></tr>
         <tr><td class="n">&ge; 13.5%; 29%; about 9%</td><td>2024 PubMed abstracts processed with LLMs; US STEM dissertations of 2026 with AI writing; new US newspaper articles, summer 2025</td><td>E1.8</td></tr>
-        <tr><td class="n">2,582</td><td>participants: biased writing assistants and attitudes</td><td>E1.9</td></tr>
         <tr><td class="n">0.21; 0.03</td><td>AI-associated words and their synonyms in podcast speech, 2019 to 2021 against 2023 to 2025 (22.1 million words, 1,326 episodes)</td><td>E1.1</td></tr>
         <tr><td class="n">400; 52.4% to 47.6% (&chi;&sup2; = 9.4)</td><td>raters; their preference for the version with more of the words Llama&rsquo;s post-training favours</td><td>E1.10</td></tr>
       </tbody>
@@ -699,7 +696,6 @@
     <div class="refs">
     <p class="cite">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques (2026). How LLMs Distort Our Written Language. arXiv 2603.18161 (preprint).</p>
     <p class="cite">Anderson, Galpin and Juzek (2025). Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English. AIES 2025.</p>
-    <p class="cite">Branigan, Pickering, Pearson, McLean and Brown (2011). The role of beliefs in lexical alignment: Evidence from dialogs with humans and computers. <i>Cognition</i> 121(1).</p>
     <p class="cite">Cyberspace Administration of China et al. (2023). Interim Measures for the Management of Generative Artificial Intelligence Services, Article 4. Translation: China Law Translate.</p>
     <p class="cite">De Bie (2025). Talk at the BIAS workshop, ECML PKDD 2025, on &ldquo;freedom of AI&rdquo; in liberal societies (from Tommie&rsquo;s notes).</p>
     <p class="cite">Google Books Ngram Viewer: <i>literally</i>, <i>dude</i>, <i>salty</i>, <i>touch base</i>; corpus &ldquo;en&rdquo;, smoothing 3, 1960 to 2022; retrieved 19 October 2026.</p>
@@ -710,7 +706,6 @@
     <p class="cite">Pan and Xu (2026). Political censorship in large language models originating from China. <i>PNAS Nexus</i>, pgag013.</p>
     <p class="cite">Rudnicka and Juzek (2026). Beyond &ldquo;AI Language&rdquo;: The case for the idiolectal nature of LLM output. arXiv 2608.06589 (preprint).</p>
     <p class="cite">Russell, Karpinska, Akinode, Thai, Emi, Spero and Iyyer (2026). AI use in American newspapers is widespread, uneven, and rarely disclosed. ACL 2026; arXiv 2510.18774.</p>
-    <p class="cite">Williams-Ceci et al. (2026). Biased AI writing assistants shift users&rsquo; attitudes on societal issues. <i>Science Advances</i> 12(11).</p>
     <p class="cite">Zajonc (1968). Attitudinal effects of mere exposure. <i>Journal of Personality and Social Psychology</i> 9(2, Pt. 2).</p>
     </div>
   </div>
@@ -733,16 +728,16 @@
   <div class="frame">
     <p class="kicker">How these slides were made</p>
     <p class="cite" style="max-width:1600px">Tommie Juzek set the argument, the running order, and the substance; the numbers come from his group&rsquo;s research data and the cited sources; unpublished results are marked. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text.</p>
-    <p class="cite">Images: the Wall of Mist card is AI-generated (ChatGPT Images 2.0), from Tommie&rsquo;s LCL talk (May 2026); the PubMed figure is Figure 4 of Juzek and Ward (COLING 2025), as published.</p>
+    <p class="cite">Images: the Wall of Mist card is AI-generated (ChatGPT Images 2.0), from Tommie&rsquo;s LCL talk (May 2026); the PubMed figure is Figure 4 of Juzek and Ward (COLING 2025), and the speech figure Figure 2 of Anderson, Galpin and Juzek (AIES 2025), both as published.</p>
     <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A5).</p>
   </div>
 </section>
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113b"></script>
-<script src="assets/charts.js?v=20261113b"></script>
-<script src="assets/dye.js?v=20261113b"></script>
-<script src="assets/deck.js?v=20261113b"></script>
+<script src="assets/reveal/reveal.js?v=20261113c"></script>
+<script src="assets/charts.js?v=20261113c"></script>
+<script src="assets/dye.js?v=20261113c"></script>
+<script src="assets/deck.js?v=20261113c"></script>
 </body>
 </html>

@@ -558,3 +558,12 @@ section:has(.step-marker[data-step="4"].visible) .swap > .sw4 { opacity: 1; }
 #overview .findings { list-style: none; margin: -14px 0 0 52px; padding: 0; }
 #overview .findings li { font-size: 42px; line-height: 1.3; color: var(--text-2); margin: 0 0 4px; padding-left: 34px; position: relative; }
 #overview .findings li::before { content: ''; position: absolute; left: 4px; top: 0.6em; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+/* the speech slide: the paper's Figure 2, with the two headline numbers beside it */
+#uptake .fig-row { display: flex; align-items: center; gap: 52px; }
+#uptake .fig-side { flex: 1; display: flex; flex-direction: column; gap: 34px; }
+#uptake .fig-side .lab { font-family: 'Inter', system-ui, sans-serif; font-size: 26px; color: var(--text-3); margin: 0 0 6px; }
+#uptake .fig-side .v { font-size: 56px; line-height: 1.1; color: var(--ink); margin: 0 0 6px; }
+#uptake .fig-side .s { font-size: 28px; line-height: 1.3; color: var(--text-2); margin: 0; }
+/* the interlude before "Why the overuse?": no text, the dye alone (state rules: body.panel) */
+#interlude .slide-no { display: none; }
