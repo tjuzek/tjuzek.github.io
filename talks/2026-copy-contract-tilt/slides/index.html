@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113p">
-<link rel="stylesheet" href="assets/deck.css?v=20261113p">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113q">
+<link rel="stylesheet" href="assets/deck.css?v=20261113q">
 </head>
 <body>
 <div class="reveal">
@@ -534,12 +534,12 @@
   <div class="frame">
     <p class="kicker">Copy, contract, tilt</p>
     <div class="verbs">
-      <div class="v copy"><p class="name">Copy</p><p class="stage">pretraining</p><p class="what">Writes in proportion to what it read.</p><p class="eqs math">slope 1</p></div>
-      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left, and pulls towards a level of its own.</p><p class="eqs math">slope below 1</p></div>
-      <div class="v tilt fragment rise"><p class="name">Tilt</p><p class="stage">DPO</p><p class="what">Multiplies what is there, by the contrast between the answers; rare habits most.</p><p class="eqs math">shift by &Delta;</p></div>
+      <div class="v copy"><p class="name">Copy</p><p class="stage">pretraining</p><p class="what">Writes in proportion to what it read.</p></div>
+      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left, and pulls towards a level of its own.</p></div>
+      <div class="v tilt fragment rise"><p class="name">Tilt</p><p class="stage">DPO</p><p class="what">Multiplies what is there, by the contrast between the answers; rare habits most.</p></div>
     </div>
-    <p class="body fragment rise" style="font-size:38px; margin-bottom:8px"><b class="num" style="color:var(--ink)">Where the line bends:</b> the tilt is larger the rarer the habit (&times;1.75, &times;1.61, &times;1.31 at &frac14;&times;, 1&times;, 4&times;; along the ratio axis too); dash-free pairs move punctuation in general; at 350M, SFT starts from zero; seeds alone differ by up to 1.47&times;.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.13">The preferred-side contrast, news, 3 seeds.</span> <span data-ev="E3.19">Ratio axis: the factor shrinks from the &frac14;&times; to the 4&times; models in 11 of 12 columns from 400&thinsp;:&thinsp;0 up (90% intervals).</span> Seeds: after SFT 1&times;, news, natural dose. A sketch to be tested on the 350M and 774M models.</p>
+    <p class="body fragment rise" style="font-size:38px; margin-bottom:8px">The tilt is larger the rarer the habit (&times;1.75, &times;1.61, &times;1.31 at &frac14;&times;, 1&times;, 4&times;; along the ratio axis too); dash-free pairs move punctuation in general; at 350M, SFT starts from zero; seeds alone differ by up to 1.47&times;.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.13">The preferred-side contrast, news, 3 seeds.</span> <span data-ev="E3.19">Ratio axis: the factor shrinks from the &frac14;&times; to the 4&times; models in 11 of 12 columns from 400:0 up (90% intervals).</span> Seeds: after SFT 1&times;, news, natural dose. A sketch to be tested on the 350M and 774M models.</p>
   </div>
 </section>
 
@@ -547,13 +547,16 @@
 
 <section id="lessons" data-state="quiet" data-timing="150">
   <div class="frame">
-    <p class="kicker">What the dye says about alignment</p>
+    <p class="kicker">Insights</p>
     <div class="points" style="margin-top:10px">
-      <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;; in the full pipeline, the contrast between answers acts as a dose.</p>
-      <p class="fragment rise"><span class="n">2</span><b class="hl">DPO&rsquo;s relative force is greatest on rare items.</b> It multiplies what is there, so much of a model&rsquo;s behaviour is set before it: in pretraining and in SFT, whose data other models often wrote.</p>
-      <p class="fragment rise"><span class="n">3</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
-      <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing leaves a trace.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
-      <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The settings are part of the machine.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects; <span data-ev="E3.16">reading at T = 0.8 instead of 1 cut the habit 9- to <span class="nobr">25-fold</span> after SFT 1&times;.</span></p>
+      <p class="fragment rise"><span class="n">1</span><b>Small preferences can lead to larger, but predictable shifts.</b> I am trying to model this as a reward advantage &epsilon; that moves the log-odds by &epsilon;/&beta;, where &beta; sets how closely DPO keeps the model to where it started. In the full pipeline, the contrast between answers acts as a dose.</p>
+      <p class="fragment rise"><span class="n">2</span><b class="hl">DPO&rsquo;s relative force is greatest on rare items,</b> but the &ldquo;trace dose&rdquo; condition is still pending. This is a critical preliminary finding: it would explain the hypothesised amplification effects that have been observed on other model behaviour levels.</p>
+      <p class="fragment rise" data-ev="E3.10"><span class="n">3</span><b>Settings matter.</b> Seeds alone could move outputs by up to 1.47&times;; <span data-ev="E3.16">reading at T = 0.8 instead of 1 cut the em-dash rate 9- to <span class="nobr">25-fold</span> after SFT 1&times;.</span></p>
+    </div>
+    <div class="side-notes fragment rise">
+      <p class="sn-head">Side notes</p>
+      <p><span class="n">4</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
+      <p data-ev="E4.5"><span class="n">5</span><b>Undoing leaves a trace.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
     </div>
   </div>
 </section>
@@ -750,9 +753,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113p"></script>
-<script src="assets/charts.js?v=20261113p"></script>
-<script src="assets/dye.js?v=20261113p"></script>
-<script src="assets/deck.js?v=20261113p"></script>
+<script src="assets/reveal/reveal.js?v=20261113q"></script>
+<script src="assets/charts.js?v=20261113q"></script>
+<script src="assets/dye.js?v=20261113q"></script>
+<script src="assets/deck.js?v=20261113q"></script>
 </body>
 </html>
