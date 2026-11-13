@@ -135,7 +135,6 @@
     host.appendChild(amp);
     dye = window.Dye.mount(amp, {
       colourEl: document.body,
-      paused: function () { return document.body.classList.contains('panel'); },
       still: html.classList.contains('motion-off'),
       startEmpty: html.classList.contains('from-dark'),
       deep: params.get('dye') === 'deep'

@@ -15,7 +15,7 @@
    API: Dye.mount(host, opts) -> { inject(xw, yw, n, plume), still(), dispose() }
         World coordinates are a 1920 x 1080 frame (the slide's own), whatever the screen size.
    opts: count (particles per plume, default 210), colourEl (element whose CSS gives the colours),
-         paused() (return true to idle: hidden slides, the Q&A light), still (draw one frame, no motion),
+         paused() (return true to idle), still (draw one frame, no motion),
          startEmpty (the plumes fill in over a few seconds, for the opening drop of dye),
          deep (a float16 canvas where the browser has one: true colours, brighter plumes, no sweep needed). */
 (function () {

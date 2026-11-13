@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112q">
-<link rel="stylesheet" href="assets/deck.css?v=20261112q">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113a">
+<link rel="stylesheet" href="assets/deck.css?v=20261113a">
 </head>
 <body>
 <div class="reveal">
@@ -94,7 +94,7 @@
     <p class="quote" style="max-width:1560px">&ldquo;Whether you are a seasoned scholar or a curious newcomer, the modern library is not merely a quiet sanctuary for books, but an intricate hub of lifelong learning<span class="dash">&mdash;</span>inviting patrons to delve into the rich tapestry of human knowledge.&rdquo;</p>
     <p class="body fragment rise" style="margin-top:14px">They overuse certain formatting, characters, words, and syntax: here the em dash, <i>delve</i>, and &ldquo;not merely X, but Y&rdquo;.</p>
     <p class="body fragment rise">And they may not align with us on values, beliefs, and stance.</p>
-    <p class="small fragment rise" data-ev="E1.4" style="margin:0"><b style="color:var(--ink-2)">N.B.</b> Not one &ldquo;AI language&rdquo;: each model keeps its own profile, an AI idiolect (Rudnicka and Juzek, preprint).</p>
+    <p class="small fragment rise" data-ev="E1.4" style="margin:0"><b style="color:var(--ink-2)">N.B.</b> Each model has its own profile: AI idiolects (Rudnicka and Juzek, preprint).</p>
     <p class="cite" style="margin-top:auto; margin-bottom:0">The sentence: an illustration in a chatbot&rsquo;s style, from the Carothers Lecture (Juzek and Ward, October 2026). Rudnicka and Juzek, &ldquo;Beyond &lsquo;AI Language&rsquo;&rdquo;, arXiv 2608.06589.</p>
   </div>
 </section>
@@ -119,7 +119,7 @@
       <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
       <div class="mist-card fragment rise" data-fragment-index="1"><img src="assets/img/wall-of-mist.jpg" alt="A playing card titled Wall of Mist: a sailing ship before a towering wall of fog."></div>
     </div>
-    <p class="body fragment rise" data-fragment-index="1" data-ev="E1.6" style="font-size:38px; margin:26px 0 6px; max-width:1300px">For any text written since, we cannot be sure it comes from the human language system: authorship indeterminacy.</p>
+    <p class="body fragment rise" data-fragment-index="1" data-ev="E1.6" style="font-size:38px; margin:26px 0 6px; max-width:1300px">For anything written since 2022, we cannot be sure who wrote it: <span class="nobr">human-authorship</span> indeterminacy. A simple question, &ldquo;how frequent is X?&rdquo;, has moved behind a wall of mist.</p>
     <p class="body fragment rise" data-fragment-index="2" style="font-size:38px; margin:0; max-width:1300px">A huge disruption for linguistics, and for computational linguistics.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E1.6">Natural change: Google Books Ngram Viewer (corpus &ldquo;en&rdquo;, smoothing 3), per million words, each word on its own scale; retrieved 19 October 2026. &ldquo;Human-authorship indeterminacy&rdquo;: Anderson, Galpin and Juzek, AIES 2025.</span> The card: AI-generated (ChatGPT Images 2.0), from the LCL talk, May 2026.</p>
   </div>
@@ -151,7 +151,7 @@
     <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
     <p class="body fragment rise" data-fragment-index="3" data-ev="E1.2" style="font-size:40px; margin:22px 0 8px">Without AI, two in five essays took no side; when the AI wrote much of it, two in three.</p>
     <p class="body fragment rise" data-fragment-index="4" data-ev="E1.3" style="font-size:40px; margin:0 0 8px">Asked only to fix the grammar, the models still moved the meaning.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161 (preprint): Figure 6, redrawn. Groups of 45, 28 and 27; the AI assistant was assigned at random, how much to use it people chose. The grammar test: 86 essays written in 2021.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161 (preprint): Figure 6, redrawn. Groups of 45, 28, and 27; the AI assistant was assigned at random, and people chose how much to use it. The grammar test: 86 essays written in 2021.</p>
   </div>
 </section>
 
@@ -178,7 +178,7 @@
       <div class="row fragment rise" data-ev="E1.7"><span class="where">Widespread</span><span class="what">Qwen is the base of 69% of new fine-tunes on Hugging Face (February 2026).</span></div>
       <div class="row fragment rise" data-ev="E1.7"><span class="where">Downstream</span><span class="what">A Japanese Qwen derivative: &ldquo;Taiwan is an inseparable part of China&rdquo;.</span></div>
     </div>
-    <p class="lede fragment rise" style="font-size:46px; margin:0">Whoever holds the lever shapes what millions read and write.</p>
+    <p class="lede fragment rise" style="font-size:46px; margin:0">Whoever trains the model can shape what millions read and write.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Interim Measures for the Management of Generative AI Services, Article 4 (in force 15 August 2023; tr. China Law Translate). Pan and Xu, <i>PNAS Nexus</i> 2026. Lambert and Brand, &ldquo;The ATOM Report&rdquo;, arXiv 2604.07190 (preprint). Ito and Takaguchi, &ldquo;Exporting Ideologies via AI?&rdquo;, Harvard-Yenching working paper 2025: two of four derivatives were largely clean. De Bie: ECML PKDD BIAS 2025 workshop talk.</p>
   </div>
 </section>
@@ -219,7 +219,7 @@
         <p class="body">the baseline: same meanings, no AI association</p>
       </div>
     </div>
-    <p class="body fragment rise" style="margin:8px 0 10px">But correlation is not causation: there is no counterfactual.</p>
+    <p class="body fragment rise" style="margin:8px 0 10px">But this is a correlation: there is no counterfactual.</p>
     <p class="lede fragment rise" style="color:var(--gold); margin:0">We really want to get this right.</p>
     <p class="cite" style="font-size:24px; margin-top:auto; margin-bottom:0">Anderson, Galpin and Juzek, &ldquo;Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English&rdquo;, AIES 2025.</p>
   </div>
@@ -245,7 +245,7 @@
       </div>
     </div>
     <p class="lede fragment rise" style="font-size:46px; margin:6px 0 0">Consistent with the hypothesis: a small preference, scaled up by training. How, exactly?</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Juzek and Ward, COLING 2025 (the conjecture). Juzek and Ward, &ldquo;Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback&rdquo;, BIAS workshop, ECML PKDD 2025, arXiv 2508.01930 (the test): Llama 3.2 3B, base against instruct; raters on Prolific, from countries where preference workers are often recruited. Not every word: <i>delve</i> and <i>nuanced</i> may stand out to raters.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Juzek and Ward, COLING 2025 (the conjecture). Juzek and Ward, &ldquo;Word Overuse and Alignment in Large Language Models: The Influence of Learning from Human Feedback&rdquo;, BIAS workshop, ECML PKDD 2025, arXiv 2508.01930 (the test): Llama 3.2 3B, base against instruct; raters on Prolific, from countries where preference workers are often recruited. Word by word, it varies: <i>delve</i> and <i>nuanced</i> may stand out to raters.</p>
   </div>
 </section>
 
@@ -353,7 +353,7 @@
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
     <p class="body fragment rise" data-ev="E3.4" style="font-size:40px; margin:10px 0 6px">A 16-fold range of pretraining doses leaves a 2.2-fold range on news and 1.5-fold on chat.</p>
-    <p class="body fragment rise" data-ev="E3.4" style="font-size:40px; margin:0">SFT does not simply copy its own data&rsquo;s rate: the natural-dose models overshoot it.</p>
+    <p class="body fragment rise" data-ev="E3.4" style="font-size:40px; margin:0">The natural-dose models overshoot the rate in the SFT data.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Geometric means over 3 seeds; whiskers the range of the seeds. Dashed and dotted lines: the rate in the SFT data (1&times; and 4&times;). T = 1; expected count.</p>
   </div>
 </section>
@@ -400,7 +400,7 @@
         <span class="fragment step-marker" data-step="3"></span>
       </div>
       <div style="padding-top:10px">
-        <p class="body">After a clause, the model can continue with a comma, an em dash or &ldquo;and&rdquo;.</p>
+        <p class="body">After a clause, the model can continue with a comma, an em dash, or &ldquo;and&rdquo;.</p>
         <p class="body">Multiply each by <span class="math"><i>e</i><sup><i>r</i>/<i>&beta;</i></sup></span>, then rescale so they sum to 1.</p>
         <p class="body" data-ev="E4.1">Advantage of the dash over the comma: <span class="math"><i>&epsilon;</i> = log 4</span>.</p>
         <div class="swap" style="height:150px; margin-top:24px">
@@ -412,7 +412,7 @@
         <p class="body fragment rise" data-fragment-index="3">A tighter leash (larger &beta;), a smaller tilt.</p>
       </div>
     </div>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Every number by hand: &pi;<sub>ref</sub> = (0.6, 0.1, 0.3); rewards 0, log 4, log 2. A toy, not a model.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Every number by hand: &pi;<sub>ref</sub> = (0.6, 0.1, 0.3); rewards 0, log 4, log 2. A toy example.</p>
   </div>
 </section>
 
@@ -445,7 +445,7 @@
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
-    <p class="body fragment rise" data-ev="E3.14" style="font-size:38px; margin:6px 0 0">Pairs with no dash still push, but not the dash in particular: in one model the colon rose 59% while the dash rose 9%, and in none of 18 did the dash outrun the other punctuation.</p>
+    <p class="body fragment rise" data-ev="E3.14" style="font-size:38px; margin:6px 0 0">Pairs with no dash push punctuation in general: in one model the colon rose 59% and the dash 9%; in none of 18 did the dash outrun the other punctuation.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.7">Natural-dose models after SFT 1&times;; 8,000 pairs, 5% of them carrying the dash (both sides: the natural rate); news, T = 1; 3 seeds, whiskers the seed range. Chat agrees: preferred side &times;1.75, rejected &times;0.78.</span> <span data-ev="E3.18">A second round of post-training, with new seeds, keeps every direction shown.</span></p>
   </div>
 </section>
@@ -459,7 +459,7 @@
     <span class="fragment step-marker" data-step="3"></span>
     <p class="body fragment rise" data-fragment-index="1" data-ev="E3.8" style="font-size:38px; margin:0 0 4px">Below 1&thinsp;:&thinsp;1 the dash falls; above it, it rises at every step: with the ratio, then with the number of carriers.</p>
     <p class="body fragment rise" data-fragment-index="3" data-ev="E3.8" style="font-size:38px; margin:0">Dashes on both sides, even four times as many, add little: contrast counts, volume largely cancels.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Each set adds exactly one em dash to some answers, so the ratio of carriers is the ratio of dashes. After SFT 1&times;; T = 1. Geometric means over nine models (&frac14;&times;, 1&times; and 4&times; doses, 3 seeds each), 432 DPO runs in all. The order holds at every step after SFT 1&times; and 4&times;, on news and on chat.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Each set adds exactly one em dash to some answers, so the ratio of carriers is the ratio of dashes. After SFT 1&times;; T = 1. Geometric means over nine models (&frac14;&times;, 1&times;, and 4&times; doses, 3 seeds each), 432 DPO runs in all. The order holds at every step after SFT 1&times; and 4&times;, on news and on chat.</p>
   </div>
 </section>
 
@@ -513,9 +513,9 @@
     <span class="fragment step-marker" data-step="2" data-fragment-index="2"></span>
     <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
     <span class="fragment step-marker" data-step="4" data-fragment-index="4"></span>
-    <p class="body fragment rise" data-fragment-index="2" data-ev="E3.20" style="font-size:36px; margin:4px 0 4px">What sets the multiple is how rare the dash was in pretraining, not how often the model writes it before DPO: the &frac14;&times; models write 6, 372 or 1,571 per million after SFT, and DPO multiplies each by &times;2.0 to &times;2.4.</p>
-    <p class="body fragment rise" data-fragment-index="4" data-ev="E3.21" style="font-size:36px; margin:0">Next, a near-zero dose between none and &frac14;&times;: rare but not absent, as <i>delve</i> was in 2022. <span class="tag wip">running next</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.20">DPO: one em dash in each of 1,198 preferred answers (&beta; = 0.1, one pass over 8,000 pairs); T = 1; geometric means over 3 seeds, whiskers the seed range; one machine. Dose 0 after SFT 0 or 1&times;: below the floor. The dose, not the rate before DPO: a first look over 27 models.</span></p>
+    <p class="body fragment rise" data-fragment-index="2" data-ev="E3.20" style="font-size:36px; margin:4px 0 4px">The multiple follows how rare the dash was in pretraining: the &frac14;&times; models write 6, 372, or 1,571 per million after SFT, and DPO multiplies each by &times;2.0 to &times;2.4.</p>
+    <p class="body fragment rise" data-fragment-index="4" data-ev="E3.21" style="font-size:36px; margin:0">Next, a near-zero dose between none and &frac14;&times;: present, but very rare, as <i>delve</i> was in 2022. <span class="tag wip">running next</span></p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.20">DPO: one em dash in each of 1,198 preferred answers (&beta; = 0.1, one pass over 8,000 pairs); T = 1; geometric means over 3 seeds, whiskers the seed range; one machine. Dose 0 after SFT 0 or 1&times;: below the floor. The pretraining dose sets the multiple: a first look, over 27 models.</span></p>
   </div>
 </section>
 
@@ -534,7 +534,7 @@
     <p class="body fragment rise" style="margin-top:26px">DPO multiplies what is there. Where almost nothing is there, a multiple of it is still almost nothing.</p>
     <p class="body fragment rise" data-ev="E3.9" style="font-size:38px">Where SFT 4&times; put the dash in, DPO multiplied it most: &times;4.3 on chat, up to the level of models pretrained on it (2,686 to 3,400).</p>
     <p class="body fragment rise" data-ev="E3.12" style="font-size:36px">SFT is different: at 350M, SFT 1&times; alone put the dash into a model that never saw it (72 per million, chat; one seed). <span class="tag wip">first look</span></p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Expected em dashes per million tokens; a counted dash would show from about 14 per million. DPO: &beta; = 0.1, one pass over 8,000 pairs. In theory a big enough push can grow anything; this one did not.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Expected em dashes per million tokens; a counted dash would show from about 14 per million. DPO: &beta; = 0.1, one pass over 8,000 pairs. In theory a big enough push can grow anything; ours was a light one.</p>
   </div>
 </section>
 
@@ -543,7 +543,7 @@
     <p class="kicker">Copy, contract, tilt</p>
     <div class="verbs">
       <div class="v copy"><p class="name">Copy</p><p class="stage">pretraining</p><p class="what">Writes in proportion to what it read.</p><p class="eqs math">slope 1</p></div>
-      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left; does not land on its own data&rsquo;s rate.</p><p class="eqs math">slope 1 &minus; <i>&lambda;</i></p></div>
+      <div class="v contract fragment rise"><p class="name">Contract</p><p class="stage">SFT</p><p class="what">Shrinks the differences pretraining left, and pulls towards a level of its own.</p><p class="eqs math">slope 1 &minus; <i>&lambda;</i></p></div>
       <div class="v tilt fragment rise"><p class="name">Tilt</p><p class="stage">DPO</p><p class="what">Multiplies what is there, by the contrast between the answers; rare habits most.</p><p class="eqs math">shift by &Delta;</p></div>
     </div>
     <p class="eq mid fragment rise" style="margin:6px 0 20px">log&thinsp;<i>m</i><sub>final</sub> <span class="op">&asymp;</span> (1 <span class="op">&minus;</span> <i>&lambda;</i>)(log&thinsp;<i>d</i> <span class="op">+</span> <i>c</i>) <span class="op">+</span> <i>&lambda;</i>&thinsp;<i>y</i>* <span class="op">+</span> &Delta;(contrast)</p>
@@ -561,7 +561,7 @@
       <p class="fragment rise"><span class="n">1</span><b>Small preferences, predictable shifts.</b> A reward advantage &epsilon; moves the log-odds by &epsilon;/&beta;; in the full pipeline, the contrast between answers acts as a dose.</p>
       <p class="fragment rise"><span class="n">2</span><b class="hl">DPO&rsquo;s relative force is greatest on rare items.</b> It multiplies what is there, so much of a model&rsquo;s behaviour is set before it: in pretraining and in SFT, whose data other models often wrote.</p>
       <p class="fragment rise"><span class="n">3</span><b>Training on X moves Y.</b> Pairs with no dash at all moved punctuation in general.</p>
-      <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing is not reversing.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
+      <p class="fragment rise" data-ev="E4.5"><span class="n">4</span><b>Undoing leaves a trace.</b> Training the opposite preference brought the trained feature back to within 10 to 20%; the rest of the model stayed where it had moved.</p>
       <p class="fragment rise" data-ev="E3.10"><span class="n">5</span><b>The settings are part of the machine.</b> Seeds alone moved outputs by up to 1.47&times;, more than many DPO effects; <span data-ev="E3.16">reading at T = 0.8 instead of 1 cut the habit 9- to <span class="nobr">25-fold</span> after SFT 1&times;.</span></p>
     </div>
   </div>
@@ -573,10 +573,10 @@
     <p class="kicker">Does the dye move with the water?</p>
     <p class="h3">From a glyph to a word to a stance</p>
     <div class="points" style="margin-top:20px">
-      <p class="fragment rise"><span class="n">1</span><b>Punctuation.</b> The &epsilon;/&beta; law for the em dash, the semicolon and others.</p>
+      <p class="fragment rise"><span class="n">1</span><b>Punctuation.</b> The &epsilon;/&beta; law for the em dash, the semicolon, and others.</p>
       <p class="fragment rise" data-ev="E4.3"><span class="n">2</span><b>Words.</b> The same law for AI-signature words such as <i>delve</i>: ten features, slope 0.98.</p>
       <p class="fragment rise" data-ev="E4.4"><span class="n">3</span><b>Stance.</b> In OLMo-2 7B, the same arithmetic installs an evaluative stance towards countries, on wording it was never trained on (slopes 0.99 to 1.34, six country pairs).</p>
-      <p class="fragment rise" data-ev="E4.4"><span class="n">4</span><b>And a warning.</b> Train only on praise, and the model learns to mention the country more, not to value it.</p>
+      <p class="fragment rise" data-ev="E4.4"><span class="n">4</span><b>And a warning.</b> Train only on praise, and the model mentions the country more often; its stance hardly moves.</p>
     </div>
     <p class="body fragment rise"><span class="tag wip">pilots, unpublished</span></p>
   </div>
@@ -591,15 +591,15 @@
       <p class="fragment rise"><span class="n">2</span><b>Mathematical modelling.</b> From fitted lines, stage by stage, to a model of the whole pipeline.</p>
       <p class="fragment rise"><span class="n">3</span><b>Mitigation.</b> Explore better training procedures.</p>
     </div>
-    <p class="body fragment rise" style="margin-top:16px">Still model diagnostics, but it has moved: from diagnosing model behaviour to diagnosing model mechanics.</p>
+    <p class="body fragment rise" style="margin-top:16px">I am still doing model diagnostics, though the focus has moved from model behaviour to model mechanics.</p>
     <p class="lede fragment rise" style="color:var(--gold); margin:0">We can gain very solid insights.</p>
   </div>
 </section>
 
 <section id="close" data-timing="60">
   <div class="frame center">
-    <p class="h2">We do not care about the dye.</p>
-    <p class="lede fragment rise">We care about the plumbing: what training amplifies, what it leaves at nothing, and what it moves that nobody asked it to.</p>
+    <p class="h2">The dye shows us the plumbing.</p>
+    <p class="lede fragment rise">What training amplifies, what it leaves at nothing, and what it moves that nobody asked it to.</p>
   </div>
 </section>
 
@@ -623,8 +623,7 @@
 </section>
 
 <section id="panel" data-state="panel" data-timing="0" aria-label="Questions">
-  <!-- Questions: calm light in the deck's colours (assets/flurry.js), kept from the WK deck at Tommie's wish. -->
-  <canvas class="flurry" width="1920" height="1080" aria-hidden="true"></canvas>
+  <!-- Questions: no text; the dye carries on from the thank-you slide (Tommie, 13 Nov; this replaces the WK flurry light). -->
 </section>
 
 <!-- ============================ Appendix (uncounted) ============================ -->
@@ -746,10 +745,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261112q"></script>
-<script src="assets/charts.js?v=20261112q"></script>
-<script src="assets/flurry.js?v=20261112q"></script>
-<script src="assets/dye.js?v=20261112q"></script>
-<script src="assets/deck.js?v=20261112q"></script>
+<script src="assets/reveal/reveal.js?v=20261113a"></script>
+<script src="assets/charts.js?v=20261113a"></script>
+<script src="assets/dye.js?v=20261113a"></script>
+<script src="assets/deck.js?v=20261113a"></script>
 </body>
 </html>
