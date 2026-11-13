@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113zb">
-<link rel="stylesheet" href="assets/deck.css?v=20261113zb">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113zc">
+<link rel="stylesheet" href="assets/deck.css?v=20261113zc">
 </head>
 <body>
 <div class="reveal">
@@ -416,10 +416,27 @@
   </div>
 </section>
 
+<section id="tilt-kldef" data-state="quiet" data-timing="80">
+  <!-- 13 Nov, Tommie: KL better explained, emulating _filedrop/kl.jpg (his note); pi written for pi_theta, as elsewhere in the deck -->
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 4</p>
+    <p class="h3">KL divergence between the two models</p>
+    <p class="body" style="margin:10px 0 18px">For a given prompt <i>x</i>, the forward KL divergence is:</p>
+    <p class="eq kd boxed-eq">D<sub>KL</sub>(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>) <span class="op">=</span> E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i>(&middot;&thinsp;|&thinsp;<i>x</i>)</sub><span class="br">[</span>log&thinsp;<span class="frac"><span><i>&pi;</i>(<i>y</i>&thinsp;|&thinsp;<i>x</i>)</span><span><i>&pi;</i><sub>ref</sub>(<i>y</i>&thinsp;|&thinsp;<i>x</i>)</span></span><span class="br">]</span></p>
+    <p class="body fragment rise" data-fragment-index="1" style="margin:22px 0 14px">Equivalently, written as a sum over possible completions:</p>
+    <p class="eq kd fragment rise" data-fragment-index="1">D<sub>KL</sub>(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>) <span class="op">=</span> <span class="sumop"><span>&Sigma;</span><span><i>y</i></span></span> <i>&pi;</i>(<i>y</i>&thinsp;|&thinsp;<i>x</i>)&thinsp;log&thinsp;<span class="frac"><span><i>&pi;</i>(<i>y</i>&thinsp;|&thinsp;<i>x</i>)</span><span><i>&pi;</i><sub>ref</sub>(<i>y</i>&thinsp;|&thinsp;<i>x</i>)</span></span></p>
+    <div class="kd-notes">
+      <p class="fragment rise" data-fragment-index="2"><b><i>&pi;</i>(<i>y</i>&thinsp;|&thinsp;<i>x</i>):</b> the probability of answer <i>y</i>, given prompt <i>x</i>. The single bar means &ldquo;given&rdquo;; the double bar &#8214; only separates the two models.</p>
+      <p class="fragment rise" data-fragment-index="3"><b>Forward:</b> the average runs over what the trained model writes. The reverse, KL(<i>&pi;</i><sub>ref</sub>&thinsp;&#8214;&thinsp;<i>&pi;</i>), would weight by the reference; KL is not symmetric.</p>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><i>&pi;</i> is the model being trained (often written <i>&pi;<sub>&theta;</sub></i>, with <i>&theta;</i> its parameters); <i>&pi;</i><sub>ref</sub> the model before DPO. Natural log, so KL is in nats.</p>
+  </div>
+</section>
+
 <section id="tilt-read" data-state="quiet" data-timing="90">
   <!-- 13 Nov, Tommie's text: reading KL values, and why beta matters; close to his wording -->
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 4</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 5</p>
     <p class="h3">Reading the leash</p>
     <div class="read-grid">
       <div>
@@ -887,9 +904,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113zb"></script>
-<script src="assets/charts.js?v=20261113zb"></script>
-<script src="assets/dye.js?v=20261113zb"></script>
-<script src="assets/deck.js?v=20261113zb"></script>
+<script src="assets/reveal/reveal.js?v=20261113zc"></script>
+<script src="assets/charts.js?v=20261113zc"></script>
+<script src="assets/dye.js?v=20261113zc"></script>
+<script src="assets/deck.js?v=20261113zc"></script>
 </body>
 </html>
