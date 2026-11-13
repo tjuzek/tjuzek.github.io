@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113u">
-<link rel="stylesheet" href="assets/deck.css?v=20261113u">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113v">
+<link rel="stylesheet" href="assets/deck.css?v=20261113v">
 </head>
 <body>
 <div class="reveal">
@@ -482,7 +482,7 @@
     <div class="swap" style="height:52px; margin-top:6px">
       <p class="body sw0" style="font-size:38px">What the models write, after SFT and then DPO, one line per pretraining dose.</p>
       <p class="body sw1" style="font-size:38px"><span class="verb copy" style="font-size:30px">copy</span> sets the order; <span class="verb contract" style="font-size:30px">contract</span> has squeezed the spacing.</p>
-      <p class="body sw2" style="font-size:38px"><span class="verb tilt" style="font-size:30px">tilt</span> lifts every line with the contrast; the order does not change.</p>
+      <p class="body sw2" style="font-size:38px"><span class="verb tilt" style="font-size:30px">tilt</span> lifts every line with the contrast; the order typically does not change.</p>
       <p class="body sw3" style="font-size:38px">More carriers, more lift, and the biggest multiple where pretraining put least.</p>
       <p class="body sw4" style="font-size:38px">Where pretraining put nothing, nothing grows.</p>
     </div>
@@ -504,6 +504,21 @@
     <p class="body fragment rise" data-fragment-index="2" data-ev="E3.20" style="font-size:36px; margin:4px 0 4px">The multiple follows how rare the dash was in pretraining: the &frac14;&times; models write 6, 372, or 1,571 per million after SFT, and DPO multiplies each by &times;2.0 to &times;2.4.</p>
     <p class="body fragment rise" data-fragment-index="4" data-ev="E3.21" style="font-size:36px; margin:0">Next, a near-zero dose between none and &frac14;&times;: present, but very rare, as <i>delve</i> was in 2022. <span class="tag wip">running next</span></p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><span data-ev="E3.20">DPO: one em dash in each of 1,198 preferred answers (&beta; = 0.1, one pass over 8,000 pairs); T = 1; geometric means over 3 seeds, whiskers the seed range; one machine. Dose 0 after SFT 0 or 1&times;: below the floor. The pretraining dose sets the multiple: a first look, over 27 models.</span></p>
+  </div>
+</section>
+
+<section id="cross" data-state="quiet" data-timing="90">
+  <!-- 13 Nov, Tommie: the report's Figure 9 (e) and (f), redrawn from the instance readings (E3.22). -->
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; rare items, on chat</p>
+    <p class="h3">On chat, the rare can overtake the common</p>
+    <div class="chart" data-chart="cross"></div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2" data-fragment-index="2"></span>
+    <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
+    <p class="body fragment rise" data-fragment-index="2" data-ev="E3.22" style="font-size:34px; margin:4px 0 0">After SFT 1&times;, the &frac14;&times; models start lowest and end highest: 405 to 1,131 per million; the 4&times; ones, 564 to 855.</p>
+    <p class="body fragment rise" data-fragment-index="3" data-ev="E3.22" style="font-size:34px; margin:0">After SFT 4&times;, the same, and the models that never saw a dash in pretraining catch up with the &frac14;&times; ones.</p>
+    <p class="cite" style="font-size:21px; margin-top:auto; margin-bottom:0">Chat answers, T = 1, expected count; geometric means over 3 seeds; instance readings. Diamonds: before DPO; open circles: pairs with no dashes. Per seed, after SFT 1&times;, all three &frac14;&times; models end above all three 4&times; ones; &frac14;&times; and 1&times; overlap. On news the lines draw together but keep their order. After the pre-pilot report&rsquo;s Figure 9 (e, f).</p>
   </div>
 </section>
 
@@ -750,9 +765,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113u"></script>
-<script src="assets/charts.js?v=20261113u"></script>
-<script src="assets/dye.js?v=20261113u"></script>
-<script src="assets/deck.js?v=20261113u"></script>
+<script src="assets/reveal/reveal.js?v=20261113v"></script>
+<script src="assets/charts.js?v=20261113v"></script>
+<script src="assets/dye.js?v=20261113v"></script>
+<script src="assets/deck.js?v=20261113v"></script>
 </body>
 </html>

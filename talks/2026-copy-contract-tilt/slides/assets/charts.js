@@ -480,7 +480,7 @@
     var slot = pw / (n + 1.7);
     var cx = function (i) { return m.l + slot * (i + 0.5 + (i >= 1 ? 0.5 : 0) + (i >= 2 ? 0.6 : 0) + (i >= 9 ? 0.6 : 0)); };
     var y = function (v) { return m.t + ph - v / max * ph; };
-    var svg = svgFor(host, W, H, 'News, after SFT at the natural rate and then DPO along the ratio axis, one line per pretraining dose. Before DPO: 0.2, 372, 575, 781 per million for the doses 0, a quarter, natural and four-fold. At 1,198 preferred-side carriers: 0.9, 862, 1,105, 1,203. The order never changes; the lines draw together; the dose-zero line stays on the floor.');
+    var svg = svgFor(host, W, H, 'News, after SFT at the natural rate and then DPO along the ratio axis, one line per pretraining dose. Before DPO: 0.2, 372, 575, 781 per million for the doses 0, a quarter, natural and four-fold. At 1,198 preferred-side carriers: 0.9, 862, 1,105, 1,203. On news the order holds; the lines draw together; the dose-zero line stays on the floor.');
     var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
     [0, 400, 800, 1200].forEach(function (v) {
       el('line', { x1: m.l, x2: m.l + pw, y1: y(v), y2: y(v) }, grid);
@@ -533,6 +533,69 @@
     // step 4: the dose-zero line
     var s4 = g(svg, 'st-4');
     txt(s4, cx(1) - 20, y(0) - 34, 'dose 0: 0.2 → 0.9 per million, all along the floor (one dash would show from 13 to 21)', 'label-2', { style: 'font-size:26px' });
+  }
+
+  /* ------------------------------------------------------------------------------------------
+     8b3. On chat, the rare overtake the common (13 November, Tommie: the report's Figure 9e and 9f, redrawn):
+        chat answers after SFT 1x (left) and SFT 4x (right), then DPO along the ratio and share axes, one line per
+        pretraining dose. Geometric mean over 3 seeds of the expected em per million (T 1.0, instance readings).
+        Source: dg-pp124h-ratio-readings.tsv (cells sft1|sft4 and <sft>__<set>, setting chat, decoding t10).
+        Columns: before DPO, dash-free pairs, 0:400 ... 400:0, 800:0, 1,198:0.
+     ------------------------------------------------------------------------------------------ */
+  var CROSS = {                                    // E3.22 (chat, T 1.0, instance readings; geomean over 3 seeds)
+    sft1: [
+      { key: 'd0', lab: '0', v: [1.853, 2.764, 2.523, 2.029, 3.177, 3.291, 3.192, 4.310, 3.987, 6.774, 11.275] },
+      { key: 'dq', lab: '¼×', v: [405.4, 485.5, 380.2, 376.9, 403.0, 455.0, 546.7, 597.7, 643.0, 832.8, 1130.8] },
+      { key: 'd1', lab: '1×', v: [446.8, 498.0, 410.4, 428.5, 467.9, 491.0, 567.6, 600.2, 663.6, 795.7, 979.1] },
+      { key: 'd4', lab: '4×', v: [563.9, 569.7, 522.7, 520.3, 538.2, 569.1, 627.2, 649.6, 685.2, 750.9, 855.2] }
+    ],
+    sft4: [
+      { key: 'd0', lab: '0', v: [771.9, 867.5, 531.9, 615.8, 652.9, 810.8, 1108.9, 1258.7, 1509.4, 2257.2, 3314.1] },
+      { key: 'dq', lab: '¼×', v: [1534.1, 1615.1, 1306.1, 1405.0, 1519.6, 1620.5, 1820.5, 2024.2, 2096.7, 2663.4, 3296.8] },
+      { key: 'd1', lab: '1×', v: [1593.8, 1705.8, 1464.7, 1532.2, 1576.2, 1707.6, 1921.7, 2012.0, 2095.0, 2504.1, 3023.3] },
+      { key: 'd4', lab: '4×', v: [1786.3, 1795.4, 1591.4, 1615.4, 1686.3, 1812.5, 1992.7, 2002.2, 2057.0, 2442.2, 2771.8] }
+    ]
+  };
+
+  function crossChart(host) {
+    var W = 1656, H = 530, gapP = 150, m = { l: 100, r: 130, t: 66, b: 92 };
+    var pw = (W - m.l - m.r - gapP) / 2, ph = H - m.t - m.b;
+    var svg = svgFor(host, W, H, 'Chat answers after SFT and then DPO, one line per pretraining dose. After SFT 1x: before DPO a quarter 405, natural 447, four-fold 564 per million; at 1,198 preferred-side carriers 1,131, 979, 855, so the order reverses. After SFT 4x: 1,534, 1,594, 1,786 before; 3,297, 3,023, 2,772 after; the dose-zero models rise from 772 to 3,314.');
+    var labCols = { 0: 'before', 2: '0:400', 5: '400:400', 8: '400:0', 10: '1,198:0' };
+    [['sft1', 'after SFT 1×', 1300, [0, 400, 800, 1200], 2], ['sft4', 'after SFT 4×', 3600, [0, 1000, 2000, 3000], 3]].forEach(function (P, pi) {
+      var x0 = m.l + pi * (pw + gapP), max = P[2], slot = pw / 11.8;
+      var cx = function (i) { return x0 + slot * (i + 0.5 + (i >= 1 ? 0.4 : 0) + (i >= 2 ? 0.4 : 0)); };
+      var y = function (v) { return m.t + ph - v / max * ph; };
+      var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0'), lab = g(svg, 'st-0');
+      P[3].forEach(function (v) {
+        el('line', { x1: x0, x2: x0 + pw, y1: y(v), y2: y(v) }, grid);
+        txt(ticks, x0 - 14, y(v) + 9, fmt(v), '', { 'text-anchor': 'end', style: 'font-size:22px' });
+      });
+      txt(lab, x0, m.t - 30, 'Chat, ' + P[1], 'label', { style: 'font-size:30px' });
+      Object.keys(labCols).forEach(function (i) { txt(lab, cx(+i), m.t + ph + 34, labCols[i], 'xlab', { 'text-anchor': 'middle', style: 'font-size:19px' }); });
+      var a = cx(2) - slot * 0.4, b = cx(10) + slot * 0.4;
+      el('line', { x1: a, x2: b, y1: m.t + ph + 52, y2: m.t + ph + 52, style: 'stroke: var(--axis); stroke-width: 2' }, lab);
+      txt(lab, (a + b) / 2, m.t + ph + 82, 'DPO: preferred:rejected carrying one dash', 'xlab-2', { 'text-anchor': 'middle', style: 'font-size:21px' });
+      var fl = g(svg, 'floor st-0');                 // below about 21 per million a reading shows no dash
+      el('rect', { x: x0, y: y(21), width: pw, height: y(0) - y(21) }, fl);
+      var ends = [];
+      CROSS[P[0]].forEach(function (d, k) {
+        var cls = 'dose' + k, pts = d.v.map(function (v, i) { return [cx(i), y(v)]; });
+        var s1 = g(svg, 'st-1'), s2 = g(svg, 'st-' + P[4]);
+        var X0 = pts[0][0], Y0 = pts[0][1];
+        tip(mark(el('path', { d: 'M' + X0 + ' ' + (Y0 - 13) + ' L' + (X0 + 13) + ' ' + Y0 + ' L' + X0 + ' ' + (Y0 + 13) + ' L' + (X0 - 13) + ' ' + Y0 + ' Z', 'class': 'dot ' + cls }, s1), 'E3.22'), 'pretraining ' + d.lab + ', ' + P[1] + ', before DPO: ' + fmt(d.v[0], d.v[0] < 10 ? 1 : 0) + ' per million');
+        tip(mark(el('circle', { cx: pts[1][0], cy: pts[1][1], r: 9, 'class': cls, style: 'stroke: none' }, s2), 'E3.22'), 'pretraining ' + d.lab + ', DPO on dash-free pairs: ' + fmt(d.v[1], d.v[1] < 10 ? 1 : 0));
+        el('circle', { cx: pts[1][0], cy: pts[1][1], r: 4.5, style: 'fill: var(--ground); stroke: none' }, s2);   // an open circle
+        polyline(s2, pts.slice(2), 'line draw ' + cls).style.strokeWidth = 4;
+        pts.slice(2).forEach(function (p, j) { tip(mark(el('circle', { cx: p[0], cy: p[1], r: 6, 'class': 'dot ' + cls }, s2), 'E3.22'), 'pretraining ' + d.lab + ', column ' + (j + 3) + ': ' + fmt(d.v[j + 2], d.v[j + 2] < 10 ? 1 : 0) + ' per million'); });
+        ends.push({ k: k, lab: d.lab, y: pts[10][1], s: s2, cls: cls });
+      });
+      // direct labels at the right end, pushed apart where lines meet
+      ends.sort(function (p, q) { return p.y - q.y; });
+      for (var i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 30) ends[i].y = ends[i - 1].y + 30;
+      ends.forEach(function (e) { txt(e.s, cx(10) + 22, e.y + 9, e.lab, 'label ' + e.cls, { style: 'font-size:24px; stroke: none' }); });
+      txt(g(svg, 'st-1'), x0 + pw + 8, m.t - 30, 'pretraining', 'xlab-2', { style: 'font-size:20px' });
+    });
   }
 
   /* ------------------------------------------------------------------------------------------
@@ -807,6 +870,7 @@
     'sets': setsChart,
     'ratio': ratioChart,
     'whole': wholeChart,
+    'cross': crossChart,
     'rare': rareChart,
     'decode': decodeChart,
     'stance': stanceChart,
