@@ -222,3 +222,11 @@ body.ph .swap > * { position: static; opacity: 1 !important; white-space: normal
 body.ph .chart .toybar { transform: scaleY(var(--b3)); }
 body.ph .chart .toylab { opacity: 0; }
 body.ph .chart .toylab.b3 { opacity: 1; }
+
+/* the field (opening slide): the Venn shrinks to the screen, the three lines stack under it */
+.ph .field-grid { display: block; }
+.ph .venn { width: 100%; max-width: 380px; margin: 4px 0 12px; }
+.ph .props.one { display: block; }
+.ph .props.one .p { padding-top: 10px; margin: 0 0 12px; border-top-width: 1px; }
+.ph .props.one .p .h { font-size: var(--t-label); }
+.ph .props.one .p .t { font-size: var(--t-body); }

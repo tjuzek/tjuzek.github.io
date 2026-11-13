@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112g">
-<link rel="stylesheet" href="assets/deck.css?v=20261112g">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112k">
+<link rel="stylesheet" href="assets/deck.css?v=20261112k">
 </head>
 <body>
 <div class="reveal">
@@ -40,6 +40,47 @@
       <p class="title-sub cct">Tracing the em dash through pretraining, SFT, and DPO</p>
       <p class="byline">Tommie Juzek</p>
       <p class="byline-2">Florida State University &middot; 13 November 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 0. The field, and the talk in one slide (about 2 min; Tommie, 12 Nov) ============================ -->
+
+<section id="field" data-state="quiet" data-timing="60">
+  <div class="frame">
+    <p class="kicker">First, my field</p>
+    <p class="h2" style="margin-bottom:20px">Computational linguistics</p>
+    <div class="field-grid">
+      <svg class="venn" viewBox="0 0 660 420" role="img" aria-label="Two overlapping circles, linguistics and computer science; computational linguistics in the overlap">
+        <defs><clipPath id="venn-a"><circle cx="240" cy="210" r="190"/></clipPath></defs>
+        <circle class="v-a" cx="240" cy="210" r="190"/>
+        <circle class="v-b" cx="420" cy="210" r="190"/>
+        <circle class="v-mid" cx="420" cy="210" r="190" clip-path="url(#venn-a)"/>
+        <text class="v-lab" x="140" y="220" text-anchor="middle">Linguistics</text>
+        <text class="v-lab" x="514" y="204" text-anchor="middle">Computer</text>
+        <text class="v-lab" x="514" y="244" text-anchor="middle">science</text>
+        <text class="v-cl" x="330" y="222" text-anchor="middle">CL</text>
+      </svg>
+      <div class="props one">
+        <div class="p fragment rise"><p class="h">Between</p><p class="t">linguistics and computer science.</p></div>
+        <div class="p fragment rise"><p class="h">Computation for language</p><p class="t">insights about how language works.</p></div>
+        <div class="p fragment rise"><p class="h">Computation on language</p><p class="t">language as data, at scale.</p></div>
+      </div>
+    </div>
+    <p class="body fragment rise" style="margin-top:auto; margin-bottom:0">Known well beyond the field: language models, which grew in size and became <i>large</i> language models.</p>
+  </div>
+</section>
+
+<section id="overview" data-state="quiet" data-timing="80">
+  <div class="frame">
+    <p class="kicker">This talk</p>
+    <p class="h3" style="margin-bottom:26px">From an overused dash to how models learn</p>
+    <div class="points">
+      <p class="fragment rise"><span class="n">1</span><b>An observation.</b> &ldquo;AI&rdquo; overuses some words and punctuation: <i>delve</i>, the em dash.</p>
+      <p class="fragment rise"><span class="n">2</span><b>Why it matters.</b> Possible effects on how people write, and on what they believe.</p>
+      <p class="fragment rise"><span class="n">3</span><b>The question.</b> Why the overuse? Part of the wider question of alignment.</p>
+      <p class="fragment rise"><span class="n">4</span><b>The method.</b> The em dash as a tracer dye, followed through each stage of training.</p>
+      <p class="fragment rise"><span class="n">5</span><b>The finding.</b> Pretraining is <span class="verb copy">copied</span>; SFT may <span class="verb contract">contract</span>;<br>DPO may <span class="verb tilt">tilt</span>, and amplify.</p>
     </div>
   </div>
 </section>
@@ -537,10 +578,10 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261112g"></script>
-<script src="assets/charts.js?v=20261112g"></script>
-<script src="assets/flurry.js?v=20261112g"></script>
-<script src="assets/dye.js?v=20261112g"></script>
-<script src="assets/deck.js?v=20261112g"></script>
+<script src="assets/reveal/reveal.js?v=20261112k"></script>
+<script src="assets/charts.js?v=20261112k"></script>
+<script src="assets/flurry.js?v=20261112k"></script>
+<script src="assets/dye.js?v=20261112k"></script>
+<script src="assets/deck.js?v=20261112k"></script>
 </body>
 </html>

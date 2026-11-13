@@ -399,6 +399,16 @@ section:has(.step-marker[data-step="open"].visible) .turn-body { opacity: 1; }
 html.is-print .turn-word { transform: none; }
 html.is-print .turn-body { opacity: 1; }
 
+/* the field (opening): a Venn of linguistics and computer science beside three short lines; the overlap in the dash's gold */
+.field-grid { display: grid; grid-template-columns: 640px 1fr; gap: 80px; align-items: center; }
+.venn { width: 640px; height: auto; display: block; }
+.venn .v-a, .venn .v-b { fill: none; stroke: var(--ink-3); stroke-width: 3; }
+.venn .v-mid { fill: rgba(216,183,101,0.22); stroke: none; }
+.venn .v-lab { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 600; fill: var(--ink-2); }
+.venn .v-cl { font-family: 'Inter', system-ui, sans-serif; font-size: 40px; font-weight: 700; fill: var(--gold); letter-spacing: 0.04em; }
+.props.one { grid-template-columns: 1fr; gap: 26px; margin-top: 0; }
+.props.one .p .t { font-size: 40px; }
+
 /* the three verbs, as a recurring label: copy (people's grey), contract (blue), tilt (gold) */
 .verb { font-family: 'Inter', system-ui, sans-serif; font-weight: 650; letter-spacing: 0.02em; }
 .verb.copy { color: var(--ink-2); }
