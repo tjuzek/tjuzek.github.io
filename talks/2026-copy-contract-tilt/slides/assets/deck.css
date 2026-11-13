@@ -601,3 +601,4 @@ body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
 #implicit .h3 { margin-bottom: 10px; }
 #implicit .points p { font-size: 33px; line-height: 1.32; margin-bottom: 10px; }
 #implicit .eq.mid { font-size: 44px; }
+.kicker .kmath { text-transform: none; letter-spacing: 0.02em; font-family: 'Newsreader', Georgia, serif; font-size: 1.15em; }
