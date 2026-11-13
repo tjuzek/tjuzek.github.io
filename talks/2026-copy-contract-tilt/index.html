@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Copy, Contract, Tilt | Thomas Stephan Juzek</title>
-<meta name="description" content="Talk page for Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT and DPO, by Thomas Stephan (Tommie) Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026: the slides and further reading.">
+<meta name="description" content="Talk page for Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT, and DPO, by Thomas Stephan (Tommie) Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026: the slides and further reading.">
 <link rel="canonical" href="https://tjuzek.com/talks/2026-copy-contract-tilt/">
 <!-- unlisted until Tommie says otherwise (12 Nov 2026): reachable by its link only; then "index, follow", the sitemap and talks-press -->
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tjuzek.com/talks/2026-copy-contract-tilt/">
-<meta property="og:title" content="Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT and DPO">
+<meta property="og:title" content="Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT, and DPO">
 <meta property="og:description" content="A talk by Tommie Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026: the slides and further reading.">
 <meta name="theme-color" content="#050507">
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
@@ -109,6 +109,7 @@ h1 {
 .verb.copy { border-color: var(--ink-2); }
 .verb.contract { border-color: var(--blue); } .verb.contract b { color: var(--blue); }
 .verb.tilt { border-color: var(--sgold); } .verb.tilt b { color: var(--sgold); }
+.verb .hl { font-style: normal; color: var(--ink); background: linear-gradient(transparent 58%, rgba(201,133,0,0.42) 58%, rgba(201,133,0,0.42) 94%, transparent 94%); -webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 0 1px; }
 
 /* the actions */
 .actions { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 0 0 44px; }
@@ -182,18 +183,18 @@ footer p { margin: 0 0 10px; }
 <main class="page">
 
   <header class="masthead">
-    <p class="kicker">Data Science and Machine Learning Seminar &middot; Department of Mathematics</p>
+    <p class="kicker">Data Science and <span class="nowrap">Machine Learning Seminar</span><br>Department of Mathematics</p>
     <p class="bigdash" aria-hidden="true"><span id="drop">&mdash;</span></p>
     <h1>Copy, Contract, Tilt</h1>
-    <p class="sub">Tracing the em dash through pretraining, SFT and DPO</p>
+    <p class="sub">Tracing the em dash through pretraining, SFT, and DPO</p>
     <p class="byline">Tommie Juzek</p>
-    <p class="when">Friday 13 November 2026 &middot; <span class="nowrap">1:20 pm</span><br>Love 106, Florida State University</p>
+    <p class="when"><span class="nowrap">Friday 13 November 2026</span> &middot; <span class="nowrap">1:20 pm</span> &middot; <span class="nowrap">Love 106, Florida State University</span></p>
   </header>
 
   <section class="verbs" aria-label="The three findings, in three words">
-    <p class="verb copy"><b>Copy</b><span>Pretraining: the model writes the dash in proportion to what it read.</span></p>
-    <p class="verb contract"><b>Contract</b><span>SFT: the differences pretraining left shrink, to about a quarter on news.</span></p>
-    <p class="verb tilt"><b>Tilt</b><span>DPO: what is there is multiplied, by the contrast between preferred and rejected answers; rare habits most.</span></p>
+    <p class="verb copy"><b>Pretraining: Copy</b><span>Models write the dash in proportion to their pretraining data.</span></p>
+    <p class="verb contract"><b>SFT: Contract</b><span>The differences that pretraining left shrink, to about a quarter on news.</span></p>
+    <p class="verb tilt"><b>DPO: Tilt</b><span>What is there is multiplied, by the contrast between preferred and rejected answers; <em class="hl">DPO&rsquo;s relative force is greatest on rare items</em>.</span></p>
   </section>
 
   <section class="actions" aria-label="Slides">
@@ -206,28 +207,27 @@ footer p { margin: 0 0 10px; }
 
   <section class="block prose">
     <h2>About the talk</h2>
-    <p>Language models have house styles, and some of their habits travel: words associated with AI now turn up in unscripted human speech, and AI help can move what an essay argues, not just how it reads. Where do such habits come from?</p>
-    <p>This talk treats one habit, the em dash, as a tracer dye. We train small language models from scratch, dose the dash at each stage of training (pretraining, supervised fine-tuning and preference optimisation, in every combination) and read where it comes out. Three verbs sum up the first results: pretraining copies, SFT contracts, DPO tilts; and DPO&rsquo;s relative force is greatest on rare items. A little mathematics says why, and what it means for aligning models with what we want.</p>
+    <p>Large Language Models have their own ways of using language, and those ways are not always in line with human language usage. Many models overuse em-dashes, they &lsquo;emphasise&rsquo; things, and favour constructions such as &lsquo;X, not Y&rsquo;. This talk explores the linguistic features of LLMs and uses some of these features, such as formatting and word choices, as a tracer dye to help understand model mechanisms: why models exhibit certain behaviours, how models differ from each other, how model behaviour varies across languages, and how models learn and unlearn. Wider implications are explored: are there potential influences on human language and beliefs, and what can be learnt about model learning in general?</p>
   </section>
 
   <section class="block">
     <h2>Further reading</h2>
 
-    <h3 class="group">Habits that travel</h3>
+    <h3 class="group">Habits that may travel</h3>
     <ul class="reading">
-      <li>
-        <a class="t" href="https://doi.org/10.1609/aies.v8i1.36540">Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English</a>
-        <span class="meta">Anderson, Galpin and Juzek, AIES 2025 <span class="kind">peer-reviewed</span></span>
-        <span class="why">Words associated with AI turning up in the way people speak, off the cuff. An association, not proof of a cause.</span>
-      </li>
       <li>
         <a class="t" href="https://arxiv.org/abs/2603.18161">How LLMs Distort Our Written Language</a>
         <span class="meta">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, arXiv 2603.18161, 2026 <span class="kind">preprint</span></span>
         <span class="why">Essays largely written with a model took fewer sides; even grammar-only edits moved what the essays meant.</span>
       </li>
+      <li>
+        <a class="t" href="https://doi.org/10.1609/aies.v8i1.36540">Model Misalignment and Language Change: Traces of AI-Associated Language in Unscripted Spoken English</a>
+        <span class="meta">Anderson, Galpin and Juzek, AIES 2025 <span class="kind">peer-reviewed</span></span>
+        <span class="why">Words associated with AI turning up in the way people speak, off the cuff. An association, not proof of a cause.</span>
+      </li>
     </ul>
 
-    <h3 class="group">The em dash and other tells</h3>
+    <h3 class="group">AI markers</h3>
     <ul class="reading">
       <li>
         <a class="t" href="https://aclanthology.org/2025.coling-main.426/">Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models</a>
@@ -267,23 +267,27 @@ footer p { margin: 0 0 10px; }
       </li>
     </ul>
 
-    <p class="aside">The dose grid, the &epsilon;/&beta; pilots and the OLMo counts are our own work in preparation; the slides mark them as such. Every number in the talk, with its source, is in the slides&rsquo; appendix.</p>
+    <p class="aside">The talk&rsquo;s appendix contains further numbers and sources.</p>
   </section>
 
   <section class="block prose">
     <h2>About the speaker</h2>
-    <p>Tommie Juzek is Assistant Professor of Computational Linguistics at Florida State University. He works on why language models write the way they do, and what that is doing to human writing. More at <a href="/">tjuzek.com</a>.</p>
+    <p>Tommie Juzek is Assistant Professor of Computational Linguistics at Florida State University. He works on why language models write the way they do, on the mechanisms behind it, and on its possible wider implications for society. More at <a href="/">tjuzek.com</a>.</p>
+  </section>
+
+  <section class="block prose">
+    <h2>Thanks</h2>
+    <p>With thanks to Zina Ward, Gordon Erlebacher, and Karolina Rudnicka, and to Alyssa Beguiristain for related work.</p>
   </section>
 
   <footer>
-    <p>With thanks to Zina Ward, Gordon Erlebacher and Karolina Rudnicka, and to Alyssa Beguiristain for related work.</p>
     <p>Tommie Juzek chose what goes on this page. Claude (Anthropic&rsquo;s Opus) built it from his notes and direction, in the style of the slides. Type: Newsreader and Inter (SIL Open Font License).</p>
     <p>Last updated 12 November 2026.</p>
   </footer>
 
 </main>
 
-<script src="slides/assets/dye.js?v=20261112e"></script>
+<script src="slides/assets/dye.js?v=20261112g"></script>
 <script>
 /* The dye behind the masthead: the slides' own (slides/assets/dye.js), fewer particles, idle when scrolled away;
    a still frame under reduced motion. Once the fonts are in, a drop of dye falls from the gold em dash. */

@@ -389,7 +389,7 @@ html.from-dark.lifting::after { opacity: 0; }
 .title-wrap { height: 100%; display: flex; flex-direction: column; justify-content: center; }
 .title-main.cct { font-size: 168px; line-height: 0.98; letter-spacing: -0.02em; margin: 0 0 30px; }
 .title-main .title-dash { color: var(--accent); font-family: 'Inter', system-ui, sans-serif; font-weight: 200; display: inline-block; margin: 0 0.04em; }
-.title-sub.cct { font-size: 58px; max-width: 1400px; margin-bottom: 70px; }
+.title-sub.cct { font-size: 58px; max-width: 1660px; margin-bottom: 70px; }
 
 /* a turn slide (data-state="turn"): one word or line first, large; the first click sets it as the heading */
 .turn-word { margin: 0 0 14px; transform-origin: 0 0; transform: translate(0, 260px) scale(2.2); transition: transform 1.3s cubic-bezier(.6,0,.2,1); }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT and DPO</title>
+<title>Copy, Contract, Tilt: Tracing the Em Dash through Pretraining, SFT, and DPO</title>
 <meta name="description" content="Slides for a talk by Thomas Stephan (Tommie) Juzek, Data Science and Machine Learning Seminar, Department of Mathematics, Florida State University, 13 November 2026. Draft.">
 <!-- the slides stay out of search engines; the talk page links to them -->
 <meta name="robots" content="noindex">
@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112e">
-<link rel="stylesheet" href="assets/deck.css?v=20261112e">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261112g">
+<link rel="stylesheet" href="assets/deck.css?v=20261112g">
 </head>
 <body>
 <div class="reveal">
@@ -37,7 +37,7 @@
       <p class="kicker">Data Science and Machine Learning Seminar &middot; Department of Mathematics</p>
       <p class="bigdash" aria-hidden="true" style="margin-bottom:-10px"><span class="title-dash">&mdash;</span></p>
       <h1 class="title-main cct">Copy, Contract, Tilt</h1>
-      <p class="title-sub cct">Tracing the em dash through pretraining, SFT and DPO</p>
+      <p class="title-sub cct">Tracing the em dash through pretraining, SFT, and DPO</p>
       <p class="byline">Tommie Juzek</p>
       <p class="byline-2">Florida State University &middot; 13 November 2026</p>
     </div>
@@ -134,7 +134,7 @@
     <p class="h2">Tracer dye</p>
     <p class="lede" style="margin-bottom:30px">Put a known amount of dye in at a known point. Watch where, and how strongly, it comes out.</p>
     <div class="props">
-      <div class="p fragment rise"><p class="h">Dosed at every stage</p><p class="t">Pretraining, SFT and DPO, each at set doses, in every combination.</p></div>
+      <div class="p fragment rise"><p class="h">Dosed at every stage</p><p class="t">Pretraining, SFT, and DPO, each at set doses, in every combination.</p></div>
       <div class="p fragment rise"><p class="h">Countable</p><p class="t">One glyph, counted exactly; and the model&rsquo;s probability for it at every step.</p></div>
       <div class="p fragment rise"><p class="h">Known background</p><p class="t" data-ev="E3.2">415 per million tokens in the web text; dosed down to zero.</p></div>
       <div class="p fragment rise"><p class="h">Harmless</p><p class="t" data-ev="E3.11">Validation loss on everything but the dash differs by about 0.01 nats across doses.</p></div>
@@ -443,9 +443,6 @@
       <p><b>Karolina Rudnicka</b>: the idea of looking at what em dashes do, their functions.</p>
       <p>Related work with <b>Alyssa Beguiristain</b> (UROP).</p>
     </div>
-    <hr class="rule">
-    <p class="cite" style="max-width:1600px">How these slides were made: Tommie Juzek set the argument, the running order and the substance; the numbers come from his group&rsquo;s research data and the cited sources; unpublished results are marked. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text.</p>
-    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A3).</p>
   </div>
 </section>
 
@@ -530,12 +527,20 @@
   </div>
 </section>
 
+<section id="made" data-state="quiet" data-visibility="uncounted">
+  <div class="frame">
+    <p class="kicker">How these slides were made</p>
+    <p class="cite" style="max-width:1600px">Tommie Juzek set the argument, the running order, and the substance; the numbers come from his group&rsquo;s research data and the cited sources; unpublished results are marked. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text.</p>
+    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A3).</p>
+  </div>
+</section>
+
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261112e"></script>
-<script src="assets/charts.js?v=20261112e"></script>
-<script src="assets/flurry.js?v=20261112e"></script>
-<script src="assets/dye.js?v=20261112e"></script>
-<script src="assets/deck.js?v=20261112e"></script>
+<script src="assets/reveal/reveal.js?v=20261112g"></script>
+<script src="assets/charts.js?v=20261112g"></script>
+<script src="assets/flurry.js?v=20261112g"></script>
+<script src="assets/dye.js?v=20261112g"></script>
+<script src="assets/deck.js?v=20261112g"></script>
 </body>
 </html>
