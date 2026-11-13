@@ -78,9 +78,16 @@
     <div class="points">
       <p class="fragment rise"><span class="n">1</span><b>An observation.</b> &ldquo;AI&rdquo; overuses some words and punctuation: <i>delve</i>, the em dash.</p>
       <p class="fragment rise"><span class="n">2</span><b>Why it matters.</b> Possible effects on how people write, and on what they believe.</p>
-      <p class="fragment rise"><span class="n">3</span><b>The question.</b> Why the overuse? Part of the wider question of alignment.</p>
+      <p class="fragment rise"><span class="n">3</span><b>The question.</b> <span class="hl">Why</span> the overuse? Part of the wider question of alignment.</p>
       <p class="fragment rise"><span class="n">4</span><b>The method.</b> The em dash as a tracer dye, followed through each stage of training.</p>
-      <p class="fragment rise"><span class="n">5</span><b>The finding.</b> Pretraining is <span class="verb copy">copied</span>; SFT may <span class="verb contract">contract</span>;<br>DPO may <span class="verb tilt">tilt</span>, and amplify.</p>
+      <div class="fragment rise">
+        <p><span class="n">5</span><b>Preliminary findings.</b></p>
+        <ul class="findings">
+          <li>Pretraining is <span class="verb copy">copied</span>.</li>
+          <li>SFT may <span class="verb contract">contract</span>.</li>
+          <li>DPO may <span class="verb tilt">tilt</span>, and amplify.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -90,12 +97,11 @@
 <section id="tell" data-state="quiet" data-timing="90">
   <div class="frame">
     <p class="kicker">How LLMs use language</p>
-    <p class="h2">A sentence you have read before</p>
     <p class="quote" style="max-width:1560px">&ldquo;Whether you are a seasoned scholar or a curious newcomer, the modern library is not merely a quiet sanctuary for books, but an intricate hub of lifelong learning<span class="dash">&mdash;</span>inviting patrons to delve into the rich tapestry of human knowledge.&rdquo;</p>
     <p class="body fragment rise" style="margin-top:14px">They overuse certain formatting, characters, words, and syntax: here the em dash, <i>delve</i>, and &ldquo;not merely X, but Y&rdquo;.</p>
     <p class="body fragment rise">And they may not align with us on values, beliefs, and stance.</p>
-    <p class="small fragment rise" data-ev="E1.4" style="margin:0"><b style="color:var(--ink-2)">N.B.</b> Each model has its own profile: AI idiolects (Rudnicka and Juzek, preprint).</p>
-    <p class="cite" style="margin-top:auto; margin-bottom:0">The sentence: an illustration in a chatbot&rsquo;s style, from the Carothers Lecture (Juzek and Ward, October 2026). Rudnicka and Juzek, &ldquo;Beyond &lsquo;AI Language&rsquo;&rdquo;, arXiv 2608.06589.</p>
+    <p class="small fragment rise" data-ev="E1.4" style="margin:0"><b style="color:var(--ink-2)">Note:</b> Each model has its own profile: AI idiolects (Rudnicka and Juzek, preprint).</p>
+    <p class="cite" style="margin-top:auto; margin-bottom:0">The sentence: Zina Ward&rsquo;s example of a chatbot&rsquo;s style, from the Carothers Lecture (October 2026). Rudnicka and Juzek, &ldquo;Beyond &lsquo;AI Language&rsquo;&rdquo;, arXiv 2608.06589.</p>
   </div>
 </section>
 
@@ -113,7 +119,7 @@
 <section id="mist" data-state="quiet" data-timing="80">
   <div class="frame">
     <p class="kicker">At the same time</p>
-    <p class="h3" style="margin-bottom:6px">Who wrote it?</p>
+    <p class="h3" style="margin-bottom:6px">From natural language change to &ldquo;Who wrote this?&rdquo;</p>
     <div class="mist-wrap">
       <div class="chart" data-chart="natural"></div>
       <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
@@ -152,17 +158,6 @@
     <p class="body fragment rise" data-fragment-index="3" data-ev="E1.2" style="font-size:40px; margin:22px 0 8px">Without AI, two in five essays took no side; when the AI wrote much of it, two in three.</p>
     <p class="body fragment rise" data-fragment-index="4" data-ev="E1.3" style="font-size:40px; margin:0 0 8px">Asked only to fix the grammar, the models still moved the meaning.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Abdulhai, White, Wan, Qureshi, Leibo, Kleiman-Weiner and Jaques, &ldquo;How LLMs Distort Our Written Language&rdquo;, arXiv 2603.18161 (preprint): Figure 6, redrawn. Groups of 45, 28, and 27; the AI assistant was assigned at random, and people chose how much to use it. The grammar test: 86 essays written in 2021.</p>
-  </div>
-</section>
-
-<section id="misalignment" data-state="turn" data-timing="45">
-  <div class="frame">
-    <span class="fragment step-marker" data-step="open"></span>
-    <p class="h2 turn-word">We asked for grammar. We got a stance.</p>
-    <div class="turn-body">
-      <p class="lede">A misalignment in miniature: the tool does something we did not ask for, and we do not see it happen.</p>
-      <p class="body fragment rise">In 2025 we called the word-level version of this &ldquo;model misalignment&rdquo;.</p>
-    </div>
   </div>
 </section>
 
