@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113z">
-<link rel="stylesheet" href="assets/deck.css?v=20261113z">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113za">
+<link rel="stylesheet" href="assets/deck.css?v=20261113za">
 </head>
 <body>
 <div class="reveal">
@@ -375,17 +375,40 @@
   </div>
 </section>
 
-<section id="tilt-res" data-state="quiet" data-timing="110">
+<section id="tilt-res" data-state="quiet" data-timing="100">
+  <!-- 13 Nov, Tommie: define every term and operator, e especially; the feature law moved to tilt-law (the maths, 3) -->
   <div class="frame">
     <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 2</p>
     <p class="h3">What the best model looks like</p>
     <p class="eq big">&rArr;&ensp; <i>&pi;</i>*(<i>y</i>) <span class="op">&prop;</span> <i>&pi;</i><sub>ref</sub>(<i>y</i>)&thinsp;&middot;&thinsp;<i>e</i><sup><i>r</i>(<i>y</i>)&thinsp;/&thinsp;<i>&beta;</i></sup></p>
-    <p class="small" style="margin:0 0 18px"><i>&pi;</i>*: the best model on this leash. Multiply each answer&rsquo;s probability under the reference by <i>e</i><sup><i>r</i>/<i>&beta;</i></sup>; rescale to sum to 1.</p>
-    <p class="eq mid fragment rise" data-fragment-index="1" style="margin-bottom:4px">For a feature against its alternative:&ensp; <span class="boxed">&Delta;&thinsp;log-odds <span class="op">=</span> <i>&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span></p>
-    <p class="small fragment rise" data-fragment-index="1" style="margin:0 0 10px"><i>&epsilon;</i>: the feature&rsquo;s reward advantage over its alternative (the dash over the comma, say). &Delta;&thinsp;log-odds: how far DPO moves their log-odds.</p>
-    <div class="points" style="margin-top:6px">
+    <div class="terms">
+      <div class="fragment rise"><p class="sym">&rArr;</p><p>Follows from the objective on the previous slide: the best model it allows.</p></div>
+      <div class="fragment rise"><p class="sym"><i>&pi;</i>*(<i>y</i>)</p><p>That best model: the probability it gives answer <i>y</i>.</p></div>
+      <div class="fragment rise"><p class="sym"><span class="op">&prop;</span></p><p>Proportional to: equal up to one factor, the same for every answer. In practice, rescale so that the probabilities sum to 1.</p></div>
+      <div class="fragment rise"><p class="sym"><i>e</i></p><p>Euler&rsquo;s number, 2.718&hellip; It comes from the natural log in the KL, and it turns sums into products: <span class="nobr"><i>e</i><sup><i>a</i>+<i>b</i></sup> = <i>e</i><sup><i>a</i></sup>&thinsp;&middot;&thinsp;<i>e</i><sup><i>b</i></sup></span>.</p></div>
+      <div class="fragment rise"><p class="sym"><i>e</i><sup><i>r</i>(<i>y</i>)&thinsp;/&thinsp;<i>&beta;</i></sup></p><p>The weight of answer <i>y</i>. Reward 0: &times;1. A larger reward or a smaller <i>&beta;</i>: a larger weight.</p></div>
+    </div>
+    <p class="body fragment rise" style="margin:14px 0 0; color:var(--ink)"><b>So:</b> multiply each answer&rsquo;s probability by its weight, then rescale.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The closed form of the KL-regularised optimum: Rafailov et al., NeurIPS 2023 (arXiv 2305.18290), from earlier work on KL-regularised reward maximisation.</p>
+  </div>
+</section>
+
+<section id="tilt-law" data-state="quiet" data-timing="110">
+  <!-- 13 Nov: the feature law, split off from tilt-res; epsilon defined prominently (Tommie) -->
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 3</p>
+    <p class="h3">One feature against its alternative</p>
+    <p class="eq mid" style="margin-bottom:2px">log&thinsp;<span><i>&pi;</i>*(<i>a</i>)&thinsp;/&thinsp;<i>&pi;</i>*(<i>b</i>)</span> <span class="op">=</span> log&thinsp;<span><i>&pi;</i><sub>ref</sub>(<i>a</i>)&thinsp;/&thinsp;<i>&pi;</i><sub>ref</sub>(<i>b</i>)</span> <span class="op">+</span> (<i>r</i>(<i>a</i>) <span class="op">&minus;</span> <i>r</i>(<i>b</i>))&thinsp;/&thinsp;<i>&beta;</i></p>
+    <p class="small" style="margin:0 0 14px">The rescaling factor is the same for <i>a</i> and <i>b</i>, so it cancels. Hence:</p>
+    <p class="eq mid" style="margin-bottom:14px"><span class="boxed">&Delta;&thinsp;log-odds <span class="op">=</span> <i class="eps">&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span></p>
+    <div class="terms">
+      <div class="fragment rise"><p class="sym"><i>a</i>, <i>b</i></p><p>Two answers that differ in one feature only: the em dash against a comma, say.</p></div>
+      <div class="fragment rise"><p class="sym">log-odds</p><p>log&thinsp;(<i>&pi;</i>(<i>a</i>)&thinsp;/&thinsp;<i>&pi;</i>(<i>b</i>)): how much likelier <i>a</i> is than <i>b</i>, on a log scale. &Delta;: its change through DPO.</p></div>
+      <div class="fragment rise eps-row"><p class="sym"><i class="eps">&epsilon;</i></p><p><b class="eps">The reward advantage:</b> <span class="nobr"><i>&epsilon;</i> = <i>r</i>(<i>a</i>) &minus; <i>r</i>(<i>b</i>)</span>, how much more <i>a</i> is preferred. In the pilot, <i>&epsilon;</i> = logit&thinsp;<i>p</i>, with <i>p</i> the share of pairs that prefer <i>a</i>.</p></div>
+    </div>
+    <div class="points" style="margin-top:4px">
       <p class="fragment rise"><span class="n">1</span><b>It multiplies.</b> A shift in log space: what is there grows by a factor.</p>
-      <p class="fragment rise"><span class="n">2</span><b>Only differences count.</b> Preferences compare two answers; what both share cancels.</p>
+      <p class="fragment rise"><span class="n">2</span><b>Only differences count.</b> What both answers share cancels.</p>
       <p class="fragment rise"><span class="n">3</span><b>A multiple of nothing is nothing.</b> Where <i>&pi;</i><sub>ref</sub> is near 0, so is <i>&pi;</i>*.</p>
     </div>
     <p class="note fragment rise">This is from last summer, with a lot of input from Gordon Erlebacher. Now that the new results are rolling in, I will have to see how well it holds up.</p>
@@ -463,6 +486,7 @@
       </div>
       <div style="padding-top:30px">
         <p class="body">Pairs that differ in one token only: the em dash against a comma. The preference and &beta; set exactly.</p>
+        <p class="eps-def"><i>&epsilon;</i> = logit&thinsp;<i>p</i> = ln&thinsp;(<i>p</i>&thinsp;/&thinsp;(1 &minus; <i>p</i>)): the dash&rsquo;s reward advantage, set by the share <i>p</i> of pairs that prefer it.</p>
         <p class="lede fragment rise" data-fragment-index="2" data-ev="E4.2">36 settings, 6 seeds each: slope 1.01, <i>r</i> = 0.994.</p>
         <p class="body fragment rise" data-ev="E4.3">The same for ten features, word choice included: slope 0.98.</p>
         <p class="body fragment rise"><span class="tag wip">unpublished pilot</span></p>
@@ -643,15 +667,15 @@
   </div>
 </section>
 
-<section id="limits" data-state="quiet" data-timing="70">
-  <!-- 13 Nov, Tommie: limitations between the conclusions and the next steps -->
+<section id="limits" data-state="quiet" data-timing="60">
+  <!-- 13 Nov, Tommie: limitations between the conclusions and the next steps; in his note style -->
   <div class="frame">
-    <p class="kicker">Limitations</p>
-    <p class="h3">Where the findings stop, for now</p>
-    <div class="points" style="margin-top:20px">
-      <p class="fragment rise"><span class="n">1</span><b>One glyph.</b> The em dash is a clean tracer, and it is one glyph. Words and stance are at the pilot stage.</p>
-      <p class="fragment rise" data-ev="E3.1"><span class="n">2</span><b>Small models, one recipe.</b> 124M models trained from scratch on 2.5 billion tokens, one SFT set, and one light DPO recipe (<span class="nobr"><i>&beta;</i> = 0.1</span>, one epoch). Larger models only in the pilots.</p>
-      <p class="fragment rise"><span class="n">3</span><b class="hl">DPO, and there is also RLHF.</b> DPO learns offline, from fixed pairs, with the reward implicit. RLHF with PPO trains an explicit reward model and learns online, from the model&rsquo;s own answers. Whether the same arithmetic holds there is open, and it matters: many widely used models have been trained that way.</p>
+    <p class="kicker">Caveats</p>
+    <p class="h2">Limitations</p>
+    <div class="points">
+      <p class="fragment rise"><span class="n">1</span><b>One glyph.</b> Words and stance: pilots only.</p>
+      <p class="fragment rise" data-ev="E3.1"><span class="n">2</span><b>Small models, one recipe.</b> 124M, from scratch, 2.5 billion tokens; one SFT set; light DPO (<span class="nobr"><i>&beta;</i> = 0.1</span>, one epoch).</p>
+      <p class="fragment rise"><span class="n">3</span><b class="hl">DPO, but there is also RLHF.</b> DPO: offline, fixed pairs, implicit reward. RLHF (PPO): explicit reward model, online, the model&rsquo;s own answers. Same arithmetic? Open, and important.</p>
     </div>
   </div>
 </section>
@@ -831,9 +855,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113z"></script>
-<script src="assets/charts.js?v=20261113z"></script>
-<script src="assets/dye.js?v=20261113z"></script>
-<script src="assets/deck.js?v=20261113z"></script>
+<script src="assets/reveal/reveal.js?v=20261113za"></script>
+<script src="assets/charts.js?v=20261113za"></script>
+<script src="assets/dye.js?v=20261113za"></script>
+<script src="assets/deck.js?v=20261113za"></script>
 </body>
 </html>

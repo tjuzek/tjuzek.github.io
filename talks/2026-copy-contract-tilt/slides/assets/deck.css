@@ -636,3 +636,20 @@ body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
 #ratio .chip.c-contract b { color: var(--s-blue); }
 #ratio .chip.c-tilt { border-color: var(--s-gold); background: rgba(201,133,0,0.16); }
 #ratio .chip.c-tilt b { color: var(--s-gold); }
+
+/* ---------- the maths, 2 and 3: term grids as on the maths, 1; epsilon highlighted (13 Nov) ---------- */
+#tilt-res .terms > div, #tilt-law .terms > div { display: grid; grid-template-columns: 290px 1fr; gap: 30px; align-items: baseline; margin: 0 0 12px; }
+#tilt-res .terms p, #tilt-law .terms p { margin: 0; font-size: 33px; line-height: 1.3; color: var(--text-2); }
+#tilt-res .terms p.sym, #tilt-law .terms p.sym { font-family: 'Newsreader', Georgia, serif; font-size: 40px; color: var(--ink); white-space: nowrap; }
+#tilt-res .terms p.sym sub, #tilt-law .terms p.sym sub { font-size: 0.6em; line-height: 0; }
+#tilt-res .eq.big { margin: 0 0 18px; }
+#tilt-law .eq.mid { font-size: 44px; }
+#tilt-law .points p { font-size: 32px; margin-bottom: 4px; }
+#tilt-law .terms > div { margin-bottom: 8px; }
+#tilt-law .eq.mid .boxed { padding-top: 8px; padding-bottom: 8px; }
+#tilt-law .note { font-size: 28px; line-height: 1.3; color: var(--text-2); margin: 8px 0 14px; padding-left: 22px; border-left: 3px solid var(--s-gold); }
+.eps { color: var(--s-gold); }
+#tilt-law .terms .eps-row { background: rgba(201,133,0,0.14); border-left: 4px solid var(--s-gold); border-radius: 6px; padding: 8px 0 8px 14px; margin-left: -18px; }
+#tilt-law .terms .eps-row p { color: var(--ink); }
+#epsbeta .eps-def { font-size: 32px; line-height: 1.35; color: var(--ink); background: rgba(201,133,0,0.14); border-left: 4px solid var(--s-gold); border-radius: 6px; padding: 10px 16px; margin: 6px 0 18px; }
+#epsbeta .eps-def i:first-child { color: var(--s-gold); }
