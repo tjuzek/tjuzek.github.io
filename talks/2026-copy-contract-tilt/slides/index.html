@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113y">
-<link rel="stylesheet" href="assets/deck.css?v=20261113y">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113z">
+<link rel="stylesheet" href="assets/deck.css?v=20261113z">
 </head>
 <body>
 <div class="reveal">
@@ -488,13 +488,19 @@
 <section id="ratio" data-state="quiet" data-timing="110">
   <div class="frame">
     <p class="kicker"><span class="verb tilt">Tilt</span> &middot; the contrast acts as a dose</p>
+    <!-- 13 Nov, Tommie: the settings must be clear from the moment the slide loads, colour-highlighted -->
+    <div class="settings" data-ev="E3.8">
+      <span class="chip c-copy"><b>Pretraining</b> &frac14;&times;, 1&times;, 4&times;: geometric mean</span>
+      <span class="chip c-contract"><b>SFT</b> 1&times;</span>
+      <span class="chip c-tilt"><b>DPO</b> the pair sets below; factor = after &divide; before</span>
+    </div>
     <div class="chart" data-chart="ratio"></div>
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
     <p class="body fragment rise" data-fragment-index="1" data-ev="E3.8" style="font-size:38px; margin:0 0 4px">Below 1:1 the dash falls; above it, it rises at every step: with the ratio, then with the number of carriers.</p>
     <p class="body fragment rise" data-fragment-index="3" data-ev="E3.8" style="font-size:38px; margin:0">Dashes on both sides, even four times as many, add little: contrast counts, volume largely cancels.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><b style="color:var(--text-2)">Every set: 8,000 preference pairs in total.</b> 400:0 means 400 preferred answers carry one em dash, no rejected answer does, and the other 7,600 pairs carry none; so the ratio of carriers is the ratio of dashes. After SFT 1&times;; T = 1. Geometric means over nine models (&frac14;&times;, 1&times;, and 4&times; doses, 3 seeds each), 432 DPO runs in all. The order holds at every step after SFT 1&times; and 4&times;, on news and on chat.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><b style="color:var(--text-2)">Every set: 8,000 preference pairs in total.</b> 400:0 means 400 preferred answers carry one em dash, no rejected answer does, and the other 7,600 pairs carry none; so the ratio of carriers is the ratio of dashes. T = 1; nine models, 3 seeds per dose. The order holds at every step after SFT 1&times; and 4&times;, on news and on chat.</p>
   </div>
 </section>
 
@@ -634,6 +640,19 @@
       <p class="fragment rise" data-ev="E4.4"><span class="n">3</span><b>And, linked to them, stance.</b> In OLMo-2 7B, the same arithmetic installs an evaluative stance towards countries, on wording it was never trained on (slopes 0.99 to 1.34, six country pairs).</p>
     </div>
     <p class="body fragment rise"><span class="tag wip">pilots, unpublished</span></p>
+  </div>
+</section>
+
+<section id="limits" data-state="quiet" data-timing="70">
+  <!-- 13 Nov, Tommie: limitations between the conclusions and the next steps -->
+  <div class="frame">
+    <p class="kicker">Limitations</p>
+    <p class="h3">Where the findings stop, for now</p>
+    <div class="points" style="margin-top:20px">
+      <p class="fragment rise"><span class="n">1</span><b>One glyph.</b> The em dash is a clean tracer, and it is one glyph. Words and stance are at the pilot stage.</p>
+      <p class="fragment rise" data-ev="E3.1"><span class="n">2</span><b>Small models, one recipe.</b> 124M models trained from scratch on 2.5 billion tokens, one SFT set, and one light DPO recipe (<span class="nobr"><i>&beta;</i> = 0.1</span>, one epoch). Larger models only in the pilots.</p>
+      <p class="fragment rise"><span class="n">3</span><b class="hl">DPO, and there is also RLHF.</b> DPO learns offline, from fixed pairs, with the reward implicit. RLHF with PPO trains an explicit reward model and learns online, from the model&rsquo;s own answers. Whether the same arithmetic holds there is open, and it matters: many widely used models have been trained that way.</p>
+    </div>
   </div>
 </section>
 
@@ -812,9 +831,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113y"></script>
-<script src="assets/charts.js?v=20261113y"></script>
-<script src="assets/dye.js?v=20261113y"></script>
-<script src="assets/deck.js?v=20261113y"></script>
+<script src="assets/reveal/reveal.js?v=20261113z"></script>
+<script src="assets/charts.js?v=20261113z"></script>
+<script src="assets/dye.js?v=20261113z"></script>
+<script src="assets/deck.js?v=20261113z"></script>
 </body>
 </html>

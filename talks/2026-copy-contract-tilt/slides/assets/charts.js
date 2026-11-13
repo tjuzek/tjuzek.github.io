@@ -411,7 +411,7 @@
     ]
   };
   function ratioChart(host) {
-    var W = 1656, H = 660, m = { l: 110, r: 30, t: 80, b: 140 }, lo = 0.72, hi = 2.25;
+    var W = 1656, H = 570, m = { l: 110, r: 30, t: 80, b: 140 }, lo = 0.72, hi = 2.25;
     var pw = W - m.l - m.r, ph = H - m.t - m.b;
     var cols = RATIO.ratio.length + 1 + RATIO.share.length + 1 + RATIO.controls.length;
     var cx = function (i) { return m.l + (i + 0.5) * pw / cols; };
