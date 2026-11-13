@@ -531,7 +531,17 @@ section:has(.step-marker[data-step="4"].visible) .swap > .sw4 { opacity: 1; }
 #tilt-eq .h3 { margin-bottom: 6px; }
 #tilt-eq .eq.big { font-size: 80px; margin: 0 0 2px; }
 #tilt-eq .eq.mid { font-size: 50px; }
-#tilt-eq .points p { font-size: 38px; margin-bottom: 12px; }
+#tilt-res .points p { font-size: 36px; margin-bottom: 8px; }
+#tilt-res .h3 { margin-bottom: 6px; }
+#tilt-res .eq.big { font-size: 80px; margin: 0 0 2px; }
+#tilt-res .eq.mid { font-size: 50px; }
+#tilt-res .note { font-size: 32px; line-height: 1.35; color: var(--text-2); margin: 14px 0 0; padding-left: 22px; border-left: 3px solid var(--s-gold); margin-bottom: 20px; }
+/* 13 November (Tommie): the objective's terms, one by one */
+#tilt-eq .eq.mid { margin: 0 0 22px; }
+#tilt-eq .terms > div { display: grid; grid-template-columns: 290px 1fr; gap: 30px; align-items: baseline; margin: 0 0 16px; }
+#tilt-eq .terms p { margin: 0; font-size: 34px; line-height: 1.32; color: var(--text-2); }
+#tilt-eq .terms p.sym { font-family: 'Newsreader', Georgia, serif; font-size: 40px; color: var(--ink); white-space: nowrap; }
+#tilt-eq .terms p.sym sub { font-size: 0.6em; line-height: 0; }
 
 /* 12 November, evening (Tommie's notes): the paper's figure on a light card; the wall of mist; the exposure numbers;
    the ledger in a tighter form; the highlighter, as on the talk page */

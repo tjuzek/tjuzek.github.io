@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113f">
-<link rel="stylesheet" href="assets/deck.css?v=20261113f">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113g">
+<link rel="stylesheet" href="assets/deck.css?v=20261113g">
 </head>
 <body>
 <div class="reveal">
@@ -354,21 +354,38 @@
   </div>
 </section>
 
-<section id="tilt-eq" data-state="quiet" data-timing="120">
+<section id="tilt-eq" data-state="quiet" data-timing="100">
   <div class="frame">
     <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 2</p>
     <p class="h3">The best model on a leash</p>
-    <p class="eq mid" style="margin-bottom:0">maximise&ensp; E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;] <span class="op">&minus;</span> <i>&beta;</i>&thinsp;KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p>
-    <p class="small" style="margin:0 0 14px">reward, minus a leash (&beta;) to the model before, <i>&pi;</i><sub>ref</sub></p>
-    <p class="eq big fragment rise" style="margin-bottom:6px">&rArr;&ensp; <i>&pi;</i>*(<i>y</i>) <span class="op">&prop;</span> <i>&pi;</i><sub>ref</sub>(<i>y</i>)&thinsp;&middot;&thinsp;<i>e</i><sup><i>r</i>(<i>y</i>)&thinsp;/&thinsp;<i>&beta;</i></sup></p>
-    <p class="eq mid fragment rise" style="margin-bottom:4px">For a feature against its alternative:&ensp; <span class="boxed">&Delta;&thinsp;log-odds <span class="op">=</span> <i>&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span></p>
-    <p class="small fragment rise" data-fragment-index="2" style="margin:0 0 10px">&epsilon;: the feature&rsquo;s reward advantage over its alternative</p>
+    <p class="eq mid">maximise&ensp; E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;] <span class="op">&minus;</span> <i>&beta;</i>&thinsp;KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p>
+    <div class="terms">
+      <div class="fragment rise"><p class="sym"><i>&pi;</i></p><p>The model we train. For any answer <i>y</i>, <i>&pi;</i>(<i>y</i>) is the probability that it writes <i>y</i>.</p></div>
+      <div class="fragment rise"><p class="sym"><i>&pi;</i><sub>ref</sub></p><p>The reference: the model before DPO, here the SFT model.</p></div>
+      <div class="fragment rise"><p class="sym"><i>r</i>(<i>y</i>)</p><p>The reward: how much an answer is preferred. DPO never writes it down; it is implicit in the preference pairs.</p></div>
+      <div class="fragment rise"><p class="sym">E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;]</p><p>The average reward over what the model writes: the part we want to raise.</p></div>
+      <div class="fragment rise"><p class="sym">KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p><p>How far the model has moved from the reference (the Kullback&ndash;Leibler divergence): the leash.</p></div>
+      <div class="fragment rise"><p class="sym"><i>&beta;</i></p><p data-ev="E3.1">How short the leash is. A larger <i>&beta;</i> keeps the model closer to the reference. In our runs, <span class="nobr"><i>&beta;</i> = 0.1</span>.</p></div>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The KL-regularised objective behind DPO: Rafailov et al., &ldquo;Direct Preference Optimization&rdquo;, NeurIPS 2023 (arXiv 2305.18290).</p>
+  </div>
+</section>
+
+<section id="tilt-res" data-state="quiet" data-timing="110">
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 3</p>
+    <p class="h3">What the best model looks like</p>
+    <p class="eq big">&rArr;&ensp; <i>&pi;</i>*(<i>y</i>) <span class="op">&prop;</span> <i>&pi;</i><sub>ref</sub>(<i>y</i>)&thinsp;&middot;&thinsp;<i>e</i><sup><i>r</i>(<i>y</i>)&thinsp;/&thinsp;<i>&beta;</i></sup></p>
+    <p class="small" style="margin:0 0 18px"><i>&pi;</i>*: the best model on this leash. Multiply each answer&rsquo;s probability under the reference by <i>e</i><sup><i>r</i>/<i>&beta;</i></sup>; rescale to sum to 1.</p>
+    <p class="eq mid fragment rise" data-fragment-index="1" style="margin-bottom:4px">For a feature against its alternative:&ensp; <span class="boxed">&Delta;&thinsp;log-odds <span class="op">=</span> <i>&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span></p>
+    <p class="small fragment rise" data-fragment-index="1" style="margin:0 0 10px"><i>&epsilon;</i>: the feature&rsquo;s reward advantage over its alternative (the dash over the comma, say). &Delta;&thinsp;log-odds: how far DPO moves their log-odds.</p>
     <div class="points" style="margin-top:6px">
       <p class="fragment rise"><span class="n">1</span><b>It multiplies.</b> A shift in log space: what is there grows by a factor.</p>
       <p class="fragment rise"><span class="n">2</span><b>Only differences count.</b> Preferences compare two answers; what both share cancels.</p>
       <p class="fragment rise"><span class="n">3</span><b>A multiple of nothing is nothing.</b> Where <i>&pi;</i><sub>ref</sub> is near 0, so is <i>&pi;</i>*.</p>
     </div>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The KL-regularised optimum behind DPO: Rafailov et al., &ldquo;Direct Preference Optimization&rdquo;, NeurIPS 2023 (arXiv 2305.18290). &Delta; = &epsilon;/&beta;: the derivation in our NSF CAREER proof of concept (unpublished).</p>
+    <p class="note fragment rise">This is from last summer, with a lot of input from Gordon Erlebacher. Now that the new results are rolling in, I will have to see how well it holds up.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">&Delta; = &epsilon;/&beta;: our NSF CAREER proof of concept (summer 2026, unpublished).</p>
   </div>
 </section>
 
@@ -725,9 +742,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113f"></script>
-<script src="assets/charts.js?v=20261113f"></script>
-<script src="assets/dye.js?v=20261113f"></script>
-<script src="assets/deck.js?v=20261113f"></script>
+<script src="assets/reveal/reveal.js?v=20261113g"></script>
+<script src="assets/charts.js?v=20261113g"></script>
+<script src="assets/dye.js?v=20261113g"></script>
+<script src="assets/deck.js?v=20261113g"></script>
 </body>
 </html>
