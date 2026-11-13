@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113w">
-<link rel="stylesheet" href="assets/deck.css?v=20261113w">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113y">
+<link rel="stylesheet" href="assets/deck.css?v=20261113y">
 </head>
 <body>
 <div class="reveal">
@@ -368,7 +368,7 @@
       <div class="fragment rise"><p class="sym"><i>&pi;</i><sub>ref</sub></p><p>The reference: the model before DPO, here the SFT model.</p></div>
       <div class="fragment rise"><p class="sym"><i>r</i>(<i>y</i>)</p><p>The reward: how much an answer is preferred. For DPO, this is implicit in the preference pairs (why: appendix A1).</p></div>
       <div class="fragment rise"><p class="sym">E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;]</p><p>The average reward over what the model writes, which is the part we want to raise.</p></div>
-      <div class="fragment rise"><p class="sym">KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p><p>How far the model has moved from the reference (the Kullback&ndash;Leibler divergence): the leash.</p></div>
+      <div class="fragment rise"><p class="sym">KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p><p>How far the model has moved from the reference (the Kullback&ndash;Leibler divergence): the leash.<br><span class="kl-def">KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>) = &Sigma;<sub><i>y</i></sub> <i>&pi;</i>(<i>y</i>) &middot; log&thinsp;(&thinsp;<i>&pi;</i>(<i>y</i>)&thinsp;/&thinsp;<i>&pi;</i><sub>ref</sub>(<i>y</i>)&thinsp;)</span></p></div>
       <div class="fragment rise"><p class="sym"><i>&beta;</i></p><p data-ev="E3.1">How short the leash is. A larger <i>&beta;</i> keeps the model closer to the reference. In our runs, <span class="nobr"><i>&beta;</i> = 0.1</span>.</p></div>
     </div>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The KL-regularised objective behind DPO: Rafailov et al., &ldquo;Direct Preference Optimization&rdquo;, NeurIPS 2023 (arXiv 2305.18290).</p>
@@ -416,6 +416,38 @@
       </div>
     </div>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">A toy example, every number by hand. The weight is <i>e</i><sup><i>r</i>/<i>&beta;</i></sup>: rewards 0, log 4, log 2 give &times;1, &times;4, &times;2 at <i>&beta;</i> = 1; at <i>&beta;</i> = 2 their square roots; at <i>&beta;</i> = &frac12; their squares.</p>
+  </div>
+</section>
+
+<section id="tilt-kl" data-state="quiet" data-timing="100">
+  <!-- 13 Nov, Tommie: toy examples for KL and how it moves with a smaller beta (the same toy as tilt-toy; E4.6). -->
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; by hand &middot; the leash</p>
+    <p class="h3">What the leash measures</p>
+    <div class="kl-grid">
+      <div>
+        <p class="body" style="margin:0 0 14px">The same toy at <i>&beta;</i> = 1. KL adds up, option by option, the new share times the log of new over old:</p>
+        <table class="kl-sum" data-ev="E4.6">
+          <tr><td>comma</td><td>0.375 &middot; log&thinsp;(0.375&thinsp;/&thinsp;0.6)</td><td>&minus;0.176</td></tr>
+          <tr class="dash-row"><td>em dash</td><td>0.25 &middot; log&thinsp;(0.25&thinsp;/&thinsp;0.1)</td><td>+0.229</td></tr>
+          <tr><td>&ldquo;and&rdquo;</td><td>0.375 &middot; log&thinsp;(0.375&thinsp;/&thinsp;0.3)</td><td>+0.084</td></tr>
+          <tr class="tot"><td>KL</td><td></td><td>0.137</td></tr>
+        </table>
+        <p class="body small" style="margin:16px 0 0">What gains weight adds, what loses weight subtracts. The total is never below 0, and it is 0 only if nothing moved.</p>
+      </div>
+      <div>
+        <table class="kl-beta" data-ev="E4.6">
+          <tr class="hd"><td><i>&beta;</i></td><td>dash</td><td>average reward</td><td>KL</td></tr>
+          <tr><td>before</td><td>0.1</td><td>0.35</td><td>0</td></tr>
+          <tr class="fragment rise"><td>2</td><td>0.163</td><td>0.47</td><td>0.03</td></tr>
+          <tr class="fragment rise"><td>1</td><td>0.25</td><td>0.61</td><td>0.14</td></tr>
+          <tr class="fragment rise"><td>&frac12;</td><td>0.471</td><td>0.90</td><td>0.57</td></tr>
+          <tr class="fragment rise"><td>0.1</td><td>0.997</td><td>1.38</td><td>2.28</td></tr>
+        </table>
+        <p class="body small fragment rise" style="margin:22px 0 0">A smaller <i>&beta;</i> makes distance cheaper, so the model buys more reward with more KL. For a gentle tilt, <span class="nobr">KL &asymp; Var(<i>r</i>)&thinsp;/&thinsp;2<i>&beta;</i><sup>2</sup></span>: halve <i>&beta;</i> and the KL roughly quadruples.</p>
+      </div>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">The toy of the previous slide: before 0.6, 0.1, 0.3; rewards 0, log 4, log 2. KL in nats (natural log), at the optimum for each <i>&beta;</i>. How far a real run goes also depends on the size of the preference and on how long it trains.</p>
   </div>
 </section>
 
@@ -780,9 +812,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113w"></script>
-<script src="assets/charts.js?v=20261113w"></script>
-<script src="assets/dye.js?v=20261113w"></script>
-<script src="assets/deck.js?v=20261113w"></script>
+<script src="assets/reveal/reveal.js?v=20261113y"></script>
+<script src="assets/charts.js?v=20261113y"></script>
+<script src="assets/dye.js?v=20261113y"></script>
+<script src="assets/deck.js?v=20261113y"></script>
 </body>
 </html>

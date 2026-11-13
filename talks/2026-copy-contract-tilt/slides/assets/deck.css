@@ -542,6 +542,8 @@ section:has(.step-marker[data-step="4"].visible) .swap > .sw4 { opacity: 1; }
 #tilt-eq .terms p { margin: 0; font-size: 34px; line-height: 1.32; color: var(--text-2); }
 #tilt-eq .terms p.sym { font-family: 'Newsreader', Georgia, serif; font-size: 40px; color: var(--ink); white-space: nowrap; }
 #tilt-eq .terms p.sym sub { font-size: 0.6em; line-height: 0; }
+#tilt-eq .terms .kl-def { display: inline-block; margin-top: 4px; font-family: 'Newsreader', Georgia, serif; font-size: 36px; color: var(--ink); white-space: nowrap; }
+#tilt-eq .terms .kl-def sub { font-size: 0.6em; line-height: 0; }
 
 /* 12 November, evening (Tommie's notes): the paper's figure on a light card; the wall of mist; the exposure numbers;
    the ledger in a tighter form; the highlighter, as on the talk page */
@@ -608,3 +610,18 @@ body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
 #lessons .side-notes p:not(.sn-head) { font-size: 30px; line-height: 1.35; color: var(--text-3); margin: 0 0 8px; padding-left: 52px; position: relative; }
 #lessons .side-notes .n { position: absolute; left: 0; font-family: 'Inter', system-ui, sans-serif; font-size: 24px; color: var(--text-3); top: 0.2em; }
 #lessons .side-notes b { color: var(--text-2); }
+
+/* ---------- tilt-kl: KL by hand, and against beta (13 Nov) ---------- */
+#tilt-kl .kl-grid { display: grid; grid-template-columns: 860px 1fr; gap: 80px; align-items: start; margin-top: 18px; }
+#tilt-kl .body { font-size: 36px; }
+#tilt-kl .body.small { font-size: 32px; color: var(--text-2); line-height: 1.35; }
+#tilt-kl table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+#tilt-kl td { padding: 8px 18px 8px 0; font-size: 34px; color: var(--text-2); vertical-align: baseline; }
+#tilt-kl .kl-sum td:nth-child(2) { padding-right: 34px; font-family: 'Newsreader', Georgia, serif; font-size: 36px; color: var(--ink); white-space: nowrap; }
+#tilt-kl .kl-sum td:last-child, #tilt-kl .kl-beta td:not(:first-child) { text-align: right; color: var(--ink); }
+#tilt-kl .kl-sum .dash-row td:first-child, #tilt-kl .kl-beta td:nth-child(2) { color: var(--s-gold); }
+#tilt-kl .kl-sum .tot td { border-top: 2px solid var(--axis); padding-top: 12px; color: var(--ink); font-weight: 600; }
+#tilt-kl .kl-beta td { padding-right: 34px; }
+#tilt-kl .kl-beta .hd td { font-size: 26px; letter-spacing: 0.04em; color: var(--text-3); border-bottom: 2px solid var(--axis); }
+#tilt-kl .kl-beta .hd td:nth-child(2) { color: var(--s-gold); }
+#tilt-kl .kl-beta td:first-child { font-family: 'Newsreader', Georgia, serif; font-size: 38px; color: var(--ink); }
