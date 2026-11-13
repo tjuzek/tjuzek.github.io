@@ -593,3 +593,11 @@ body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
 #pipeline:has(.step-marker[data-step="1"].visible) .chart .f-contract .box-t { fill: var(--s-blue); }
 #pipeline:has(.step-marker[data-step="1"].visible) .chart .f-tilt .box { stroke: var(--s-gold); }
 #pipeline:has(.step-marker[data-step="1"].visible) .chart .f-tilt .box-t { fill: var(--s-gold); }
+
+/* 13 November: the toy tilt, worked in plain multipliers */
+#tilt-toy .toy-steps .lede { margin: 0 0 10px; }
+#tilt-toy .toy-steps .body { margin: 0; }
+#tilt-toy .dash-v { color: var(--s-gold); font-weight: 500; }
+#implicit .h3 { margin-bottom: 10px; }
+#implicit .points p { font-size: 33px; line-height: 1.32; margin-bottom: 10px; }
+#implicit .eq.mid { font-size: 44px; }

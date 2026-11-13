@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113i">
-<link rel="stylesheet" href="assets/deck.css?v=20261113i">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113j">
+<link rel="stylesheet" href="assets/deck.css?v=20261113j">
 </head>
 <body>
 <div class="reveal">
@@ -351,7 +351,7 @@
     <div class="terms">
       <div class="fragment rise"><p class="sym"><i>&pi;</i></p><p>The model we train. For any answer <i>y</i>, <i>&pi;</i>(<i>y</i>) is the probability that it writes <i>y</i>.</p></div>
       <div class="fragment rise"><p class="sym"><i>&pi;</i><sub>ref</sub></p><p>The reference: the model before DPO, here the SFT model.</p></div>
-      <div class="fragment rise"><p class="sym"><i>r</i>(<i>y</i>)</p><p>The reward: how much an answer is preferred. For DPO, this is implicit in the preference pairs.</p></div>
+      <div class="fragment rise"><p class="sym"><i>r</i>(<i>y</i>)</p><p>The reward: how much an answer is preferred. For DPO, this is implicit in the preference pairs (why: appendix A1).</p></div>
       <div class="fragment rise"><p class="sym">E<sub><i>y</i>&thinsp;&sim;&thinsp;<i>&pi;</i></sub>[&thinsp;<i>r</i>(<i>y</i>)&thinsp;]</p><p>The average reward over what the model writes, which is the part we want to raise.</p></div>
       <div class="fragment rise"><p class="sym">KL(<i>&pi;</i>&thinsp;&#8214;&thinsp;<i>&pi;</i><sub>ref</sub>)</p><p>How far the model has moved from the reference (the Kullback&ndash;Leibler divergence): the leash.</p></div>
       <div class="fragment rise"><p class="sym"><i>&beta;</i></p><p data-ev="E3.1">How short the leash is. A larger <i>&beta;</i> keeps the model closer to the reference. In our runs, <span class="nobr"><i>&beta;</i> = 0.1</span>.</p></div>
@@ -379,6 +379,7 @@
 </section>
 
 <section id="tilt-toy" data-state="quiet" data-timing="110">
+  <!-- 13 Nov (Tommie: "hard to follow"): rebuilt around the weights e^(r/beta) as plain multipliers; beta = 1 first, then a tighter and a looser leash -->
   <div class="frame">
     <p class="kicker"><span class="verb tilt">Tilt</span> &middot; by hand</p>
     <div style="display:grid; grid-template-columns: 900px 1fr; gap: 70px; align-items:start">
@@ -389,19 +390,17 @@
         <span class="fragment step-marker" data-step="3"></span>
       </div>
       <div style="padding-top:10px">
-        <p class="body">After a clause, the model can continue with a comma, an em dash, or &ldquo;and&rdquo;.</p>
-        <p class="body">Multiply each by <span class="math"><i>e</i><sup><i>r</i>/<i>&beta;</i></sup></span>, then rescale so they sum to 1.</p>
-        <p class="body" data-ev="E4.1">Advantage of the dash over the comma: <span class="math"><i>&epsilon;</i> = log 4</span>.</p>
-        <div class="swap" style="height:150px; margin-top:24px">
-          <p class="lede sw0">Before: the dash at 0.10.</p>
-          <p class="lede sw1" data-ev="E4.1"><span class="math"><i>&beta;</i> = 2</span>: &Delta; = 0.69; dash 0.16</p>
-          <p class="lede sw2" data-ev="E4.1"><span class="math"><i>&beta;</i> = 1</span>: &Delta; = 1.39; dash 0.25</p>
-          <p class="lede sw3" data-ev="E4.1"><span class="math"><i>&beta;</i> = &frac12;</span>: &Delta; = 2.77; dash 0.47</p>
+        <p class="body">After a clause, the model can go on with a comma, an em dash, or &ldquo;and&rdquo;.</p>
+        <p class="body">The preferences give each option a weight. Multiply, then rescale so that they sum to 1.</p>
+        <div class="swap toy-steps" style="height:330px; margin-top:18px">
+          <div class="sw0"><p class="lede">Before: 0.6, 0.1, 0.3.</p></div>
+          <div class="sw1" data-ev="E4.1"><p class="lede">At <i>&beta;</i> = 1: &times;1, &times;4, &times;2</p><p class="body">0.6, 0.4, 0.6; sum 1.6<br>&divide;&thinsp;1.6: 0.375, <b class="dash-v">0.25</b>, 0.375</p></div>
+          <div class="sw2" data-ev="E4.1"><p class="lede">Tighter, <i>&beta;</i> = 2: &times;1, &times;2, &times;1.4</p><p class="body">The dash goes to <b class="dash-v">0.163</b>.</p></div>
+          <div class="sw3" data-ev="E4.1"><p class="lede">Looser, <i>&beta;</i> = &frac12;: &times;1, &times;16, &times;4</p><p class="body">The dash goes to <b class="dash-v">0.471</b>.</p></div>
         </div>
-        <p class="body fragment rise" data-fragment-index="3">A tighter leash (larger &beta;), a smaller tilt.</p>
       </div>
     </div>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Every number by hand: &pi;<sub>ref</sub> = (0.6, 0.1, 0.3); rewards 0, log 4, log 2. A toy example.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">A toy example, every number by hand. The weight is <i>e</i><sup><i>r</i>/<i>&beta;</i></sup>: rewards 0, log 4, log 2 give &times;1, &times;4, &times;2 at <i>&beta;</i> = 1; at <i>&beta;</i> = 2 their square roots; at <i>&beta;</i> = &frac12; their squares.</p>
   </div>
 </section>
 
@@ -616,6 +615,23 @@
 
 <!-- ============================ Appendix (uncounted) ============================ -->
 
+<section id="implicit" data-state="quiet" data-visibility="uncounted">
+  <div class="frame" style="padding-top:60px">
+    <p class="kicker">Appendix &middot; DPO</p>
+    <p class="h3">Why the reward is implicit in DPO</p>
+    <div class="points">
+      <p><span class="n">1</span><b>RLHF</b> first trains a reward model on the preference pairs, then trains the language model against that reward, on the KL leash.</p>
+      <p><span class="n">2</span><b>DPO skips that step.</b> The best model on the leash, <i>&pi;</i>* &prop; <i>&pi;</i><sub>ref</sub>&thinsp;&middot;&thinsp;<i>e</i><sup><i>r</i>/<i>&beta;</i></sup>, can be turned round: <span class="nobr"><i>r</i>(<i>y</i>) = <i>&beta;</i>&thinsp;log&thinsp;<i>&pi;</i>(<i>y</i>)/<i>&pi;</i><sub>ref</sub>(<i>y</i>) + a constant</span>. Every model is the best answer to some reward: its log-ratio against the reference.</p>
+      <p><span class="n">3</span><b>Into the preference model</b> (Bradley&ndash;Terry): the preferred answer wins with probability <span class="nobr"><i>&sigma;</i>(<i>r</i>(<i>y</i><sub>w</sub>) &minus; <i>r</i>(<i>y</i><sub>l</sub>))</span>. The constant cancels, which leaves a loss on the language model alone:</p>
+    </div>
+    <p class="eq mid" style="margin:0 0 18px 52px">&minus;log&thinsp;<i>&sigma;</i>(&thinsp;<i>&beta;</i>&thinsp;log&thinsp;<i>&pi;</i>(<i>y</i><sub>w</sub>)/<i>&pi;</i><sub>ref</sub>(<i>y</i><sub>w</sub>) <span class="op">&minus;</span> <i>&beta;</i>&thinsp;log&thinsp;<i>&pi;</i>(<i>y</i><sub>l</sub>)/<i>&pi;</i><sub>ref</sub>(<i>y</i><sub>l</sub>)&thinsp;)</p>
+    <div class="points">
+      <p><span class="n">4</span><b>So no reward is ever written down.</b> The pairs say which answer is better, and training moves the model until its implied reward agrees. This is also why only differences in reward count.</p>
+    </div>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0"><i>y</i><sub>w</sub>, <i>y</i><sub>l</sub>: the preferred and the rejected answer; <i>&sigma;</i>: the logistic function. Rafailov et al., &ldquo;Direct Preference Optimization&rdquo;, NeurIPS 2023 (arXiv 2305.18290).</p>
+  </div>
+</section>
+
 <section id="numbers-open" data-state="quiet" data-visibility="uncounted">
   <div class="frame" style="padding-top:60px">
     <p class="kicker">Every number on these slides: the opening</p>
@@ -724,15 +740,15 @@
     <p class="kicker">How these slides were made</p>
     <p class="cite" style="max-width:1600px">Tommie Juzek set the argument, the running order, and the substance; the numbers come from his group&rsquo;s research data and the cited sources; unpublished results are marked. Claude (Anthropic&rsquo;s Opus) built this page from his notes and direction, drew the figures from those numbers, and drafted the slide text.</p>
     <p class="cite">Images: the Wall of Mist card is AI-generated (ChatGPT Images 2.0), from Tommie&rsquo;s LCL talk (May 2026); the PubMed figure is Figure 4 of Juzek and Ward (COLING 2025), and the speech figure Figure 2 of Anderson, Galpin and Juzek (AIES 2025), both as published.</p>
-    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Numbers and sources: the appendix (A1 to A5).</p>
+    <p class="cite">Type: Newsreader and Inter (SIL Open Font License). Slides: reveal.js (MIT). Why the reward is implicit in DPO: A1. Numbers and sources: A2 to A6.</p>
   </div>
 </section>
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113i"></script>
-<script src="assets/charts.js?v=20261113i"></script>
-<script src="assets/dye.js?v=20261113i"></script>
-<script src="assets/deck.js?v=20261113i"></script>
+<script src="assets/reveal/reveal.js?v=20261113j"></script>
+<script src="assets/charts.js?v=20261113j"></script>
+<script src="assets/dye.js?v=20261113j"></script>
+<script src="assets/deck.js?v=20261113j"></script>
 </body>
 </html>

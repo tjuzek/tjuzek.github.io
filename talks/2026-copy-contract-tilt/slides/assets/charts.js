@@ -275,16 +275,16 @@
         pi_ref = (0.6, 0.1, 0.3) for comma, em dash, "and"; rewards 0, log 4, log 2. pi* = pi_ref e^{r/beta} / Z.
         Step 0: pi_ref. Steps 1 to 3: beta = 2, 1, 1/2 (the gold bars morph; CSS rules in deck.css).
      ------------------------------------------------------------------------------------------ */
-  var TOY = [                                      // E4.1 (beta = 2, 1, 1/2)
-    { tok: ',', name: 'comma', ref: 0.6, r: '0', p: [0.490, 0.375, 0.176] },
-    { tok: '—', name: 'em dash', ref: 0.1, r: 'log 4', p: [0.163, 0.250, 0.471] },
-    { tok: 'and', name: '"and"', ref: 0.3, r: 'log 2', p: [0.347, 0.375, 0.353] }
+  var TOY = [                                      // E4.1 (beta = 1, 2, 1/2: the worked case, a tighter leash, a looser one)
+    { tok: ',', name: 'comma', ref: 0.6, r: '0', p: [0.375, 0.490, 0.176] },
+    { tok: '—', name: 'em dash', ref: 0.1, r: 'log 4', p: [0.250, 0.163, 0.471] },
+    { tok: 'and', name: '"and"', ref: 0.3, r: 'log 2', p: [0.375, 0.347, 0.353] }
   ];
   function toyChart(host) {
     var W = 1000, H = 640, m = { l: 110, r: 30, t: 70, b: 150 }, max = 0.7;
     var pw = W - m.l - m.r, ph = H - m.t - m.b, cw = pw / 3, bw = 96;
     var y = function (v) { return m.t + ph - v / max * ph; };
-    var svg = svgFor(host, W, H, 'A toy model: comma, em dash and "and" with base probabilities 0.6, 0.1 and 0.3. Tilted by rewards 0, log 4 and log 2: at beta 2 the em dash rises to 0.16, at beta 1 to 0.25, at beta one half to 0.47.');
+    var svg = svgFor(host, W, H, 'A toy model: comma, em dash and "and" with base probabilities 0.6, 0.1 and 0.3. Tilted by rewards 0, log 4 and log 2: at beta 1 the em dash rises to 0.25, at beta 2 to 0.16, at beta one half to 0.47.');
     svg.setAttribute('class', 'toy');
     var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
     [0, 0.2, 0.4, 0.6].forEach(function (v) {
@@ -292,9 +292,9 @@
       txt(ticks, m.l - 18, y(v) + 10, fmt(v, 1), '', { 'text-anchor': 'end' });
     });
     var lg = g(svg, 'legend st-0');
-    el('rect', { x: m.l, y: 8, width: 26, height: 26, rx: 5, 'class': 'ref-bar' }, lg); txt(lg, m.l + 38, 31, 'before (π₀)', '');
+    el('rect', { x: m.l, y: 8, width: 26, height: 26, rx: 5, 'class': 'ref-bar' }, lg); txt(lg, m.l + 38, 31, 'before', '');
     var lg2 = g(svg, 'legend st-1');
-    el('rect', { x: m.l + 300, y: 8, width: 26, height: 26, rx: 5, 'class': 'tilt-bar' }, lg2); txt(lg2, m.l + 338, 31, 'after the tilt (π*)', '');
+    el('rect', { x: m.l + 300, y: 8, width: 26, height: 26, rx: 5, 'class': 'tilt-bar' }, lg2); txt(lg2, m.l + 338, 31, 'after the tilt', '');
     TOY.forEach(function (t, i) {
       var cx = m.l + (i + 0.5) * cw, s0 = g(svg, 'st-0');
       tip(mark(el('rect', { x: cx - bw - 6, y: y(t.ref), width: bw, height: y(0) - y(t.ref), rx: 6, 'class': 'ref-bar' }, s0), 'E4.1'), t.name + ' before: ' + t.ref);
@@ -306,8 +306,8 @@
       bar.style.setProperty('--b1', (t.p[0] / max).toFixed(4));
       bar.style.setProperty('--b2', (t.p[1] / max).toFixed(4));
       bar.style.setProperty('--b3', (t.p[2] / max).toFixed(4));
-      tip(bar, t.name + ' after: ' + t.p.map(function (v) { return fmt(v, 3); }).join(', ') + ' at beta 2, 1, 1/2');
-      t.p.forEach(function (v, k) { txt(s1, cx + 6 + bw / 2, y(v) - 14, fmt(v, 2), 'label toylab b' + (k + 1), { 'text-anchor': 'middle' }); });
+      tip(bar, t.name + ' after: ' + t.p.map(function (v) { return fmt(v, 3); }).join(', ') + ' at beta 1, 2, 1/2');
+      t.p.forEach(function (v, k) { txt(s1, cx + 6 + bw / 2, y(v) - 14, String(+v.toFixed(3)), 'label toylab b' + (k + 1), { 'text-anchor': 'middle' }); });
     });
   }
 
