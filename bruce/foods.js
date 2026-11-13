@@ -23,7 +23,7 @@
  * rewrite past days.
  */
 window.BRUCE = {
-  updated: '2026-11-12',
+  updated: '2026-11-13',
 
   target: 750,     // kcal a day, treats included: the cap, never more
   bandWidth: 50,   // the day should land in the band from (target - 50) to target: 700 to 750
@@ -40,10 +40,11 @@ window.BRUCE = {
     { id: 'meat', flex: true, name: 'Ovengebraden vlees', kcalPerG: 1.45, portion: 85,
       note: 'Ovengebraden hondenvlees. Etiket: 1450 kcal per kg.' },
 
-    { id: 'chicken', flex: true, name: 'Kip, gekookt', short: 'kip', kcalPerG: 1.2, portion: 100,
+    { id: 'chicken', flex: true, name: 'Kip, gekookt', short: 'kip', kcalPerG: 1.35, portion: 100,
+      // weighed 13 Nov 2026: 280 g frozen -> 185 g boiled; 0.893 / (185 / 280) = 1.35
       note: 'Kipfilethaasjes van Costco, gekookt in water. Het etiket (100 kcal per 112 g) geldt voor ' +
-            'RAUW gewicht; gekookte kip verliest ongeveer een kwart van haar gewicht, dus gekookt is het ' +
-            'ongeveer 1,2 kcal per g. Weeg ze gekookt. 100 g gekookt is ongeveer 135 g rauw.' },
+            'RAUW (diepvries)gewicht. Gewogen: 280 g diepvries werd 185 g gekookt, dus gekookt is het ' +
+            'ongeveer 1,35 kcal per g. Weeg ze gekookt. 100 g gekookt is ongeveer 150 g rauw.' },
 
     { id: 'veg', name: 'Groentemix, zoutarm', short: 'groentemix', kcalPerG: 0.36, portion: 218.75, unit: '½ blik',
       note: 'Etiket: 45 kcal per portie, 3,5 porties per blik, dus ½ blik is ongeveer 79 kcal. ' +
@@ -58,7 +59,7 @@ window.BRUCE = {
             'elke volgende druk 5. Een gewone dag is ongeveer 30 stuks (60 kcal), binnen de 750.' },
 
     { id: 'corned', flex: true, name: 'Cornedbeef, zoutarm', short: 'cornedbeef', kcalPerG: 130 / 56, portion: 28,
-      note: 'Etiket: 130 kcal per 56 g. 28 g (65 kcal) = ongeveer 45 g ovengebraden vlees of 55 g kip. ' +
+      note: 'Etiket: 130 kcal per 56 g. 28 g (65 kcal) = ongeveer 45 g ovengebraden vlees of 48 g kip. ' +
             'Op een cornedbeefdag zonder ovengebraden vlees mag er 25 g bij (58 kcal, evenveel als 40 g vlees); ' +
             'dat is wel dubbel zoveel zout.' }
   ],
@@ -73,9 +74,9 @@ window.BRUCE = {
   //   fixed: true   no -/+ buttons on the page (otherwise adjustable in steps of 5 g)
   //   or: 'corned'  this item may be replaced by extra of that food at the same kcal: once the
   //                 day's planned amount of it is given, its button offers the extra
-  //                 (40 g oven roast = 58 kcal = 25 g corned beef = 48 g chicken)
+  //                 (40 g oven roast = 58 kcal = 25 g corned beef = 43 g chicken)
   // Every-day items 378 kcal; corned beef day 65 + 58 + kibble ~84 g (741);
-  // chicken day 72 + 58 + kibble ~81 g (739). Oven roast 40 g on both days.
+  // chicken day 81 + 58 + kibble ~78 g (740). Oven roast 40 g on both days.
   dayTypes: [
     { id: 'corned', name: 'Cornedbeefdag', short: 'cornedbeef', fill: 'kibble',
       items: [ { id: 'corned', g: 28 }, { id: 'meat', g: 40, fixed: true, or: 'corned' } ] },
