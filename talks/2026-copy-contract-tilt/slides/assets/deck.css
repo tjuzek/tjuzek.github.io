@@ -653,3 +653,15 @@ body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
 #tilt-law .terms .eps-row p { color: var(--ink); }
 #epsbeta .eps-def { font-size: 32px; line-height: 1.35; color: var(--ink); background: rgba(201,133,0,0.14); border-left: 4px solid var(--s-gold); border-radius: 6px; padding: 10px 16px; margin: 6px 0 18px; }
 #epsbeta .eps-def i:first-child { color: var(--s-gold); }
+
+/* ---------- tilt-read: reading KL values, and why beta matters (Tommie's text, 13 Nov) ---------- */
+#tilt-read .read-grid { display: grid; grid-template-columns: 820px 1fr; gap: 80px; align-items: start; margin-top: 14px; }
+#tilt-read .sub { font-size: 26px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--s-gold); margin: 0 0 12px; font-weight: 600; }
+#tilt-read .sub i { text-transform: none; }
+#tilt-read .kl-read { border-collapse: collapse; }
+#tilt-read .kl-read td { font-size: 33px; padding: 6px 28px 6px 0; color: var(--text-2); vertical-align: baseline; }
+#tilt-read .kl-read td:first-child { font-family: 'Newsreader', Georgia, serif; font-size: 36px; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+#tilt-read .kl-read td:first-child sub { font-size: 0.6em; line-height: 0; }
+#tilt-read .beta-rows p { font-size: 33px; line-height: 1.3; color: var(--text-2); margin: 0 0 16px; }
+#tilt-read .beta-rows .b { display: block; font-family: 'Newsreader', Georgia, serif; font-size: 36px; color: var(--ink); margin-bottom: 2px; }
+#tilt-read .note { font-size: 30px; line-height: 1.35; color: var(--text-2); margin: auto 0 10px; padding-left: 22px; border-left: 3px solid var(--s-gold); }

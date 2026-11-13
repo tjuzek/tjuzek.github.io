@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113za">
-<link rel="stylesheet" href="assets/deck.css?v=20261113za">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113zb">
+<link rel="stylesheet" href="assets/deck.css?v=20261113zb">
 </head>
 <body>
 <div class="reveal">
@@ -413,6 +413,38 @@
     </div>
     <p class="note fragment rise">This is from last summer, with a lot of input from Gordon Erlebacher. Now that the new results are rolling in, I will have to see how well it holds up.</p>
     <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">&Delta; = &epsilon;/&beta;: our NSF CAREER proof of concept (summer 2026, unpublished).</p>
+  </div>
+</section>
+
+<section id="tilt-read" data-state="quiet" data-timing="90">
+  <!-- 13 Nov, Tommie's text: reading KL values, and why beta matters; close to his wording -->
+  <div class="frame">
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; DPO &middot; the maths, 4</p>
+    <p class="h3">Reading the leash</p>
+    <div class="read-grid">
+      <div>
+        <p class="sub">KL, in plain terms</p>
+        <table class="kl-read">
+          <tr class="fragment rise"><td><i>&pi;</i> = <i>&pi;</i><sub>ref</sub></td><td>KL = 0: the models are identical.</td></tr>
+          <tr class="fragment rise"><td><i>&pi;</i> &ne; <i>&pi;</i><sub>ref</sub></td><td>KL &gt; 0: the models differ.</td></tr>
+          <tr class="fragment rise"><td>KL = 0.01</td><td>very small divergence</td></tr>
+          <tr class="fragment rise"><td>KL = 0.1</td><td>moderate divergence</td></tr>
+          <tr class="fragment rise"><td>KL = 1.0</td><td>substantial divergence</td></tr>
+          <tr class="fragment rise"><td>KL = 2.0</td><td>larger divergence</td></tr>
+        </table>
+        <p class="small fragment rise" style="margin:12px 0 0">Illustrative values; what they mean depends on how KL is measured (per token or per answer, say).</p>
+      </div>
+      <div>
+        <p class="sub">Why <i>&beta;</i> matters</p>
+        <p class="eq mid" style="margin:0 0 14px">reward <span class="op">&minus;</span> <i>&beta;</i> &times; KL</p>
+        <div class="beta-rows">
+          <p class="fragment rise"><span class="b"><i>&beta;</i> = 0.5</span>weaker penalty for moving away from the reference: more freedom to change behaviour.</p>
+          <p class="fragment rise"><span class="b"><i>&beta;</i> = 1</span>in between.</p>
+          <p class="fragment rise"><span class="b"><i>&beta;</i> = 2</span>stronger penalty: the model stays closer to the reference, and its behaviour changes less.</p>
+        </div>
+      </div>
+    </div>
+    <p class="note fragment rise">In standard DPO, <i>&beta;</i> sits in the preference loss (appendix A1), with no explicit KL term. The same intuition about regularisation generally applies; a smaller <i>&beta;</i> does not necessarily mean faster optimisation or better learning.</p>
   </div>
 </section>
 
@@ -855,9 +887,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113za"></script>
-<script src="assets/charts.js?v=20261113za"></script>
-<script src="assets/dye.js?v=20261113za"></script>
-<script src="assets/deck.js?v=20261113za"></script>
+<script src="assets/reveal/reveal.js?v=20261113zb"></script>
+<script src="assets/charts.js?v=20261113zb"></script>
+<script src="assets/dye.js?v=20261113zb"></script>
+<script src="assets/deck.js?v=20261113zb"></script>
 </body>
 </html>
