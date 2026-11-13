@@ -54,7 +54,7 @@
     each(doc.querySelectorAll('.reveal .slides > section'), function (s) {
       // numbered as on the projector: counted slides 1 to N, the appendix A1 to A6
       var label = s.getAttribute('data-visibility') === 'uncounted' ? 'A' + (++app) : String(++counted);
-      if (s.id === 'panel' || s.id === 'interlude') return;
+      if (s.id === 'panel' || s.id === 'interlude' || s.id === 'interlude-2') return;
       var sec = document.importNode(s, true);
       clean(sec);
       var state = sec.getAttribute('data-state') || 'plain';

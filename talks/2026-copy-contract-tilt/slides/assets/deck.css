@@ -576,7 +576,7 @@ section:has(.step-marker[data-step="4"].visible) .swap > .sw4 { opacity: 1; }
 #uptake .fig-side .v { font-size: 56px; line-height: 1.1; color: var(--ink); margin: 0 0 6px; }
 #uptake .fig-side .s { font-size: 28px; line-height: 1.3; color: var(--text-2); margin: 0; }
 /* the interlude before "Why the overuse?": no text, the dye alone (state rules: body.panel) */
-#interlude .slide-no { display: none; }
+#interlude .slide-no, #interlude-2 .slide-no { display: none; }
 
 /* the interlude: the dye at full strength, no stretch, no text (Tommie, 13 Nov) */
 body.interlude .waves { opacity: 1; }
