@@ -77,7 +77,7 @@
   var STAGES = [
     { name: 'Pretraining', verb: 'copy', from: 'web text, 2.5 billion tokens', from2: 'learns to continue it', dose: '0, ¼×, 1×, 4× the natural rate', next: '+ near zero: running next', ev: 'E3.1' },
     { name: 'SFT', verb: 'contract', from: '20,000 chat answers', from2: 'learns to answer like them', dose: '0, 1×, 4×', ev: 'E3.1' },
-    { name: 'DPO', verb: 'tilt', from: '8,000 pairs of answers', from2: 'learns which was preferred', dose: 'which side carries it', ev: 'E3.1' }
+    { name: 'DPO', verb: 'tilt', from: '8,000 pairs of answers', from2: 'learns which was preferred', dose: '12 pair sets: side, ratio', ev: 'E3.1' }
   ];
   function pipelineChart(host, mode) {
     var W = 1656, H = mode === 'design' ? 590 : 420, bw = 480, bh = 220, gap = (W - 3 * bw) / 2, by = mode === 'design' ? 150 : 90;
@@ -93,7 +93,7 @@
       if (mode !== 'design') return;
       var s1 = g(svg, 'st-1');
       drop(s1, x + 40, 66, 32);
-      txt(s1, x + 90, 52, 'dye in', 'box-t', { style: 'font-size:30px' });
+      txt(s1, x + 90, 52, 'dosage', 'box-t', { style: 'font-size:30px' });
       txt(s1, x + 90, 92, S.dose, 'box-s', { style: 'fill: var(--ink)' });
       if (S.next) mark(txt(s1, x + 90, 130, S.next, 'nexttxt', { style: 'font-size:27px' }), 'E3.21');
       mark(s1, S.ev);
@@ -102,7 +102,7 @@
       txt(s2, x + bw / 2, by + bh + 130, 'read: news and chat', 'box-s', { 'text-anchor': 'middle', style: 'fill: var(--ink)' });
     });
     if (mode === 'design') {
-      txt(g(svg, 'st-1'), 0, by + bh + 196, '1× = 415 em dashes per million tokens, the web text’s natural rate. 124M models from scratch, 3 seeds per dose.', 'box-s', {});
+      txt(g(svg, 'st-1'), 0, by + bh + 196, '1× = 415 em dashes per million tokens, the web text’s natural rate. 124M models from scratch, 3 seeds each: 432 DPO models.', 'box-s', {});
     }
   }
 

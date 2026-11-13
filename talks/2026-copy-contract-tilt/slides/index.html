@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113e">
-<link rel="stylesheet" href="assets/deck.css?v=20261113e">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113f">
+<link rel="stylesheet" href="assets/deck.css?v=20261113f">
 </head>
 <body>
 <div class="reveal">
@@ -300,13 +300,13 @@
 <section id="design" data-state="quiet" data-timing="100">
   <div class="frame">
     <p class="kicker">The experiment: a dose grid</p>
-    <p class="h3">Dye in at every stage; read after every stage</p>
+    <p class="h3" data-ev="E3.1">Dosage: 4 pretraining &times; 3 SFT &times; 12 DPO conditions</p>
     <div class="chart" data-chart="design"></div>
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
     <span class="fragment step-marker" data-step="3"></span>
     <p class="body fragment rise" data-fragment-index="2" style="font-size:38px; margin-top:6px">The reading: the expected number of em dashes per million tokens, summing the model&rsquo;s own probability of the dash along its own text.</p>
-    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Pre-pilot: GPT-2-shaped models (124M) trained from scratch on DCLM web text at four doses, 3 seeds each (a near-zero dose runs next); SFT on 20,000 chat answers; DPO (&beta; = 0.1) on 8,000 pairs. Reading: 2,000 news and 1,000 chat prompts, sampled at T = 1. Juzek et al., work in preparation.</p>
+    <p class="cite" style="font-size:22px; margin-top:auto; margin-bottom:0">Pre-pilot on DCLM web text; SFT on 20,000 chat answers; DPO (&beta; = 0.1) on 8,000 pairs. Pair sets: preferred against rejected dashes, 0&thinsp;:&thinsp;400 to 1,198&thinsp;:&thinsp;0; none; both sides (one machine). A first round on a second machine adds the side and swap tests. Reading: 2,000 news and 1,000 chat prompts, T = 1. Juzek et al., in preparation.</p>
   </div>
 </section>
 
@@ -725,9 +725,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113e"></script>
-<script src="assets/charts.js?v=20261113e"></script>
-<script src="assets/dye.js?v=20261113e"></script>
-<script src="assets/deck.js?v=20261113e"></script>
+<script src="assets/reveal/reveal.js?v=20261113f"></script>
+<script src="assets/charts.js?v=20261113f"></script>
+<script src="assets/dye.js?v=20261113f"></script>
+<script src="assets/deck.js?v=20261113f"></script>
 </body>
 </html>
