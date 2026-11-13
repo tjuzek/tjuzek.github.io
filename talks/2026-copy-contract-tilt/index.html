@@ -194,7 +194,7 @@ footer p { margin: 0 0 10px; }
   <section class="verbs" aria-label="The three findings, in three words">
     <p class="verb copy"><b>Copy</b><span>Pretraining: the model writes the dash in proportion to what it read.</span></p>
     <p class="verb contract"><b>Contract</b><span>SFT: the differences pretraining left shrink, to about a quarter on news.</span></p>
-    <p class="verb tilt"><b>Tilt</b><span>DPO: what is there is multiplied, by the contrast between preferred and rejected answers.</span></p>
+    <p class="verb tilt"><b>Tilt</b><span>DPO: what is there is multiplied, by the contrast between preferred and rejected answers; rare habits most.</span></p>
   </section>
 
   <section class="actions" aria-label="Slides">
@@ -213,7 +213,7 @@ footer p { margin: 0 0 10px; }
   <section class="block prose">
     <h2>About the talk</h2>
     <p>Language models have house styles, and some of their habits travel: words associated with AI now turn up in unscripted human speech, and AI help can move what an essay argues, not just how it reads. Where do such habits come from?</p>
-    <p>This talk treats one habit, the em dash, as a tracer dye. We train small language models from scratch, dose the dash at each stage of training (pretraining, supervised fine-tuning and preference optimisation, in every combination) and read where it comes out. Three verbs sum up the first results: pretraining copies, SFT contracts, DPO tilts. A little mathematics says why, and what it means for aligning models with what we want.</p>
+    <p>This talk treats one habit, the em dash, as a tracer dye. We train small language models from scratch, dose the dash at each stage of training (pretraining, supervised fine-tuning and preference optimisation, in every combination) and read where it comes out. Three verbs sum up the first results: pretraining copies, SFT contracts, DPO tilts; and DPO&rsquo;s relative force is greatest on rare items. A little mathematics says why, and what it means for aligning models with what we want.</p>
   </section>
 
   <section class="block">
@@ -289,7 +289,7 @@ footer p { margin: 0 0 10px; }
 
 </main>
 
-<script src="slides/assets/dye.js?v=20261112d"></script>
+<script src="slides/assets/dye.js?v=20261112e"></script>
 <script>
 /* The dye behind the masthead: the slides' own (slides/assets/dye.js), fewer particles, idle when scrolled away;
    a still frame under reduced motion. Once the fonts are in, a drop of dye falls from the gold em dash. */

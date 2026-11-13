@@ -5,7 +5,9 @@
    deck.css, so back-navigation, URL jumps and print all land right.
    Colour carries the stage: copy (pretraining) neutral, contract (SFT) blue, tilt (DPO) gold.
    12 November: RATIO swapped to the full ratio axis (9 dosed bases); WHOLE (the pipeline in one picture) and
-   DECODE (T 1.0 against T 0.8) added, both from the instance's readings (dg-pp124h-ratio-readings.tsv). */
+   DECODE (T 1.0 against T 0.8) added, both from the instance's readings (dg-pp124h-ratio-readings.tsv).
+   12 November, later: RARE (DPO's factor by pretraining and SFT dose; Tommie: highlight that DPO's relative force
+   is greatest on rare items) and the near-zero dose, queued, on the design figure and in RARE's empty column. */
 (function () {
   'use strict';
   var NS = 'http://www.w3.org/2000/svg';
@@ -72,7 +74,7 @@
         Design: 07b DESIGN.md §11; the pre-pilot report's design figure (prepilot-report.tex 146-164).
      ------------------------------------------------------------------------------------------ */
   var STAGES = [
-    { name: 'Pretraining', verb: 'copy', from: 'web text, 2.5 billion tokens', from2: 'learns to continue it', dose: '0, ¼×, 1×, 4× the natural rate', ev: 'E3.1' },
+    { name: 'Pretraining', verb: 'copy', from: 'web text, 2.5 billion tokens', from2: 'learns to continue it', dose: '0, ¼×, 1×, 4× the natural rate', next: '+ near zero: running next', ev: 'E3.1' },
     { name: 'SFT', verb: 'contract', from: '20,000 chat answers', from2: 'learns to answer like them', dose: '0, 1×, 4×', ev: 'E3.1' },
     { name: 'DPO', verb: 'tilt', from: '8,000 pairs of answers', from2: 'learns which was preferred', dose: 'which side carries it', ev: 'E3.1' }
   ];
@@ -92,6 +94,7 @@
       drop(s1, x + 40, 66, 32);
       txt(s1, x + 90, 52, 'dye in', 'box-t', { style: 'font-size:30px' });
       txt(s1, x + 90, 92, S.dose, 'box-s', { style: 'fill: var(--ink)' });
+      if (S.next) mark(txt(s1, x + 90, 130, S.next, 'nexttxt', { style: 'font-size:27px' }), 'E3.21');
       mark(s1, S.ev);
       var s2 = g(svg, 'st-2');
       arrow(s2, x + bw / 2, by + bh + 12, x + bw / 2, by + bh + 92, true);
@@ -502,6 +505,99 @@
   }
 
   /* ------------------------------------------------------------------------------------------
+     8b2. Rare items (12 November, Tommie: "DPO's relative force is greatest on rare items"): DPO's factor at
+        1,198 : 0 against the pretraining dose, after each SFT dose. Instance readings, T 1.0, geometric mean over
+        3 seeds, whiskers the seed range; log scale, so equal steps are equal multiples. Source:
+        dg-pp124h-ratio-summary.tsv (set callr0, t10); rates before DPO from dg-pp124h-ratio-readings.tsv (cells
+        sft0, sft1, sft4). At each dose the three SFT doses sit together although the rates before DPO differ up to
+        260-fold: the multiple follows the pretraining dose. Dose 0 after SFT 0 or 1x is below the floor (not drawn).
+        The empty column is the near-zero dose, queued next (E3.21).
+     ------------------------------------------------------------------------------------------ */
+  var RARE = {                                     // E3.20: [geomean, min, max] after SFT 0, 1x, 4x; null: not read
+    news: {
+      d0: [null, null, [5.122, 4.726, 5.565]],
+      dq: [[2.403, 2.093, 2.595], [2.316, 2.202, 2.480], [2.042, 1.921, 2.136]],
+      d1: [[1.656, 1.065, 2.075], [1.922, 1.827, 2.070], [1.657, 1.552, 1.717]],
+      d4: [[1.467, 1.331, 1.570], [1.540, 1.337, 1.823], [1.444, 1.412, 1.499]]
+    },
+    chat: {
+      d0: [null, null, [4.293, 4.100, 4.571]],
+      dq: [[2.460, 1.861, 3.285], [2.789, 2.430, 3.295], [2.149, 2.008, 2.293]],
+      d1: [[1.809, 1.082, 2.684], [2.191, 1.808, 2.537], [1.897, 1.569, 2.094]],
+      d4: [[1.429, 1.254, 1.688], [1.517, 1.388, 1.612], [1.552, 1.501, 1.585]]
+    }
+  };
+  var RARE_BEFORE = {                              // E3.20: em per million before DPO, after SFT 0, 1x, 4x
+    news: {
+      d0: [0.009, 0.182, 140.999],
+      dq: [6.016, 372.201, 1570.963],
+      d1: [26.273, 575.047, 2060.595],
+      d4: [101.781, 780.793, 2378.662]
+    },
+    chat: {
+      d0: [0.006, 1.853, 771.896],
+      dq: [3.587, 405.44, 1534.124],
+      d1: [11.871, 446.839, 1593.823],
+      d4: [42.224, 563.899, 1786.349]
+    }
+  };
+  function rareChart(host) {
+    var W = 1656, H = 548, pwid = 700, gapp = 136, m = { l: 120, t: 110, b: 92 }, ph = H - m.t - m.b;
+    var top = Math.log(7), y = function (v) { return m.t + ph - Math.log(v) / top * ph; };
+    var svg = svgFor(host, W, H, 'DPO with 1,198 preferred-side carriers multiplies the em dash most where pretraining put least. News, after SFT at 0, 1 and 4 times: about 2.0 to 2.4 at a quarter dose, 1.7 to 1.9 at the natural dose, 1.4 to 1.5 at four times; 5.1 where pretraining had none and SFT at four times put it in. Chat alike. The three SFT doses agree although the rates before DPO differ up to 260-fold. A near-zero dose is queued next.');
+    var SFTS = [['after SFT 0', 'hollow', 2], ['after SFT 1×', 'filled', 1], ['after SFT 4×', 'diamond', 2]];
+    function marker(parent, cx, cy, kind) {
+      if (kind === 'diamond') return el('path', { d: 'M' + cx + ' ' + (cy - 15) + ' L' + (cx + 15) + ' ' + cy + ' L' + cx + ' ' + (cy + 15) + ' L' + (cx - 15) + ' ' + cy + ' Z', 'class': 'dot tilt' }, parent);
+      return el('circle', { cx: cx, cy: cy, r: kind === 'hollow' ? 10 : 12, 'class': kind === 'hollow' ? 'dot hollow tilt' : 'dot tilt' }, parent);
+    }
+    var lx = m.l;
+    SFTS.forEach(function (s) {
+      var it = g(svg, 'legend st-' + s[2]);
+      marker(it, lx + 14, 24, s[1]);
+      txt(it, lx + 38, 34, s[0], '');
+      lx += 38 + s[0].length * 12.6 + 56;
+    });
+    txt(g(svg, 'st-0'), W, 34, 'DPO’s factor at 1,198 : 0 (log scale)', 'xlab-2', { 'text-anchor': 'end' });
+    ['news', 'chat'].forEach(function (setting, pi) {
+      var x0 = m.l + pi * (pwid + gapp), col = function (i) { return x0 + (i + 0.5) * pwid / 5; };
+      var grid = g(svg, 'grid st-0'), ticks = g(svg, 'tick st-0');
+      [1, 1.5, 2, 3, 4, 6].forEach(function (v) {
+        el('line', { x1: x0, x2: x0 + pwid, y1: y(v), y2: y(v) }, grid);
+        txt(ticks, x0 - 16, y(v) + 10, '×' + fmt(v, v % 1 ? 1 : 0), '', { 'text-anchor': 'end', style: 'font-size:24px' });
+      });
+      var lab = g(svg, 'st-0');
+      txt(lab, x0, m.t - 32, setting === 'news' ? 'News continuations' : 'Chat answers', 'label', {});
+      ['0', 'near 0', '¼×', '1×', '4×'].forEach(function (s, i) { txt(lab, col(i), m.t + ph + 42, s, 'xlab', { 'text-anchor': 'middle', style: i === 1 ? 'fill: var(--text-3)' : '' }); });
+      txt(lab, x0 + pwid / 2, m.t + ph + 84, 'dose in pretraining', 'xlab-2', { 'text-anchor': 'middle' });
+      // step 4: the near-zero dose, queued
+      var s4 = g(svg, 'st-4');
+      el('rect', { x: col(1) - 44, y: m.t + 4, width: 88, height: ph - 8, rx: 14, 'class': 'nextbox' }, s4);
+      mark(txt(s4, col(1) + 9, m.t + ph / 2, 'running next', 'nexttxt', { 'text-anchor': 'middle', transform: 'rotate(-90 ' + (col(1) + 9) + ' ' + (m.t + ph / 2) + ')' }), 'E3.21');
+      var D = RARE[setting], B = RARE_BEFORE[setting];
+      // step 1: after SFT 1x, a line through the dosed models
+      polyline(g(svg, 'st-1'), [['dq', 2], ['d1', 3], ['d4', 4]].map(function (a) { return [col(a[1]), y(D[a[0]][1][0])]; }), 'line tilt').style.cssText = 'stroke-width:3; opacity:0.55';
+      [['d0', 0, '0'], ['dq', 2, '¼×'], ['d1', 3, '1×'], ['d4', 4, '4×']].forEach(function (a) {
+        var vals = D[a[0]], shown = [];
+        vals.forEach(function (r, k) {
+          if (!r) return;
+          var stp = a[0] === 'd0' ? 3 : SFTS[k][2], grp = g(svg, 'st-' + stp), cx = col(a[1]) + (k - 1) * 36;
+          whisker(grp, cx, y(r[1]), y(r[2]), null, false);
+          tip(mark(marker(grp, cx, y(r[0]), SFTS[k][1]), 'E3.20'), setting + ', pretraining ' + a[2] + ', ' + SFTS[k][0] + ': ×' + fmt(r[0], 2) + ' (seeds ' + fmt(r[1], 2) + ' to ' + fmt(r[2], 2) + '); before DPO ' + fmt(B[a[0]][k], B[a[0]][k] < 10 ? 1 : 0) + ' per million');
+          shown.push(r);
+        });
+        // the cluster's range of multiples, above its highest whisker (step 2; dose 0 at step 3)
+        var gms = shown.map(function (r) { return r[0]; }), hiw = Math.max.apply(null, shown.map(function (r) { return r[2]; }));
+        var s = a[0] === 'd0' ? '×' + fmt(gms[0], 1) : '×' + fmt(Math.min.apply(null, gms), 1) + '–' + fmt(Math.max.apply(null, gms), 1);
+        txt(g(svg, 'st-' + (a[0] === 'd0' ? 3 : 2)), col(a[1]) + (a[0] === 'd0' ? 36 : 0), y(hiw) - 20, s, 'label', { 'text-anchor': 'middle', style: 'font-size:28px' });
+      });
+      var s3 = g(svg, 'st-3');
+      txt(s3, col(0), y(1.32), 'SFT 0, 1×:', 'xlab-2', { 'text-anchor': 'middle' });
+      txt(s3, col(0), y(1.32) + 26, 'nothing to', 'xlab-2', { 'text-anchor': 'middle' });
+      txt(s3, col(0), y(1.32) + 52, 'multiply', 'xlab-2', { 'text-anchor': 'middle' });
+    });
+  }
+
+  /* ------------------------------------------------------------------------------------------
      8c. The read-out: the same SFT models read at T 1.0 and at T 0.8 with top-p 0.95 (natural-dose bases, geometric
         mean over 3 seeds, expected em per million, instance readings). Source: dg-pp124h-ratio-readings.tsv
         (cells sft1, sft4; arm d1). Log axis: the arrow's length is the factor.
@@ -642,6 +738,7 @@
     'sets': setsChart,
     'ratio': ratioChart,
     'whole': wholeChart,
+    'rare': rareChart,
     'decode': decodeChart,
     'stance': stanceChart,
     'olmo': olmoChart
@@ -652,5 +749,5 @@
       if (b && !host.firstChild) b(host);
     });
   }
-  window.DeckCharts = { buildAll: buildAll, data: { RATIO: RATIO, WHOLE: WHOLE, DECODE: DECODE } };
+  window.DeckCharts = { buildAll: buildAll, data: { RATIO: RATIO, WHOLE: WHOLE, RARE: RARE, RARE_BEFORE: RARE_BEFORE, DECODE: DECODE } };
 })();

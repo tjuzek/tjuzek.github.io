@@ -484,6 +484,11 @@ table.toy td.em-glyph { font-weight: 300; color: var(--accent); }
 .chart .dose3 { fill: #ffc45c; stroke: #ffc45c; }
 .chart .dot.dose0, .chart .dot.dose1, .chart .dot.dose2, .chart .dot.dose3 { stroke: var(--ground); stroke-width: 3; }
 .chart .line.dose0, .chart .line.dose1, .chart .line.dose2, .chart .line.dose3 { fill: none; }
+/* rare items: the SFT doses as shapes (hollow, filled, diamond), all gold since the value is DPO's factor; the
+   near-zero dose, queued, as a dashed column in the work-in-progress blue (also on the design figure) */
+.chart .dot.hollow.tilt { fill: var(--ground); stroke: var(--s-gold); stroke-width: 5; }
+.chart .nextbox { fill: rgba(143,179,232,0.05); stroke: #8fb3e8; stroke-width: 3; stroke-dasharray: 12 10; }
+.chart .nexttxt { font-size: 26px; fill: #8fb3e8; font-weight: 600; letter-spacing: 0.04em; }
 /* the read-out: T 1 hollow, T 0.8 filled, both SFT blue */
 .chart .dot.hollow.blue { fill: var(--ground); stroke: var(--s-blue); stroke-width: 5; }
 .chart .dot.contract { stroke: var(--ground); stroke-width: 3; }
