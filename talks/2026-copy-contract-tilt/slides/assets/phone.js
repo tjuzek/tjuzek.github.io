@@ -69,6 +69,7 @@
       if (/^\d+$/.test(label)) LAST = Math.max(LAST, +label);
     });
     if (window.DeckCharts) window.DeckCharts.buildAll();
+    normaliseType();
     each(deck.querySelectorAll('.chart'), function (c, k) {
       var svg = c.querySelector('svg');
       if (!svg) return;
@@ -105,7 +106,60 @@
     try { history.replaceState(history.state, '', '#' + S.el.id); } catch (e) { /* file:// */ }
     if (theme) theme.setAttribute('content', getComputedStyle(document.body).getPropertyValue('--ground').trim() || '#050507');
     fitDrawings();
+    fitWide(S);
   }
+  /* ---- desktop sizes that phone.css does not reach (14 Nov) ----
+     Many slides set their own projector sizes in deck.css (44 px points, 62 px figures, 80 px equations). Measure
+     every element with phone.css off and on: where phone.css changes nothing, the size is the projector's, so it
+     is scaled by K, the ratio of phone body text to projector body text. Charts (SVG) scale by their viewBox. */
+  var K = 0.46, FLOOR = 12;
+  function normaliseType() {
+    var link = document.querySelector('link[href*="phone.css"]'), sheet = link && link.sheet;
+    if (!sheet) return;                              // the sheet itself is switched: link.disabled would fetch it again
+    var els = Array.prototype.filter.call(deck.querySelectorAll('.frame *'), function (n) {
+      return !(n instanceof SVGElement) && !n.closest('.bigdash');
+    });
+    var fs = function (n) { return parseFloat(getComputedStyle(n).fontSize); };
+    sheet.disabled = true;
+    var desk = els.map(fs);
+    sheet.disabled = false;
+    var ph = els.map(fs), out = [];
+    var at = new Map();
+    els.forEach(function (n, i) { at.set(n, i); });
+    els.forEach(function (n, i) {
+      if (!(Math.abs(desk[i] - ph[i]) < 0.5 && desk[i] >= 19)) return;
+      var j = at.get(n.parentElement);              // a child that only inherits follows its parent
+      if (j !== undefined && Math.abs(desk[j] - desk[i]) < 0.5 && Math.abs(desk[j] - ph[j]) < 0.5) return;
+      out.push([n, Math.max(FLOOR, desk[i] * K)]);
+    });
+    out.forEach(function (a) { a[0].style.fontSize = a[1].toFixed(1) + 'px'; });
+  }
+  /* an equation or a table wider than the screen is set smaller until it fits; failing that, it scrolls sideways */
+  function fitWide(S) {
+    if (S.fitted) return;
+    S.fitted = true;
+    var frame = S.el.querySelector('.frame') || S.el;
+    var cs = getComputedStyle(frame);
+    var room = frame.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    each(S.el.querySelectorAll('.eq, table, .boxed-eq, .kl-def, .terms .sym, .nobr, .boxed'), function (n) {
+      if (n.closest('svg')) return;
+      for (var k = 0; k < 4; k++) {
+        var w = n.scrollWidth, left = n.getBoundingClientRect().left - frame.getBoundingClientRect().left - parseFloat(cs.paddingLeft);
+        var avail = room - Math.max(0, left);
+        if (w <= avail + 1) return;
+        var f = parseFloat(getComputedStyle(n).fontSize), g = Math.max(14, f * avail / w * 0.97);
+        if (g >= f - 0.2) break;
+        // the element and every part of it with a size of its own, by the same ratio
+        [n].concat(Array.prototype.slice.call(n.querySelectorAll('*'))).forEach(function (m) {
+          if (m === n || m.style.fontSize) m.style.fontSize = (parseFloat(getComputedStyle(m).fontSize) * g / f).toFixed(1) + 'px';
+        });
+      }
+      // still too wide at the smallest size: an equation breaks between its terms; anything else scrolls sideways
+      if (n.scrollWidth > room + 1 && n.classList.contains('eq')) n.classList.add('ph-wrap');
+      if (n.scrollWidth > room + 1) n.classList.add('ph-scroll');
+    });
+  }
+
   function fromHash() {
     var h = decodeURIComponent(location.hash.replace(/^#\/?/, '').split('/')[0] || '');
     if (!h) return 0;
