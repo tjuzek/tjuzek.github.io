@@ -24,8 +24,8 @@
   if ((h === '' || h === 'title') && !/print-pdf/i.test(location.search)) document.documentElement.classList.add('from-dark');
 } catch (e) { /* leave it */ } })();
 </script>
-<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113zc">
-<link rel="stylesheet" href="assets/deck.css?v=20261113zc">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261113ze">
+<link rel="stylesheet" href="assets/deck.css?v=20261113ze">
 </head>
 <body>
 <div class="reveal">
@@ -299,8 +299,9 @@
 
 <section id="design" data-state="quiet" data-timing="100">
   <div class="frame">
-    <p class="kicker">The experiment: a dose grid</p>
+    <p class="kicker">The experiment: a dose grid <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <p class="h3" data-ev="E3.1">Dosage: 4 pretraining &times; 3 SFT &times; 12 DPO conditions</p>
+    <p class="model-box"><b>The model:</b> nanoGPT at GPT-2 small size (124M parameters), trained from scratch, from random weights.</p>
     <div class="chart" data-chart="design"></div>
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
@@ -313,7 +314,7 @@
 <section id="grid" data-state="quiet" data-timing="80">
   <!-- 13 Nov, Tommie: the combinatorics of the set-up, drawn like a network (E3.1). -->
   <div class="frame">
-    <p class="kicker">The experiment: a dose grid</p>
+    <p class="kicker">The experiment: a dose grid <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <p class="h3">Every path is one recipe</p>
     <div class="chart" data-chart="grid"></div>
     <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
@@ -327,7 +328,7 @@
 
 <section id="copy" data-state="quiet" data-timing="80">
   <div class="frame">
-    <p class="kicker"><span class="verb copy">Copy</span> &middot; pretraining</p>
+    <p class="kicker"><span class="verb copy">Copy</span> &middot; pretraining <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <div style="display:grid; grid-template-columns: 900px 1fr; gap: 70px; align-items:start">
       <div>
         <div class="chart" data-chart="copy"></div>
@@ -345,7 +346,7 @@
 
 <section id="contract" data-state="quiet" data-timing="100">
   <div class="frame">
-    <p class="kicker"><span class="verb contract">Contract</span> &middot; SFT</p>
+    <p class="kicker"><span class="verb contract">Contract</span> &middot; SFT <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <div class="chart" data-chart="contract"></div>
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
@@ -526,7 +527,7 @@
 <section id="epsbeta" data-state="quiet" data-timing="80">
   <!-- [S] skippable. NSF CAREER proof of concept, C1: the unspaced em-dash token against the comma. -->
   <div class="frame">
-    <p class="kicker">Pilot on <span class="kmath">&Delta; = <i>&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span>: predicted against measured</p>
+    <p class="kicker">Pilot on <span class="kmath">&Delta; = <i>&epsilon;</i>&thinsp;/&thinsp;<i>&beta;</i></span>: predicted against measured <span class="mtag alt">GPT-2 small &middot; OpenAI&rsquo;s weights</span></p>
     <div style="display:grid; grid-template-columns: 820px 1fr; gap: 70px; align-items:start">
       <div>
         <div class="chart" data-chart="epsbeta"></div>
@@ -547,7 +548,7 @@
 
 <section id="sets" data-state="quiet" data-timing="110">
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; in the full pipeline</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; in the full pipeline <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <p class="h3">The side that carries the dash sets the sign</p>
     <div class="chart" data-chart="sets"></div>
     <span class="fragment step-marker" data-step="1"></span>
@@ -560,7 +561,7 @@
 
 <section id="ratio" data-state="quiet" data-timing="110">
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; the contrast acts as a dose</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; the contrast acts as a dose <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <!-- 13 Nov, Tommie: the settings must be clear from the moment the slide loads, colour-highlighted -->
     <div class="settings" data-ev="E3.8">
       <span class="chip c-copy"><b>Pretraining</b> &frac14;&times;, 1&times;, 4&times;: geometric mean</span>
@@ -580,7 +581,7 @@
 <section id="readout" data-state="quiet" data-timing="80">
   <!-- [S] skippable. The two-decoding check (07b D22, D67, D68): every ratio-axis model read again at T 0.8, top-p 0.95. -->
   <div class="frame">
-    <p class="kicker">The read-out &middot; decoding is a tilt too</p>
+    <p class="kicker">The read-out &middot; decoding is a tilt too <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <div style="display:grid; grid-template-columns: 900px 1fr; gap: 64px; align-items:start; margin-top:10px">
       <div>
         <div class="chart" data-chart="decode"></div>
@@ -599,7 +600,7 @@
 
 <section id="whole" data-state="quiet" data-timing="110">
   <div class="frame">
-    <p class="kicker">Copy, contract, tilt &middot; the pipeline in one picture</p>
+    <p class="kicker">Copy, contract, tilt &middot; the pipeline in one picture <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <div class="chart" data-chart="whole"></div>
     <span class="fragment step-marker" data-step="1"></span>
     <span class="fragment step-marker" data-step="2"></span>
@@ -620,7 +621,7 @@
   <!-- Highlighted at Tommie's request (12 Nov): "DPO's relative force is greatest on rare items". The near-zero dose
        is queued by Tommie (E3.21); its number is not fixed here. -->
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; rare items</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; rare items <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <p class="h3">DPO&rsquo;s relative force is greatest on rare items</p>
     <div class="chart" data-chart="rare"></div>
     <span class="fragment step-marker" data-step="1" data-fragment-index="1"></span>
@@ -636,7 +637,7 @@
 <section id="cross" data-state="quiet" data-timing="90">
   <!-- 13 Nov, Tommie: the report's Figure 9 (e) and (f), redrawn from the instance readings (E3.22). -->
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; rare items, on chat</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; rare items, on chat <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <p class="h3">On chat, the rare can overtake the common</p>
     <div class="chart" data-chart="cross"></div>
     <span class="fragment step-marker" data-step="1"></span>
@@ -644,13 +645,13 @@
     <span class="fragment step-marker" data-step="3" data-fragment-index="3"></span>
     <p class="body fragment rise" data-fragment-index="2" data-ev="E3.22" style="font-size:34px; margin:4px 0 0">After SFT 1&times;, the &frac14;&times; models start lowest and end highest: 405 to 1,131 per million; the 4&times; ones, 564 to 855.</p>
     <p class="body fragment rise" data-fragment-index="3" data-ev="E3.22" style="font-size:34px; margin:0">After SFT 4&times;, the same, and the models that never saw a dash in pretraining catch up with the &frac14;&times; ones.</p>
-    <p class="cite" style="font-size:21px; margin-top:auto; margin-bottom:0">Chat answers, T = 1, expected count; geometric means over 3 seeds; instance readings. Diamonds: before DPO; open circles: pairs with no dashes. Per seed, after SFT 1&times;, all three &frac14;&times; models end above all three 4&times; ones; &frac14;&times; and 1&times; overlap. On news the lines draw together but keep their order. After the pre-pilot report&rsquo;s Figure 9 (e, f).</p>
+    <p class="cite" style="font-size:21px; margin-top:auto; margin-bottom:0"><span class="mname">124M nanoGPT models, trained from scratch.</span> Chat answers, T = 1, expected count; geometric means over 3 seeds; instance readings. Diamonds: before DPO; open circles: pairs with no dashes. Per seed, after SFT 1&times;, all three &frac14;&times; models end above all three 4&times; ones; &frac14;&times; and 1&times; overlap. On news the lines draw together but keep their order. After the pre-pilot report&rsquo;s Figure 9 (e, f).</p>
   </div>
 </section>
 
 <section id="zero" data-state="quiet" data-timing="100">
   <div class="frame">
-    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; a multiple of almost nothing</p>
+    <p class="kicker"><span class="verb tilt">Tilt</span> &middot; a multiple of almost nothing <span class="mtag">124M nanoGPT &middot; from scratch</span></p>
     <p class="h3">DPO multiplies what is there.</p>
     <table class="numbers" style="font-size:30px; margin-top:16px">
       <thead><tr><th style="font-size:22px">Models that never saw a dash in pretraining (3 seeds); chat</th><th style="font-size:22px">before DPO</th><th style="font-size:22px">after 1,198 preferred-side dashes</th></tr></thead>
@@ -723,7 +724,7 @@
     <p class="h2">Limitations</p>
     <div class="points">
       <p class="fragment rise"><span class="n">1</span><b>One glyph.</b> Words and stance: pilots only.</p>
-      <p class="fragment rise" data-ev="E3.1"><span class="n">2</span><b>Small models, one recipe.</b> 124M, from scratch, 2.5 billion tokens; one SFT set; light DPO (<span class="nobr"><i>&beta;</i> = 0.1</span>, one epoch).</p>
+      <p class="fragment rise" data-ev="E3.1"><span class="n">2</span><b>Small models, one recipe.</b> 124M nanoGPT (GPT-2 small), from scratch, 2.5 billion tokens; one SFT set; light DPO (<span class="nobr"><i>&beta;</i> = 0.1</span>, one epoch).</p>
       <p class="fragment rise"><span class="n">3</span><b class="hl">DPO, but there is also RLHF.</b> DPO: offline, fixed pairs, implicit reward. RLHF (PPO): explicit reward model, online, the model&rsquo;s own answers. Same arithmetic? Open, and important.</p>
     </div>
   </div>
@@ -904,9 +905,9 @@
 
 </div>
 </div>
-<script src="assets/reveal/reveal.js?v=20261113zc"></script>
-<script src="assets/charts.js?v=20261113zc"></script>
-<script src="assets/dye.js?v=20261113zc"></script>
-<script src="assets/deck.js?v=20261113zc"></script>
+<script src="assets/reveal/reveal.js?v=20261113ze"></script>
+<script src="assets/charts.js?v=20261113ze"></script>
+<script src="assets/dye.js?v=20261113ze"></script>
+<script src="assets/deck.js?v=20261113ze"></script>
 </body>
 </html>

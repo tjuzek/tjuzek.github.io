@@ -680,3 +680,12 @@ body.interlude .reveal .progress { opacity: 0; transition: opacity 1s ease; }
 #tilt-kldef .kd-notes { margin-top: 26px; }
 #tilt-kldef .kd-notes p { font-size: 32px; line-height: 1.35; color: var(--text-2); margin: 0 0 10px; }
 #tilt-kldef .kd-notes b { color: var(--ink); font-weight: 600; }
+
+/* ---------- which model: a violet tag on every dose-grid slide, a box on "design" (13 Nov, Tommie) ---------- */
+.kicker .mtag { float: right; text-transform: none; letter-spacing: 0.02em; font-weight: 600; font-size: 0.92em; color: var(--ink);
+  border: 2px solid var(--w-violet); background: color-mix(in srgb, var(--w-violet) 22%, transparent); border-radius: 999px; padding: 2px 16px; margin-top: -4px; }
+.kicker .mtag.alt { border-color: var(--ink-2); background: rgba(201,197,187,0.12); }
+.model-box { font-size: 32px; line-height: 1.35; color: var(--ink); margin: 2px 0 10px; padding: 10px 18px; border-left: 5px solid var(--w-violet);
+  border-radius: 6px; background: color-mix(in srgb, var(--w-violet) 16%, transparent); }
+.model-box b { color: var(--w-violet); font-weight: 650; }
+.cite .mname { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--w-violet); }

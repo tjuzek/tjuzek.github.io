@@ -80,7 +80,7 @@
     { name: 'DPO', verb: 'tilt', from: '8,000 pairs of answers', from2: 'learns which was preferred', dose: '12 pair sets: side, ratio', ev: 'E3.1' }
   ];
   function pipelineChart(host, mode) {
-    var W = 1656, H = mode === 'design' ? 590 : 420, bw = 480, bh = 220, gap = (W - 3 * bw) / 2, by = mode === 'design' ? 150 : 90;
+    var W = 1656, H = mode === 'design' ? 530 : 420, bw = 480, bh = 220, gap = (W - 3 * bw) / 2, by = mode === 'design' ? 150 : 90;
     var svg = svgFor(host, W, H, 'Three training stages: pretraining on web text, SFT on chat answers, DPO on pairs of answers. In the experiment, em dashes are dosed at every stage and the model is read after every stage.');
     STAGES.forEach(function (S, i) {
       var x = i * (bw + gap), s0 = g(svg, 'st-0');
@@ -98,11 +98,11 @@
       if (S.next) mark(txt(s1, x + 90, 130, S.next, 'nexttxt', { style: 'font-size:27px' }), 'E3.21');
       mark(s1, S.ev);
       var s2 = g(svg, 'st-2');
-      arrow(s2, x + bw / 2, by + bh + 12, x + bw / 2, by + bh + 92, true);
-      txt(s2, x + bw / 2, by + bh + 130, 'read: news and chat', 'box-s', { 'text-anchor': 'middle', style: 'fill: var(--ink)' });
+      arrow(s2, x + bw / 2, by + bh + 12, x + bw / 2, by + bh + 62, true);
+      txt(s2, x + bw / 2, by + bh + 100, 'read: news and chat', 'box-s', { 'text-anchor': 'middle', style: 'fill: var(--ink)' });
     });
     if (mode === 'design') {
-      txt(g(svg, 'st-1'), 0, by + bh + 196, '1× = 415 em dashes per million tokens, the web text’s natural rate. 124M models from scratch, 3 seeds each: 432 DPO models.', 'box-s', {});
+      txt(g(svg, 'st-1'), 0, by + bh + 152, '1× = 415 em dashes per million tokens, the web text’s natural rate. 3 seeds each: 432 DPO models.', 'box-s', {});
     }
   }
 
