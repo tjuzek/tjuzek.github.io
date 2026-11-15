@@ -108,9 +108,13 @@
   .pl-swap { display: block; font-size: 14px; color: var(--accent); margin-top: 3px; line-height: 1.3; }
   .day-reset { margin-top: 12px; }
 
-  /* Something else: free kcal */
-  .other { padding: 11px 12px; margin-top: 10px; }
-  .other-h { display: block; font-weight: 650; font-size: 16px; margin-bottom: 8px; }
+  /* Something else: free kcal (in the plan before the kibble; under the tiles when no day type is picked) */
+  .other-home { padding: 11px 12px; margin-top: 10px; }
+  .other-home[hidden] { display: none; }
+  .pl-list li.pl-other { display: block; }
+  .pl-other .tip { display: none; }
+  .other-h { display: block; font-weight: 650; font-size: 15.5px; line-height: 1.25; margin-bottom: 8px; }
+  .other-h small { font-weight: 400; font-size: 14.5px; color: var(--muted); }
   .other-row { display: flex; align-items: center; gap: 8px; }
   .other-row input { flex: 1; min-width: 0; }
   .other-row span { color: var(--muted); }
@@ -257,16 +261,19 @@
   <section aria-labelledby="h-food">
     <h2 id="h-food">Of druk op wat ze kreeg</h2>
     <div class="tiles" id="tiles"></div>
-    <form class="card other" id="other-form" autocomplete="off">
-      <label class="other-h" for="o-kcal">Iets anders</label>
-      <div class="other-row">
-        <input type="text" inputmode="decimal" id="o-kcal" placeholder="kcal" aria-label="Iets anders, in kcal">
-        <span>kcal</span>
-        <button class="btn primary" type="submit" id="o-add">Toevoegen</button>
-      </div>
-      <input type="text" id="o-what" maxlength="40" placeholder="Wat was het? (mag leeg)" aria-label="Wat was het? (mag leeg)">
-      <p class="tip">Telt mee in het totaal; in het plan krijgt ze dan minder brokjes.</p>
-    </form>
+    <!-- "Iets anders" sits here only when no day type is picked; on a plan day renderPlan moves the form into the plan, before the kibble -->
+    <div class="card other-home" id="other-home">
+      <form class="other" id="other-form" autocomplete="off">
+        <label class="other-h" for="o-kcal">Iets anders <small id="o-given"></small></label>
+        <div class="other-row">
+          <input type="text" inputmode="decimal" id="o-kcal" placeholder="kcal" aria-label="Iets anders, in kcal">
+          <span>kcal</span>
+          <button class="btn primary" type="submit" id="o-add">Toevoegen</button>
+        </div>
+        <input type="text" id="o-what" maxlength="40" placeholder="Wat was het? (mag leeg)" aria-label="Wat was het? (mag leeg)">
+        <p class="tip">Telt mee in het totaal. Met een plan voor vandaag gaat het van de brokjes af.</p>
+      </form>
+    </div>
     <p class="tip tiles-hint">Lang indrukken op een tegel wist die soort voor vandaag. Losse items wis je met × onder Vandaag.</p>
     <div class="row-btns day-reset"><button class="btn small danger" id="day-reset">Dag resetten</button></div>
   </section>
@@ -595,6 +602,17 @@
     return pieces(r.f) ? Math.max(0, Math.round(rest)) : (rest < 0.5 ? 0 : rest);
   }
 
+  // One "Iets anders" form, moved between the plan (before the kibble) and its home under the tiles,
+  // so a half-typed amount survives a re-render.
+  var otherForm = $('other-form'), otherAdd = $('o-add'), otherGiven = $('o-given');
+  function placeOther(d, slot) {
+    (slot || $('other-home')).appendChild(otherForm);
+    $('other-home').hidden = !!slot;
+    otherAdd.classList.toggle('primary', !slot);   // in the plan it looks like the other + buttons
+    var k = logged(d, OTHER).kcal;
+    otherGiven.textContent = k > 0.5 ? '(' + fmtK(k) + ' kcal gegeven)' : '';
+  }
+
   function renderPlan(d) {
     var el = $('plan-card'), p = planOf(d);
     if (!p) {
@@ -609,10 +627,13 @@
         '</div><p class="tip">Elke dag: ' + esc(every) + ' (' + fmtK(everyK) + ' kcal). Het soort dag voegt zijn eigen eten toe, en de brokjes ' +
         'vullen de dag aan tot ongeveer ' + fmtK(b0.aim - b0.credit) + ' kcal; na een wandeling mag er wat bij. ' +
         'Of sla dit over en druk gewoon op de tegels.</p></div>';
+      placeOther(d, null);
       return;
     }
     var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Wijzigen</button></div><ul class="pl-list">';
+    var OTHER_SLOT = '<li class="pl-other" id="pl-other-slot"></li>', slotted = false;
     p.rows.forEach(function (r) {
+      if (r.fill && !slotted) { html += OTHER_SLOT; slotted = true; }
       var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r), sl = r.slot, replaced = sl && sl.replacedK > 0.5;
       // the fill's optional second step: 'next' before the standard is given, 'open' after, '' otherwise
       var wig = r.fill && r.extra > 0 ? (!r.second ? 'next' : give > 0 ? 'open' : '') : '';
@@ -644,14 +665,15 @@
       html += '<li' + (r.fill ? ' class="fill"' : '') + '><div class="pl-info"><span class="pl-name">' + esc(r.f.name) + '</span>' +
         '<span class="pl-amt"><span>' + esc(amt) + '</span>' + steps + '</span>' + extra + '</div>' + action + '</li>';
     });
+    if (!slotted) html += OTHER_SLOT;
     var wigOpen = p.totalFirst < p.total - 0.5;
     html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(wigOpen ? p.totalFirst : p.total) + ' kcal</b>' +
       (wigOpen ? ', met de extra brokjes ' + fmtK(p.total) : '') + ' (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
     if (p.off > 0.5) html += '<p class="tip">Inclusief ' + fmtK(p.off) + ' kcal ander eten van vandaag.</p>';
     if (p.overBy > 0.5) html += '<p class="warn-text">' + fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes: geef ergens minder van.</p>';
-    html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt. ' +
-      'Iets anders gegeven? Vul de kcal in onder de tegels.</p></div>';
+    html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt.</p></div>';
     el.innerHTML = html;
+    placeOther(d, $('pl-other-slot'));
   }
 
   $('plan-card').addEventListener('click', function (ev) {
