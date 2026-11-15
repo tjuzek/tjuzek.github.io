@@ -6,7 +6,8 @@
  * Derivations, assumptions and sources live in ~/claudecode/bruce-diet/README.md (not served).
  *
  * Fields per food (each food has kcalPerG OR kcalPerPiece):
- *   id            stable key, saved in the phone's log; never rename an id that has been used
+ *   id            stable key, saved in the phone's log; never rename an id that has been used.
+ *                 'other' is taken: the page logs its free kcal field ("Iets anders") under it
  *   name          tile label
  *   kcalPerG      kcal per gram AS WEIGHED
  *   portion       weighed foods: standard portion in grams, what one tap on the tile logs

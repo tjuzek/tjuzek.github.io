@@ -65,7 +65,7 @@ python3 -m http.server 8000
   say so. Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/sleep-sound/README.md`.
 - `/bruce/` (from 2026-11-12) is an unlisted personal tool, not part of the academic site: a phone
   calorie tally for Tommie's dog (a day planner, corned beef or chicken day, that tops up with kibble
-  to the 700 to 750 kcal band; tiles for what she ate; grams to kcal and back; what is left, in grams;
+  to the 700 to 750 kcal band; tiles for what she ate, plus a free kcal field; grams to kcal and back; what is left, in grams;
   a walk credit; weigh-ins). `noindex, nofollow`, not in the sitemap, `llms.txt` or the nav,
   linked from no page, no analytics, and deliberately no `robots.txt` line (a Disallow would advertise
   the path and hide the noindex from crawlers). Food values and day types live in `bruce/foods.js`, the

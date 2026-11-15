@@ -107,6 +107,15 @@
   .pl-done { color: var(--ok); font-weight: 650; white-space: nowrap; font-size: 15px; }
   .pl-swap { display: block; font-size: 14px; color: var(--accent); margin-top: 3px; line-height: 1.3; }
   .day-reset { margin-top: 12px; }
+
+  /* Something else: free kcal */
+  .other { padding: 11px 12px; margin-top: 10px; }
+  .other-h { display: block; font-weight: 650; font-size: 16px; margin-bottom: 8px; }
+  .other-row { display: flex; align-items: center; gap: 8px; }
+  .other-row input { flex: 1; min-width: 0; }
+  .other-row span { color: var(--muted); }
+  .other #o-what { display: block; width: 100%; margin-top: 8px; }
+  .other .tip { margin-top: 8px; }
   .btn.danger { color: var(--over); }
   .pl-sum { padding: 10px 12px; border-top: 1px solid var(--line); font-size: 15px; }
   .pl-sum p { margin: 0; }
@@ -248,6 +257,16 @@
   <section aria-labelledby="h-food">
     <h2 id="h-food">Of druk op wat ze kreeg</h2>
     <div class="tiles" id="tiles"></div>
+    <form class="card other" id="other-form" autocomplete="off">
+      <label class="other-h" for="o-kcal">Iets anders</label>
+      <div class="other-row">
+        <input type="text" inputmode="decimal" id="o-kcal" placeholder="kcal" aria-label="Iets anders, in kcal">
+        <span>kcal</span>
+        <button class="btn primary" type="submit" id="o-add">Toevoegen</button>
+      </div>
+      <input type="text" id="o-what" maxlength="40" placeholder="Wat was het? (mag leeg)" aria-label="Wat was het? (mag leeg)">
+      <p class="tip">Telt mee in het totaal; in het plan krijgt ze dan minder brokjes.</p>
+    </form>
     <p class="tip tiles-hint">Lang indrukken op een tegel wist die soort voor vandaag. Losse items wis je met × onder Vandaag.</p>
     <div class="row-btns day-reset"><button class="btn small danger" id="day-reset">Dag resetten</button></div>
   </section>
@@ -473,19 +492,25 @@
     Object.keys(state.days).forEach(function (k) { if (k < cut) delete state.days[k]; });
   }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-  function nameOf(e) { return byId[e.food] ? byId[e.food].name : e.name; }   // current (Dutch) name
+  var OTHER = 'other';   // food id of the free kcal field ("Iets anders"); not a food in foods.js
+  function nameOf(e) { return e.food !== OTHER && byId[e.food] ? byId[e.food].name : e.name; }   // current (Dutch) name
   function describe(e) {
     var amt = e.u === 'pc' ? fmtPc(e.q) + ', ' : (typeof e.q === 'number' ? fmtG(e.q) + ' g, ' : '');
     return amt + fmtK(e.kcal) + ' kcal';
   }
 
+  function pushEntry(e) {
+    day().entries.push(e);
+    save(); render();
+    toast('Toegevoegd: ' + nameOf(e) + ', ' + describe(e), function () { removeEntry(e.id, true); });
+  }
   function addEntry(f, q) {   // grams kept to 0.1 g so named portions (187.1 g = ½ can) stay exact
     q = pieces(f) ? Math.round(q) : Math.round(q * 10) / 10;
     if (!(q > 0)) return;
-    var e = { id: uid(), ts: Date.now(), food: f.id, name: f.name, q: q, u: pieces(f) ? 'pc' : 'g', kcal: q * per(f) };
-    day().entries.push(e);
-    save(); render();
-    toast('Toegevoegd: ' + f.name + ', ' + describe(e), function () { removeEntry(e.id, true); });
+    pushEntry({ id: uid(), ts: Date.now(), food: f.id, name: f.name, q: q, u: pieces(f) ? 'pc' : 'g', kcal: q * per(f) });
+  }
+  function addOther(kcal, what) {   // "Iets anders": kcal only, no amount; the planner counts it as other food
+    pushEntry({ id: uid(), ts: Date.now(), food: OTHER, name: 'Iets anders' + (what ? ' (' + what + ')' : ''), kcal: kcal });
   }
   function removeEntry(id, quiet) {
     var d = peekDay(todayKey()); if (!d) return;
@@ -506,11 +531,16 @@
   // An item with `or` (the oven roast) is a slot of fixed kcal: whatever of the `or` food is
   // given beyond its own planned amount fills the slot first, and the item shrinks to what is
   // still open. So 25 g extra corned beef stands in for 40 g roast and the kibble stays put.
+  // The fill comes in two steps when walks leave room above the day type's own kibble (the
+  // standard: planned amounts with any -/+ steps, no walks, nothing extra logged): the first tap
+  // gives the standard, an optional second tap the rest. When other food has brought the fill
+  // down to the standard or below, one tap fills it.
   var SLOT_EPS = 2;   // kcal; a slot this close to full counts as full
+  var WIGGLE_MIN = 10;   // kcal; less room than this above the standard goes in the first tap
   function planOf(d) {
     var dt = d && d.type ? typeById[d.type] : null;
     if (!dt) return null;
-    var b = budget(d), adj = d.adj || {}, rows = [], used = 0, seen = {}, planQ = {};
+    var b = budget(d), adj = d.adj || {}, rows = [], used = 0, stdUsed = 0, seen = {}, planQ = {};
     var specs = (B.everyDay || []).map(function (it) { return { it: it, adjustable: false }; })
       .concat(dt.items.map(function (it) { return { it: it, adjustable: !it.fixed }; }));
     specs.forEach(function (s) {   // planned amounts first, so a slot can see its stand-in's plan
@@ -522,6 +552,7 @@
     specs.forEach(function (s) {
       var f = byId[s.it.id]; if (!f || f.id === dt.fill || seen[f.id]) return;
       var q = planQ[f.id], lg = logged(d, f.id), planK = q * per(f), slot = null;
+      stdUsed += planK;   // the day as planned: nothing extra, slots full
       var o = s.it.or ? byId[s.it.or] : null;
       if (o && o.kcalPerG > 0 && planQ[o.id] != null) {
         var extraK = Math.max(0, logged(d, o.id).kcal - planQ[o.id] * per(o));
@@ -544,11 +575,20 @@
     d.entries.forEach(function (e) { if (!seen[e.food] && e.food !== dt.fill) off += e.kcal; });
     used += off;
     var ff = byId[dt.fill], lgF = logged(d, dt.fill);
-    var room = b.aim - used;
-    var fillQ = ff ? Math.max(0, roundQ(ff, room / per(ff))) : 0;
-    if (ff) rows.push({ f: ff, q: fillQ, kcal: fillQ * per(ff), given: lgF.q, adjustable: false, fill: true });
-    var total = used + (ff ? Math.max(fillQ * per(ff), lgF.kcal) : 0);
-    return { dt: dt, rows: rows, b: b, total: total, off: off, overBy: room < 0 ? -room : 0 };
+    var room = b.aim - used, total = used, totalFirst = used;
+    if (ff) {
+      var fillQ = Math.max(0, roundQ(ff, room / per(ff)));
+      var stdQ = Math.max(0, roundQ(ff, (b.aim - b.credit - stdUsed) / per(ff)));
+      var firstQ = Math.min(stdQ, fillQ), extraQ = fillQ - firstQ;
+      if (extraQ * per(ff) < WIGGLE_MIN) { firstQ = fillQ; extraQ = 0; }
+      var second = extraQ > 0 && lgF.q >= firstQ - 0.5;   // the standard is given; the rest is optional
+      var fq = second ? fillQ : firstQ;
+      rows.push({ f: ff, q: fq, kcal: fq * per(ff), given: lgF.q, adjustable: false, fill: true,
+                  first: firstQ, extra: extraQ, second: second });
+      total += Math.max(fillQ * per(ff), lgF.kcal);
+      totalFirst += Math.max(firstQ * per(ff), lgF.kcal);
+    }
+    return { dt: dt, rows: rows, b: b, total: total, totalFirst: totalFirst, off: off, overBy: room < 0 ? -room : 0 };
   }
   function toGive(r) {   // unrounded for weighed foods, so a whole ½ can stays a ½ can
     var rest = r.q - r.given;
@@ -558,7 +598,7 @@
   function renderPlan(d) {
     var el = $('plan-card'), p = planOf(d);
     if (!p) {
-      var everyK = 0, every = (B.everyDay || []).map(function (it) {
+      var b0 = budget(d), everyK = 0, every = (B.everyDay || []).map(function (it) {
         var f = byId[it.id]; if (!f) return '';
         var q = it.g != null ? it.g : it.pc, nm = f.short || f.name.toLowerCase();
         everyK += q * per(f);
@@ -567,26 +607,35 @@
       el.innerHTML = '<div class="pl-pick"><p class="pl-q">Wat voor dag is het?</p><div class="pl-types">' +
         TYPES.map(function (t) { return '<button class="btn primary" data-type="' + esc(t.id) + '">' + esc(t.name) + '</button>'; }).join('') +
         '</div><p class="tip">Elke dag: ' + esc(every) + ' (' + fmtK(everyK) + ' kcal). Het soort dag voegt zijn eigen eten toe, en de brokjes ' +
-        'vullen de dag aan tot ongeveer ' + fmtK(budget(d).aim) + ' kcal. Of sla dit over en druk gewoon op de tegels.</p></div>';
+        'vullen de dag aan tot ongeveer ' + fmtK(b0.aim - b0.credit) + ' kcal; na een wandeling mag er wat bij. ' +
+        'Of sla dit over en druk gewoon op de tegels.</p></div>';
       return;
     }
     var html = '<div class="pl-head"><b>' + esc(p.dt.name) + '</b><button class="btn small" id="pl-change">Wijzigen</button></div><ul class="pl-list">';
     p.rows.forEach(function (r) {
       var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r), sl = r.slot, replaced = sl && sl.replacedK > 0.5;
+      // the fill's optional second step: 'next' before the standard is given, 'open' after, '' otherwise
+      var wig = r.fill && r.extra > 0 ? (!r.second ? 'next' : give > 0 ? 'open' : '') : '';
+      var shownQ = wig === 'open' ? r.first : r.q, shownK = wig === 'open' ? r.first * per(r.f) : r.kcal;
       var amt, extra = '';
       if (replaced) {
         amt = r.q > 0 ? fmtQ(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal (de rest is extra ' + shortName(sl.by) + ')'
                       : 'vervangen door extra ' + shortName(sl.by) + ' (' + fmtK(sl.fullK) + ' kcal)';
       } else {
-        amt = fmtAmount(r.f, r.q) + ' · ' + fmtK(r.kcal) + ' kcal';
+        amt = fmtAmount(r.f, shownQ) + ' · ' + fmtK(shownK) + ' kcal';
         if (sl && !(r.given > 0)) amt += ' · of ' + fmtG(sl.fullK / per(sl.by)) + ' g extra ' + shortName(sl.by);
       }
-      if (r.given > 0 && (pc || give > 0 || r.swap || Math.abs(r.given - r.q) >= 0.5)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
+      if (r.given > 0 && (pc || give > 0 || r.swap || Math.abs(r.given - shownQ) >= 0.5)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
       if (r.fill) amt += ' · vult de dag aan';
       if (r.swap) extra = '<span class="pl-swap">Geen ' + esc(shortName(r.swap.slot)) + '? Geef dan nog ' + fmtG(r.swap.g) + ' g (' + fmtK(r.swap.k) + ' kcal).</span>';
+      if (wig) {
+        var wq = wig === 'next' ? r.extra : give, by = p.b.walks > 1 ? 'dankzij de wandelingen ' : p.b.walks ? 'dankzij de wandeling ' : '';
+        extra = '<span class="pl-swap">' + (wig === 'next' ? 'Daarna mag er ' + by : 'Er mag ' + by) + 'nog ' + fmtG(wq) + ' g bij (' +
+          fmtK(wq * per(r.f)) + ' kcal). Dat hoeft niet.</span>';
+      }
       var steps = r.adjustable ? '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="-1" aria-label="Minder ' + esc(r.f.name) + '">−</button>' +
         '<button class="step" data-step="' + esc(r.f.id) + '" data-dir="1" aria-label="Meer ' + esc(r.f.name) + '">+</button>' : '';
-      var action = give > 0 ? '<button class="btn small pl-give" data-give="' + esc(r.f.id) + '">+ ' + esc(fmtAmount(r.f, give)) + '</button>'
+      var action = give > 0 ? '<button class="btn small pl-give" data-give="' + esc(r.f.id) + '">+ ' + esc(fmtAmount(r.f, give)) + (wig === 'open' ? ' extra' : '') + '</button>'
         : r.swap ? '<button class="btn small pl-give" data-swap="' + esc(r.f.id) + '" aria-label="Nog ' + fmtG(r.swap.g) + ' g ' + esc(shortName(r.f)) +
             ' in plaats van ' + esc(shortName(r.swap.slot)) + '">+ ' + fmtG(r.swap.g) + ' g</button>'
         : (r.given > 0 || r.q > 0) ? '<span class="pl-done">✓ gegeven</span>'
@@ -595,10 +644,13 @@
       html += '<li' + (r.fill ? ' class="fill"' : '') + '><div class="pl-info"><span class="pl-name">' + esc(r.f.name) + '</span>' +
         '<span class="pl-amt"><span>' + esc(amt) + '</span>' + steps + '</span>' + extra + '</div>' + action + '</li>';
     });
-    html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(p.total) + ' kcal</b> (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
+    var wigOpen = p.totalFirst < p.total - 0.5;
+    html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(wigOpen ? p.totalFirst : p.total) + ' kcal</b>' +
+      (wigOpen ? ', met de extra brokjes ' + fmtK(p.total) : '') + ' (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
     if (p.off > 0.5) html += '<p class="tip">Inclusief ' + fmtK(p.off) + ' kcal ander eten van vandaag.</p>';
     if (p.overBy > 0.5) html += '<p class="warn-text">' + fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes: geef ergens minder van.</p>';
-    html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt.</p></div>';
+    html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt. ' +
+      'Iets anders gegeven? Vul de kcal in onder de tegels.</p></div>';
     el.innerHTML = html;
   }
 
@@ -920,6 +972,17 @@
   });
   ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { $('tiles').addEventListener(t, cancelPress); });
   $('tiles').addEventListener('contextmenu', function (ev) { if (ev.target.closest('[data-add]')) ev.preventDefault(); });
+
+  // Something else: a kcal amount (and, if wanted, what it was). The planner counts it as other food.
+  $('other-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var k = parseNum($('o-kcal').value), what = $('o-what').value.replace(/\s+/g, ' ').trim().slice(0, 40);
+    if (isNaN(k) || Math.round(k) < 1) { toast('Vul het aantal kcal in, bv. 30.'); $('o-kcal').focus(); return; }
+    if (k > 1000) { toast('Meer dan 1000 kcal in één keer? Kijk het getal na.'); $('o-kcal').focus(); return; }
+    $('o-kcal').value = ''; $('o-what').value = '';
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();   // closes the phone keyboard
+    addOther(Math.round(k), what);
+  });
 
   $('log').addEventListener('click', function (ev) {
     var b = ev.target.closest('[data-del]'); if (b) removeEntry(b.getAttribute('data-del'));
