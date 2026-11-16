@@ -547,8 +547,8 @@
   // standard: planned amounts with any -/+ steps, no walks, nothing extra logged): the first tap
   // gives the standard, an optional second tap the rest. When other food has brought the fill
   // down to the standard or below, one tap fills it.
-  // Skipped items (d.skip, "Overslaan", 15 Nov) count at what was given, as if stepped down to it:
-  // the plan stops holding kcal back for food she won't get (chicken given as "Iets anders", say).
+  // Skipped items (d.skip, set by "Dag afronden", 16 Nov) count at what was given, as if stepped down
+  // to it: the plan stops holding kcal back for food she won't get (chicken given as "Iets anders", say).
   var SLOT_EPS = 2;   // kcal; a slot this close to full counts as full
   var WIGGLE_MIN = 10;   // kcal; less room than this above the standard goes in the first tap
   function planOf(d) {
@@ -610,11 +610,8 @@
       total += Math.max(fillQ * per(ff), lgF.kcal);
       totalFirst += Math.max(firstQ * per(ff), lgF.kcal);
     }
-    // Offer to skip the pending food when holding it back costs kibble: there is no room for any,
-    // or food beyond the plan has eaten more than the walks added, so the fill is under its standard.
-    var squeezed = room < 0 || used - stdUsed - b.credit > SLOT_EPS;
     return { dt: dt, rows: rows, b: b, total: total, totalFirst: totalFirst, off: off, overBy: room < 0 ? -room : 0,
-             room: room, fillGiven: lgF.q, pending: pending, pendK: pendK, offerSkip: pending.length > 0 && squeezed };
+             pending: pending, pendK: pendK };
   }
   function toGive(r) {   // unrounded for weighed foods, so a whole ½ can stays a ½ can
     var rest = r.q - r.given;
@@ -697,15 +694,14 @@
     html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(wigOpen ? p.totalFirst : p.total) + ' kcal</b>' +
       (wigOpen ? ', met de extra brokjes ' + fmtK(p.total) : '') + ' (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
     if (p.off > 0.5) html += '<p class="tip">Inclusief ' + fmtK(p.off) + ' kcal ander eten van vandaag.</p>';
-    if (p.overBy > 0.5) html += '<p class="warn-text">' + (p.offerSkip
-      ? 'Met wat nog niet gegeven is, komt de dag ' + fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes.'
+    var open = p.pending.length > 0, fillName = byId[p.dt.fill] ? shortName(byId[p.dt.fill]) : 'brokjes';
+    if (p.overBy > 0.5) html += '<p class="warn-text">' + (open
+      ? 'Met wat nog open staat (' + esc(andList(p.pending.map(pendName))) + ', ' + fmtK(p.pendK) + ' kcal), komt de dag ' +
+        fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder ' + esc(fillName) + '.'
       : fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes: geef ergens minder van.') + '</p>';
-    if (p.offerSkip) {
-      var ff = byId[p.dt.fill], fit = ff ? roundQ(ff, Math.max(0, p.room + p.pendK) / per(ff)) - p.fillGiven : 0;
-      html += '<div class="pl-pend"><p>Nog niet gegeven: ' + esc(andList(p.pending.map(pendName))) + ' (' + fmtK(p.pendK) + ' kcal). ' +
-        (fit >= 0.5 ? 'Krijgt ze die niet meer, dan is er nog plaats voor ' + fmtG(fit) + ' g ' + esc(shortName(ff)) + '.' : 'Krijgt ze die niet meer?') +
-        '</p><button class="btn small" id="pl-skip">Overslaan</button></div>';
-    }
+    // The kibble rounds off the day: once only it is left, "Dag afronden" stops counting what is still open
+    if (open) html += '<div class="pl-pend"><p>Krijgt ze alleen nog ' + esc(fillName) + '? Wat nog open staat, telt dan niet meer mee.</p>' +
+      '<button class="btn small" id="pl-skip">Dag afronden</button></div>';
     html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt.</p></div>';
     el.innerHTML = html;
     placeOther(d, $('pl-other-slot'));
@@ -719,13 +715,15 @@
     }
     if (t) { var d1 = day(); d1.type = t.getAttribute('data-type'); d1.adj = {}; d1.skip = {}; save(); render(); return; }
     var p = planOf(peekDay(todayKey())); if (!p) return;
-    if (ev.target.closest('#pl-skip')) {   // stop holding kcal back for the planned food not given yet
-      var dk = day(), before = JSON.parse(JSON.stringify(dk.skip || {})), names = p.pending.map(function (r) { return shortName(r.f); });
-      if (!names.length) return;
+    if (ev.target.closest('#pl-skip')) {   // Dag afronden: stop holding kcal back for the planned food not given yet
+      var dk = day(), before = JSON.parse(JSON.stringify(dk.skip || {}));
+      if (!p.pending.length) return;
       dk.skip = dk.skip || {};
       p.pending.forEach(function (r) { dk.skip[r.f.id] = true; });
       save(); render();
-      toast('Overgeslagen: ' + andList(names) + '.', function () { day().skip = before; save(); render(); });
+      var fr = planOf(dk).rows.filter(function (r) { return r.fill; })[0], fq = fr ? toGive(fr) : 0;
+      toast('Dag afgerond: ' + (fq > 0 ? 'nog ' + fmtAmount(fr.f, fq) + ' ' + shortName(fr.f) : 'geen ' + (fr ? shortName(fr.f) : 'brokjes') + ' meer') + '.',
+        function () { day().skip = before; save(); render(); });
       return;
     }
     var u = ev.target.closest('[data-unskip]');
