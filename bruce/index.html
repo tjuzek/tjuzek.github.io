@@ -125,6 +125,10 @@
   .pl-sum p { margin: 0; }
   .pl-sum p + p { margin-top: 4px; }
   .warn-text { color: var(--over); font-weight: 600; }
+  .pl-pend { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+  .pl-pend p { flex: 1; min-width: 0; }
+  .pl-pend + p { margin-top: 6px; }
+  .pl-list li.skipped .pl-name { color: var(--muted); }
 
   /* Walks */
   .walks { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
@@ -407,6 +411,7 @@
       d.walks = (typeof d.walks === 'number' && d.walks > 0) ? Math.floor(d.walks) : 0;
       if (typeof d.type !== 'string') d.type = null;
       if (!d.adj || typeof d.adj !== 'object') d.adj = {};
+      if (!d.skip || typeof d.skip !== 'object') d.skip = {};
     });
     s.weights = s.weights.filter(function (w) { return w && validKey(w.d) && typeof w.lb === 'number' && w.lb > 0; });
     if (!validKey(s.lastBackup)) s.lastBackup = null;
@@ -480,7 +485,7 @@
   function peekDay(k) { return state.days[k] || null; }
   function day() {
     var k = todayKey();
-    if (!state.days[k]) state.days[k] = { entries: [], walks: 0, type: null, adj: {} };
+    if (!state.days[k]) state.days[k] = { entries: [], walks: 0, type: null, adj: {}, skip: {} };
     return state.days[k];
   }
   function sumDay(d) { var t = 0; if (d) d.entries.forEach(function (e) { t += e.kcal; }); return t; }
@@ -542,42 +547,52 @@
   // standard: planned amounts with any -/+ steps, no walks, nothing extra logged): the first tap
   // gives the standard, an optional second tap the rest. When other food has brought the fill
   // down to the standard or below, one tap fills it.
+  // Skipped items (d.skip, "Overslaan", 15 Nov) count at what was given, as if stepped down to it:
+  // the plan stops holding kcal back for food she won't get (chicken given as "Iets anders", say).
   var SLOT_EPS = 2;   // kcal; a slot this close to full counts as full
   var WIGGLE_MIN = 10;   // kcal; less room than this above the standard goes in the first tap
   function planOf(d) {
     var dt = d && d.type ? typeById[d.type] : null;
     if (!dt) return null;
-    var b = budget(d), adj = d.adj || {}, rows = [], used = 0, stdUsed = 0, seen = {}, planQ = {};
+    var b = budget(d), adj = d.adj || {}, skip = d.skip || {}, rows = [], used = 0, stdUsed = 0, seen = {}, planQ = {}, fullQ = {};
     var specs = (B.everyDay || []).map(function (it) { return { it: it, adjustable: false }; })
       .concat(dt.items.map(function (it) { return { it: it, adjustable: !it.fixed }; }));
     specs.forEach(function (s) {   // planned amounts first, so a slot can see its stand-in's plan
       var f = byId[s.it.id]; if (!f || f.id === dt.fill) return;
       var q = s.it.g != null ? s.it.g : s.it.pc;
       if (s.adjustable && typeof adj[f.id] === 'number' && adj[f.id] >= 0) q = adj[f.id];
+      fullQ[f.id] = q;
+      if (skip[f.id]) q = Math.min(q, logged(d, f.id).q);
       planQ[f.id] = q;
     });
     specs.forEach(function (s) {
       var f = byId[s.it.id]; if (!f || f.id === dt.fill || seen[f.id]) return;
       var q = planQ[f.id], lg = logged(d, f.id), planK = q * per(f), slot = null;
+      var full = fullQ[f.id], skipped = !!skip[f.id] && (pieces(f) ? Math.round(full - lg.q) > 0 : full - lg.q >= 0.5);
       stdUsed += planK;   // the day as planned: nothing extra, slots full
       var o = s.it.or ? byId[s.it.or] : null;
       if (o && o.kcalPerG > 0 && planQ[o.id] != null) {
         var extraK = Math.max(0, logged(d, o.id).kcal - planQ[o.id] * per(o));
         var openK = planK - extraK; if (openK < SLOT_EPS) openK = 0;
-        slot = { by: o, fullK: planK, fullQ: q, replacedK: planK - openK };
+        slot = { by: o, fullK: planK, fullQ: q, replacedK: planK - openK,
+                 bySkipped: !!skip[o.id] && fullQ[o.id] - logged(d, o.id).q >= 0.5 };   // stand-in skipped and still short
         planK = openK; q = openK / per(f);
       }
       used += Math.max(planK, lg.kcal);
       seen[f.id] = true;
-      rows.push({ f: f, q: q, kcal: planK, given: lg.q, givenK: lg.kcal, adjustable: s.adjustable, fill: false, slot: slot });
+      rows.push({ f: f, q: q, kcal: planK, given: lg.q, givenK: lg.kcal, adjustable: s.adjustable, fill: false, slot: slot,
+                  full: full, skipped: skipped });
     });
     rows.forEach(function (r) {   // once a stand-in's own amount is given, it offers to fill the open slot
       rows.forEach(function (sr) {
-        if (!sr.slot || sr.slot.by !== r.f || toGive(r) > 0) return;
+        if (!sr.slot || sr.slot.by !== r.f || r.skipped || toGive(r) > 0) return;
         var restK = sr.kcal - sr.givenK, g = roundG(restK / per(r.f));
         if (restK >= SLOT_EPS && g > 0) r.swap = { g: g, k: restK, slot: sr.f };
       });
     });
+    // Planned food not given yet: the kcal the plan still holds back for it
+    var pending = rows.filter(function (r) { return !r.skipped && toGive(r) > 0; }), pendK = 0;
+    pending.forEach(function (r) { pendK += toGive(r) * per(r.f); });
     var off = 0;
     d.entries.forEach(function (e) { if (!seen[e.food] && e.food !== dt.fill) off += e.kcal; });
     used += off;
@@ -595,12 +610,18 @@
       total += Math.max(fillQ * per(ff), lgF.kcal);
       totalFirst += Math.max(firstQ * per(ff), lgF.kcal);
     }
-    return { dt: dt, rows: rows, b: b, total: total, totalFirst: totalFirst, off: off, overBy: room < 0 ? -room : 0 };
+    // Offer to skip the pending food when holding it back costs kibble: there is no room for any,
+    // or food beyond the plan has eaten more than the walks added, so the fill is under its standard.
+    var squeezed = room < 0 || used - stdUsed - b.credit > SLOT_EPS;
+    return { dt: dt, rows: rows, b: b, total: total, totalFirst: totalFirst, off: off, overBy: room < 0 ? -room : 0,
+             room: room, fillGiven: lgF.q, pending: pending, pendK: pendK, offerSkip: pending.length > 0 && squeezed };
   }
   function toGive(r) {   // unrounded for weighed foods, so a whole ½ can stays a ½ can
     var rest = r.q - r.given;
     return pieces(r.f) ? Math.max(0, Math.round(rest)) : (rest < 0.5 ? 0 : rest);
   }
+  function pendName(r) { var q = toGive(r); return (pieces(r.f) ? q : fmtAmount(r.f, q)) + ' ' + shortName(r.f); }   // '60 g kip', '10 snoepjes'
+  function andList(a) { return a.length > 1 ? a.slice(0, -1).join(', ') + ' en ' + a[a.length - 1] : (a[0] || ''); }
 
   // One "Iets anders" form, moved between the plan (before the kibble) and its home under the tiles,
   // so a half-typed amount survives a re-render.
@@ -634,6 +655,12 @@
     var OTHER_SLOT = '<li class="pl-other" id="pl-other-slot"></li>', slotted = false;
     p.rows.forEach(function (r) {
       if (r.fill && !slotted) { html += OTHER_SLOT; slotted = true; }
+      if (r.skipped) {
+        html += '<li class="skipped"><div class="pl-info"><span class="pl-name">' + esc(r.f.name) + '</span><span class="pl-amt"><span>' +
+          esc(fmtAmount(r.f, r.full) + ' · overgeslagen' + (r.given > 0 ? ' (' + fmtQ(r.f, r.given) + ' gegeven)' : '')) + '</span></span></div>' +
+          '<button class="btn small pl-give" data-unskip="' + esc(r.f.id) + '" aria-label="' + esc(r.f.name) + ' terug in het plan">Terugzetten</button></li>';
+        return;
+      }
       var pc = pieces(r.f), give = pc ? tapQty(r.f, d) : toGive(r), sl = r.slot, replaced = sl && sl.replacedK > 0.5;
       // the fill's optional second step: 'next' before the standard is given, 'open' after, '' otherwise
       var wig = r.fill && r.extra > 0 ? (!r.second ? 'next' : give > 0 ? 'open' : '') : '';
@@ -644,7 +671,7 @@
                       : 'vervangen door extra ' + shortName(sl.by) + ' (' + fmtK(sl.fullK) + ' kcal)';
       } else {
         amt = fmtAmount(r.f, shownQ) + ' · ' + fmtK(shownK) + ' kcal';
-        if (sl && !(r.given > 0)) amt += ' · of ' + fmtG(sl.fullK / per(sl.by)) + ' g extra ' + shortName(sl.by);
+        if (sl && !(r.given > 0) && !sl.bySkipped) amt += ' · of ' + fmtG(sl.fullK / per(sl.by)) + ' g extra ' + shortName(sl.by);
       }
       if (r.given > 0 && (pc || give > 0 || r.swap || Math.abs(r.given - shownQ) >= 0.5)) amt += ' (' + fmtQ(r.f, r.given) + ' gegeven)';
       if (r.fill) amt += ' · vult de dag aan';
@@ -670,7 +697,15 @@
     html += '</ul><div class="pl-sum"><p>Plan: <b>' + fmtK(wigOpen ? p.totalFirst : p.total) + ' kcal</b>' +
       (wigOpen ? ', met de extra brokjes ' + fmtK(p.total) : '') + ' (zone ' + fmtK(p.b.low) + ' tot ' + fmtK(p.b.allow) + ')</p>';
     if (p.off > 0.5) html += '<p class="tip">Inclusief ' + fmtK(p.off) + ' kcal ander eten van vandaag.</p>';
-    if (p.overBy > 0.5) html += '<p class="warn-text">' + fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes: geef ergens minder van.</p>';
+    if (p.overBy > 0.5) html += '<p class="warn-text">' + (p.offerSkip
+      ? 'Met wat nog niet gegeven is, komt de dag ' + fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes.'
+      : fmtK(p.overBy) + ' kcal boven het doel, zelfs zonder brokjes: geef ergens minder van.') + '</p>';
+    if (p.offerSkip) {
+      var ff = byId[p.dt.fill], fit = ff ? roundQ(ff, Math.max(0, p.room + p.pendK) / per(ff)) - p.fillGiven : 0;
+      html += '<div class="pl-pend"><p>Nog niet gegeven: ' + esc(andList(p.pending.map(pendName))) + ' (' + fmtK(p.pendK) + ' kcal). ' +
+        (fit >= 0.5 ? 'Krijgt ze die niet meer, dan is er nog plaats voor ' + fmtG(fit) + ' g ' + esc(shortName(ff)) + '.' : 'Krijgt ze die niet meer?') +
+        '</p><button class="btn small" id="pl-skip">Overslaan</button></div>';
+    }
     html += '<p class="tip">Druk op + telkens als je iets geeft; de brokjes passen zich vanzelf aan wat ze verder krijgt.</p></div>';
     el.innerHTML = html;
     placeOther(d, $('pl-other-slot'));
@@ -680,10 +715,27 @@
     var t = ev.target.closest('[data-type]'), g = ev.target.closest('[data-give]'), s = ev.target.closest('[data-step]'),
         w = ev.target.closest('[data-swap]');
     if (ev.target.closest('#pl-change')) {
-      var d0 = day(); d0.type = null; d0.adj = {}; save(); render(); return;
+      var d0 = day(); d0.type = null; d0.adj = {}; d0.skip = {}; save(); render(); return;
     }
-    if (t) { var d1 = day(); d1.type = t.getAttribute('data-type'); d1.adj = {}; save(); render(); return; }
+    if (t) { var d1 = day(); d1.type = t.getAttribute('data-type'); d1.adj = {}; d1.skip = {}; save(); render(); return; }
     var p = planOf(peekDay(todayKey())); if (!p) return;
+    if (ev.target.closest('#pl-skip')) {   // stop holding kcal back for the planned food not given yet
+      var dk = day(), before = JSON.parse(JSON.stringify(dk.skip || {})), names = p.pending.map(function (r) { return shortName(r.f); });
+      if (!names.length) return;
+      dk.skip = dk.skip || {};
+      p.pending.forEach(function (r) { dk.skip[r.f.id] = true; });
+      save(); render();
+      toast('Overgeslagen: ' + andList(names) + '.', function () { day().skip = before; save(); render(); });
+      return;
+    }
+    var u = ev.target.closest('[data-unskip]');
+    if (u) {
+      var uf = u.getAttribute('data-unskip'), du = day();
+      if (du.skip) delete du.skip[uf];
+      save(); render();
+      toast('Terug in het plan: ' + shortName(byId[uf]) + '.', function () { var dd = day(); dd.skip = dd.skip || {}; dd.skip[uf] = true; save(); render(); });
+      return;
+    }
     if (g) {
       var id = g.getAttribute('data-give');
       p.rows.forEach(function (r) {
@@ -1014,7 +1066,7 @@
     var k = todayKey(), d = peekDay(k);
     if (!d || (!d.entries.length && !d.walks && !d.type)) { toast('Vandaag staat er nog niets.'); return; }
     if (!window.confirm('Vandaag helemaal wissen? Al het eten, de wandelingen en het soort dag gaan weg.')) return;
-    state.days[k] = { entries: [], walks: 0, type: null, adj: {} };
+    state.days[k] = { entries: [], walks: 0, type: null, adj: {}, skip: {} };
     save(); render();
     toast('Dag gereset.', function () { state.days[k] = d; save(); render(); });
   });
