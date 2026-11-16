@@ -100,9 +100,50 @@
     });
   }
 
+  /* ------------------------------------------------------------------------------------------
+     3. Backup slide A1: essay stance by AI use. Abdulhai et al. (2026, preprint), Figure 6, redrawn as in the maths
+        talk (EVIDENCE E1.2 there; WK ledger 13.5). Only no AI against heavy use was tested.
+     ------------------------------------------------------------------------------------------ */
+  var STANCE = [
+    { step: 1, label: 'Wrote alone', sub: 'no AI', group: 'Human', v: [32.6, 39.5, 27.9] },
+    { step: 2, label: 'Used AI lightly', sub: 'advice, look-ups', group: 'LLM-Influenced', v: [31.0, 44.8, 24.1] },
+    { step: 3, label: 'Let AI write', sub: 'much of the essay', group: 'LLM', v: [22.2, 66.7, 11.1] }
+  ];
+  function stanceChart(host) {
+    var W = 1656, H = 420, xa = 430, xb = 1640, bh = 84, gap = 4, rowY = [118, 236, 354];
+    var s = (xb - xa) / 100;
+    var svg = svgFor(host, W, H, 'Stance of essays on whether money leads to happiness. Wrote alone: 32.6% for, 39.5% neutral, 27.9% against. Used AI lightly: 31.0, 44.8, 24.1. Let AI write much of the essay: 22.2, 66.7, 11.1.');
+    var lg = g(svg, 'legend st-0'), lx = xa;
+    [['for', 'for'], ['nostance', 'neutral: takes no side'], ['against', 'against']].forEach(function (k) {
+      el('rect', { x: lx, y: 8, width: 26, height: 26, rx: 5, 'class': k[0] }, lg);
+      txt(lg, lx + 38, 31, k[1], '');
+      lx += 38 + k[1].length * 12.6 + 64;
+    });
+    STANCE.forEach(function (r, i) {
+      var y = rowY[i], tot = r.v[0] + r.v[1] + r.v[2];
+      var c1 = xa + r.v[0] / tot * 100 * s, c2 = xa + (r.v[0] + r.v[1]) / tot * 100 * s;
+      var grp = g(svg, 'st-' + r.step);
+      txt(grp, 0, y - 4, r.label, 'label', {});
+      txt(grp, 0, y + 32, r.sub, 'label-2', {});
+      var bars = g(grp, 'grow-x');
+      bars.style.transformOrigin = xa + 'px 0px';
+      var labs = g(grp, 'late');
+      [
+        { cls: 'for', name: 'for', v: r.v[0], a: xa, b: c1 - gap / 2 },
+        { cls: 'nostance', name: 'neutral', v: r.v[1], a: c1 + gap / 2, b: c2 - gap / 2 },
+        { cls: 'against', name: 'against', v: r.v[2], a: c2 + gap / 2, b: xb }
+      ].forEach(function (sg) {
+        var rect = mark(el('rect', { x: sg.a.toFixed(1), y: y - bh / 2, width: (sg.b - sg.a).toFixed(1), height: bh, rx: 6, 'class': 'bar ' + sg.cls }, bars), 'AB6');
+        tip(rect, r.label + ' (' + r.group + '): ' + sg.name + ' ' + fmt(sg.v, 1) + '%');
+        txt(labs, ((sg.a + sg.b) / 2).toFixed(1), y + 11, fmt(sg.v, 1) + '%', 'seglabel', { 'text-anchor': 'middle' });
+      });
+    });
+  }
+
   var BUILDERS = {
     'timeline': timelineChart,
-    'per-million': perMillionChart
+    'per-million': perMillionChart,
+    'stance': stanceChart
   };
   function buildAll() {
     Array.prototype.forEach.call(document.querySelectorAll('.chart[data-chart]'), function (host) {
@@ -110,5 +151,5 @@
       if (b && !host.firstChild) b(host);
     });
   }
-  window.DeckCharts = { buildAll: buildAll, data: { PM: PM } };
+  window.DeckCharts = { buildAll: buildAll, data: { PM: PM, STANCE: STANCE } };
 })();

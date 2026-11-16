@@ -1,9 +1,9 @@
 /* deck.js: runtime for the LIN 3042 mock article presentation (17 November 2026). Built on the engine of
    "What Is Left to Write?" (WK talk, 1 October 2026) as carried on in "Copy, Contract, Tilt" (13 November 2026):
    the same keys, numbering, jump box and WK's line bundles as the background.
-   URL switches:  ?present (trap F5, Ctrl+R and Tab)   ?motion=on|off   ?rubric (open with the rubric tags on)
+   URL switches:  ?present (trap F5, Ctrl+R and Tab)   ?motion=on|off   ?clean (open with the rubric colours off)
                   ?print-pdf (reveal's print view)
-   Our keys:      R: rubric tags on/off (which row of the presentation rubric each slide serves)
+   Our keys:      R: rubric colours on/off (which row of the presentation rubric each part meets; slide 2 is the key)
                   G: jump to a slide by its number (A1, A2 for the appendix), Enter to go, Esc to cancel
    Dev keys:      K key test (for the clicker)
    Reveal keys:   PageDown/PageUp, arrows, Space: step   B or . : black   O: overview */
@@ -19,7 +19,6 @@
   try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { /* old browser */ }
   if (params.get('motion') === 'off' || (reduce && params.get('motion') !== 'on')) html.classList.add('motion-off');
   if (PRINT) html.classList.add('is-print');
-  if (params.has('rubric')) html.classList.add('show-rubric');
 
   /* ---- a small toast for feedback ---- */
   var toastEl = null, toastTimer = 0;
@@ -38,7 +37,7 @@
     b: 'black screen on/off', B: 'black screen on/off', v: 'black screen on/off', F5: PRESENT ? 'blocked (would reload)' : 'reload (blocked with ?present)',
     Escape: 'nothing (overview is O)', Tab: PRESENT ? 'blocked' : 'moves focus (blocked with ?present)',
     o: 'overview', O: 'overview', g: 'jump to slide (number, Enter)', G: 'jump to slide (number, Enter)', Home: 'first slide', End: 'last slide',
-    r: 'rubric tags on/off', R: 'rubric tags on/off', k: 'close this', K: 'close this', F11: 'browser full screen'
+    r: 'rubric colours on/off', R: 'rubric colours on/off', k: 'close this', K: 'close this', F11: 'browser full screen'
   };
   var kt = null, ktBody = null, ktOpen = false;
   function buildKeyTest() {
@@ -139,31 +138,35 @@
     });
   }
 
-  /* ---- rubric tags (R): each section's data-rubric names the rows it serves (LIN 3042 presentation rubric) ---- */
-  var RUBRIC = {
-    '1': 'Rubric 1 · The article and its question',
-    '2': 'Rubric 2 · What the researchers did',
-    '3': 'Rubric 3 · One piece of evidence, walked through',
-    '4': 'Rubric 4 · Critique',
-    '5': 'Rubric 5 · The instructor’s question',
-    '6': 'Rubric 6 · Why this article',
-    'B1': 'Bonus 1 · Timing',
-    'B2': 'Bonus 2 · A second question',
-    'none': 'No rubric row: it keeps the talk on time'
+  /* ---- rubric colours (R): a section's data-rubric names the rubric rows it serves, data-rubric-note what it covers
+          there; parts marked data-rb get a bar in that row's colour (deck.css). On by default; R or ?clean hides them.
+          Slide 2 is the key. ---- */
+  var ROWS = {
+    '1': '1 \u00b7 The article and its question', '2': '2 \u00b7 What the researchers did', '3': '3 \u00b7 One piece of evidence',
+    '4': '4 \u00b7 Critique', '5': '5 \u00b7 The instructor\u2019s question', '6': '6 \u00b7 Why this article',
+    'B1': 'Bonus 1 \u00b7 Timing', 'B2': 'Bonus 2 \u00b7 A second question', 'aside': 'Not on the rubric'
   };
+  if (params.has('clean')) html.classList.add('hide-rubric');
   function tagRubric() {
     Array.prototype.forEach.call(document.querySelectorAll('.reveal .slides > section[data-rubric]'), function (s) {
-      var keys = s.getAttribute('data-rubric').split(/\s+/).filter(Boolean);
-      var tag = document.createElement('span');
-      tag.className = 'rubric-tag' + (keys[0] === 'none' ? ' none' : '');
+      var tag = document.createElement('div');
+      tag.className = 'rubric-tag';
       tag.setAttribute('aria-hidden', 'true');
-      tag.textContent = keys.map(function (k) { return RUBRIC[k] || k; }).join('  +  ');
+      s.getAttribute('data-rubric').split(/\s+/).filter(Boolean).forEach(function (k) {
+        var c = document.createElement('span');
+        c.className = 'rc';
+        c.setAttribute('data-rr', k);
+        c.textContent = ROWS[k] || k;
+        tag.appendChild(c);
+      });
+      var note = s.getAttribute('data-rubric-note');
+      if (note) { var n = document.createElement('span'); n.className = 'rn'; n.textContent = note; tag.appendChild(n); }
       s.appendChild(tag);
     });
   }
   function toggleRubric() {
-    var on = html.classList.toggle('show-rubric');
-    toast(on ? 'Rubric tags on' : 'Rubric tags off');
+    var hidden = html.classList.toggle('hide-rubric');
+    toast(hidden ? 'Rubric colours off' : 'Rubric colours on');
   }
 
   function slideTitle(s) {
@@ -252,7 +255,7 @@
     }).then(function () {
       window.Reveal.addKeyBinding({ keyCode: 75, key: 'K', description: 'Key test (dev)' }, toggleKeyTest);
       window.Reveal.addKeyBinding({ keyCode: 71, key: 'G', description: 'Jump to a slide by number' }, openJump);
-      window.Reveal.addKeyBinding({ keyCode: 82, key: 'R', description: 'Rubric tags on/off' }, toggleRubric);
+      window.Reveal.addKeyBinding({ keyCode: 82, key: 'R', description: 'Rubric colours on/off' }, toggleRubric);
       if (PRESENT) toast('Presenting: F5, Ctrl+R and Tab are off');
     });
   }

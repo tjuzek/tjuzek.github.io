@@ -372,14 +372,44 @@ html.reveal-print .reveal .slides .pdf-page section { height: 1080px !important;
 
 /* ======================= The mock presentation: this deck's own pieces (16 November 2026) ======================= */
 
-/* rubric tags (key R): which row of the presentation rubric a slide serves. Hidden unless html.show-rubric */
+/* rubric colours (16 Nov, Tommie): each row of the presentation rubric has a colour, six of the dataviz palette's dark
+   slots in the order blue, orange, aqua, violet, magenta, green. Yellow is left out because it is the deck's gold accent
+   (AI words, H0/H1, step numbers). The order was searched and validated on #050507: all checks pass, worst adjacent
+   CVD 9.4; every chip and bar also carries its row number. Both bonuses neutral grey. On by default; R or ?clean hides
+   them. Slide 2 is the key. */
+:root { --rb1: #3987e5; --rb2: #d95926; --rb3: #199e70; --rb4: #9085e9; --rb5: #d55181; --rb6: #0ca30c; --rbB: #8d8a82; }
+[data-rr="1"], [data-rb="1"] { --rbc: var(--rb1); }
+[data-rr="2"], [data-rb="2"] { --rbc: var(--rb2); }
+[data-rr="3"], [data-rb="3"] { --rbc: var(--rb3); }
+[data-rr="4"], [data-rb="4"] { --rbc: var(--rb4); }
+[data-rr="5"], [data-rb="5"] { --rbc: var(--rb5); }
+[data-rr="6"], [data-rb="6"] { --rbc: var(--rb6); }
+[data-rr="B1"], [data-rb="B1"], [data-rr="B2"], [data-rb="B2"], [data-rr="aside"] { --rbc: var(--rbB); }
 .reveal .slides section > .rubric-tag {
-  position: absolute; top: 34px; right: 46px; z-index: 3; display: none;
-  font-family: 'Inter', system-ui, sans-serif; font-size: 25px; font-weight: 650; letter-spacing: 0.04em; line-height: 1.2;
-  color: #050507; background: var(--gold); padding: 7px 16px; border-radius: 8px; pointer-events: none;
+  position: absolute; top: 34px; right: 46px; z-index: 3; display: flex; align-items: center; gap: 12px;
+  font-family: 'Inter', system-ui, sans-serif; line-height: 1.2; pointer-events: none;
 }
-html.show-rubric .reveal .slides section > .rubric-tag { display: block; }
-html.show-rubric .reveal .slides section > .rubric-tag.none { background: transparent; color: var(--text-3); border: 2px solid var(--text-3); }
+.rubric-tag .rc { font-size: 24px; font-weight: 650; letter-spacing: 0.02em; color: #050507; background: var(--rbc); padding: 6px 14px; border-radius: 8px; }
+.rubric-tag .rc[data-rr="aside"] { background: transparent; color: var(--text-3); border: 2px solid var(--text-3); padding: 4px 12px; }
+.rubric-tag .rn { font-size: 22px; color: var(--text-2); }
+html.hide-rubric .reveal .slides section > .rubric-tag { display: none; }
+/* a bar in the left margin beside each part that meets a row, with the row's number */
+[data-rb] { position: relative; }
+[data-rb]::before { content: ''; position: absolute; left: -46px; top: 4px; bottom: 4px; width: 8px; border-radius: 4px; background: var(--rbc); }
+[data-rb]::after { content: attr(data-rb); position: absolute; left: -100px; top: 2px; width: 44px; text-align: right;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 1.2; color: var(--rbc); }
+html.hide-rubric [data-rb]::before, html.hide-rubric [data-rb]::after { display: none; }
+
+/* the rubric slide: one row per rubric row, its colour chip first */
+.rub-lede { font-size: 40px; margin-bottom: 14px; }
+.rgrid .rr { display: grid; grid-template-columns: 76px 1fr 104px 330px; column-gap: 24px; align-items: center;
+  padding: 8px 0; border-top: 1.5px solid var(--hair); }
+.rgrid .rr:last-child { border-bottom: 1.5px solid var(--hair); }
+.rgrid .rk { justify-self: start; min-width: 60px; text-align: center; box-sizing: border-box; padding: 5px 8px; border-radius: 8px;
+  background: var(--rbc); color: #050507; font-family: 'Inter', system-ui, sans-serif; font-size: 26px; font-weight: 700; }
+.rgrid .rt b { display: block; font-size: 32px; line-height: 1.15; font-weight: 500; color: var(--ink); }
+.rgrid .rd { display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 21px; line-height: 1.3; color: var(--text-3); margin-top: 2px; }
+.rgrid .rp, .rgrid .rw { font-family: 'Inter', system-ui, sans-serif; font-size: 24px; color: var(--text-2); font-variant-numeric: tabular-nums; }
 
 /* title */
 .title-wrap { height: 100%; display: flex; flex-direction: column; justify-content: center; }
@@ -454,14 +484,14 @@ section:has(.step-marker[data-step="3"].visible) .sent .w { color: var(--s-gold)
 .chart .dot.hollow.neutral { fill: var(--ground); stroke: var(--s-neutral); stroke-width: 5; }
 
 /* the evidence: the paper's figure, tall, on a light card at the left; the walk-through at the right */
-.frame.fig { padding: 30px 120px 30px 80px; }
+.frame.fig { padding: 30px 120px 30px 112px; }
 .walk-grid { display: grid; grid-template-columns: 596px 1fr; gap: 76px; height: 100%; align-items: center; }
 .figcard.tall { padding: 10px 12px 8px; margin: 0; }
 .figwrap { position: relative; }
 .figwrap img { display: block; width: 100%; height: auto; }
-.figwrap .hl { position: absolute; border: 5px solid var(--s-gold); border-radius: 8px; background: rgba(201,133,0,0.13);
+.figwrap .hl { position: absolute; border: 5px solid var(--rb3); border-radius: 8px; background: rgba(25,158,112,0.13);
   opacity: 0; transition: opacity 0.5s ease; box-sizing: border-box; pointer-events: none; }
-.figwrap .hl.line { background: rgba(201,133,0,0.22); border-width: 4px; }
+.figwrap .hl.line { background: rgba(25,158,112,0.24); border-width: 4px; }
 section:has(.step-marker[data-step="1"].visible):not(:has(.step-marker[data-step="2"].visible)) .figwrap .hl[data-at="1"],
 section:has(.step-marker[data-step="2"].visible):not(:has(.step-marker[data-step="3"].visible)) .figwrap .hl[data-at="2"],
 section:has(.step-marker[data-step="3"].visible):not(:has(.step-marker[data-step="4"].visible)) .figwrap .hl[data-at="3"],
@@ -498,9 +528,6 @@ section:has(.step-marker[data-step="5"].visible) .walk p.s[data-at="4"] { opacit
 .crit .c .h { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
 .crit .c .hd { font-size: 46px; line-height: 1.15; font-weight: 450; color: var(--ink); margin: 0 0 16px; }
 .crit .c .t { font-size: 34px; line-height: 1.3; color: var(--text-2); margin: 0 0 14px; }
-.crit .c.strength { border-color: var(--s-blue); }
-.crit .c.weakness { border-color: var(--s-gold); }
-.crit .c.follow { border-color: var(--ink-2); }
 
 /* why this article */
 .why .lede { max-width: 1560px; }
@@ -522,3 +549,26 @@ table.numbers.rubric td b { color: var(--ink); font-weight: 600; }
 
 /* the Draft tag on the title, until Tommie approves */
 .tag.draft { color: #e0a25a; vertical-align: 0.1em; }
+
+/* nota bene (16 Nov): a wall of emphasize-type verbs, one per language (paper, Table 2); English in gold */
+.nb-head { font-size: 66px; margin-bottom: 22px; }
+.wall { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px 18px; margin: 6px 0 24px; }
+.wall .wc { border: 2px solid var(--axis); border-radius: 12px; padding: 12px 16px 10px; }
+.wall .lem { display: block; font-size: 36px; line-height: 1.25; color: var(--ink); white-space: nowrap; }
+.wall .lang { display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 21px; letter-spacing: 0.04em; color: var(--text-3); margin-top: 4px; }
+.wall .wc.en { border-color: var(--s-gold); }
+.wall .wc.en .lem { color: var(--s-gold); }
+
+/* backup A1 (16 Nov): the stance chart, from the maths talk. Gold and blue poles around a grey middle */
+.chart .for { fill: var(--s-gold); }
+.chart .against { fill: var(--s-blue); }
+.chart .nostance { fill: var(--s-grey); }
+.chart .seglabel { font-size: 30px; font-weight: 650; fill: #050507; font-variant-numeric: tabular-nums; }
+.chart .grow-x { transform-box: view-box; transform: scaleX(0.001); transition: transform 1.1s cubic-bezier(.2,.7,.2,1); }
+.chart .late { opacity: 0; transition: opacity 0.4s ease; }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .grow-x,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .grow-x,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .grow-x { transform: scaleX(1); }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .late,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .late,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .late { opacity: 1; transition-delay: 0.8s; }
