@@ -63,6 +63,12 @@ python3 -m http.server 8000
   `meta.json`) are BUILT, never hand-edited: `~/claudecode/lin3042/course/modules/sleep-sound/code/build_sleep.py`.
   The recordings are Sleep-EDF Expanded (PhysioNet), licensed ODC-By 1.0, not CC0; the page and its footer
   say so. Nothing is stored or sent. Notes: `~/claudecode/lin3042/course/modules/sleep-sound/README.md`.
+- `/lin3042/mock-presentation/` (from 2026-11-16) is a slide deck, not a page: Tommie's mock Article Summary &
+  Critique presentation on his EACL 2027 paper (the uptick of AI-associated words in news), shown in class on
+  17 Nov 2026. The engine is the Copy-Contract-Tilt deck without the dye (WK's line bundles, WK's violet); R shows
+  which rubric row each slide serves. Unlisted (`noindex`, not in the sitemap, linked from nowhere) until Tommie
+  says. Every number on a slide is checked against the paper: `~/claudecode/lin3042/course/modules/mock-presentation/`
+  (`EVIDENCE.md`, `check_evidence.py`, `citation-audit.md`).
 - `/bruce/` (from 2026-11-12) is an unlisted personal tool, not part of the academic site: a phone
   calorie tally for Tommie's dog (a day planner, corned beef or chicken day, that tops up with kibble
   to the 700 to 750 kcal band; tiles for what she ate, plus a free kcal field; grams to kcal and back; what is left, in grams;
@@ -125,7 +131,7 @@ python3 -m http.server 8000
 
 ## Files
 `index.html` · `research.html` · `teaching.html` · `talks-press.html` · `now/index.html` · `phd/index.html`
-· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo; `linck/`, the Linck et al. tasks; `confounds/`, the confounds explainer) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
+· `lin3042/` (course page: `index.html`, `data.js`, the schedule PDF; `papers/`, the article guide; `priming/`, the priming demo; `linck/`, the Linck et al. tasks; `confounds/`, the confounds explainer; `mock-presentation/`, the mock presentation deck) · `404.html` · `style.css` · `robots.txt` · `sitemap.xml` · `llms.txt` · `CNAME` ·
 `.nojekyll` · `talks/2026-left-to-write/` (landing page for the MLL colloquium talk of 1 October 2026,
 in the sitemap; source in `~/claudecode/wk-talk/talk/landing/`) and its `slides/` (the deck; `noindex`,
 not in the sitemap; source in `~/claudecode/wk-talk/talk/deck/`) · `talks/left-to-write/` (redirect stub
@@ -146,7 +152,9 @@ dog-calorie tally, from 12 November 2026: `index.html`, `foods.js`, `manifest.we
   and the image of Gerhard Richter's *Spiegel, Grau* (1991) is © Gerhard Richter, used under the National Galleries
   of Scotland personal-use licence with credit and a link to the artwork page. In `talks/2026-copy-contract-tilt/slides/`
   (also used by its landing page), reveal.js is MIT (notice in `assets/reveal/LICENSE`) and the Newsreader and
-  Inter fonts are SIL OFL 1.1 (texts in `assets/fonts/`). None of these is MIT-0 or CC0.
+  Inter fonts are SIL OFL 1.1 (texts in `assets/fonts/`). In `lin3042/mock-presentation/`, reveal.js is MIT and the
+  Newsreader and Inter fonts are SIL OFL 1.1 (same files and notices), and `assets/img/juzek-2027-fig2.png` is Figure 2
+  of Juzek (2027), CC BY 4.0. None of these is MIT-0 or CC0.
 
 If you reuse anything here, a credit or a link back to [tjuzek.com](https://tjuzek.com) is appreciated, though not required.
 

@@ -1,0 +1,524 @@
+/* deck.css: theme for the LIN 3042 mock article presentation (17 November 2026), on the engine and look of the
+   WK deck ("What Is Left to Write?", 1 October 2026) as carried on in "Copy, Contract, Tilt" (13 November 2026).
+   Dark only; the background is WK's line bundles in WK's violet (data-palette="wk").
+   Chart colours are constant and were checked with the dataviz validator for the WK deck:
+   gold #c98500 and blue #3987e5 pass together; red #e66767 never shares a chart with gold;
+   violet is decoration only. This deck's own pieces are at the end. No em dashes in this file (site rule). */
+
+/* ---------- fonts (self-hosted, OFL; licences in fonts/) ---------- */
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-standard-italic.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-ext-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: block;
+  src: url(fonts/newsreader-latin-ext-standard-italic.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: block;
+  src: url(fonts/inter-latin-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Inter'; font-style: italic; font-weight: 100 900; font-display: block;
+  src: url(fonts/inter-latin-standard-italic.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: block;
+  src: url(fonts/inter-latin-ext-standard-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* ---------- animatable tokens (registered so colour changes can transition) ---------- */
+@property --accent  { syntax: '<color>'; inherits: true; initial-value: #d8b765; }
+@property --ground  { syntax: '<color>'; inherits: true; initial-value: #050507; }
+@property --wave-a  { syntax: '<color>'; inherits: true; initial-value: #a88f55; }
+@property --wave-b  { syntax: '<color>'; inherits: true; initial-value: #8b6cff; }
+@property --wave-c  { syntax: '<color>'; inherits: true; initial-value: #4a6fc0; }
+@property --text-2  { syntax: '<color>'; inherits: true; initial-value: #c9c5bb; }
+@property --text-3  { syntax: '<color>'; inherits: true; initial-value: #8d8a82; }
+
+/* ---------- palettes (base values; the animated tokens above point at these). Only the violet differs. ---------- */
+html, html[data-palette="violet"] {
+  --bg: #050507;          /* the WK flyer's black, a hair lifted */
+  --ink: #f4f1ea;         /* warm white */
+  --ink-2: #c9c5bb;
+  --ink-3: #8d8a82;
+  --hair: #26262b;        /* gridlines */
+  --axis: #3c3c42;
+  --gold: #d8b765;        /* text accent */
+  --w-gold: #a88f55;      /* the waves: gold, violet, blue (WK's wave colours) */
+  --w-violet: #8b6cff;
+  --w-blue: #4a6fc0;
+}
+html[data-palette="lilac"]    { --w-violet: #a58bff; }
+html[data-palette="electric"] { --w-violet: #7c4dff; }
+html[data-palette="wk"]       { --w-violet: #6c5fae; }   /* the WK deck's violet, for comparison */
+
+/* chart series: constant across palettes (colour follows the entity) */
+:root {
+  --s-gold: #c98500;      /* flagship models; "up" */
+  --s-blue: #3987e5;      /* small tier; "down" */
+  --s-red:  #e66767;      /* flagged: never in a chart with gold */
+  --s-neutral: #8d8a82;   /* human reference marks */
+  --floor: #50524d;       /* the zero-floor band: a neutral grey */
+  --s-grey: #6f716b;      /* a stance that takes no side: neutral grey, lifted to 4:1 on the ground.
+                             With gold and blue as the two poles: CVD and contrast checks pass; its
+                             chroma "fails" by design (a diverging midpoint must read as no hue) */
+}
+
+body {
+  --accent: var(--gold);
+  --ground: var(--bg);
+  --wave-a: var(--w-gold);
+  --wave-b: var(--w-violet);
+  --wave-c: var(--w-blue);
+  --text-2: var(--ink-2);
+  --text-3: var(--ink-3);
+  transition: --accent 2s ease, --ground 2.4s ease 0.6s, --wave-a 2s ease, --wave-b 2s ease,
+              --wave-c 2s ease, --text-2 2s ease, --text-3 2s ease;
+}
+
+/* ---------- page ---------- */
+html, body { margin: 0; height: 100%; }
+body, .reveal-viewport {
+  background: var(--ground);
+  color: var(--ink);
+}
+.reveal {
+  font-family: 'Newsreader', Georgia, serif;
+  font-optical-sizing: auto;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+.reveal .slides { text-align: left; }
+.reveal .slides > section { height: 1080px; box-sizing: border-box; }
+.reveal .progress { height: 4px; color: var(--accent); background: transparent; }
+.reveal .pause-overlay { background: #000; }
+.reveal ::selection { background: var(--accent); color: #000; }
+.reveal a { color: inherit; text-decoration-color: var(--text-3); text-underline-offset: 0.18em; }
+
+/* inner frame carries the padding (print CSS zeroes section padding) */
+.frame {
+  position: absolute; inset: 0;
+  padding: 104px 132px 96px;
+  box-sizing: border-box;
+  display: flex; flex-direction: column;
+}
+.frame.center { justify-content: center; }
+.frame.split { flex-direction: row; gap: 96px; align-items: center; }
+
+/* ---------- type ---------- */
+.kicker {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 30px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 28px;
+}
+.h1 { font-size: 132px; line-height: 1.02; font-weight: 440; letter-spacing: -0.012em; margin: 0; }
+.h2 { font-size: 84px;  line-height: 1.08; font-weight: 430; letter-spacing: -0.008em; margin: 0 0 36px; }
+.h3 { font-size: 58px;  line-height: 1.12; font-weight: 450; margin: 0 0 18px; }
+.lede { font-size: 56px; line-height: 1.28; font-weight: 380; color: var(--ink); margin: 0 0 28px; max-width: 1500px; }
+.body { font-size: 46px; line-height: 1.34; font-weight: 400; color: var(--text-2); margin: 0 0 22px; }
+.small { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; line-height: 1.4; color: var(--text-3); }
+.quote { font-style: italic; font-size: 56px; line-height: 1.28; font-weight: 380; margin: 0 0 22px; }
+.cite {
+  font-family: 'Inter', system-ui, sans-serif; font-style: normal;
+  font-size: 30px; line-height: 1.4; color: var(--text-3); margin: 0 0 12px;
+}
+.sans { font-family: 'Inter', system-ui, sans-serif; }
+.num { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
+.muted { color: var(--text-3); }
+
+/* tags that must be resolved before the talk */
+.tag {
+  display: inline-block; vertical-align: 0.32em;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 20px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; margin-left: 12px;
+  border: 1.5px solid currentColor; border-radius: 6px;
+  color: var(--text-3);
+}
+.tag.pending { color: #e0a25a; }
+.tag.wip { color: #8fb3e8; }
+html.is-print .tag.pending, html.is-print .tag.wip { border-width: 1px; }
+
+/* ---------- layouts ---------- */
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 72px; margin-top: 24px; }
+.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; margin-top: 12px; }
+.col h3 { font-family: 'Inter', system-ui, sans-serif; font-size: 34px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 22px; }
+.col .quote { font-size: 44px; }
+.col .body { font-size: 40px; }
+.rule { height: 2px; background: var(--axis); margin: 26px 0; border: 0; }
+/* the ledger (slides 4 and 5): a label and a line per row, then the point */
+.ledger { margin: 8px 0 44px; }
+.ledger .row { display: grid; grid-template-columns: 320px 1fr; align-items: baseline;
+  padding: 16px 0; border-top: 2px solid var(--axis); }
+.ledger .row:last-child { border-bottom: 2px solid var(--axis); }
+.ledger .where { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.ledger .what { font-size: 46px; line-height: 1.25; color: var(--text-2); }
+.lede.point { font-size: 64px; line-height: 1.2; margin-bottom: 20px; }
+#sources .cite { font-size: 28px; margin-bottom: 9px; }   /* the appendix list: one size down so it fits */
+/* title slide */
+.title-main { font-size: 138px; line-height: 0.98; font-weight: 450; letter-spacing: -0.015em; margin: 0 0 40px; }
+.title-sub { font-size: 54px; line-height: 1.22; font-weight: 380; color: var(--text-2); margin: 0 0 64px; max-width: 1000px; }
+.byline { font-family: 'Inter', system-ui, sans-serif; font-size: 34px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+.byline-2 { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; color: var(--text-3); margin: 0; }
+
+
+/* numbers table (the table-view twin of the figures) */
+table.numbers { border-collapse: collapse; font-family: 'Inter', system-ui, sans-serif; font-size: 23px; width: 100%; }
+table.numbers th, table.numbers td { text-align: left; padding: 4px 14px 4px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+table.numbers th { color: var(--text-3); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 20px; }
+table.numbers td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- figures ---------- */
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: 'Inter', system-ui, sans-serif; fill: var(--text-2); }
+.chart .tick text { font-size: 28px; fill: var(--text-3); font-variant-numeric: tabular-nums; }
+.chart .grid line { stroke: var(--hair); stroke-width: 2; }
+.chart .axis line, .chart .axis path { stroke: var(--axis); stroke-width: 2; }
+.chart .ref line { stroke: var(--ink-2); stroke-width: 3; }
+.chart .ref text { font-size: 30px; fill: var(--ink-2); }
+.chart .floor rect { fill: var(--floor); opacity: 0.55; }
+.chart .floor text { font-size: 26px; fill: var(--text-3); }
+.chart .label { font-size: 32px; fill: var(--ink); font-weight: 600; }
+.chart .label-2 { font-size: 28px; fill: var(--text-2); }
+.chart .xlab { font-size: 28px; fill: var(--text-2); }
+.chart .xlab-2 { font-size: 22px; fill: var(--text-3); }
+.chart .gold { fill: var(--s-gold); stroke: var(--s-gold); }
+.chart .blue { fill: var(--s-blue); stroke: var(--s-blue); }
+.chart .red  { fill: var(--s-red);  stroke: var(--s-red); }
+.chart .neutral { fill: var(--s-neutral); stroke: var(--s-neutral); }
+.chart .dot { stroke: var(--ground); stroke-width: 4; }       /* 2px surface ring, scaled for projection */
+.chart .line { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.chart .bar { stroke: none; }
+.chart .legend text { font-size: 28px; fill: var(--text-2); }
+.chart .pendingmark { font-size: 20px; fill: #e0a25a; font-weight: 600; letter-spacing: 0.06em; }
+.chart .wipmark { font-size: 20px; fill: #8fb3e8; font-weight: 600; letter-spacing: 0.06em; }
+
+/* step-driven state: hidden step markers are reveal fragments; the figure reads them with :has().
+   This makes back-navigation, hash jumps and print all land in the right state. */
+.step-marker { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.chart [class*="st-"] { opacity: 0; transition: opacity 0.7s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3,
+section:has(.step-marker[data-step="4"].visible) .chart .st-4,
+section:has(.step-marker[data-step="5"].visible) .chart .st-5 { opacity: 1; }
+.chart .st-0 { opacity: 1; }
+/* bars grow from the baseline when their step arrives */
+.chart .grow { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0.001); }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .grow,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .grow,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .grow,
+section:has(.step-marker[data-step="4"].visible) .chart .st-4 .grow { transform: scaleY(1); }
+/* the 39 flagged entries swell in */
+.chart .pop { transform-box: fill-box; transform-origin: 50% 50%; transform: scale(0.2); transition: transform 0.9s cubic-bezier(.3,1.6,.4,1); }
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .pop { transform: scale(1); }
+/* lines draw in */
+.chart .draw { stroke-dasharray: var(--len, 4000); stroke-dashoffset: var(--len, 4000); transition: stroke-dashoffset 1.6s ease; }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .draw,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .draw,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .draw { stroke-dashoffset: 0; }
+
+/* ---------- a panel slide, if one is added: no number, no progress bar ---------- */
+#panel .slide-no { display: none; }
+body.panel .reveal .progress { opacity: 0; transition: opacity 1s ease; }
+
+/* ---------- text fragments: a quiet rise ---------- */
+.reveal .fragment.rise { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal .fragment.rise.visible { opacity: 1; transform: none; }
+
+/* ---------- the background (behind the slides): WK's three bundles of lines (deck.js) ---------- */
+.waves { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.waves .drift { position: absolute; top: 0; left: 0; width: 200%; height: 100%; animation: drift 160s linear infinite; will-change: transform; }
+.waves .drift.slow { animation-duration: 220s; }
+.waves .drift.rev  { animation-direction: reverse; }
+@keyframes drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+.waves svg { width: 100%; height: 100%; display: block; }
+.waves path { fill: none; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.waves .ba path { stroke: var(--wave-a); }
+.waves .bb path { stroke: var(--wave-b); }
+.waves .bc path { stroke: var(--wave-c); }
+.waves > .amp { position: absolute; inset: 0; }
+.waves canvas.dye { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.waves .amp { transform-box: view-box; transform-origin: 50% 93%; transition: transform 1.6s cubic-bezier(.6,0,.2,1), opacity 1.6s ease; }
+.waves { transition: opacity 1.2s ease; opacity: 0.9; }
+body.quiet .waves { opacity: 0.22; }
+html:not(.bg-lines) .waves { opacity: 0.8; }
+html:not(.bg-lines) body.quiet .waves { opacity: 0.3; }
+/* thank you (before the credits): the waves at full strength, a gentle swell */
+body.thanks .waves, body.panel .waves { opacity: 1; }
+/* a turn slide (data-state="turn"): the dye comes up and swells while one word stands alone, then settles like a chart slide's */
+body.turn .waves { opacity: 1; }
+body.turn .waves .amp { transform: scaleY(1.75); }
+body.turn:has(.reveal .slides section.present .step-marker[data-step="open"].visible) .waves { opacity: 0.22; }
+body.turn:has(.reveal .slides section.present .step-marker[data-step="open"].visible) .waves .amp { transform: none; }
+
+/* ---------- dev overlays ---------- */
+.toast {
+  position: fixed; right: 28px; bottom: 28px; z-index: 50;
+  font: 600 16px/1.3 'Inter', system-ui, sans-serif; color: #111; background: #e8e3d6;
+  padding: 8px 14px; border-radius: 8px; opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+}
+.toast.on { opacity: 0.95; }
+.keytest {
+  position: fixed; inset: 6vh 8vw; z-index: 60; display: none;
+  background: rgba(8,8,12,0.94); border: 2px solid #5b5b66; border-radius: 16px;
+  padding: 28px 36px; box-sizing: border-box; color: #eee;
+  font: 400 18px/1.45 'Inter', system-ui, sans-serif; overflow: hidden;
+}
+.keytest.on { display: block; }
+.keytest h2 { font: 600 26px/1.2 'Inter', system-ui, sans-serif; margin: 0 0 6px; }
+.keytest p { margin: 0 0 14px; color: #aaa; }
+.keytest table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.keytest td, .keytest th { text-align: left; padding: 6px 12px 6px 0; border-bottom: 1px solid #2a2a33; }
+.keytest th { color: #999; font-weight: 600; }
+.keytest td.act { color: #e9c56b; }
+
+/* ---------- motion off (prefers-reduced-motion unless ?motion=on, or ?motion=off) ---------- */
+html.motion-off *, html.motion-off *::before, html.motion-off *::after { transition-duration: 0s !important; animation: none !important; }
+html.motion-off body { transition: none !important; }
+
+/* ---------- print (reveal ?print-pdf) ---------- */
+html.is-print .waves { display: none; }
+html.is-print, html.is-print * { transition: none !important; animation: none !important; }
+html.is-print .reveal .slides section .frame { position: absolute; }
+
+/* schematic strokes */
+.chart .line.dashed { stroke-dasharray: 14 12; }
+.chart .dot.hollow.gold { fill: var(--ground); stroke: var(--s-gold); stroke-width: 5; }
+.chart .whisker line { stroke: var(--s-gold); stroke-width: 5; stroke-linecap: round; }
+.nobr { white-space: nowrap; }
+
+.chart .late { opacity: 0; transition: opacity 0.4s ease; }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .grow-x,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .grow-x,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .grow-x { transform: scaleX(1); }
+section:has(.step-marker[data-step="1"].visible) .chart .st-1 .late,
+section:has(.step-marker[data-step="2"].visible) .chart .st-2 .late,
+section:has(.step-marker[data-step="3"].visible) .chart .st-3 .late { opacity: 1; transition-delay: 0.8s; }
+
+/* slide numbers (for reference; G jumps by number). Inside the slide, so they scale and print with it */
+.reveal .slides section > .slide-no {
+  position: absolute; right: 46px; bottom: 30px; z-index: 2;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 22px; font-weight: 500; line-height: 1;
+  letter-spacing: 0.06em; font-variant-numeric: tabular-nums;
+  color: var(--text-3); opacity: 0.75; pointer-events: none;
+}
+.reveal .slides section > .slide-no.overview-only { display: none; }
+.reveal.overview .slides section > .slide-no { display: block; font-size: 120px; font-weight: 600; opacity: 0.9; right: 64px; bottom: 48px; }
+
+/* the G box: bottom right, over the number; screen pixels, not slide pixels */
+.jump {
+  position: fixed; right: 24px; bottom: 20px; z-index: 55;
+  display: none; align-items: center; gap: 12px;
+  padding: 8px 16px; border-radius: 10px;
+  background: rgba(10, 10, 14, 0.94); border: 1.5px solid #3c3c42;
+  font: 500 17px/1.2 'Inter', system-ui, sans-serif; color: var(--text-2);
+}
+.jump.on { display: flex; }
+.jump-label { color: var(--text-3); letter-spacing: 0.04em; }
+.jump input {
+  width: 3.4em; padding: 3px 4px; border: 0; border-bottom: 1.5px solid var(--text-3); border-radius: 0;
+  background: transparent; color: var(--ink); font: 600 20px/1.2 'Inter', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums; text-align: center; outline: none; caret-color: var(--gold);
+}
+.jump-hint { color: var(--text-3); max-width: 28em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jump.bad { border-color: #e0a25a; animation: jump-shake 0.34s ease; }
+.jump.bad .jump-hint { color: #e0a25a; }
+@keyframes jump-shake { 20% { transform: translateX(-6px); } 60% { transform: translateX(5px); } 100% { transform: none; } }
+html.is-print .jump { display: none; }
+
+/* print view: reveal moves each section into a .pdf-page, so the height rule above no longer
+   matches; without an explicit height the absolute .frame collapses and content is clipped */
+html.reveal-print .reveal .slides .pdf-page section { height: 1080px !important; }
+
+.hl-gold { color: var(--s-gold); }
+.hl-blue { color: var(--s-blue); }
+.boxed { border: 2px solid var(--axis); border-radius: 14px; padding: 22px 30px; display: inline-block; }
+
+/* a plain list of points, one per click */
+.points p { font-size: 44px; line-height: 1.3; color: var(--text-2); margin: 0 0 24px; padding-left: 52px; position: relative; max-width: 1560px; }
+.points p .n { position: absolute; left: 0; top: 2px; font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 650; color: var(--accent); }
+.points p b { color: var(--ink); font-weight: 600; }
+
+/* the tracer properties */
+.props { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 72px; margin-top: 10px; }
+.props .p { border-top: 2px solid var(--axis); padding-top: 16px; }
+.props .p .h { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+.props .p .t { font-size: 38px; line-height: 1.28; color: var(--text-2); margin: 0; }
+.figcard { margin: 4px 0 0; background: #fbfaf7; border-radius: 14px; padding: 12px 18px 6px; box-sizing: border-box; }
+.figcard img { display: block; width: 100%; height: auto; }
+
+/* ======================= The mock presentation: this deck's own pieces (16 November 2026) ======================= */
+
+/* rubric tags (key R): which row of the presentation rubric a slide serves. Hidden unless html.show-rubric */
+.reveal .slides section > .rubric-tag {
+  position: absolute; top: 34px; right: 46px; z-index: 3; display: none;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 25px; font-weight: 650; letter-spacing: 0.04em; line-height: 1.2;
+  color: #050507; background: var(--gold); padding: 7px 16px; border-radius: 8px; pointer-events: none;
+}
+html.show-rubric .reveal .slides section > .rubric-tag { display: block; }
+html.show-rubric .reveal .slides section > .rubric-tag.none { background: transparent; color: var(--text-3); border: 2px solid var(--text-3); }
+
+/* title */
+.title-wrap { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.title-main.mock { font-size: 116px; line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 34px; max-width: 1640px; }
+.title-sub.mock { font-size: 52px; max-width: 1500px; margin-bottom: 70px; }
+.byline-2 + .byline-2 { margin-top: 10px; }
+
+/* steps on HTML (not only charts): an element with data-at="N" appears with step N */
+.stepped [data-at] { opacity: 0; transform: translateY(14px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.stepped [data-at="0"] { opacity: 1; transform: none; }
+section:has(.step-marker[data-step="1"].visible) .stepped [data-at="1"],
+section:has(.step-marker[data-step="2"].visible) .stepped [data-at="2"],
+section:has(.step-marker[data-step="3"].visible) .stepped [data-at="3"],
+section:has(.step-marker[data-step="4"].visible) .stepped [data-at="4"],
+section:has(.step-marker[data-step="5"].visible) .stepped [data-at="5"] { opacity: 1; transform: none; }
+
+/* the hypotheses */
+.hyp { display: grid; grid-template-columns: 120px 1fr; gap: 16px 26px; align-items: baseline;
+  border: 2px solid var(--axis); border-radius: 16px; padding: 28px 36px; max-width: 1560px; margin-top: 6px; }
+.hyp .k { font-family: 'Inter', system-ui, sans-serif; font-size: 46px; font-weight: 700; color: var(--accent); }
+.hyp .k sub { font-size: 0.6em; vertical-align: -0.1em; }
+.hyp .v { font-size: 46px; line-height: 1.24; color: var(--ink); }
+.hyp .v i { color: var(--ink); }
+
+/* what this talk leaves out: one line lit (today), the rest quiet */
+.scope p { font-size: 44px; line-height: 1.3; color: var(--text-3); margin: 0 0 26px; padding-left: 250px; position: relative; max-width: 1640px; box-sizing: border-box; }
+.scope p.today { color: var(--ink); }
+.scope p .t { position: absolute; left: 0; top: 0.55em; font-family: 'Inter', system-ui, sans-serif; font-size: 26px; font-weight: 650; letter-spacing: 0.12em; text-transform: uppercase; }
+.scope p.today .t { color: var(--accent); }
+
+/* step 1 of the method: a sentence cut in half, two continuations */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; margin-top: 4px; }
+.split .whole { grid-column: 1 / -1; }
+.sent { font-size: 38px; line-height: 1.3; border-radius: 14px; padding: 16px 26px 18px; border: 2px solid var(--axis); color: var(--text-2); margin: 0; }
+.sent .lab { display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 23px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; }
+.sent.model { border-color: var(--s-gold); }
+.sent.model .lab { color: var(--s-gold); }
+.sent.human { border-color: var(--ink-3); }
+.sent .first { color: var(--ink); }
+.sent .cut { font-family: 'Inter', system-ui, sans-serif; color: var(--accent); font-weight: 600; padding: 0 0.15em; }
+.sent .rest { color: var(--text-3); }
+.sent .w { transition: color 0.6s ease, box-shadow 0.6s ease; }
+section:has(.step-marker[data-step="3"].visible) .sent .w { color: var(--s-gold); box-shadow: inset 0 -4px 0 var(--s-gold); }
+.madeup { font-family: 'Inter', system-ui, sans-serif; font-size: 22px; color: var(--text-3); letter-spacing: 0.04em; margin: 8px 0 0; }
+.toplist { font-size: 36px; line-height: 1.32; color: var(--text-2); margin: 22px 0 0; max-width: 1640px; }
+.toplist b { color: var(--ink); font-weight: 600; }
+.toplist i { color: var(--s-gold); }
+
+/* step 2 of the method: data line, timeline, measure and control beside an example chart */
+.count-grid { display: grid; grid-template-columns: 820px 1fr; gap: 72px; margin-top: 6px; align-items: start; }
+.mc .p { border-top: 2px solid var(--axis); padding-top: 14px; margin-bottom: 26px; }
+.mc .h { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+.mc .t { font-size: 36px; line-height: 1.28; color: var(--text-2); margin: 0; }
+.chart-title { font-family: 'Inter', system-ui, sans-serif; font-size: 26px; font-weight: 600; color: var(--text-2); margin: 0 0 4px; }
+.chart .yr { font-size: 34px; font-weight: 600; fill: var(--ink); }
+.chart .yr-out { font-size: 34px; font-weight: 600; fill: var(--text-3); }
+.chart .cell-before { fill: rgba(141,138,130,0.16); stroke: var(--s-neutral); stroke-width: 3; }
+.chart .cell-after { fill: rgba(201,133,0,0.16); stroke: var(--s-gold); stroke-width: 3; }
+.chart .cell-out { fill: url(#tl-hatch); stroke: var(--axis); stroke-width: 3; }
+.chart .brk { fill: none; stroke-width: 3; }
+.chart .brk.before { stroke: var(--s-neutral); }
+.chart .brk.after { stroke: var(--s-gold); }
+.chart .brk-lab { font-size: 30px; font-weight: 650; letter-spacing: 0.08em; }
+.chart .brk-lab.before { fill: var(--ink-2); }
+.chart .brk-lab.after { fill: var(--s-gold); }
+.chart .gpt line { stroke: var(--accent); stroke-width: 4; }
+.chart .gpt text { font-size: 26px; fill: var(--accent); font-weight: 600; }
+.chart .word { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 34px; fill: var(--ink); }
+.chart .val { font-size: 24px; fill: var(--text-2); font-variant-numeric: tabular-nums; }
+.chart .chg { font-size: 26px; font-weight: 650; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.chart .conn { stroke: var(--ink-3); stroke-width: 3; opacity: 0.6; }
+.chart .dot.hollow.neutral { fill: var(--ground); stroke: var(--s-neutral); stroke-width: 5; }
+
+/* the evidence: the paper's figure, tall, on a light card at the left; the walk-through at the right */
+.frame.fig { padding: 30px 120px 30px 80px; }
+.walk-grid { display: grid; grid-template-columns: 596px 1fr; gap: 76px; height: 100%; align-items: center; }
+.figcard.tall { padding: 10px 12px 8px; margin: 0; }
+.figwrap { position: relative; }
+.figwrap img { display: block; width: 100%; height: auto; }
+.figwrap .hl { position: absolute; border: 5px solid var(--s-gold); border-radius: 8px; background: rgba(201,133,0,0.13);
+  opacity: 0; transition: opacity 0.5s ease; box-sizing: border-box; pointer-events: none; }
+.figwrap .hl.line { background: rgba(201,133,0,0.22); border-width: 4px; }
+section:has(.step-marker[data-step="1"].visible):not(:has(.step-marker[data-step="2"].visible)) .figwrap .hl[data-at="1"],
+section:has(.step-marker[data-step="2"].visible):not(:has(.step-marker[data-step="3"].visible)) .figwrap .hl[data-at="2"],
+section:has(.step-marker[data-step="3"].visible):not(:has(.step-marker[data-step="4"].visible)) .figwrap .hl[data-at="3"],
+section:has(.step-marker[data-step="4"].visible):not(:has(.step-marker[data-step="5"].visible)) .figwrap .hl[data-at="4"],
+section:has(.step-marker[data-step="5"].visible) .figwrap .hl[data-at="5"] { opacity: 1; }
+.figcite { font-family: 'Inter', system-ui, sans-serif; font-size: 20px; color: var(--text-3); margin: 8px 2px 0; line-height: 1.3; }
+.walk .kicker { margin-bottom: 14px; }
+.walk .h3 { font-size: 54px; margin-bottom: 22px; }
+.walk p.s { font-size: 36px; line-height: 1.28; color: var(--text-2); margin: 0 0 20px; padding-left: 50px; position: relative;
+  opacity: 0; transition: opacity 0.6s ease; }
+.walk p.s .n { position: absolute; left: 0; top: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 27px; font-weight: 650; color: var(--accent); }
+.walk p.s b { color: var(--ink); font-weight: 600; }
+.walk p.s .sq { color: #5a9be0; }
+.walk p.s .ci { color: var(--ink-2); }
+.walk p.s .pu { color: #b47fd0; }
+.walk p.s[data-at="0"] { opacity: 1; }
+section:has(.step-marker[data-step="1"].visible) .walk p.s[data-at="1"],
+section:has(.step-marker[data-step="2"].visible) .walk p.s[data-at="2"],
+section:has(.step-marker[data-step="3"].visible) .walk p.s[data-at="3"],
+section:has(.step-marker[data-step="4"].visible) .walk p.s[data-at="4"],
+section:has(.step-marker[data-step="5"].visible) .walk p.s[data-at="5"] { opacity: 1; }
+/* earlier steps step back once the next arrives */
+section:has(.step-marker[data-step="1"].visible) .walk p.s[data-at="0"],
+section:has(.step-marker[data-step="2"].visible) .walk p.s[data-at="1"],
+section:has(.step-marker[data-step="3"].visible) .walk p.s[data-at="2"],
+section:has(.step-marker[data-step="4"].visible) .walk p.s[data-at="3"],
+section:has(.step-marker[data-step="5"].visible) .walk p.s[data-at="4"] { opacity: 0.42; }
+.walk p.s.verdict { color: var(--ink); }
+.walk p.s.verdict b { color: var(--accent); }
+
+/* critique: three cards */
+.crit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; margin-top: 18px; }
+.crit .c { border-top: 4px solid var(--axis); padding-top: 18px; }
+.crit .c .h { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+.crit .c .hd { font-size: 46px; line-height: 1.15; font-weight: 450; color: var(--ink); margin: 0 0 16px; }
+.crit .c .t { font-size: 34px; line-height: 1.3; color: var(--text-2); margin: 0 0 14px; }
+.crit .c.strength { border-color: var(--s-blue); }
+.crit .c.weakness { border-color: var(--s-gold); }
+.crit .c.follow { border-color: var(--ink-2); }
+
+/* why this article */
+.why .lede { max-width: 1560px; }
+
+/* thank you */
+.thanks-big { font-size: 150px; line-height: 1; font-weight: 430; letter-spacing: -0.015em; margin: 0 0 26px; }
+.thanks-q { font-size: 72px; line-height: 1.1; font-weight: 380; color: var(--text-2); margin: 0 0 80px; }
+.links { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; line-height: 1.6; color: var(--text-2); margin: 0 0 24px; }
+.links b { color: var(--ink); font-weight: 600; }
+.disclose { font-family: 'Inter', system-ui, sans-serif; font-size: 23px; line-height: 1.45; color: var(--text-3); max-width: 1500px; margin: 0; }
+
+/* the appendix */
+table.numbers.rubric { font-size: 30px; }
+table.numbers.rubric th { font-size: 22px; }
+table.numbers.rubric td { padding: 10px 24px 10px 0; color: var(--text-2); }
+table.numbers.rubric td b { color: var(--ink); font-weight: 600; }
+#sources .cite { font-size: 26px; line-height: 1.38; margin-bottom: 14px; }
+#sources .cite b { color: var(--ink-2); font-weight: 600; }
+
+/* the Draft tag on the title, until Tommie approves */
+.tag.draft { color: #e0a25a; vertical-align: 0.1em; }

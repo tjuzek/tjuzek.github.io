@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en-GB" data-palette="wk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mock Article Presentation: AI Words Across 34 Languages (LIN 3042)</title>
+<meta name="description" content="A mock Article Summary and Critique presentation for LIN 3042 Applied Linguistics, Fall 2026: Juzek (2027), AI-Associated Lexical Shifts Across 34 Languages (EACL 2027), on the uptick of AI-associated words in news writing.">
+<!-- unlisted for now: kept out of search engines and linked from nowhere until Tommie says -->
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/reveal/reveal.css?v=20261116a">
+<link rel="stylesheet" href="assets/deck.css?v=20261116a">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- Every number on a slide is in ~/claudecode/lin3042/course/modules/mock-presentation/EVIDENCE.md (data-ev),
+     checked against the paper by check_evidence.py there. About 7 minutes in all (data-timing, seconds). -->
+
+<section id="title" data-rubric="1" data-timing="15">
+  <div class="frame">
+    <div class="title-wrap">
+      <p class="kicker">LIN 3042 &middot; Mock article presentation <span class="tag draft">Draft</span></p>
+      <h1 class="title-main mock">AI-Associated Lexical Shifts Across 34&nbsp;Languages</h1>
+      <p class="title-sub mock">Cross-Lingual Convergence and Diachronic Uptake in News Writing</p>
+      <p class="byline">Thomas Stephan Juzek &middot; Florida State University</p>
+      <p class="byline-2">EACL 2027, main conference (to appear) &middot; preprint: arXiv:2605.25358</p>
+      <p class="byline-2">Presented 17 November 2026</p>
+    </div>
+  </div>
+</section>
+
+<section id="question" data-state="quiet" data-rubric="1" data-timing="50">
+  <div class="frame stepped">
+    <p class="kicker">The article and its question</p>
+    <p class="h2">Do AI words rise in the news after ChatGPT, across languages?</p>
+    <p class="body" data-ev="P67 P80">In scientific English, words that AI models overuse, such as <i>delve</i>, <i>underscore</i> and <i>intricate</i>, have spiked since 2022 (e.g. Kobak et&nbsp;al. 2025). But that work is almost all English, and almost all science.</p>
+    <p class="body" data-at="1" data-ev="P69">Why it is worth doing: news is what most people read, and most languages have not been looked at.</p>
+    <div class="hyp" data-at="2">
+      <span class="k">H<sub>0</sub></span><span class="v">AI words change no more than comparable <i>baseline</i> words.</span>
+      <span class="k">H<sub>1</sub></span><span class="v">AI words rise more than baseline words.</span>
+    </div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+  </div>
+</section>
+
+<!-- [S] skippable if time is short -->
+<section id="scope" data-state="quiet" data-rubric="none" data-timing="15">
+  <div class="frame">
+    <p class="kicker">One part of a bigger paper</p>
+    <p class="h2">The paper does a lot. Today: one part.</p>
+    <div class="scope">
+      <p class="today"><span class="t">Today</span>Do AI words rise in news writing after ChatGPT?</p>
+      <p data-ev="A61"><span class="t">Not today</span>The same ideas are overused across languages: <i>emphasize</i>-type verbs in 24 of 34</p>
+      <p data-ev="P195"><span class="t">Not today</span>A longer view, 2012 to 2024, in 10 languages</p>
+      <p><span class="t">Not today</span>Checks across models, seeds and settings; ethics</p>
+    </div>
+  </div>
+</section>
+
+<section id="ai-words" data-state="quiet" data-rubric="2" data-timing="60">
+  <div class="frame stepped">
+    <p class="kicker">What the researchers did &middot; 1: finding the AI words</p>
+    <p class="lede" style="font-size:44px; margin-bottom:20px" data-ev="P109">No participants here: the &lsquo;participants&rsquo; are texts, news sentences in 34 languages.</p>
+    <div class="split">
+      <p class="sent whole"><span class="lab">A news sentence from 2020&ndash;21, cut in half</span><span class="first">The new bridge over the river opened on Monday,</span><span class="cut">|</span><span class="rest">&hellip;</span></p>
+      <p class="sent model" data-at="1" data-ev="P129"><span class="lab">GPT-4.1-mini writes the second half</span>&hellip; and the mayor said it would <span class="w">revitalize</span> the waterfront and <span class="w">emphasize</span> the city&rsquo;s commitment to its residents.</p>
+      <p class="sent human" data-at="2"><span class="lab">The journalist&rsquo;s real second half</span>&hellip; two years late, after the cost had doubled.</p>
+    </div>
+    <p class="madeup" data-at="1" data-ev="P129">Example made up for this slide. The study used up to 100,000 real sentences per language.</p>
+    <p class="toplist" data-at="3" data-ev="P190 T1 P322">Words the model uses far more often than the journalists are its <b>AI words</b>: the top 20 per language, each language computed on its own, nothing translated. English top 10: <i>additionally, emphasize, revolutionize, revitalize, captivated, conservationist, streamline, firsthand, personalize, introspective</i>.</p>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+  </div>
+</section>
+
+<section id="counting" data-state="quiet" data-rubric="2" data-timing="55">
+  <div class="frame stepped">
+    <p class="kicker">What the researchers did &middot; 2: counting them in the news</p>
+    <p class="body" style="color:var(--ink); margin-bottom:4px" data-ev="P111 P118">Data: WMT News Crawl (web news), 34 languages, 7.1 billion tokens.</p>
+    <div class="chart" data-chart="timeline"></div>
+    <div class="count-grid">
+      <div class="mc" data-at="2" data-ev="P190">
+        <div class="p"><p class="h">Measure</p><p class="t">How much of all the text the 20 AI words make up, before vs after: the % change.</p></div>
+        <div class="p"><p class="h">Control</p><p class="t">The same for 20 <i>baseline</i> words, which the model and the journalists use about equally often.</p></div>
+      </div>
+      <div data-at="3">
+        <p class="chart-title">English examples, per million tokens (Table 4)</p>
+        <div class="chart" data-chart="per-million"></div>
+      </div>
+    </div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+  </div>
+</section>
+
+<section id="figure" data-state="quiet" data-rubric="3" data-timing="110">
+  <div class="frame fig">
+    <div class="walk-grid">
+      <div>
+        <div class="figcard tall">
+          <div class="figwrap">
+            <img src="assets/img/juzek-2027-fig2.png?v=20261116a" width="1239" height="2019"
+                 alt="Figure 2 of the paper: for each of 34 languages, the percentage change from 2020-21 to 2023-24 of AI-associated words (filled marks) and baseline words (open circles), with dashed lines at the two averages.">
+            <!-- highlight boxes, in % of the image (rows at an even pitch of 50.8 px from Romanian at y 113.5;
+                 zero at x 713.3, 4.637 px per percentage point; measured from the PNG, 16 Nov) -->
+            <div class="hl" data-at="1" style="left:1.5%; width:96.5%; top:27.13%; height:2.28%"></div>
+            <div class="hl line" data-at="2" style="left:55.00%; width:1.78%; top:1.98%; height:89.65%"></div>
+            <div class="hl line" data-at="2" style="left:62.33%; width:1.78%; top:1.98%; height:89.65%"></div>
+            <div class="hl" data-at="3" style="left:1.5%; width:96.5%; top:4.48%; height:7.31%"></div>
+            <div class="hl" data-at="4" style="left:1.5%; width:96.5%; top:72.42%; height:7.31%"></div>
+            <div class="hl" data-at="4" style="left:1.5%; width:96.5%; top:82.49%; height:7.31%"></div>
+            <div class="hl" data-at="5" style="left:1.5%; width:96.5%; top:4.48%; height:67.70%"></div>
+            <div class="hl" data-at="5" style="left:1.5%; width:96.5%; top:79.97%; height:2.28%"></div>
+          </div>
+        </div>
+        <p class="figcite">Figure 2 from Juzek (2027), as published (CC BY 4.0).</p>
+      </div>
+      <div class="walk">
+        <p class="kicker">One piece of evidence: Figure 2</p>
+        <p class="h3">AI words against baseline words, in 34 languages</p>
+        <p class="s" data-at="0"><span class="n">0</span>One row per language. <span class="ci">Open circle</span>: baseline words. <span class="sq">Filled mark</span>: AI words. Further right means a bigger rise from 2020&ndash;21 to 2023&ndash;24.</p>
+        <p class="s" data-at="1" data-ev="P339"><span class="n">1</span>English: AI words <b>+25.5%</b>; the baseline words fall a little.</p>
+        <p class="s" data-at="2" data-ev="P330"><span class="n">2</span>The dashed lines are the averages: AI words <b>+15.1%</b>, baseline words <b>&minus;4.5%</b>.</p>
+        <p class="s" data-at="3" data-ev="P339"><span class="n">3</span>Biggest rises: Romanian <b>+88.9%</b>, German <b>+70.8%</b>, Czech <b>+49.7%</b>.</p>
+        <p class="s" data-at="4" data-ev="P339"><span class="n">4</span>Not everywhere: in <b>six</b> languages (<span class="pu">purple</span>) AI words fall below their baseline, e.g. Persian <b>&minus;33.2%</b>, Japanese <b>&minus;29.9%</b>.</p>
+        <p class="s verdict" data-at="5" data-ev="P330 P339"><span class="n">5</span>In <b>28 of 34</b> languages, AI words outpace the baseline: evidence for H<sub>1</sub>. Real, but modest: smaller than in scientific English.</p>
+      </div>
+    </div>
+    <span class="fragment step-marker" data-step="1"></span>
+    <span class="fragment step-marker" data-step="2"></span>
+    <span class="fragment step-marker" data-step="3"></span>
+    <span class="fragment step-marker" data-step="4"></span>
+    <span class="fragment step-marker" data-step="5"></span>
+  </div>
+</section>
+
+<section id="critique" data-state="quiet" data-rubric="4" data-timing="80">
+  <div class="frame">
+    <p class="kicker">Critique</p>
+    <div class="crit">
+      <div class="c strength fragment rise">
+        <p class="h">Strength</p>
+        <p class="hd">A built-in control</p>
+        <p class="t" data-ev="P190 P322">Baseline words are counted the same way, in the same texts. And 34 languages, each with its own list: nothing translated.</p>
+      </div>
+      <div class="c weakness fragment rise">
+        <p class="h">Weakness</p>
+        <p class="hd">Correlation, not causation</p>
+        <p class="t">The counts cannot tell apart AI-written text, people picking up the words, and topics shifting.</p>
+        <p class="t" data-ev="P330 P190">With billions of tokens, every language passes the significance test, even the eight where AI words fell. The comparison with the baseline carries the claim.</p>
+      </div>
+      <div class="c follow fragment rise">
+        <p class="h">Follow-up</p>
+        <p class="hd">Follow the outlets</p>
+        <p class="t" data-ev="P439">Track the same news outlets into 2025&ndash;26, and compare outlets that say they use AI with outlets that say they do not. This needs a corpus that records the outlet; News Crawl does not.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why" data-state="quiet" data-rubric="6" data-timing="35">
+  <!-- Drafted by Claude from the paper's motivation and the COLING 2025 precursor: Tommie to rewrite in his own words. -->
+  <div class="frame why">
+    <p class="kicker">Why this article <span class="tag pending">Tommie: rewrite in your words</span></p>
+    <p class="lede">I had looked at why ChatGPT &lsquo;delves&rsquo; so much in science writing (Juzek &amp; Ward 2025). I wanted to know whether this is an English-and-science thing, or whether it reaches everyday news, in many languages.</p>
+    <p class="lede fragment rise" style="color:var(--text-2)">What it changed for me: the effect is real, but smaller in news than in science, and not universal. Six languages go the other way.</p>
+  </div>
+</section>
+
+<section id="questions" data-state="thanks" data-rubric="5 B2" data-timing="0">
+  <div class="frame center">
+    <p class="thanks-big">Thank you.</p>
+    <p class="thanks-q">Questions?</p>
+    <p class="links"><b>Paper</b> <a href="https://arxiv.org/abs/2605.25358">arxiv.org/abs/2605.25358</a> &middot; <b>Code and word lists</b> <a href="https://github.com/tjuzek/ai-34-languages">github.com/tjuzek/ai-34-languages</a> &middot; <b>Explore the words</b> <a href="https://www.aiwordexplorer.com">aiwordexplorer.com</a></p>
+    <p class="disclose">AI use: Claude (Claude Opus 5.5, Anthropic) drafted these slides on my prompting and checked every number on them against the paper; I edited and approved them.</p>
+  </div>
+</section>
+
+<section id="rubric-map" data-visibility="uncounted" data-state="quiet">
+  <div class="frame">
+    <p class="kicker">Appendix &middot; How this talk maps onto the presentation rubric</p>
+    <table class="numbers rubric">
+      <thead><tr><th>Rubric row</th><th>Points</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td><b>1.</b> The article and its question</td><td class="n">15</td><td>Slides 1 and 2</td></tr>
+        <tr><td><b>2.</b> What the researchers did</td><td class="n">20</td><td>Slides 4 and 5</td></tr>
+        <tr><td><b>3.</b> One piece of evidence, walked through</td><td class="n">20</td><td>Slide 6 (the paper&rsquo;s Figure 2)</td></tr>
+        <tr><td><b>4.</b> Critique</td><td class="n">20</td><td>Slide 7</td></tr>
+        <tr><td><b>5.</b> The instructor&rsquo;s question</td><td class="n">15</td><td>Slide 9, the questions</td></tr>
+        <tr><td><b>6.</b> Why this article</td><td class="n">10</td><td>Slide 8</td></tr>
+        <tr><td><b>Bonus 1:</b> timing</td><td class="n">+3</td><td>About 7 minutes in all; slide 3 can go if time is short</td></tr>
+        <tr><td><b>Bonus 2:</b> a second question</td><td class="n">+2</td><td>Slide 9, the questions</td></tr>
+      </tbody>
+    </table>
+    <p class="cite" style="margin-top:24px">Press R on any slide to see which row it serves.</p>
+  </div>
+</section>
+
+<section id="sources" data-visibility="uncounted" data-state="quiet">
+  <div class="frame">
+    <p class="kicker">Appendix &middot; Sources and credits</p>
+    <p class="cite"><b>The article.</b> Juzek, Thomas Stephan (2027). AI-Associated Lexical Shifts Across 34 Languages: Cross-Lingual Convergence and Diachronic Uptake in News Writing. <i>Proceedings of EACL 2027</i>, main conference (to appear). Preprint: <a href="https://arxiv.org/abs/2605.25358">arXiv:2605.25358</a>.</p>
+    <p class="cite">Juzek, Tom S., and Zina B. Ward (2025). Why Does ChatGPT &ldquo;Delve&rdquo; So Much? Exploring the Sources of Lexical Overrepresentation in Large Language Models. <i>Proceedings of the 31st International Conference on Computational Linguistics (COLING 2025)</i>, 6397&ndash;6411. <a href="https://aclanthology.org/2025.coling-main.426/">aclanthology.org/2025.coling-main.426</a>.</p>
+    <p class="cite">Kobak, Dmitry, Rita Gonz&aacute;lez-M&aacute;rquez, Em&#337;ke-&Aacute;gnes Horv&aacute;t, and Jan Lause (2025). Delving into LLM-assisted writing in biomedical publications through excess vocabulary. <i>Science Advances</i> 11(27), eadt3813. <a href="https://doi.org/10.1126/sciadv.adt3813">doi:10.1126/sciadv.adt3813</a>.</p>
+    <p class="cite">WMT News Crawl: <a href="https://data.statmt.org/news-crawl/">data.statmt.org/news-crawl</a>. Its maintainers ask users to cite the latest WMT findings paper: Kocmi, Tom, et al. (2025). Findings of the WMT25 General Machine Translation Shared Task. <i>Proceedings of the Tenth Conference on Machine Translation</i>, 355&ndash;413.</p>
+    <p class="cite">OpenAI (2022). Introducing ChatGPT. 30 November 2022.</p>
+    <p class="cite" style="margin-top:22px"><b>Credits.</b> Figure 2 is reproduced from Juzek (2027), CC BY 4.0. The paper thanks Gordon Erlebacher, Zina Ward, Jose Hernandez and the FSU Research Computing Center. Slides on the engine of the talk <i>What Is Left to Write?</i> (1 October 2026); reveal.js (MIT); Newsreader and Inter (SIL OFL 1.1). AI use: Claude (Claude Opus 5.5, Anthropic) drafted these slides on Tommie Juzek&rsquo;s prompting and checked every number on them against the paper; Tommie Juzek edited and approved them.</p>
+  </div>
+</section>
+
+</div>
+</div>
+<script src="assets/reveal/reveal.js?v=20261116a"></script>
+<script src="assets/charts.js?v=20261116a"></script>
+<script src="assets/deck.js?v=20261116a"></script>
+</body>
+</html>
