@@ -537,7 +537,12 @@ section:has(.step-marker[data-step="5"].visible) .walk p.s[data-at="4"] { opacit
 .thanks-q { font-size: 72px; line-height: 1.1; font-weight: 380; color: var(--text-2); margin: 0 0 80px; }
 .links { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; line-height: 1.6; color: var(--text-2); margin: 0 0 24px; }
 .links b { color: var(--ink); font-weight: 600; }
-.disclose { font-family: 'Inter', system-ui, sans-serif; font-size: 23px; line-height: 1.45; color: var(--text-3); max-width: 1500px; margin: 0; }
+/* AI use, made prominent (Tommie, 17 Nov): a boxed line on the title slide and on slide 11 */
+.disclose { font-family: 'Inter', system-ui, sans-serif; font-size: 30px; line-height: 1.45; color: var(--ink-2);
+  max-width: 1500px; margin: 0; padding: 18px 28px 20px; text-align: left; background: var(--bg);
+  border: 2px solid var(--axis); border-left: 8px solid var(--gold); border-radius: 6px; }
+.disclose b { color: var(--ink); font-weight: 650; }
+.title-wrap .disclose { margin-top: 44px; }
 
 /* the appendix */
 table.numbers.rubric { font-size: 30px; }
