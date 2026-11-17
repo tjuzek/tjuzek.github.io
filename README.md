@@ -105,10 +105,11 @@ python3 -m http.server 8000
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
   published by rsync from its source folder, never with `--delete`, so the two do not touch.
   `talks/left-to-write/` is a redirect stub (`noindex`) to the 2026 slides, keeping the slide hash.
-- `talks/2026-copy-contract-tilt/` (from 2026-11-12) is the maths seminar talk of 13 November 2026, **noindex for
-  now at Tommie's request**: landing page and slides both `noindex`, not in the sitemap or `llms.txt`.
+- `talks/2026-copy-contract-tilt/` (from 2026-11-12) is the maths seminar talk of 13 November 2026, **kept low-key
+  and noindex for good at Tommie's request** (decided 2026-11-17: made quickly and with much AI, so discourage
+  indexing; do not flip it to `index, follow`, add it to the sitemap or `llms.txt`, or pitch that): landing page and slides both `noindex`, not in the sitemap or `llms.txt`.
   From 2026-11-13 to 2026-11-17 the home banner linked the landing page (Tommie's word; removed at his word). Since
-  2026-11-17 talks-press lists it (Tommie's word); the rest waits for him: landing to `index, follow`, a sitemap entry. Source: `~/claudecode/maths-data-science-talk/talk/` (`landing/`, `deck/`;
+  2026-11-17 talks-press lists it (Tommie's word); that is as far as it goes. Source: `~/claudecode/maths-data-science-talk/talk/` (`landing/`, `deck/`;
   its README has the rsync commands). Deck assets carry a `?v=` version: bump it in the source on every republish.
 - `/human-baseline-collective/` (from 2026-10-25) is an unlisted pitch page for a planned
   research podcast run by the Human Baseline Collective (so far Tommie, Matt Patience of FSU,
