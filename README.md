@@ -99,7 +99,7 @@ python3 -m http.server 8000
   AI disclaimer first, whose em dashes and "X, not Y" contrasts are deliberate. Do not "fix" them.
   (The temporary home-page banner pointed there until 2026-10-19, then to the Carothers lecture PDF
   `talks/2026-carothers/2026-Carothers-Lecture.pdf` until 2026-11-12; since 2026-11-13 it points to
-  `talks/2026-copy-contract-tilt/`, at Tommie's word. It has no em dash.)
+  `talks/2026-copy-contract-tilt/`, at Tommie's word, until 2026-11-17, when it was removed at his word. It had no em dash.)
 - Talk pages (from 2026-09-30): `talks/<year>-<slug>/` is the talk's landing page (phone first:
   slides, reading, anything the audience needs); `talks/<year>-<slug>/slides/` is the deck. Flat,
   one folder per talk, the year as prefix so a rerun in a later year gets its own record. Each is
@@ -107,7 +107,7 @@ python3 -m http.server 8000
   `talks/left-to-write/` is a redirect stub (`noindex`) to the 2026 slides, keeping the slide hash.
 - `talks/2026-copy-contract-tilt/` (from 2026-11-12) is the maths seminar talk of 13 November 2026, **unlisted for
   now at Tommie's request**: landing page and slides both `noindex`, not in the sitemap, `llms.txt`, talks-press or
-  the banner, linked from no page. Since 2026-11-13 the home banner links the landing page (Tommie's word); the rest
+  the banner, linked from no page. From 2026-11-13 to 2026-11-17 the home banner linked the landing page (Tommie's word; removed at his word); the rest
   waits for him: landing to `index, follow`, a talks-press item, a sitemap entry. Source: `~/claudecode/maths-data-science-talk/talk/` (`landing/`, `deck/`;
   its README has the rsync commands). Deck assets carry a `?v=` version: bump it in the source on every republish.
 - `/human-baseline-collective/` (from 2026-10-25) is an unlisted pitch page for a planned
