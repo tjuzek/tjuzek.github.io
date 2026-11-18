@@ -258,7 +258,12 @@
     show('quiz');
   }
 
-  // Essay and presentation: the presentation days still to come, then the essay until it is due
+  // Essay and presentation: the tasks before it (each until its due date), the presentation days
+  // still to come, then the essay until it is due
+  ((D.asac && D.asac.tasks) || []).filter(function (t) { return today <= t.due; })
+    .forEach(function (t) {
+      list('asac').appendChild(row('Due', t.due, true, t.title, D.dueTime + ', on Canvas', t.url));
+    });
   var pres = D.sessions.filter(function (s) { return s.presentation && s.date >= today; });
   if (D.asac && pres.length) {
     list('asac').appendChild(row('In class', pres[0].date, true, D.asac.presentation.title,

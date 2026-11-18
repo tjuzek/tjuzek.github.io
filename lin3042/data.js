@@ -18,7 +18,7 @@
  * title from Canvas too.
  */
 window.LIN3042 = {
-  updated: '2026-11-09',
+  updated: '2026-11-18',
   lastSession: '2026-12-03',
   dueTime: '11:59 pm',
 
@@ -44,7 +44,14 @@ window.LIN3042 = {
 
   // The Article Summary and Critique: the essay and the presentation, with `url` and title as on
   // Canvas (as for the THAs). The presentation's dates are the sessions marked `presentation: true`.
+  // `tasks` are the 0-point Canvas items around it (added 18 Nov); each shows until its due date.
   asac: {
+    tasks: [
+      { title: 'Article Summary and Critique Paper Choice', due: '2026-11-22',
+        url: 'https://canvas.fsu.edu/courses/354011/assignments/3334788' },
+      { title: 'Article Summary and Critique Preferred Presentation Day', due: '2026-11-22',
+        url: 'https://canvas.fsu.edu/courses/354011/assignments/3341705' }
+    ],
     essay: { title: 'Article Summary and Critique Essay', due: '2026-12-06',
       url: 'https://canvas.fsu.edu/courses/354011/assignments/3326097' },
     presentation: { title: 'Article Summary and Critique Presentation',
