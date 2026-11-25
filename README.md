@@ -166,4 +166,5 @@ If you reuse anything here, a credit or a link back to [tjuzek.com](https://tjuz
 
 ## AI Assistance
 
-Repository polished with Claude Code.
+Main pages: content by TSJ, language Claude-polished, code by Claude (via Claude Code).
+Pages with their own AI disclaimer or credit follow that instead.
