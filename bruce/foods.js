@@ -3,7 +3,7 @@
  * This is the only file a routine change touches: a new package label, a new portion, a new
  * food, a new day type. Change it here, then bump `updated`. index.html does the rest.
  *
- * Derivations, assumptions and sources live in ~/claudecode/bruce-diet/README.md (not served).
+ * Derivations, assumptions and sources live in ~/claudecode/_archive/bruce-diet/README.md (not served).
  *
  * Fields per food (each food has kcalPerG OR kcalPerPiece):
  *   id            stable key, saved in the phone's log; never rename an id that has been used.

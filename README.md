@@ -84,7 +84,7 @@ python3 -m http.server 8000
   `?today=YYYY-MM-DD` previews another day on a separate test store. The page is in Dutch (`nl-BE`,
   Flemish word choices, decimal commas) at Tommie's request (2026-11-12), the one exception to the en-GB
   house style; code comments stay English. Notes and derivations:
-  `~/claudecode/bruce-diet/README.md` (not served).
+  `~/claudecode/_archive/bruce-diet/README.md` (not served).
 - Press record: the JSON-LD `ItemList` in `talks-press.html` is the record; the visible
   chips are a curated subset of it ("Selected coverage" plus a collapsed full list).
   Syndicated reprints: one story, one entry.
